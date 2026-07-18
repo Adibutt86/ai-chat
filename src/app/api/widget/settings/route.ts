@@ -18,7 +18,21 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const { agentId, primaryColor, secondaryColor, borderRadius, position, welcomeMessage, placeholder, themeMode } = await request.json();
+    const { 
+      agentId, 
+      primaryColor, 
+      secondaryColor, 
+      borderRadius, 
+      position, 
+      welcomeMessage, 
+      placeholder, 
+      themeMode,
+      showBooking,
+      showLeadForm,
+      showServices,
+      showHours,
+      showPricing
+    } = await request.json();
 
     if (!agentId) {
       return NextResponse.json({ error: 'agentId is required' }, { status: 400 });
@@ -34,6 +48,11 @@ export async function POST(request: Request) {
         welcomeMessage,
         placeholder,
         themeMode,
+        showBooking: showBooking !== undefined ? showBooking : true,
+        showLeadForm: showLeadForm !== undefined ? showLeadForm : true,
+        showServices: showServices !== undefined ? showServices : false,
+        showHours: showHours !== undefined ? showHours : false,
+        showPricing: showPricing !== undefined ? showPricing : false,
       },
       create: {
         agentId,
@@ -44,6 +63,11 @@ export async function POST(request: Request) {
         welcomeMessage: welcomeMessage || 'Hi! How can I help you today?',
         placeholder: placeholder || 'Type your message...',
         themeMode: themeMode || 'light',
+        showBooking: showBooking !== undefined ? showBooking : true,
+        showLeadForm: showLeadForm !== undefined ? showLeadForm : true,
+        showServices: showServices !== undefined ? showServices : false,
+        showHours: showHours !== undefined ? showHours : false,
+        showPricing: showPricing !== undefined ? showPricing : false,
       },
     });
 

@@ -14,6 +14,14 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
   const [placeholder, setPlaceholder] = useState('Type your message...');
   const [themeMode, setThemeMode] = useState('light');
   const [position, setPosition] = useState('bottom-right');
+  
+  // Toggles for Quick Links
+  const [showBooking, setShowBooking] = useState(true);
+  const [showLeadForm, setShowLeadForm] = useState(true);
+  const [showServices, setShowServices] = useState(false);
+  const [showHours, setShowHours] = useState(false);
+  const [showPricing, setShowPricing] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -30,6 +38,11 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
             setPlaceholder(data.placeholder || 'Type your message...');
             setThemeMode(data.themeMode || 'light');
             setPosition(data.position || 'bottom-right');
+            setShowBooking(data.showBooking !== undefined ? data.showBooking : true);
+            setShowLeadForm(data.showLeadForm !== undefined ? data.showLeadForm : true);
+            setShowServices(data.showServices !== undefined ? data.showServices : false);
+            setShowHours(data.showHours !== undefined ? data.showHours : false);
+            setShowPricing(data.showPricing !== undefined ? data.showPricing : false);
           }
         }
       } catch (err) {
@@ -56,6 +69,11 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
           placeholder,
           themeMode,
           position,
+          showBooking,
+          showLeadForm,
+          showServices,
+          showHours,
+          showPricing,
         }),
       });
 
@@ -82,7 +100,7 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
     <div className="space-y-8">
       <div>
         <h2 className="text-2xl font-bold text-white">Widget Customizer & Installation</h2>
-        <p className="text-zinc-400 text-sm">Design visual styling parameters and download one-line production loader codes.</p>
+        <p className="text-zinc-400 text-sm">Design visual styling parameters and configure clickable suggested actions for visitors.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -171,13 +189,73 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
             />
           </div>
 
+          {/* Quick suggested links configuration checklist */}
+          <div className="border-t border-zinc-800 pt-5 space-y-4">
+            <div>
+              <h4 className="text-xs uppercase tracking-wider text-zinc-400 font-bold mb-2">Suggested Actions / Quick Links</h4>
+              <p className="text-[11px] text-zinc-500">Enable default suggestion buttons to appear at the start of a chat conversation.</p>
+            </div>
+
+            <div className="space-y-3">
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={showBooking}
+                  onChange={(e) => setShowBooking(e.target.checked)}
+                  className="rounded border-zinc-800 text-blue-600 focus:ring-blue-600 bg-zinc-950 h-4 w-4"
+                />
+                <span>📅 Book an Appointment / Demowise</span>
+              </label>
+
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={showLeadForm}
+                  onChange={(e) => setShowLeadForm(e.target.checked)}
+                  className="rounded border-zinc-800 text-blue-600 focus:ring-blue-600 bg-zinc-950 h-4 w-4"
+                />
+                <span>📞 Contact Us / Leave Details</span>
+              </label>
+
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={showServices}
+                  onChange={(e) => setShowServices(e.target.checked)}
+                  className="rounded border-zinc-800 text-blue-600 focus:ring-blue-600 bg-zinc-950 h-4 w-4"
+                />
+                <span>💼 Our Services</span>
+              </label>
+
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={showHours}
+                  onChange={(e) => setShowHours(e.target.checked)}
+                  className="rounded border-zinc-800 text-blue-600 focus:ring-blue-600 bg-zinc-950 h-4 w-4"
+                />
+                <span>🕒 Business Working Hours</span>
+              </label>
+
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={showPricing}
+                  onChange={(e) => setShowPricing(e.target.checked)}
+                  className="rounded border-zinc-800 text-blue-600 focus:ring-blue-600 bg-zinc-950 h-4 w-4"
+                />
+                <span>💲 Pricing Plans</span>
+              </label>
+            </div>
+          </div>
+
           <button
             type="submit"
             disabled={loading}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-lg text-white font-semibold"
+            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-lg text-white font-semibold w-full justify-center transition cursor-pointer"
           >
             <Save className="h-4 w-4" />
-            {loading ? 'Saving...' : 'Update Customizations'}
+            {loading ? 'Saving Changes...' : 'Update Widget Settings'}
           </button>
         </form>
 
@@ -203,7 +281,7 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
               href={`/widget-sandbox?agentId=${agentId}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center bg-zinc-950 hover:bg-zinc-850 border border-zinc-800 rounded-xl px-4 py-3 text-sm font-semibold text-blue-400 w-full transition"
+              className="inline-flex items-center justify-center bg-zinc-950 hover:bg-zinc-850 border border-zinc-800 rounded-xl px-4 py-3 text-sm font-semibold text-blue-400 w-full transition cursor-pointer"
             >
               Open Live Simulator Screen
             </a>

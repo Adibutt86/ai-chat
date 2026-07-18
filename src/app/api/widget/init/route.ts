@@ -34,6 +34,11 @@ export async function GET(request: Request) {
       welcomeMessage: 'Hi! How can I help you today?',
       placeholder: 'Type your message...',
       themeMode: 'light',
+      showBooking: true,
+      showLeadForm: true,
+      showServices: false,
+      showHours: false,
+      showPricing: false,
     },
   });
 

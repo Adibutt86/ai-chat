@@ -205,6 +205,13 @@ model WidgetSettings {
   logoUrl        String?
   themeMode      String         @default("light") // light, dark, system
   
+  // Suggested Actions / Quick Links
+  showBooking    Boolean        @default(true)
+  showLeadForm   Boolean        @default(true)
+  showServices   Boolean        @default(false)
+  showHours      Boolean        @default(false)
+  showPricing    Boolean        @default(false)
+  
   agent          Agent          @relation(fields: [agentId], references: [id], onDelete: Cascade)
 }
 

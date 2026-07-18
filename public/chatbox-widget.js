@@ -675,6 +675,56 @@
       ? `<img src="${config.avatarUrl}" class="chatbox-avatar" alt="${config.name || 'AI Assistant'}" />`
       : `<svg class="chatbox-avatar" style="padding: 4px; box-sizing: border-box;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 1 10 10c0 5.523-4.477 10-10 10S2 17.523 2 12A10 10 0 0 1 12 2z"/><path d="M12 6v6l4 2"/></svg>`;
 
+    function getSuggestionsHTML() {
+      let html = '';
+      const showBooking = config.widgetSettings?.showBooking !== false;
+      const showLeadForm = config.widgetSettings?.showLeadForm !== false;
+      const showServices = config.widgetSettings?.showServices === true;
+      const showHours = config.widgetSettings?.showHours === true;
+      const showPricing = config.widgetSettings?.showPricing === true;
+
+      if (showBooking || showLeadForm || showServices || showHours || showPricing) {
+        html += '<div class="chatbox-suggestions-container" id="chatbox-welcome-suggestions">';
+        if (showBooking) {
+          html += `
+            <button class="chatbox-suggestion-pill" id="chatbox-suggest-book">
+              <span>📅</span> <strong>Book an Appointment</strong>
+            </button>
+          `;
+        }
+        if (showLeadForm) {
+          html += `
+            <button class="chatbox-suggestion-pill" id="chatbox-suggest-lead">
+              <span>📞</span> <strong>Leave a Message</strong>
+            </button>
+          `;
+        }
+        if (showHours) {
+          html += `
+            <button class="chatbox-suggestion-pill" id="chatbox-suggest-hours">
+              <span>🕒</span> <strong>Business Hours</strong>
+            </button>
+          `;
+        }
+        if (showServices) {
+          html += `
+            <button class="chatbox-suggestion-pill" id="chatbox-suggest-services">
+              <span>💼</span> <strong>Our Services</strong>
+            </button>
+          `;
+        }
+        if (showPricing) {
+          html += `
+            <button class="chatbox-suggestion-pill" id="chatbox-suggest-pricing">
+              <span>💲</span> <strong>Pricing Plans</strong>
+            </button>
+          `;
+        }
+        html += '</div>';
+      }
+      return html;
+    }
+
     container.innerHTML = `
       <div id="chatbox-window" role="dialog" aria-label="AI Chat Window">
         <div id="chatbox-header">
@@ -705,17 +755,7 @@
             ${avatarImg.replace('chatbox-avatar', 'chatbox-message-avatar')}
             <div class="chatbox-message">${welcomeMessage}</div>
           </div>
-          <div class="chatbox-suggestions-container" id="chatbox-welcome-suggestions">
-            <button class="chatbox-suggestion-pill" id="chatbox-suggest-book">
-              <span>📅</span> <strong>Book an Appointment</strong>
-            </button>
-            <button class="chatbox-suggestion-pill" id="chatbox-suggest-hours">
-              <span>🕒</span> <strong>What are your business hours?</strong>
-            </button>
-            <button class="chatbox-suggestion-pill" id="chatbox-suggest-services">
-              <span>💬</span> <strong>What services do you offer?</strong>
-            </button>
-          </div>
+          ${getSuggestionsHTML()}
         </div>
         <button id="chatbox-scroll-latest">
           <span>New messages</span>
@@ -768,35 +808,54 @@
       }
     });
 
-    // Suggested Questions
-    const suggestBookBtn = document.getElementById('chatbox-suggest-book');
-    if (suggestBookBtn) {
-      suggestBookBtn.onclick = () => {
-        removeSuggestions();
-        appendMessage('user', 'I want to book an appointment');
-        appendBookingWidget();
-      };
-    }
-    
-    const suggestHoursBtn = document.getElementById('chatbox-suggest-hours');
-    if (suggestHoursBtn) {
-      suggestHoursBtn.onclick = () => {
-        removeSuggestions();
-        input.value = 'What are your business hours?';
-        input.dispatchEvent(new Event('input'));
-        handleSend();
-      };
+    function connectSuggestionsListeners() {
+      const suggestBookBtn = document.getElementById('chatbox-suggest-book');
+      if (suggestBookBtn) {
+        suggestBookBtn.onclick = () => {
+          removeSuggestions();
+          appendMessage('user', 'I want to book an appointment');
+          appendBookingWidget();
+        };
+      }
+      const suggestLeadBtn = document.getElementById('chatbox-suggest-lead');
+      if (suggestLeadBtn) {
+        suggestLeadBtn.onclick = () => {
+          removeSuggestions();
+          input.value = 'I want to leave my contact details / get in touch';
+          input.dispatchEvent(new Event('input'));
+          handleSend();
+        };
+      }
+      const suggestHoursBtn = document.getElementById('chatbox-suggest-hours');
+      if (suggestHoursBtn) {
+        suggestHoursBtn.onclick = () => {
+          removeSuggestions();
+          input.value = 'What are your business working hours?';
+          input.dispatchEvent(new Event('input'));
+          handleSend();
+        };
+      }
+      const suggestServicesBtn = document.getElementById('chatbox-suggest-services');
+      if (suggestServicesBtn) {
+        suggestServicesBtn.onclick = () => {
+          removeSuggestions();
+          input.value = 'What services do you offer?';
+          input.dispatchEvent(new Event('input'));
+          handleSend();
+        };
+      }
+      const suggestPricingBtn = document.getElementById('chatbox-suggest-pricing');
+      if (suggestPricingBtn) {
+        suggestPricingBtn.onclick = () => {
+          removeSuggestions();
+          input.value = 'What are your pricing plans?';
+          input.dispatchEvent(new Event('input'));
+          handleSend();
+        };
+      }
     }
 
-    const suggestServicesBtn = document.getElementById('chatbox-suggest-services');
-    if (suggestServicesBtn) {
-      suggestServicesBtn.onclick = () => {
-        removeSuggestions();
-        input.value = 'What services do you offer?';
-        input.dispatchEvent(new Event('input'));
-        handleSend();
-      };
-    }
+    connectSuggestionsListeners();
 
     function removeSuggestions() {
       const suggestions = document.getElementById('chatbox-welcome-suggestions');
@@ -859,37 +918,10 @@
             ${avatarImg.replace('chatbox-avatar', 'chatbox-message-avatar')}
             <div class="chatbox-message">${welcomeMessage}</div>
           </div>
-          <div class="chatbox-suggestions-container" id="chatbox-welcome-suggestions">
-            <button class="chatbox-suggestion-pill" id="chatbox-suggest-book">
-              <span>📅</span> <strong>Book an Appointment</strong>
-            </button>
-            <button class="chatbox-suggestion-pill" id="chatbox-suggest-hours">
-              <span>🕒</span> <strong>What are your business hours?</strong>
-            </button>
-            <button class="chatbox-suggestion-pill" id="chatbox-suggest-services">
-              <span>💬</span> <strong>What services do you offer?</strong>
-            </button>
-          </div>
+          ${getSuggestionsHTML()}
         `;
         
-        // Reconnect suggesters
-        document.getElementById('chatbox-suggest-book').onclick = () => {
-          removeSuggestions();
-          appendMessage('user', 'I want to book an appointment');
-          appendBookingWidget();
-        };
-        document.getElementById('chatbox-suggest-hours').onclick = () => {
-          removeSuggestions();
-          input.value = 'What are your business hours?';
-          input.dispatchEvent(new Event('input'));
-          handleSend();
-        };
-        document.getElementById('chatbox-suggest-services').onclick = () => {
-          removeSuggestions();
-          input.value = 'What services do you offer?';
-          input.dispatchEvent(new Event('input'));
-          handleSend();
-        };
+        connectSuggestionsListeners();
       }
       
       windowDiv.classList.remove('active');

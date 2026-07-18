@@ -5,6 +5,12 @@ import { generateChatResponseStream } from '@/lib/ai';
 
 const searchCache = new Map<string, string>();
 
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
 function isGreeting(message: string): boolean {
   const normalized = message.trim().toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "");
   const greetings = ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening'];
@@ -51,12 +57,20 @@ function hasBookingIntent(message: string): boolean {
   return triggers.some(keyword => normalized.includes(keyword));
 }
 
+export async function OPTIONS() {
+  const response = new NextResponse(null, { status: 204 });
+  response.headers.set('Access-Control-Allow-Origin', '*');
+  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+  return response;
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const agentId = searchParams.get('agentId');
 
   if (!agentId) {
-    return NextResponse.json({ error: 'agentId is required' }, { status: 400 });
+    return NextResponse.json({ error: 'agentId is required' }, { status: 400, headers: corsHeaders });
   }
 
   const conversations = await prisma.conversation.findMany({
@@ -69,7 +83,7 @@ export async function GET(request: Request) {
     orderBy: { createdAt: 'desc' },
   });
 
-  return NextResponse.json(conversations);
+  return NextResponse.json(conversations, { headers: corsHeaders });
 }
 
 export async function POST(request: Request) {
@@ -78,7 +92,7 @@ export async function POST(request: Request) {
     const { agentId, visitorId, message, conversationId, meta } = await request.json();
 
     if (!agentId || !message) {
-      return NextResponse.json({ error: 'agentId and message are required' }, { status: 400 });
+      return NextResponse.json({ error: 'agentId and message are required' }, { status: 400, headers: corsHeaders });
     }
 
     let targetAgentId = agentId;
@@ -96,7 +110,7 @@ export async function POST(request: Request) {
     });
 
     if (!agent) {
-      return NextResponse.json({ error: 'Agent not found' }, { status: 404 });
+      return NextResponse.json({ error: 'Agent not found' }, { status: 404, headers: corsHeaders });
     }
 
     // 1. Find or create conversation
@@ -151,7 +165,12 @@ export async function POST(request: Request) {
           controller.close();
         }
       });
-      return new Response(stream, { headers: { 'Content-Type': 'text/event-stream' } });
+      return new Response(stream, { 
+        headers: { 
+          'Content-Type': 'text/event-stream',
+          ...corsHeaders
+        } 
+      });
     }
 
     // 3. Greetings Detection
@@ -174,7 +193,12 @@ export async function POST(request: Request) {
           controller.close();
         }
       });
-      return new Response(stream, { headers: { 'Content-Type': 'text/event-stream' } });
+      return new Response(stream, { 
+        headers: { 
+          'Content-Type': 'text/event-stream',
+          ...corsHeaders
+        } 
+      });
     }
 
     // 4. Small Talk Detection
@@ -197,7 +221,12 @@ export async function POST(request: Request) {
           controller.close();
         }
       });
-      return new Response(stream, { headers: { 'Content-Type': 'text/event-stream' } });
+      return new Response(stream, { 
+        headers: { 
+          'Content-Type': 'text/event-stream',
+          ...corsHeaders
+        } 
+      });
     }
 
     // 5. Cache Lookup
@@ -221,7 +250,12 @@ export async function POST(request: Request) {
           controller.close();
         }
       });
-      return new Response(stream, { headers: { 'Content-Type': 'text/event-stream' } });
+      return new Response(stream, { 
+        headers: { 
+          'Content-Type': 'text/event-stream',
+          ...corsHeaders
+        } 
+      });
     }
 
     // 6. Perform manual RAG vector lookup (Up to 10 chunks)
@@ -360,11 +394,12 @@ Token Estimate: ~${Math.round((message.length + fullReply.length) / 4)}
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
         'Connection': 'keep-alive',
+        ...corsHeaders,
       },
     });
 
   } catch (error: any) {
     console.error("Internal Route Error in /api/chat:", error);
-    return NextResponse.json({ error: 'Internal server error handling message' }, { status: 500 });
+    return NextResponse.json({ error: 'Internal server error handling message' }, { status: 500, headers: corsHeaders });
   }
 }

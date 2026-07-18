@@ -26,9 +26,15 @@ export async function GET(request: Request) {
         orderBy: { createdAt: 'asc' }
       });
 
-      return NextResponse.json(services);
+      const response = NextResponse.json(services);
+      response.headers.set('Access-Control-Allow-Origin', '*');
+      response.headers.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
+      response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+      return response;
     } catch (err: any) {
-      return NextResponse.json({ error: err.message || 'Server error' }, { status: 500 });
+      const response = NextResponse.json({ error: err.message || 'Server error' }, { status: 500 });
+      response.headers.set('Access-Control-Allow-Origin', '*');
+      return response;
     }
   }
 
@@ -164,4 +170,12 @@ export async function DELETE(request: Request) {
   } catch (error: any) {
     return NextResponse.json({ error: error.message || 'Server error' }, { status: 500 });
   }
+}
+
+export async function OPTIONS() {
+  const response = new NextResponse(null, { status: 204 });
+  response.headers.set('Access-Control-Allow-Origin', '*');
+  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+  return response;
 }

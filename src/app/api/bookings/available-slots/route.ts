@@ -8,14 +8,30 @@ export async function GET(request: Request) {
   const date = searchParams.get('date'); // YYYY-MM-DD
 
   if (!agentId || !serviceId || !date) {
-    return NextResponse.json({ error: 'agentId, serviceId, and date are required' }, { status: 400 });
+    const errorResponse = NextResponse.json({ error: 'agentId, serviceId, and date are required' }, { status: 400 });
+    errorResponse.headers.set('Access-Control-Allow-Origin', '*');
+    return errorResponse;
   }
 
   try {
     const slots = await getAvailableTimeSlots(agentId, serviceId, date);
-    return NextResponse.json(slots);
+    const response = NextResponse.json(slots);
+    response.headers.set('Access-Control-Allow-Origin', '*');
+    response.headers.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+    return response;
   } catch (err: any) {
     console.error('Error fetching slots:', err);
-    return NextResponse.json({ error: err.message || 'Internal server error' }, { status: 500 });
+    const errorResponse = NextResponse.json({ error: err.message || 'Internal server error' }, { status: 500 });
+    errorResponse.headers.set('Access-Control-Allow-Origin', '*');
+    return errorResponse;
   }
+}
+
+export async function OPTIONS() {
+  const response = new NextResponse(null, { status: 204 });
+  response.headers.set('Access-Control-Allow-Origin', '*');
+  response.headers.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+  return response;
 }

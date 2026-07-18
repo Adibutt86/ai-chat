@@ -213,7 +213,7 @@ export async function POST(request: Request) {
     }
 
     // Return confirmation
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       booking: {
         id: booking.id,
@@ -224,9 +224,15 @@ export async function POST(request: Request) {
         businessName: agent.organization.name,
       }
     });
+    response.headers.set('Access-Control-Allow-Origin', '*');
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PATCH, DELETE');
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+    return response;
   } catch (error: any) {
     console.error('Error creating booking:', error);
-    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
+    const errorResponse = NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
+    errorResponse.headers.set('Access-Control-Allow-Origin', '*');
+    return errorResponse;
   }
 }
 
@@ -305,4 +311,12 @@ export async function PATCH(request: Request) {
   } catch (error: any) {
     return NextResponse.json({ error: error.message || 'Server error' }, { status: 500 });
   }
+}
+
+export async function OPTIONS() {
+  const response = new NextResponse(null, { status: 204 });
+  response.headers.set('Access-Control-Allow-Origin', '*');
+  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PATCH, DELETE');
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+  return response;
 }

@@ -122,7 +122,7 @@ export async function* generateChatResponseStream(
   options?: { temperature?: number }
 ): AsyncGenerator<string, void, unknown> {
   const config = await getActiveProviderConfig();
-
+  const key = config.geminiKey || process.env.GEMINI_API_KEY || '';
   const isFakeGeminiKey = !key || key.includes('Fake') || key.includes('Placeholder') || key.length < 15;
 
   // Fallback if no context was retrieved

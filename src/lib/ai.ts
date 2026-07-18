@@ -42,7 +42,7 @@ export async function getEmbedding(text: string): Promise<number[]> {
     }
 
     const key = config.geminiKey || process.env.GEMINI_API_KEY || '';
-    const isFakeKey = !key || key.includes('Fake') || key === 'AIzaSyFakeKeyPlaceholder' || !key.startsWith('AIzaSy');
+    const isFakeKey = !key || key.includes('Fake') || key.includes('Placeholder') || key.length < 15;
 
     if (isFakeKey) {
       // Quick, high-fidelity reproducible local pseudo-embedding to prevent slow timeout errors
@@ -123,8 +123,7 @@ export async function* generateChatResponseStream(
 ): AsyncGenerator<string, void, unknown> {
   const config = await getActiveProviderConfig();
 
-  const key = config.geminiKey || process.env.GEMINI_API_KEY || '';
-  const isFakeGeminiKey = !key || key.includes('Fake') || key === 'AIzaSyFakeKeyPlaceholder' || !key.startsWith('AIzaSy');
+  const isFakeGeminiKey = !key || key.includes('Fake') || key.includes('Placeholder') || key.length < 15;
 
   // Fallback if no context was retrieved
   if (!context || context.trim().length < 5) {

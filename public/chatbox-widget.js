@@ -504,6 +504,10 @@
       }
 
       /* Booking Wizard Card design updates */
+      .chatbox-message-row.booking-wizard-container {
+        max-width: 100% !important;
+        width: 100% !important;
+      }
       .booking-wizard {
         background: #ffffff;
         border: 1px solid #e2e8f0;
@@ -513,7 +517,7 @@
         font-size: 13px;
         color: #334155;
         width: 100%;
-        max-width: 290px;
+        max-width: 100%;
         box-sizing: border-box;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
       }

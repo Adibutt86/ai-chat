@@ -270,7 +270,7 @@ export async function POST(request: Request) {
     let hoursContext = '';
     if (businessHoursList.length > 0) {
       const tz = businessHoursList[0].timezone;
-      hoursContext = `Our official Business Working Hours (Timezone: ${tz}):\n`;
+      hoursContext = `Our Business Hours (Timezone: ${tz}):\n`;
       const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       const sortedHoursList = [...businessHoursList].sort((a, b) => {
         const dayA = a.dayOfWeek === 0 ? 7 : a.dayOfWeek;
@@ -286,7 +286,7 @@ export async function POST(request: Request) {
         }
       });
     } else {
-      hoursContext = `Our official Business Working Hours: Monday to Friday from 09:00 to 17:00 (UTC). Weekends are Closed.`;
+      hoursContext = `Our Business Hours: Monday to Friday from 09:00 to 17:00 (UTC). Weekends are Closed.`;
     }
 
     // Fetch and inject services context dynamically

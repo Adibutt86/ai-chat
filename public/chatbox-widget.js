@@ -913,6 +913,44 @@
 
     function formatMessageText(text) {
       if (!text) return '';
+
+      // Check if the response contains Business Working Hours
+      if (text.includes('Business Working Hours') || text.includes('Business Hours') || text.includes('Working Hours')) {
+        const lines = text.split('\n');
+        let headerText = '';
+        let hoursHtml = '<div style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px; width: 100%; min-width: 220px; max-width: 280px; font-size: 12px; background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.06); padding: 12px; border-radius: 12px; box-sizing: border-box; font-family: inherit;">';
+        let hasHours = false;
+
+        lines.forEach(line => {
+          // Matches format: "- Monday: 10:00 to 17:00" or "* **Monday**: 10:00 to 17:00" or "Monday: 10:00 to 17:00"
+          const match = line.match(/(?:-|\*|\s)*\s*(?:\*\*)?([a-zA-Z]+)(?:\*\*)?:\s*(.*)/);
+          if (match && ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].includes(match[1].toLowerCase())) {
+            hasHours = true;
+            const day = match[1];
+            const hours = match[2].trim();
+            const isClosed = hours.toLowerCase().includes('closed') || hours.toLowerCase().includes('unavailable');
+            
+            hoursHtml += `
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 4px; border-b: 1px dashed rgba(0,0,0,0.05); width: 100%;">
+                <span style="font-weight: 600; color: #475569;">${day}</span>
+                <span style="font-weight: 600; color: ${isClosed ? '#ef4444' : '#10b981'}; background: ${isClosed ? 'rgba(239, 68, 68, 0.08)' : 'rgba(16, 185, 129, 0.08)'}; padding: 3px 8px; border-radius: 20px; font-size: 11px;">
+                  ${hours}
+                </span>
+              </div>
+            `;
+          } else if (line.trim()) {
+            // Keep header information clean
+            const cleanLine = line.replace(/(?:-|\*|\s)*\s*(?:\*\*)?/g, '').trim();
+            headerText += (headerText ? '<br/>' : '') + cleanLine;
+          }
+        });
+        hoursHtml += '</div>';
+
+        if (hasHours) {
+          return `<div style="font-weight: 500; margin-bottom: 6px;">${headerText}</div>${hoursHtml}`;
+        }
+      }
+
       let escaped = text
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")

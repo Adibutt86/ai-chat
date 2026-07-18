@@ -215,6 +215,14 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ success: true, message: 'Activity logs reset' });
     }
 
+    if (action === 'clear-cache') {
+      await prisma.manualKnowledge.deleteMany({ where: { agentId } });
+      await prisma.website.deleteMany({ where: { agentId } });
+      await prisma.document.deleteMany({ where: { agentId } });
+      await prisma.training.deleteMany({ where: { agentId } });
+      return NextResponse.json({ success: true, message: 'Agent knowledge base cache completely wiped.' });
+    }
+
     if (action === 'stop') {
       // Mark all 'running' training tasks as failed
       await prisma.training.updateMany({

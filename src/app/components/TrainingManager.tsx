@@ -58,6 +58,7 @@ export default function TrainingManager({ agentId }: TrainingManagerProps) {
   // Action loading states
   const [stopping, setStopping] = useState(false);
   const [resetting, setResetting] = useState(false);
+  const [clearingCache, setClearingCache] = useState(false);
 
   const fetchLogs = async () => {
     try {
@@ -258,6 +259,30 @@ export default function TrainingManager({ agentId }: TrainingManagerProps) {
       console.error(err);
     } finally {
       setResetting(false);
+    }
+  };
+
+  const handleClearCache = async () => {
+    if (!confirm('WARNING: Are you sure you want to WIPE the entire knowledge base for this agent? This will permanently delete all crawled pages, text records, manual files, FAQ documents, and vector search embeddings. This action CANNOT be undone.')) return;
+    if (!confirm('Please confirm once more. Do you want to completely clear the cache and start fresh?')) return;
+    
+    setClearingCache(true);
+    try {
+      const res = await fetch(`/api/training?agentId=${agentId}&action=clear-cache`, {
+        method: 'DELETE'
+      });
+      if (res.ok) {
+        fetchLogs();
+        fetchDocuments();
+        alert('Knowledge base cache has been completely cleared. Your agent is now empty.');
+      } else {
+        const data = await res.json();
+        alert(data.error || 'Failed to clear knowledge base cache');
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setClearingCache(false);
     }
   };
 
@@ -567,6 +592,14 @@ export default function TrainingManager({ agentId }: TrainingManagerProps) {
                 title="Clear training activity log history"
               >
                 {resetting ? 'Resetting...' : 'Reset'}
+              </button>
+              <button
+                onClick={handleClearCache}
+                disabled={clearingCache}
+                className="bg-white hover:bg-red-50 text-red-650 border border-red-200 hover:border-red-300 px-2 py-1 rounded-lg text-[10px] font-bold transition cursor-pointer"
+                title="Wipe entire agent knowledge base and vector embeddings"
+              >
+                {clearingCache ? 'Clearing...' : 'Clear Cache'}
               </button>
             </div>
           </div>

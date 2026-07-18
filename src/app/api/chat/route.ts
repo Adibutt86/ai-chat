@@ -331,7 +331,7 @@ Rules:
             context,
             history,
             message,
-            { temperature: agent.temperature }
+            { temperature: agent.temperature, model: agent.model }
           )) {
             fullReply += chunk;
             controller.enqueue(encoder.encode(JSON.stringify({ chunk }) + '\n'));

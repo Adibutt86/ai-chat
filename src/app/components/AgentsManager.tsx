@@ -241,6 +241,7 @@ export default function AgentsManager({
                   >
                     <option value="gemini-2.5-flash">Gemini 2.5 Flash (Recommended)</option>
                     <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
+                    <option value="meta-llama/llama-3.1-8b-instruct:free">Llama 3.1 8B (OpenRouter Free)</option>
                   </select>
                 </div>
                 <div>

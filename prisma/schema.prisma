@@ -242,10 +242,11 @@ model APIKey {
 
 model GlobalSettings {
   id               String   @id @default("global-config")
-  activeProvider   String   @default("gemini") // gemini, openai, claude
+  activeProvider   String   @default("gemini") // gemini, openai, claude, openrouter
   geminiKey        String   @default("")
   openaiKey        String   @default("")
   claudeKey        String   @default("")
+  openrouterKey    String   @default("")
   updatedAt        DateTime @updatedAt
 }
 

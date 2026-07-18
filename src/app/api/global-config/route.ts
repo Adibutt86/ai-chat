@@ -16,6 +16,7 @@ export async function GET(request: Request) {
     geminiKey: '',
     openaiKey: '',
     claudeKey: '',
+    openrouterKey: '',
   });
 }
 
@@ -24,7 +25,7 @@ export async function POST(request: Request) {
   if (!session || session.role !== 'admin') return authError();
 
   try {
-    const { activeProvider, geminiKey, openaiKey, claudeKey } = await request.json();
+    const { activeProvider, geminiKey, openaiKey, claudeKey, openrouterKey } = await request.json();
 
     const config = await prisma.globalSettings.upsert({
       where: { id: 'global-config' },
@@ -33,6 +34,7 @@ export async function POST(request: Request) {
         geminiKey,
         openaiKey,
         claudeKey,
+        openrouterKey,
       },
       create: {
         id: 'global-config',
@@ -40,6 +42,7 @@ export async function POST(request: Request) {
         geminiKey: geminiKey || '',
         openaiKey: openaiKey || '',
         claudeKey: claudeKey || '',
+        openrouterKey: openrouterKey || '',
       },
     });
 

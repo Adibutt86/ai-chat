@@ -14,6 +14,7 @@ async function getActiveProviderConfig() {
       geminiKey: process.env.GEMINI_API_KEY || 'AIzaSyFakeKeyPlaceholder',
       openaiKey: '',
       claudeKey: '',
+      openrouterKey: '',
     };
   } catch {
     return {
@@ -21,6 +22,7 @@ async function getActiveProviderConfig() {
       geminiKey: process.env.GEMINI_API_KEY || 'AIzaSyFakeKeyPlaceholder',
       openaiKey: '',
       claudeKey: '',
+      openrouterKey: '',
     };
   }
 }
@@ -119,7 +121,7 @@ export async function* generateChatResponseStream(
   context: string,
   history: { sender: string; content: string }[],
   latestMessage: string,
-  options?: { temperature?: number }
+  options?: { temperature?: number; model?: string }
 ): AsyncGenerator<string, void, unknown> {
   const config = await getActiveProviderConfig();
   const key = config.geminiKey || process.env.GEMINI_API_KEY || '';
@@ -133,6 +135,74 @@ export async function* generateChatResponseStream(
       await new Promise(r => setTimeout(r, 40));
     }
     return;
+  }
+
+  // OpenRouter Integration
+  if (config.activeProvider === 'openrouter') {
+    try {
+      const openrouterApiKey = config.openrouterKey || process.env.OPENROUTER_API_KEY || '';
+      const openrouterUrl = 'https://openrouter.ai/api/v1/chat/completions';
+      
+      const response = await fetch(openrouterUrl, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${openrouterApiKey}`,
+          'Content-Type': 'application/json',
+          'HTTP-Referer': 'https://chatbox-ai.com',
+          'X-Title': 'ChatBox AI',
+        },
+        body: JSON.stringify({
+          model: options?.model || 'meta-llama/llama-3.1-8b-instruct:free',
+          messages: [
+            { role: 'system', content: `${systemPrompt}\n\nContext:\n${context}` },
+            ...history.map(h => ({ role: h.sender === 'visitor' ? 'user' : 'assistant', content: h.content })),
+            { role: 'user', content: latestMessage }
+          ],
+          temperature: options?.temperature ?? 0.7,
+          stream: true
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`OpenRouter API error: ${response.statusText}`);
+      }
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+
+      if (reader) {
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+
+          for (const line of lines) {
+            const cleanLine = line.trim();
+            if (!cleanLine || cleanLine === 'data: [DONE]') continue;
+            if (cleanLine.startsWith('data: ')) {
+              try {
+                const parsed = JSON.parse(cleanLine.substring(6));
+                const text = parsed.choices[0]?.delta?.content || '';
+                if (text) {
+                  yield text;
+                }
+              } catch (e) {
+                // Ignore parse errors
+              }
+            }
+          }
+        }
+      }
+      return;
+    } catch (openrouterErr) {
+      console.error('Error in OpenRouter API stream:', openrouterErr);
+      const fallback = simulateLocalAIResponse(context, latestMessage);
+      yield fallback;
+      return;
+    }
   }
 
   if (config.activeProvider === 'gemini' && isFakeGeminiKey) {
@@ -215,7 +285,7 @@ export async function generateChatResponse(
   context: string,
   history: { sender: string; content: string }[],
   latestMessage: string,
-  options?: { temperature?: number }
+  options?: { temperature?: number; model?: string }
 ): Promise<string> {
   let response = '';
   for await (const chunk of generateChatResponseStream(systemPrompt, context, history, latestMessage, options)) {

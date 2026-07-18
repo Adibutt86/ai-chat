@@ -307,17 +307,11 @@
       #chatbox-sticky-suggestions {
         background-color: #ffffff;
         border-bottom: 1px solid #f1f5f9;
-        padding: 8px 12px;
+        padding: 10px 14px;
         display: flex;
-        gap: 8px;
-        overflow-x: auto;
-        white-space: nowrap;
+        flex-wrap: wrap;
+        gap: 6px;
         flex-shrink: 0;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-      }
-      #chatbox-sticky-suggestions::-webkit-scrollbar {
-        display: none;
       }
       
       .chatbox-suggestion-pill {
@@ -337,6 +331,13 @@
         box-shadow: 0 1px 2px rgba(0,0,0,0.02);
         flex-shrink: 0;
         margin: 0 !important;
+      }
+      .chatbox-suggestion-pill img.emoji {
+        width: 14px !important;
+        height: 14px !important;
+        margin: 0 !important;
+        display: inline-block !important;
+        vertical-align: middle !important;
       }
       .chatbox-suggestion-pill:hover {
         background-color: ${primaryColor};

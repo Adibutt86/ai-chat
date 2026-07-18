@@ -103,3 +103,80 @@ section.pricing.section {
     padding-top: 25px;
     font-weight: 600;
 }
+
+/* Global dashboard dark mode utility overrides */
+.dark {
+  background-color: #141920 !important;
+}
+
+.dark .bg-white {
+  background-color: #1B2129 !important;
+}
+
+.dark .text-zinc-900,
+.dark .text-zinc-800,
+.dark .text-zinc-750,
+.dark .text-zinc-700,
+.dark .text-black,
+.dark select,
+.dark input:not([type="checkbox"]):not([type="radio"]),
+.dark textarea {
+  color: #f4f4f5 !important; /* text-zinc-100 */
+}
+
+.dark .text-zinc-600,
+.dark .text-zinc-550,
+.dark .text-zinc-500 {
+  color: #a1a1aa !important; /* text-zinc-400 */
+}
+
+.dark .border-zinc-200,
+.dark .border-zinc-250,
+.dark .border-zinc-300,
+.dark .border-zinc-350,
+.dark .border-zinc-150,
+.dark .border-zinc-100 {
+  border-color: #27272a !important; /* border-zinc-800 */
+}
+
+.dark select,
+.dark input:not([type="color"]):not([type="checkbox"]):not([type="radio"]),
+.dark textarea {
+  background-color: #141920 !important;
+  border-color: #27272a !important;
+}
+
+.dark select option {
+  background-color: #1B2129 !important;
+  color: #ffffff !important;
+}
+
+.dark .hover\:bg-zinc-50:hover,
+.dark .hover\:bg-zinc-100:hover,
+.dark .hover\:bg-zinc-200\/50:hover {
+  background-color: #27272a !important;
+  color: #ffffff !important;
+}
+
+.dark .bg-zinc-200 {
+  background-color: #27272a !important;
+  color: #f4f4f5 !important;
+}
+
+.dark .bg-zinc-50 {
+  background-color: #141920 !important;
+}
+
+.dark .divide-zinc-150 > * + *,
+.dark .divide-zinc-200 > * + * {
+  border-color: #27272a !important;
+}
+
+.dark .shadow-sm {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5) !important;
+}
+
+.dark .bg-zinc-900\/50 {
+  background-color: rgba(27, 33, 41, 0.5) !important;
+}
+

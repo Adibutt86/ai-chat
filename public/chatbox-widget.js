@@ -330,7 +330,7 @@
         gap: 6px;
         box-shadow: 0 1px 2px rgba(0,0,0,0.02);
         flex-shrink: 0;
-        margin: 0 !important;
+        margin: 0 0 5px 0 !important;
       }
       .chatbox-suggestion-pill img.emoji {
         width: 14px !important;

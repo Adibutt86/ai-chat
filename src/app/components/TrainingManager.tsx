@@ -278,6 +278,43 @@ export default function TrainingManager({ agentId }: TrainingManagerProps) {
     }
   };
 
+  const handleDeleteLog = async (logId: string) => {
+    try {
+      const res = await fetch(`/api/training?agentId=${agentId}&logId=${logId}`, {
+        method: 'DELETE'
+      });
+      if (res.ok) {
+        fetchLogs();
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleResetDoc = async (doc: any) => {
+    if (!confirm(`Are you sure you want to reset and re-index "${doc.name}"? This will delete previous vector chunks and trigger a new embedding index process.`)) return;
+    try {
+      const res = await fetch(`/api/training/documents`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          docId: doc.id,
+          name: doc.name,
+          content: doc.content
+        })
+      });
+      if (res.ok) {
+        fetchDocuments();
+        fetchLogs();
+      } else {
+        const data = await res.json();
+        alert(data.error || 'Failed to reset document');
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleOpenEditDoc = (doc: DocumentRecord) => {
     setSelectedDoc(doc);
     setEditName(doc.name);
@@ -539,7 +576,7 @@ export default function TrainingManager({ agentId }: TrainingManagerProps) {
               <p className="text-xs text-zinc-550 italic text-center py-8">No training events logged yet.</p>
             ) : (
               logs.map((log) => (
-                <div key={log.id} className="p-3 bg-zinc-50 border border-zinc-200 rounded-lg flex items-start gap-3">
+                <div key={log.id} className="p-3 bg-zinc-50 border border-zinc-200 rounded-lg flex items-start gap-3 group relative">
                   {log.status === 'completed' && <Check className="h-4 w-4 text-emerald-600 mt-0.5" />}
                   {log.status === 'running' && <Loader2 className="h-4 w-4 text-blue-600 animate-spin mt-0.5" />}
                   {log.status === 'failed' && <AlertTriangle className="h-4 w-4 text-red-650 mt-0.5" />}
@@ -549,6 +586,13 @@ export default function TrainingManager({ agentId }: TrainingManagerProps) {
                     </p>
                     <p className="text-[10px] text-zinc-550 mt-0.5">{log.message}</p>
                   </div>
+                  <button
+                    onClick={() => handleDeleteLog(log.id)}
+                    className="opacity-0 group-hover:opacity-100 p-1 text-zinc-400 hover:text-red-500 rounded transition cursor-pointer"
+                    title="Delete Log Entry"
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </button>
                 </div>
               ))
             )}
@@ -614,6 +658,13 @@ export default function TrainingManager({ agentId }: TrainingManagerProps) {
                     </td>
                     <td className="p-3 text-right">
                       <div className="flex gap-2 justify-end">
+                        <button
+                          onClick={() => handleResetDoc(doc)}
+                          className="p-1.5 hover:bg-zinc-100 text-zinc-500 hover:text-zinc-900 rounded-lg transition cursor-pointer"
+                          title="Reset & Re-index Document"
+                        >
+                          <RefreshCw className="h-4 w-4" />
+                        </button>
                         <button
                           onClick={() => handleOpenEditDoc(doc)}
                           className="p-1.5 hover:bg-zinc-100 text-zinc-500 hover:text-zinc-900 rounded-lg transition cursor-pointer"

@@ -200,6 +200,14 @@ export async function DELETE(request: Request) {
   }
 
   try {
+    const logId = searchParams.get('logId');
+    if (logId) {
+      await prisma.training.delete({
+        where: { id: logId },
+      });
+      return NextResponse.json({ success: true, message: 'Log entry deleted' });
+    }
+
     if (action === 'reset') {
       await prisma.training.deleteMany({
         where: { agentId },

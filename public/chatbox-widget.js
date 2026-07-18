@@ -982,6 +982,7 @@
       if (text.includes('Business Working Hours') || text.includes('Business Hours') || text.includes('Working Hours')) {
         const lines = text.split('\n');
         let headerText = '';
+        let footerText = '';
         let hoursHtml = '<div style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px; width: 100%; min-width: 220px; max-width: 280px; font-size: 12px; background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.06); padding: 12px; border-radius: 12px; box-sizing: border-box; font-family: inherit;">';
         let hasHours = false;
 
@@ -1003,15 +1004,21 @@
               </div>
             `;
           } else if (line.trim()) {
-            // Keep header information clean
             const cleanLine = line.replace(/(?:-|\*|\s)*\s*(?:\*\*)?/g, '').trim();
-            headerText += (headerText ? '<br/>' : '') + cleanLine;
+            if (!hasHours) {
+              headerText += (headerText ? '<br/>' : '') + cleanLine;
+            } else {
+              // Exclude typical cart and shop navigation template lists
+              if (!cleanLine.includes('Cart') && !cleanLine.includes('Jeans') && !cleanLine.includes('WP DESGIN') && !cleanLine.includes('Close cart')) {
+                footerText += (footerText ? '<br/>' : '') + cleanLine;
+              }
+            }
           }
         });
         hoursHtml += '</div>';
 
         if (hasHours) {
-          return `<div style="font-weight: 500; margin-bottom: 6px;">${headerText}</div>${hoursHtml}`;
+          return `<div style="font-weight: 500; margin-bottom: 6px;">${headerText}</div>${hoursHtml}${footerText ? `<div style="margin-top: 10px; font-size: 12px; color: #64748b;">${footerText}</div>` : ''}`;
         }
       }
 

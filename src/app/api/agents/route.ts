@@ -64,6 +64,49 @@ export async function POST(request: Request) {
   }
 }
 
+export async function PUT(request: Request) {
+  const session = await getSessionUser(request);
+  if (!session) return authError();
+
+  try {
+    const { id, name, description, avatarUrl, themeColor, language, model, temperature, systemPrompt } = await request.json();
+
+    if (!id) {
+      return NextResponse.json({ error: 'id is required' }, { status: 400 });
+    }
+
+    // Ensure agent belongs to organization
+    const existingAgent = await prisma.agent.findFirst({
+      where: {
+        id,
+        organizationId: session.orgId,
+      },
+    });
+
+    if (!existingAgent) {
+      return NextResponse.json({ error: 'Agent not found or permission denied' }, { status: 404 });
+    }
+
+    const updatedAgent = await prisma.agent.update({
+      where: { id },
+      data: {
+        name: name !== undefined ? name : existingAgent.name,
+        description: description !== undefined ? description : existingAgent.description,
+        avatarUrl: avatarUrl !== undefined ? avatarUrl : existingAgent.avatarUrl,
+        themeColor: themeColor !== undefined ? themeColor : existingAgent.themeColor,
+        language: language !== undefined ? language : existingAgent.language,
+        model: model !== undefined ? model : existingAgent.model,
+        temperature: temperature !== undefined ? parseFloat(temperature) : existingAgent.temperature,
+        systemPrompt: systemPrompt !== undefined ? systemPrompt : existingAgent.systemPrompt,
+      },
+    });
+
+    return NextResponse.json(updatedAgent);
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message || 'Server error' }, { status: 500 });
+  }
+}
+
 export async function DELETE(request: Request) {
   const session = await getSessionUser(request);
   if (!session) return authError();

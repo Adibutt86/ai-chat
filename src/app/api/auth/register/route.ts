@@ -43,30 +43,30 @@ export async function POST(request: Request) {
       },
     });
 
-    // If websiteUrl is provided during signup, automatically provision a default chatbot agent and trigger web crawl indexing
-    if (websiteUrl) {
-      try {
-        const agent = await prisma.agent.create({
-          data: {
-            name: `${name}'s Chatbot`,
-            description: `Automated assistant for ${websiteUrl}`,
-            themeColor: '#2563eb',
-            language: 'en',
-            model: 'gemini-2.5-flash',
-            temperature: 0.7,
-            organizationId: org.id,
-          },
-        });
+    // Always provision a default chatbot agent for every user/org
+    try {
+      const agent = await prisma.agent.create({
+        data: {
+          name: `${name}'s Chatbot`,
+          description: websiteUrl ? `Automated assistant for ${websiteUrl}` : 'General customer support assistant',
+          themeColor: '#2563eb',
+          language: 'en',
+          model: 'gemini-2.5-flash',
+          temperature: 0.7,
+          organizationId: org.id,
+        },
+      });
 
-        // Create default widget settings
-        await prisma.widgetSettings.create({
-          data: {
-            agentId: agent.id,
-            primaryColor: agent.themeColor,
-            borderRadius: '0.75rem',
-          },
-        });
+      // Create default widget settings
+      await prisma.widgetSettings.create({
+        data: {
+          agentId: agent.id,
+          primaryColor: agent.themeColor,
+          borderRadius: '0.75rem',
+        },
+      });
 
+      if (websiteUrl) {
         // Add website record
         const website = await prisma.website.create({
           data: {
@@ -78,9 +78,9 @@ export async function POST(request: Request) {
 
         // Trigger crawler asynchronously
         crawlWebsite(agent.id, website.id, websiteUrl).catch(console.error);
-      } catch (agentErr) {
-        console.error('Failed to auto-create chatbot agent during registration:', agentErr);
       }
+    } catch (agentErr) {
+      console.error('Failed to auto-create chatbot agent during registration:', agentErr);
     }
 
     const token = generateToken({

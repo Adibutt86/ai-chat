@@ -129,6 +129,21 @@ export default function DashboardLayout() {
     }
   };
 
+  const handleUpdateAgent = async (agentData: any) => {
+    try {
+      const res = await fetch('/api/agents', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(agentData),
+      });
+      if (res.ok) {
+        await fetchAgents();
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleDeleteAgent = async (id: string) => {
     try {
       const res = await fetch(`/api/agents?agentId=${id}`, {
@@ -199,6 +214,7 @@ export default function DashboardLayout() {
             selectedAgentId={selectedAgentId}
             onSelectAgent={handleSelectAgent}
             onCreateAgent={handleCreateAgent}
+            onUpdateAgent={handleUpdateAgent}
             onDeleteAgent={handleDeleteAgent}
           />
         )}

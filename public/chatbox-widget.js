@@ -277,6 +277,8 @@
         align-self: flex-end;
         object-fit: cover;
         border: 1px solid #cbd5e1;
+        flex-shrink: 0;
+        display: block;
       }
       .chatbox-message {
         padding: 12px 16px;

@@ -147,9 +147,9 @@ export default function DashboardLayout() {
 
   if (loading || dataLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-zinc-50 text-zinc-500">
+      <div className="flex min-h-screen items-center justify-center bg-[#141920] text-zinc-400">
         <div className="text-center space-y-3">
-          <Loader2 className="h-8 w-8 animate-spin mx-auto text-blue-600" />
+          <Loader2 className="h-8 w-8 animate-spin mx-auto text-blue-500" />
           <p className="text-sm font-medium">Loading workspace console...</p>
         </div>
       </div>
@@ -160,7 +160,7 @@ export default function DashboardLayout() {
   const activeAgentName = activeAgent ? activeAgent.name : 'No Agent Selected';
 
   return (
-    <div className="flex h-screen bg-zinc-50 text-zinc-800 overflow-hidden">
+    <div className="dark flex h-screen bg-[#141920] text-zinc-100 overflow-hidden">
       {/* Sidebar Nav */}
       <Sidebar 
         currentTab={currentTab} 
@@ -169,7 +169,7 @@ export default function DashboardLayout() {
       />
 
       {/* Main Content Workspace */}
-      <main className="flex-1 overflow-y-auto p-8 bg-zinc-50">
+      <main className="flex-1 overflow-y-auto p-8 bg-[#141920]">
         {/* Workspace select header when agents exist */}
         {agents.length > 0 && (
           <div className="mb-6 flex justify-end gap-3 items-center text-xs">

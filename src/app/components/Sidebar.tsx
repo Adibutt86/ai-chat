@@ -42,21 +42,21 @@ export default function Sidebar({ currentTab, setCurrentTab, agentsCount }: Side
   ];
 
   return (
-    <aside className="w-64 border-r border-zinc-200 bg-white flex flex-col text-zinc-700">
+    <aside className="w-64 border-r border-zinc-800 bg-[#1B2129] flex flex-col text-zinc-300">
       {/* Brand Header */}
-      <div className="h-16 px-6 border-b border-zinc-200 flex items-center gap-2">
-        <Bot className="h-6 w-6 text-blue-600" />
-        <span className="font-bold text-zinc-900 text-lg tracking-tight">ChatBox AI</span>
+      <div className="h-16 px-6 border-b border-zinc-800 flex items-center gap-2">
+        <Bot className="h-6 w-6 text-blue-500" />
+        <span className="font-bold text-white text-lg tracking-tight">ChatBox AI</span>
       </div>
 
       {/* User Section */}
-      <div className="px-4 py-4 border-b border-zinc-200 flex items-center gap-3">
-        <div className="h-9 w-9 rounded-full bg-zinc-200 flex items-center justify-center border border-zinc-300 text-blue-600 font-semibold uppercase">
+      <div className="px-4 py-4 border-b border-zinc-800 flex items-center gap-3">
+        <div className="h-9 w-9 rounded-full bg-zinc-800 flex items-center justify-center border border-zinc-700 text-blue-400 font-semibold uppercase">
           {session?.email?.substring(0, 2) || 'US'}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-zinc-900 truncate">{session?.email?.split('@')[0] || 'User'}</p>
-          <p className="text-xs text-zinc-500 truncate">{session?.email || 'admin@chatbox.ai'}</p>
+          <p className="text-sm font-semibold text-white truncate">{session?.email?.split('@')[0] || 'User'}</p>
+          <p className="text-xs text-zinc-400 truncate">{session?.email || 'admin@chatbox.ai'}</p>
         </div>
       </div>
 
@@ -71,16 +71,16 @@ export default function Sidebar({ currentTab, setCurrentTab, agentsCount }: Side
               onClick={() => setCurrentTab(item.id)}
               className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition duration-150 cursor-pointer ${
                 isActive 
-                  ? 'bg-zinc-200 text-zinc-900 border-l-2 border-blue-600' 
-                  : 'text-zinc-550 hover:text-zinc-900 hover:bg-zinc-200/50'
+                  ? 'bg-zinc-800 text-white border-l-2 border-blue-500' 
+                  : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
               }`}
             >
               <div className="flex items-center gap-3">
-                <Icon className={`h-4 w-4 ${isActive ? 'text-blue-600' : 'text-zinc-400'}`} />
+                <Icon className={`h-4 w-4 ${isActive ? 'text-blue-400' : 'text-zinc-500'}`} />
                 <span>{item.name}</span>
               </div>
               {item.badge !== undefined && (
-                <span className="bg-zinc-200 text-xs px-2 py-0.5 rounded-full text-zinc-600 border border-zinc-350">
+                <span className="bg-zinc-800 text-xs px-2 py-0.5 rounded-full text-zinc-300 border border-zinc-750">
                   {item.badge}
                 </span>
               )}
@@ -90,10 +90,10 @@ export default function Sidebar({ currentTab, setCurrentTab, agentsCount }: Side
       </nav>
 
       {/* Logout Footer */}
-      <div className="p-4 border-t border-zinc-200">
+      <div className="p-4 border-t border-zinc-800">
         <button
           onClick={logout}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-600 hover:text-red-700 hover:bg-red-50 transition duration-150 cursor-pointer"
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-400 hover:text-red-500 hover:bg-red-950/30 transition duration-150 cursor-pointer"
         >
           <LogOut className="h-4 w-4" />
           <span>Sign Out</span>

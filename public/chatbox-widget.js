@@ -32,6 +32,10 @@
     });
 
   function buildWidget(config, origin) {
+    if (document.getElementById('chatbox-widget-container')) {
+      return;
+    }
+
     // 3. Inject global style definitions
     const style = document.createElement('style');
     const primaryColor = config.widgetSettings?.primaryColor || '#2563eb';
@@ -42,14 +46,7 @@
 
     style.innerHTML = `
       /* Strict style isolation: revert child tags to default agent styles, preventing host website leakage */
-      #chatbox-widget-container button,
-      #chatbox-widget-container textarea,
-      #chatbox-widget-container h4,
-      #chatbox-widget-container p,
-      #chatbox-widget-container span,
-      #chatbox-widget-container a,
-      #chatbox-widget-container svg,
-      #chatbox-widget-container div {
+      :where(#chatbox-widget-container) :where(button, textarea, h4, p, span, a, svg, div) {
         all: revert;
         box-sizing: border-box;
       }

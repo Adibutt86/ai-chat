@@ -41,6 +41,19 @@
     const position = config.widgetSettings?.position || 'bottom-right';
 
     style.innerHTML = `
+      /* Strict style isolation: revert child tags to default agent styles, preventing host website leakage */
+      #chatbox-widget-container button,
+      #chatbox-widget-container textarea,
+      #chatbox-widget-container h4,
+      #chatbox-widget-container p,
+      #chatbox-widget-container span,
+      #chatbox-widget-container a,
+      #chatbox-widget-container svg,
+      #chatbox-widget-container div {
+        all: revert;
+        box-sizing: border-box;
+      }
+
       #chatbox-widget-container {
         position: fixed;
         bottom: 24px;

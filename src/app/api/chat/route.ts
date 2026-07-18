@@ -289,7 +289,20 @@ export async function POST(request: Request) {
       hoursContext = `Our official Business Working Hours: Monday to Friday from 09:00 to 17:00 (UTC). Weekends are Closed.`;
     }
 
-    context = `${hoursContext}\n\n${context}`;
+    // Fetch and inject services context dynamically
+    const servicesList = await prisma.service.findMany({
+      where: { organizationId: agent.organizationId, isActive: true }
+    });
+    let servicesContext = '';
+    if (servicesList.length > 0) {
+      servicesContext = `Available Services for Booking:\n` + servicesList.map(s => 
+        `- ${s.name}: ${s.description || 'No description'} (Duration: ${s.durationMinutes} minutes, Price: ${s.price} ${s.currency})`
+      ).join('\n');
+    } else {
+      servicesContext = `No services are currently configured for booking.`;
+    }
+
+    context = `${hoursContext}\n\n${servicesContext}\n\n${context}`;
 
     // 7. Check for Buying Intent to trigger Lead Capture prompt
     const buyingIntentKeywords = ['price', 'buy', 'cost', 'quote', 'premium', 'demo', 'pricing', 'subscribe', 'sales'];

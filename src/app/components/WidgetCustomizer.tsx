@@ -22,6 +22,10 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
   const [showHours, setShowHours] = useState(false);
   const [showPricing, setShowPricing] = useState(false);
 
+  // Widget dimensions
+  const [width, setWidth] = useState('380px');
+  const [height, setHeight] = useState('600px');
+
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -43,6 +47,8 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
             setShowServices(data.showServices !== undefined ? data.showServices : false);
             setShowHours(data.showHours !== undefined ? data.showHours : false);
             setShowPricing(data.showPricing !== undefined ? data.showPricing : false);
+            setWidth(data.width || '380px');
+            setHeight(data.height || '600px');
           }
         }
       } catch (err) {
@@ -74,6 +80,8 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
           showServices,
           showHours,
           showPricing,
+          width,
+          height,
         }),
       });
 
@@ -169,6 +177,30 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
             </div>
           </div>
 
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Widget Width</label>
+              <input
+                type="text"
+                value={width}
+                onChange={(e) => setWidth(e.target.value)}
+                placeholder="e.g. 380px"
+                className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Widget Height</label>
+              <input
+                type="text"
+                value={height}
+                onChange={(e) => setHeight(e.target.value)}
+                placeholder="e.g. 600px"
+                className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white"
+              />
+            </div>
+          </div>
+
           <div>
             <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Welcome Text</label>
             <input
@@ -244,7 +276,7 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
                   onChange={(e) => setShowPricing(e.target.checked)}
                   className="rounded border-zinc-800 text-blue-600 focus:ring-blue-600 bg-zinc-950 h-4 w-4"
                 />
-                <span>💲 Pricing Plans</span>
+                <span><span>💲</span> Pricing Plans</span>
               </label>
             </div>
           </div>

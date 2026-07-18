@@ -39,6 +39,8 @@ export async function GET(request: Request) {
       showServices: false,
       showHours: false,
       showPricing: false,
+      width: '380px',
+      height: '600px',
     },
   });
 

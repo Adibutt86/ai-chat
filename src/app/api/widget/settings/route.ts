@@ -31,7 +31,9 @@ export async function POST(request: Request) {
       showLeadForm,
       showServices,
       showHours,
-      showPricing
+      showPricing,
+      width,
+      height
     } = await request.json();
 
     if (!agentId) {
@@ -53,6 +55,8 @@ export async function POST(request: Request) {
         showServices: showServices !== undefined ? showServices : false,
         showHours: showHours !== undefined ? showHours : false,
         showPricing: showPricing !== undefined ? showPricing : false,
+        width: width || '380px',
+        height: height || '600px',
       },
       create: {
         agentId,
@@ -68,6 +72,8 @@ export async function POST(request: Request) {
         showServices: showServices !== undefined ? showServices : false,
         showHours: showHours !== undefined ? showHours : false,
         showPricing: showPricing !== undefined ? showPricing : false,
+        width: width || '380px',
+        height: height || '600px',
       },
     });
 

@@ -138,8 +138,8 @@
         display: none;
         opacity: 0;
         transform: translateY(20px) scale(0.95);
-        width: 385px;
-        height: 590px;
+        width: ${config.widgetSettings?.width || '385px'};
+        height: ${config.widgetSettings?.height || '590px'};
         background: #ffffff;
         border: 1px solid #f1f5f9;
         border-radius: ${borderRadius};
@@ -245,6 +245,11 @@
         flex-direction: column;
         gap: 16px;
         scroll-behavior: smooth;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      #chatbox-body::-webkit-scrollbar {
+        display: none;
       }
       
       /* Messages Styles */
@@ -299,38 +304,52 @@
         border-bottom-right-radius: 4px;
       }
       
-      /* Suggestions Cards */
-      .chatbox-suggestions-container {
+      #chatbox-sticky-suggestions {
+        background-color: #ffffff;
+        border-bottom: 1px solid #f1f5f9;
+        padding: 8px 12px;
         display: flex;
-        flex-direction: column;
         gap: 8px;
-        margin-top: 8px;
-        width: 100%;
-        max-width: 280px;
-        animation: chatbox-message-in 0.3s forwards 0.1s;
-        opacity: 0;
+        overflow-x: auto;
+        white-space: nowrap;
+        flex-shrink: 0;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
       }
+      #chatbox-sticky-suggestions::-webkit-scrollbar {
+        display: none;
+      }
+      
       .chatbox-suggestion-pill {
         background-color: #ffffff;
         border: 1px solid #e2e8f0;
         color: #334155;
-        padding: 10px 14px;
-        border-radius: 12px;
-        font-size: 12.5px;
-        font-weight: 500;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
         text-align: left;
         cursor: pointer;
         transition: all 0.2s ease;
-        display: flex;
+        display: inline-flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
         box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        flex-shrink: 0;
+        margin: 0 !important;
       }
       .chatbox-suggestion-pill:hover {
-        background-color: #f1f5f9;
-        border-color: #cbd5e1;
-        transform: translateX(4px);
-        color: #0f172a;
+        background-color: ${primaryColor};
+        color: #ffffff !important;
+        border-color: ${primaryColor};
+      }
+      .chatbox-suggestion-pill:hover strong {
+        color: #ffffff !important;
+      }
+      .chatbox-suggestion-pill strong {
+        color: #334155;
+        font-weight: 600;
+        transition: color 0.2s;
       }
       
       /* Scrolling Helper */
@@ -742,20 +761,25 @@
             </div>
           </div>
           <div class="chatbox-header-actions">
+            <button class="chatbox-header-btn" id="chatbox-clear-btn" title="Clear Chat History" aria-label="Clear Chat History">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </button>
             <button class="chatbox-header-btn" id="chatbox-minimize-btn" title="Minimize Chat" aria-label="Minimize Chat">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             </button>
-            <button class="chatbox-header-btn" id="chatbox-close-x" title="Close & Reset" aria-label="Close & Reset Chat">
+            <button class="chatbox-header-btn" id="chatbox-close-x" title="Close Chat" aria-label="Close Chat">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
           </div>
+        </div>
+        <div id="chatbox-sticky-suggestions">
+          ${getSuggestionsHTML()}
         </div>
         <div id="chatbox-body" role="log">
           <div class="chatbox-message-row bot">
             ${avatarImg.replace('chatbox-avatar', 'chatbox-message-avatar')}
             <div class="chatbox-message">${welcomeMessage}</div>
           </div>
-          ${getSuggestionsHTML()}
         </div>
         <button id="chatbox-scroll-latest">
           <span>New messages</span>
@@ -858,10 +882,7 @@
     connectSuggestionsListeners();
 
     function removeSuggestions() {
-      const suggestions = document.getElementById('chatbox-welcome-suggestions');
-      if (suggestions) {
-        suggestions.style.display = 'none';
-      }
+      // Keep quick links sticky and permanently visible on top
     }
 
     let visitorId = localStorage.getItem('chatbox_visitor_id');
@@ -904,30 +925,36 @@
 
     minimizeBtn.onclick = toggleChat;
 
-    closeX.onclick = () => {
-      // Clear history on full reset close
-      if (confirm('Would you like to clear this conversation history?')) {
-        chatMessages = [];
-        localStorage.removeItem('chatbox_messages');
-        localStorage.removeItem('chatbox_conversation_id');
-        conversationId = null;
-        
-        // Restore body view
-        body.innerHTML = `
-          <div class="chatbox-message-row bot">
-            ${avatarImg.replace('chatbox-avatar', 'chatbox-message-avatar')}
-            <div class="chatbox-message">${welcomeMessage}</div>
-          </div>
-          ${getSuggestionsHTML()}
-        `;
-        
-        connectSuggestionsListeners();
-      }
-      
-      windowDiv.classList.remove('active');
-      launcher.classList.remove('open');
-      localStorage.setItem('chatbox_is_open', 'false');
-    };
+    closeX.onclick = toggleChat;
+
+    const clearBtn = document.getElementById('chatbox-clear-btn');
+    if (clearBtn) {
+      clearBtn.onclick = () => {
+        if (confirm('Would you like to clear this conversation history?')) {
+          chatMessages = [];
+          localStorage.removeItem('chatbox_messages');
+          localStorage.removeItem('chatbox_conversation_id');
+          conversationId = null;
+
+          // Clear chat bubble containers
+          body.innerHTML = `
+            <div class="chatbox-message-row bot">
+              ${avatarImg.replace('chatbox-avatar', 'chatbox-message-avatar')}
+              <div class="chatbox-message">${welcomeMessage}</div>
+            </div>
+          `;
+
+          // Re-render sticky horizontal suggestions bar
+          const stickySuggestions = document.getElementById('chatbox-sticky-suggestions');
+          if (stickySuggestions) {
+            stickySuggestions.innerHTML = getSuggestionsHTML();
+            connectSuggestionsListeners();
+          }
+          
+          scrollToBottom(true);
+        }
+      };
+    }
 
     // Restore Open State
     const chatboxIsOpen = localStorage.getItem('chatbox_is_open') === 'true';

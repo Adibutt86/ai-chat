@@ -212,6 +212,10 @@ model WidgetSettings {
   showHours      Boolean        @default(false)
   showPricing    Boolean        @default(false)
   
+  // Custom Sizing Options
+  width          String         @default("380px")
+  height         String         @default("600px")
+  
   agent          Agent          @relation(fields: [agentId], references: [id], onDelete: Cascade)
 }
 

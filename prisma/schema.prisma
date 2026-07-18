@@ -1,0 +1,330 @@
+// This is your Prisma schema file
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  directUrl  = env("DIRECT_URL")
+  extensions = [vector]
+}
+
+model User {
+  id            String          @id @default(cuid())
+  email         String          @unique
+  name          String?
+  passwordHash  String?
+  role          String          @default("user") // admin, user
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  memberships   Member[]
+  apiKeys       APIKey[]
+  subscriptions Subscription[]
+}
+
+model Organization {
+  id                  String               @id @default(cuid())
+  name                String
+  slug                String               @unique
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  members             Member[]
+  agents              Agent[]
+  usage               Usage[]
+  services            Service[]
+  businessHours       BusinessHours[]
+  bookings            Booking[]
+  calendarConnection  CalendarConnection?
+}
+
+model Member {
+  id             String       @id @default(cuid())
+  role           String       @default("member") // owner, admin, member
+  organizationId String
+  userId         String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, userId])
+}
+
+model Agent {
+  id             String         @id @default(cuid())
+  name           String
+  description    String?
+  avatarUrl      String?
+  themeColor     String         @default("#2563eb")
+  language       String         @default("en")
+  model          String         @default("gemini-2.5-flash")
+  temperature    Float          @default(0.7)
+  systemPrompt   String         @default("You are a helpful AI assistant. Answer questions based on the provided context. If the answer is not in the context, say 'I don't have enough information. Please contact support.'")
+  organizationId String
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  websites       Website[]
+  documents      Document[]
+  faqs           FAQ[]
+  trainingLogs   Training[]
+  conversations  Conversation[]
+  manualKnowledge ManualKnowledge[]
+  widgetSettings WidgetSettings?
+  bookings       Booking[]
+}
+
+model Website {
+  id             String         @id @default(cuid())
+  agentId        String
+  url            String
+  status         String         @default("pending") // pending, crawling, completed, failed
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  agent          Agent          @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  documents      Document[]
+}
+
+model Document {
+  id             String         @id @default(cuid())
+  agentId        String
+  websiteId      String?
+  name           String
+  type           String         @default("text") // website_page, pdf, docx, txt, md, csv
+  url            String?
+  content        String
+  status         String         @default("pending") // pending, indexing, completed, failed
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  agent          Agent          @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  website        Website?       @relation(fields: [websiteId], references: [id], onDelete: SetNull)
+  embeddings     Embedding[]
+}
+
+model Embedding {
+  id             String                       @id @default(cuid())
+  documentId     String
+  chunkContent   String
+  embedding      Unsupported("vector(768)")?
+  createdAt      DateTime                     @default(now())
+
+  document       Document                     @relation(fields: [documentId], references: [id], onDelete: Cascade)
+}
+
+model FAQ {
+  id             String         @id @default(cuid())
+  agentId        String
+  question       String
+  answer         String
+  category       String         @default("General")
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  agent          Agent          @relation(fields: [agentId], references: [id], onDelete: Cascade)
+}
+
+model ManualKnowledge {
+  id             String         @id @default(cuid())
+  agentId        String
+  title          String
+  content        String
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  agent          Agent          @relation(fields: [agentId], references: [id], onDelete: Cascade)
+}
+
+model Training {
+  id             String         @id @default(cuid())
+  agentId        String
+  sourceType     String         // website, file, faq, manual
+  sourceName     String
+  status         String         // completed, running, failed
+  message        String?
+  createdAt      DateTime       @default(now())
+
+  agent          Agent          @relation(fields: [agentId], references: [id], onDelete: Cascade)
+}
+
+model Conversation {
+  id             String         @id @default(cuid())
+  agentId        String
+  visitorId      String
+  country        String?        @default("Unknown")
+  browser        String?        @default("Unknown")
+  pageUrl        String?        @default("Unknown")
+  isResolved     Boolean        @default(false)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  agent          Agent          @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  messages       Message[]
+  leads          Lead[]
+}
+
+model Message {
+  id             String         @id @default(cuid())
+  conversationId String
+  sender         String         // user, visitor, system
+  content        String
+  createdAt      DateTime       @default(now())
+
+  conversation   Conversation   @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+}
+
+model Lead {
+  id             String         @id @default(cuid())
+  conversationId String?
+  agentId        String
+  name           String?
+  email          String
+  phone          String?
+  company        String?
+  createdAt      DateTime       @default(now())
+
+  conversation   Conversation?  @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+}
+
+model WidgetSettings {
+  id             String         @id @default(cuid())
+  agentId        String         @unique
+  primaryColor   String         @default("#2563eb")
+  secondaryColor String         @default("#1e40af")
+  borderRadius   String         @default("0.75rem")
+  position       String         @default("bottom-right") // bottom-right, bottom-left
+  welcomeMessage String         @default("Hi! How can I help you today?")
+  placeholder    String         @default("Type your message...")
+  logoUrl        String?
+  themeMode      String         @default("light") // light, dark, system
+  
+  agent          Agent          @relation(fields: [agentId], references: [id], onDelete: Cascade)
+}
+
+model Usage {
+  id             String         @id @default(cuid())
+  organizationId String
+  metric         String         // embedding_chunks, gemini_tokens, chat_messages, page_crawls
+  amount         Int            @default(0)
+  createdAt      DateTime       @default(now())
+
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}
+
+model Subscription {
+  id             String         @id @default(cuid())
+  userId         String
+  plan           String         @default("free") // free, pro, enterprise
+  status         String         @default("active") // active, canceled, unpaid
+  currentPeriodEnd DateTime?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model APIKey {
+  id             String         @id @default(cuid())
+  userId         String
+  key            String         @unique
+  name           String         @default("Default Key")
+  createdAt      DateTime       @default(now())
+
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model GlobalSettings {
+  id               String   @id @default("global-config")
+  activeProvider   String   @default("gemini") // gemini, openai, claude
+  geminiKey        String   @default("")
+  openaiKey        String   @default("")
+  claudeKey        String   @default("")
+  updatedAt        DateTime @updatedAt
+}
+
+model Service {
+  id              String       @id @default(cuid())
+  organizationId  String
+  name            String
+  description     String?
+  durationMinutes Int
+  price           Float
+  currency        String       @default("USD")
+  isActive        Boolean      @default(true)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  bookings        Booking[]
+
+  @@index([organizationId])
+}
+
+model BusinessHours {
+  id              String       @id @default(cuid())
+  organizationId  String
+  dayOfWeek       Int          // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+  isEnabled       Boolean      @default(true)
+  startTime       String       @default("09:00") // HH:mm
+  endTime         String       @default("17:00") // HH:mm
+  timezone        String       @default("UTC")
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, dayOfWeek])
+  @@index([organizationId])
+}
+
+model Booking {
+  id              String       @id @default(cuid())
+  organizationId  String
+  agentId         String
+  serviceId       String
+  customerName    String
+  customerEmail   String
+  customerPhone   String?
+  customerNotes   String?
+  bookingDate     DateTime
+  startTime       DateTime
+  endTime         DateTime
+  timezone        String       @default("UTC")
+  status          String       @default("confirmed") // pending, confirmed, cancelled, completed, no_show
+  googleEventId   String?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  agent           Agent        @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  service         Service      @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([agentId])
+  @@index([serviceId])
+  @@index([startTime])
+  @@index([status])
+}
+
+model CalendarConnection {
+  id              String       @id @default(cuid())
+  organizationId  String       @unique
+  provider        String       @default("google")
+  accessToken     String
+  refreshToken    String?
+  expiresAt       DateTime?
+  calendarId      String?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+}

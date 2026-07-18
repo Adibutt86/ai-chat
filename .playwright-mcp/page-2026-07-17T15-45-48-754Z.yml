@@ -1,0 +1,291 @@
+- generic [active] [ref=f2e1]:
+  - banner [ref=f2e2]:
+    - generic [ref=f2e3]:
+      - link "Sitech Sitech" [ref=f2e4] [cursor=pointer]:
+        - /url: /
+        - img "Sitech" [ref=f2e6]
+        - generic [ref=f2e7]: Sitech
+      - navigation [ref=f2e8]:
+        - list [ref=f2e9]:
+          - listitem [ref=f2e10]:
+            - link "Home " [ref=f2e11] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=f2e12]:
+                - text: Home
+                - generic [ref=f2e13]: 
+              - text: 
+          - listitem [ref=f2e14]:
+            - link "About" [ref=f2e15] [cursor=pointer]:
+              - /url: /about
+          - listitem [ref=f2e17]:
+            - link "Services " [ref=f2e18] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=f2e19]:
+                - text: Services
+                - generic [ref=f2e20]: 
+              - text: 
+          - listitem [ref=f2e21]:
+            - link "Prices" [ref=f2e22] [cursor=pointer]:
+              - /url: /prices
+          - listitem [ref=f2e24]:
+            - link "Pricing" [ref=f2e25] [cursor=pointer]:
+              - /url: /pricing
+          - listitem [ref=f2e27]:
+            - link "Dashboard" [ref=f2e28] [cursor=pointer]:
+              - /url: /dashboard
+          - listitem [ref=f2e30]:
+            - link "ChatBox AI Sandbox" [ref=f2e31] [cursor=pointer]:
+              - /url: /widget-sandbox?agentId=demo
+          - listitem [ref=f2e33]:
+            - link "WP Plugin" [ref=f2e34] [cursor=pointer]:
+              - /url: /wordpress
+          - listitem [ref=f2e36]:
+            - link "Contact" [ref=f2e37] [cursor=pointer]:
+              - /url: /contact
+          - listitem [ref=f2e39]:
+            - link "Get Started" [ref=f2e40] [cursor=pointer]:
+              - /url: /register
+            - link "Sign In" [ref=f2e41] [cursor=pointer]:
+              - /url: /login
+      - generic [ref=f2e42]:
+        - link "Sign In" [ref=f2e43] [cursor=pointer]:
+          - /url: /login
+        - link "Get Started" [ref=f2e44] [cursor=pointer]:
+          - /url: /register
+      - text: 
+  - main [ref=f2e45]:
+    - generic [ref=f2e46]:
+      - img "The Fastest Web Solutions" [ref=f2e48]
+      - generic [ref=f2e50]:
+        - generic [ref=f2e51]: The Fastest Web Solutions
+        - heading "The Fastest Web Solutions" [level=1] [ref=f2e52]
+        - paragraph [ref=f2e53]: Optimize and integrate your marketing stack. Get actionable insights on how to get more sales from your marketing budget.
+        - link "Try For Free" [ref=f2e54] [cursor=pointer]:
+          - /url: "#"
+    - generic [ref=f2e57]:
+      - img "Our Features and Services" [ref=f2e59]
+      - list [ref=f2e60]:
+        - listitem [ref=f2e61]:
+          - link " Data Analysis Phasellus fringilla tuc dignissim diam. Duis nec tempus ligula. Curabitur vel pretium. Vestibulum metus pur esta" [ref=f2e62] [cursor=pointer]:
+            - /url: /service
+            - generic [ref=f2e63]: 
+            - generic [ref=f2e64]: Data Analysis
+            - paragraph [ref=f2e65]: Phasellus fringilla tuc dignissim diam. Duis nec tempus ligula. Curabitur vel pretium. Vestibulum metus pur esta
+        - listitem [ref=f2e66]:
+          - link " Optimization Phasellus fringilla dignissim diam. Duis nec tempus ligula. Curabitur vel pretium. Vestibulum metus pur esta" [ref=f2e67] [cursor=pointer]:
+            - /url: /service
+            - generic [ref=f2e68]: 
+            - generic [ref=f2e69]: Optimization
+            - paragraph [ref=f2e70]: Phasellus fringilla dignissim diam. Duis nec tempus ligula. Curabitur vel pretium. Vestibulum metus pur esta
+        - listitem [ref=f2e71]:
+          - link " Content Track Phasellus fringilla tuc dignissim diam. Duis nec tempus ligula. Curabitur vel pretium. Vestibulum metus pur esta" [ref=f2e72] [cursor=pointer]:
+            - /url: /service
+            - generic [ref=f2e73]: 
+            - generic [ref=f2e74]: Content Track
+            - paragraph [ref=f2e75]: Phasellus fringilla tuc dignissim diam. Duis nec tempus ligula. Curabitur vel pretium. Vestibulum metus pur esta
+        - listitem [ref=f2e76]:
+          - link " Risk Manage Phasellus fringilla dignissim diam. Duis nec tempus ligula. Curabitur vel pretium. Vestibulum metus pur esta" [ref=f2e77] [cursor=pointer]:
+            - /url: /service
+            - generic [ref=f2e78]: 
+            - generic [ref=f2e79]: Risk Manage
+            - paragraph [ref=f2e80]: Phasellus fringilla dignissim diam. Duis nec tempus ligula. Curabitur vel pretium. Vestibulum metus pur esta
+    - generic [ref=f2e82]:
+      - generic [ref=f2e83]:
+        - generic [ref=f2e84]:
+          - generic [ref=f2e85]: The Right Digital Tools for Business
+          - heading "The Right Digital Tools for Business" [level=4] [ref=f2e86]
+        - paragraph [ref=f2e87]: Phasellus dapibus non sem sit amet dictum. Nunc non eros aliquam, vulputate lectus eget, cursus risus. Vestibulum nec erat et nunc eleifend finibus quis in nunc
+        - list [ref=f2e88]:
+          - listitem [ref=f2e89]:
+            - generic [ref=f2e90]: 
+            - generic [ref=f2e92]:
+              - heading "Detects your platform and makes installation on your websites a breeze" [level=6] [ref=f2e93]
+              - paragraph [ref=f2e94]: Phasellus dapibus non sem sit amet dictum. Nunc non eros aliquam, vulputate lectus eget, cursus risus. Vestibulum nec erat et nunc eleifend finibus quis in nunc
+          - listitem [ref=f2e95]:
+            - generic [ref=f2e96]: 
+            - generic [ref=f2e98]:
+              - heading "Advanced catalog of top analytics and marketing services to address your business needs" [level=6] [ref=f2e99]
+              - paragraph [ref=f2e100]: Vulputate lectus eget, cursus risus. Vestibulum nec erat et nunc eleifend finibus quis in nunc
+          - listitem [ref=f2e101]:
+            - generic [ref=f2e102]: 
+            - generic [ref=f2e104]:
+              - heading "More users from searches using smart algorithm ASO tools" [level=6] [ref=f2e105]
+              - paragraph [ref=f2e106]: Nunc non eros aliquam, vulputate lectus eget, cursus risus. Vestibulum nec erat et nunc eleifend finibus quis in nunc. Aliquam erat volutpat
+        - generic [ref=f2e107]:
+          - link "View Demo" [ref=f2e108] [cursor=pointer]:
+            - /url: "#"
+          - link "Free Trial" [ref=f2e109] [cursor=pointer]:
+            - /url: "#"
+      - generic [ref=f2e110]:
+        - img "The Right Digital Tools for Business" [ref=f2e111]
+        - img "The Right Digital Tools for Business" [ref=f2e112]
+    - generic [ref=f2e113]:
+      - generic [ref=f2e114]:
+        - generic [ref=f2e115]:
+          - img "Big Data Optimization" [ref=f2e116]
+          - img "Big Data Optimization" [ref=f2e117]
+        - generic [ref=f2e119]:
+          - img "Big Data Optimization" [ref=f2e120]
+          - img "Big Data Optimization" [ref=f2e121]
+          - img "Big Data Optimization" [ref=f2e122]
+      - generic [ref=f2e123]:
+        - heading "Big Data Optimization" [level=3] [ref=f2e124]
+        - generic [ref=f2e125]:
+          - generic [ref=f2e127]:
+            - img "Stats Chart" [ref=f2e130]
+            - img "Interface stats" [ref=f2e133]
+            - img "Cover page stats" [ref=f2e136]
+            - img "SaaS Metrics" [ref=f2e139]
+            - img "Big Data Metrics" [ref=f2e142]
+          - generic [ref=f2e143]:
+            - link "" [ref=f2e144] [cursor=pointer]:
+              - /url: "#"
+            - link "" [ref=f2e146] [cursor=pointer]:
+              - /url: "#"
+    - generic [ref=f2e150]:
+      - generic [ref=f2e152]:
+        - heading "How it works with your business " [level=4] [ref=f2e153] [cursor=pointer]:
+          - text: How it works with your business
+          - generic [ref=f2e154]: 
+        - generic [ref=f2e158]:
+          - paragraph [ref=f2e159]: Suspendisse hendrerit, augue accumsan dictum tincidunt, sem sapien lobortis nibh, vitae auctor mi tortor et ipsum. Duis vitae augue vitae mi suscipit rutrum vitae non eros.
+          - list [ref=f2e160]:
+            - listitem [ref=f2e161]:
+              - generic [ref=f2e162]: "01"
+              - generic [ref=f2e163]:
+                - heading "Choosing the optimal solution" [level=6] [ref=f2e164]
+                - paragraph [ref=f2e165]: Nullam elementum, magna at suscipit lobortis, dui nibh molestie enim, sed scelerisque ex odio sit amet purus. Pellentesque fermentum mauris eget ligula Praesent lacinia ligula nec ligula convallis. Duis sagittis suscipit risus vitae tincidunt
+            - listitem [ref=f2e166]:
+              - generic [ref=f2e167]: "02"
+              - generic [ref=f2e168]:
+                - heading "Big Data Discover, Elaborate, Optimization" [level=6] [ref=f2e169]
+                - paragraph [ref=f2e170]: Nullam elementum, magna at suscipit lobortis, dui nibh molestie enim, sed scelerisque ex odio sit amet purus. Pellentesque fermentum mauris eget ligula. Praesent lacinia ligula nec ligula convallis, eu facilisis nulla lobortis. Phasellus nec gravida elit
+            - listitem [ref=f2e171]:
+              - generic [ref=f2e172]: "03"
+              - generic [ref=f2e173]:
+                - heading "Support and Promote Services" [level=6] [ref=f2e174]
+                - paragraph [ref=f2e175]: Nullam elementum, magna at suscipit lobortis, dui nibh molestie enim, sed scelerisque ex odio sit amet purus. Pellentesque fermentum mauris eget ligula.Praesent lacinia ligula nec ligula convallis, eu facilisis nulla lobortis. Phasellus nec gravida elit. Duis sagittis suscipit risus vitae tincidunt lorem
+      - heading "All Services that we provide " [level=4] [ref=f2e178] [cursor=pointer]:
+        - text: All Services that we provide
+        - generic [ref=f2e179]: 
+      - heading "Advanced Solutions & Prices " [level=4] [ref=f2e183] [cursor=pointer]:
+        - text: Advanced Solutions & Prices
+        - generic [ref=f2e184]: 
+    - generic [ref=f2e186]:
+      - generic [ref=f2e187]:
+        - img "Join Us" [ref=f2e188]
+        - generic [ref=f2e189]:
+          - img "Join Us" [ref=f2e190]
+          - img "Join Us" [ref=f2e191]
+      - generic [ref=f2e192]:
+        - heading "Join 0+ growing businesses that use Sitech to drive Customer Experience" [level=3] [ref=f2e193]:
+          - text: Join
+          - generic [ref=f2e194]: 0+
+          - text: growing businesses that use Sitech to drive Customer Experience
+        - list [ref=f2e196]:
+          - listitem [ref=f2e197]:
+            - generic [ref=f2e198]: 
+            - text: No credit card required
+          - listitem [ref=f2e199]:
+            - generic [ref=f2e200]: 
+            - text: 14-day free trial
+          - listitem [ref=f2e201]:
+            - generic [ref=f2e202]: 
+            - text: Cancel Anytime
+        - link "Get Started Now" [ref=f2e203] [cursor=pointer]:
+          - /url: "#"
+    - generic [ref=f2e204]:
+      - generic [ref=f2e205]:
+        - heading "What Clients Say" [level=4] [ref=f2e206]
+        - generic [ref=f2e207]:
+          - link "" [ref=f2e208] [cursor=pointer]:
+            - /url: "#"
+          - link "" [ref=f2e210] [cursor=pointer]:
+            - /url: "#"
+        - generic [ref=f2e214]:
+          - generic [ref=f2e216]:
+            - text: “
+            - generic [ref=f2e217]:
+              - paragraph [ref=f2e218]: Praesent dignissim eros pharetra arcu semper, vel sagittis urna iaculis. Donec vel venenatis ante. Vivamus sit amet elit id risus semper feugiat. Aenean euismod orci sed felis laoreet, consectetur rutrum ipsum blandit
+              - heading "Simon T.Brown" [level=6] [ref=f2e219]
+              - text: CEO, “Cryptobase” company
+            - img "doge" [ref=f2e220]
+          - generic [ref=f2e222]:
+            - text: “
+            - generic [ref=f2e223]:
+              - paragraph [ref=f2e224]: Nunc sed mollis diam, in commodo velit. Sed ut tempus orci. Donec consectetur, urna non dapibus finibus, tellus dolor dignissim turpis, ut hendrerit dui felis non justo. Aliquam non dui erat. Nam risus.
+              - heading "Linda McDonald" [level=6] [ref=f2e225]
+              - text: CEO, Founder, “Innovation line” company
+            - img "doge" [ref=f2e226]
+          - generic [ref=f2e228]:
+            - text: “
+            - generic [ref=f2e229]:
+              - paragraph [ref=f2e230]: Praesent dignissim eros pharetra arcu semper, vel sagittis urna iaculis. Donec vel venenatis ante. Vivamus sit amet elit id risus semper feugiat. Aenean euismod orci sed felis laoreet, consectetur rutrum ipsum blandit
+              - heading "Cristian Rawnes" [level=6] [ref=f2e231]
+              - text: SMM Manager
+            - img "doge" [ref=f2e232]
+      - generic [ref=f2e234]:
+        - generic [ref=f2e235]: 
+        - list [ref=f2e237]:
+          - listitem [ref=f2e238]: 1000+ Partners,
+          - listitem [ref=f2e239]: 1700+ Investors,
+          - listitem [ref=f2e240]: 160+ Clients
+    - generic [ref=f2e245]:
+      - generic [ref=f2e246]:
+        - generic [ref=f2e247]:
+          - generic [ref=f2e248]: Ask us any
+          - heading "Ask us any" [level=4] [ref=f2e249]
+        - paragraph [ref=f2e250]: Suspendisse ligula magna, laoreet non egestas ac, lobortis at nulla. Suspendisse efficitur neque nec neque porttitor tincidunt. Donec iaculis lacus vitae velit finibus ullamcorper
+      - generic [ref=f2e251]:
+        - textbox "Name" [ref=f2e252] [cursor=pointer]
+        - textbox "E-mail" [ref=f2e253] [cursor=pointer]
+        - textbox "Type your message here…" [ref=f2e254] [cursor=pointer]
+        - button "Send" [ref=f2e255] [cursor=pointer]
+  - contentinfo [ref=f2e257]:
+    - generic [ref=f2e258]:
+      - generic [ref=f2e259]:
+        - link "Sitech Sitech" [ref=f2e260] [cursor=pointer]:
+          - /url: /
+          - img "Sitech" [ref=f2e262]
+          - generic [ref=f2e263]: Sitech
+        - list [ref=f2e264]:
+          - listitem [ref=f2e265]:
+            - link "About " [ref=f2e266] [cursor=pointer]:
+              - /url: /about
+              - text: About
+              - generic [ref=f2e267]: 
+          - listitem [ref=f2e268]:
+            - link "Services " [ref=f2e269] [cursor=pointer]:
+              - /url: /services
+              - text: Services
+              - generic [ref=f2e270]: 
+          - listitem [ref=f2e271]:
+            - link "Contact " [ref=f2e272] [cursor=pointer]:
+              - /url: /contact
+              - text: Contact
+              - generic [ref=f2e273]: 
+      - generic [ref=f2e274]:
+        - generic [ref=f2e275]:
+          - link "sitechcompany@email.com" [ref=f2e276] [cursor=pointer]:
+            - /url: mailto:sitechcompany@email.com
+          - link "+1 202 303 404" [ref=f2e277] [cursor=pointer]:
+            - /url: tel:+1202303404
+        - list [ref=f2e279]:
+          - listitem [ref=f2e280]:
+            - link "" [ref=f2e281] [cursor=pointer]:
+              - /url: https://facebook.com/
+          - listitem [ref=f2e283]:
+            - link "" [ref=f2e284] [cursor=pointer]:
+              - /url: https://instagram.com/
+          - listitem [ref=f2e286]:
+            - link "" [ref=f2e287] [cursor=pointer]:
+              - /url: https://twitter.com/
+          - listitem [ref=f2e289]:
+            - link "" [ref=f2e290] [cursor=pointer]:
+              - /url: https://youtube.com/
+          - listitem [ref=f2e292]:
+            - link "" [ref=f2e293] [cursor=pointer]:
+              - /url: https://linkedin.com/
+      - paragraph [ref=f2e295]: Copyright © 2026 Sitech by Merkulove
+    - text: 
+  - button "Open Next.js Dev Tools" [ref=f2e301] [cursor=pointer]

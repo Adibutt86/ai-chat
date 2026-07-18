@@ -1,0 +1,26 @@
+- generic [active] [ref=f22e1]:
+  - generic [ref=f22e3]:
+    - generic [ref=f22e4]:
+      - heading "ChatBox AI" [level=1] [ref=f22e5]
+      - paragraph [ref=f22e6]: Create your admin account to get started
+    - generic [ref=f22e7]:
+      - generic [ref=f22e8]:
+        - generic [ref=f22e9]: Your Name
+        - textbox "Hassan" [ref=f22e10]
+      - generic [ref=f22e11]:
+        - generic [ref=f22e12]: Email Address
+        - textbox "hassan@company.com" [ref=f22e13]
+      - generic [ref=f22e14]:
+        - generic [ref=f22e15]: Password
+        - textbox "••••••••" [ref=f22e16]
+      - generic [ref=f22e17]:
+        - generic [ref=f22e18]: Website URL (Optional - Auto-train Chatbot)
+        - textbox "https://mybusiness.com" [ref=f22e19]
+        - paragraph [ref=f22e20]: If set, we automatically create and crawl your site to train your chatbot agent.
+      - button "Create Account" [ref=f22e21]
+    - paragraph [ref=f22e22]:
+      - text: Already have an account?
+      - link "Sign In" [ref=f22e23] [cursor=pointer]:
+        - /url: /login
+  - button "Open Next.js Dev Tools" [ref=f22e29] [cursor=pointer]
+  - alert [ref=f22e33]

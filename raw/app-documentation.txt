@@ -1,0 +1,67 @@
+========================================================================
+                      CHATBOX AI USER & SERVICE GUIDE
+========================================================================
+
+------------------------------------------------------------------------
+1. PLATFORM OVERVIEW
+------------------------------------------------------------------------
+AICHAT is an all-in-one conversational AI platform designed to automate 
+customer engagement and booking scheduling. The system embeds a beautiful, 
+interactive chat bubble on your website, allowing visitors to get answers 
+to their questions and schedule appointments directly within the chat window.
+
+------------------------------------------------------------------------
+2. BUSINESS CHANNELS & SERVICE FEATURES
+------------------------------------------------------------------------
+- Core Capabilities: The AI assistant is active 24/7. It provides visitors 
+  with direct, friendly answers using knowledge crawled from your website, 
+  uploaded documents, or custom FAQ pairs.
+- Lead Capture System: When a visitor asks about pricing, quotes, or demo 
+  services, the chatbot automatically prompts them to capture their email, 
+  name, and contact information. Leads are saved instantly to the dashboard.
+- Interactive Scheduling: Visitors can view list pricing, select standard 
+  company services, and book open slots directly through the chat bubble.
+
+------------------------------------------------------------------------
+3. CALENDAR SYNCHRONIZATION & BOOKINGS
+------------------------------------------------------------------------
+- Real-Time Scheduling: The booking calendar is fully automated. When a 
+  customer selects a date and slot, it registers in the backend console.
+- Google Calendar Sync: If you connect your Google Calendar in your Settings, 
+  scheduled slots are pushed automatically to your personal Google Calendar.
+- Double-Booking Protection: The scheduling system automatically blocks out 
+  times when you are busy on your Google Calendar, preventing overlapping slots.
+- Status Controls: You can manage, confirm, complete, or cancel appointments 
+  directly from your dashboard. Cancelled bookings are deleted automatically 
+  from your connected Google Calendar.
+
+------------------------------------------------------------------------
+4. HOW TO CONNECT GOOGLE CALENDAR
+------------------------------------------------------------------------
+To connect your Google Calendar to the AICHAT system:
+1. Log in to your AICHAT dashboard console.
+2. Go to the Settings tab in the sidebar.
+3. Click the "Connect Google Calendar" button.
+4. Grant the requested permissions in the Google authorization window.
+5. Choose your preferred calendar from the dropdown selection list.
+6. Once linked, the system will sync your appointments and busy times.
+
+------------------------------------------------------------------------
+5. FREQUENTLY ASKED QUESTIONS (FAQs)
+------------------------------------------------------------------------
+- Question: How do I book an appointment with you?
+  Answer: You can book an appointment directly here in the chat! Just click the "Book an Appointment" button or type "I want to book an appointment" to choose a service, date, and time slot.
+
+- Question: What services do you offer?
+  Answer: We offer professional consultation services, custom AI agent setups, and website integrations. You can view all our current services and prices directly in the booking menu.
+
+- Question: How do I connect my Google Calendar?
+  Answer: Log in to your dashboard, go to the Settings tab, click "Connect Google Calendar", and grant the necessary permissions. Once connected, select your calendar from the dropdown list.
+
+- Question: Do you have a free plan?
+  Answer: Yes! We offer a free plan for developers and small websites that includes up to 15 chat requests per minute using the free tier.
+
+- Question: When are you open?
+  Answer: Our official working hours are Monday to Friday from 09:00 to 17:00 (UTC). We are closed on weekends.
+------------------------------------------------------------------------
+========================================================================

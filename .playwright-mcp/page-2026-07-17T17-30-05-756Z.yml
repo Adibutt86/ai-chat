@@ -1,0 +1,4 @@
+- generic [active] [ref=f25e1]:
+  - button "Open Next.js Dev Tools" [ref=f25e29] [cursor=pointer]
+  - alert [ref=f25e33]
+  - paragraph [ref=f25e43]: Loading workspace console...

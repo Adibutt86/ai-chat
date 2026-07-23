@@ -155,7 +155,7 @@ export default function Home() {
                   ⚡ Instant Embed
                 </span>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '14px', background: 'rgba(42, 42, 255, 0.1)', padding: '6px 12px', borderRadius: '20px', border: '1px solid rgba(42, 42, 255, 0.2)' }}>
-                  🤖 Powered by Gemini
+                  🤖 Powered by ChatBox AI
                 </span>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '14px', background: 'rgba(42, 42, 255, 0.1)', padding: '6px 12px', borderRadius: '20px', border: '1px solid rgba(42, 42, 255, 0.2)' }}>
                   🔌 WordPress Ready

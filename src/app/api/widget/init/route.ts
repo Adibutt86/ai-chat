@@ -20,12 +20,19 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Agent not found' }, { status: 404 });
   }
 
+  // Fetch global active provider setting
+  const globalConfig = await prisma.globalSettings.findUnique({
+    where: { id: 'global-config' },
+  });
+  const activeProvider = globalConfig?.activeProvider || 'gemini';
+
   // Set CORS headers so standard client web loaders can request embedding setup
   const response = NextResponse.json({
     id: agent.id,
     name: agent.name,
     avatarUrl: agent.avatarUrl,
     themeColor: agent.themeColor,
+    activeProvider,
     widgetSettings: agent.widgetSettings || {
       primaryColor: '#2563eb',
       secondaryColor: '#1e40af',

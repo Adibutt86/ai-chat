@@ -229,34 +229,7 @@ export async function POST(request: Request) {
       });
     }
 
-    // 5. Cache Lookup
-    const cacheKey = `${targetAgentId}:${message.trim().toLowerCase()}`;
-    if (searchCache.has(cacheKey)) {
-      const cachedResponse = searchCache.get(cacheKey)!;
-      const stream = new ReadableStream({
-        async start(controller) {
-          controller.enqueue(encoder.encode(JSON.stringify({ conversationId: conv.id }) + '\n'));
-          for (const word of cachedResponse.split(' ')) {
-            controller.enqueue(encoder.encode(JSON.stringify({ chunk: word + ' ' }) + '\n'));
-            await new Promise(r => setTimeout(r, 15));
-          }
-          await prisma.message.create({
-            data: {
-              conversationId: conv.id,
-              sender: 'user',
-              content: cachedResponse,
-            },
-          });
-          controller.close();
-        }
-      });
-      return new Response(stream, { 
-        headers: { 
-          'Content-Type': 'text/event-stream',
-          ...corsHeaders
-        } 
-      });
-    }
+    // 5. RAG Retrieval & Prompt Execution
 
     // 6. Perform manual RAG vector lookup (Up to 10 chunks)
     const matches = await searchRelevantChunks(targetAgentId, message, 10);
@@ -352,14 +325,24 @@ Rules:
             controller.enqueue(encoder.encode(JSON.stringify({ chunk }) + '\n'));
           }
 
-          // Cache completed response
-          searchCache.set(cacheKey, fullReply);
+          // Only attach source links for matches with strong similarity score (score >= 0.25)
+          const validMatches = matches.filter(m => m.url && m.score >= 0.25);
+          const sourceUrls = Array.from(new Set(validMatches.map(m => m.url as string)));
+
+          // Check if the AI's actual reply relies on retrieved context rather than fallback info
+          const isFallbackReply = fullReply.includes("couldn't find that information");
+          
+          if (sourceUrls.length > 0 && !isFallbackReply) {
+            const sourceLinksMarkdown = `\n\n📌 **Source:** ` + sourceUrls.map(url => `[${url}](${url})`).join(', ');
+            fullReply += sourceLinksMarkdown;
+            controller.enqueue(encoder.encode(JSON.stringify({ chunk: sourceLinksMarkdown }) + '\n'));
+          }
 
           // Save completed bot response to DB
           await prisma.message.create({
             data: {
               conversationId: conv.id,
-              sender: 'user',
+              sender: 'assistant',
               content: fullReply,
             },
           });

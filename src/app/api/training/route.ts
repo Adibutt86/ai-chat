@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getSessionUser, authError } from '@/lib/api-auth';
 import { prisma } from '@/lib/db';
 import { crawlWebsite, chunkText } from '@/lib/crawler';
-import { indexDocumentChunk } from '@/lib/vector';
+import { indexDocumentChunk, clearEmbeddingCache } from '@/lib/vector';
 
 export async function GET(request: Request) {
   const session = await getSessionUser(request);
@@ -216,6 +216,8 @@ export async function DELETE(request: Request) {
     }
 
     if (action === 'clear-cache') {
+      clearEmbeddingCache();
+      await prisma.embedding.deleteMany({});
       await prisma.manualKnowledge.deleteMany({ where: { agentId } });
       await prisma.website.deleteMany({ where: { agentId } });
       await prisma.document.deleteMany({ where: { agentId } });

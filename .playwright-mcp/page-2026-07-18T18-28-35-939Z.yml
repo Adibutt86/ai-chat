@@ -1,0 +1,14 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e3]:
+    - heading "ChatBox AI Sandbox" [level=1] [ref=f1e4]
+    - paragraph [ref=f1e5]: This simulates a customer's external website loading the script bundle.
+    - generic [ref=f1e6]:
+      - paragraph [ref=f1e7]: "Loaded script tag parameters:"
+      - paragraph [ref=f1e8]: <script
+      - paragraph [ref=f1e9]: src="http://localhost:3000/chatbox-widget.js"
+      - paragraph [ref=f1e10]: data-agent-id="cmrp7qyw60039uwy892sam3si"
+      - paragraph [ref=f1e11]: async>
+      - paragraph [ref=f1e12]: </script>
+    - paragraph [ref=f1e13]: Look at the bottom right/left corner of this browser window to test the floating chat bubble!
+  - button "Open Next.js Dev Tools" [ref=f1e19] [cursor=pointer]
+  - alert [ref=f1e23]

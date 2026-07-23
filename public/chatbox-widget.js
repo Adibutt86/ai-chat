@@ -230,20 +230,35 @@
         gap: 8px;
       }
       .chatbox-header-btn {
-        background: transparent;
-        border: none;
-        color: #64748b;
+        background: #f1f5f9;
+        border: 1px solid #cbd5e1;
+        color: #1e293b;
         padding: 6px;
+        width: 32px;
+        height: 32px;
         border-radius: 6px;
         cursor: pointer;
-        display: flex;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
-        transition: background-color 0.2s, color 0.2s;
+        transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+      }
+      .chatbox-header-btn svg {
+        display: block !important;
+        width: 16px !important;
+        height: 16px !important;
+        stroke: #1e293b !important;
+        color: #1e293b !important;
+        fill: none !important;
+        stroke-width: 2px !important;
       }
       .chatbox-header-btn:hover {
-        background-color: #f1f5f9;
-        color: #0f172a;
+        background-color: #e2e8f0;
+        border-color: #94a3b8;
+      }
+      .chatbox-header-btn:hover svg {
+        stroke: #0f172a !important;
+        color: #0f172a !important;
       }
       
       #chatbox-body {
@@ -810,7 +825,7 @@
             </button>
           </div>
           <div class="chatbox-branding">
-            Powered by <a href="#" target="_blank" rel="noopener">ChatBox AI</a>
+            Powered by <a href="#" target="_blank" rel="noopener">ChatBox AI</a> ${config.activeProvider ? `<span style="opacity:0.75; font-size:11px; margin-left:4px;">(${config.activeProvider.toUpperCase()})</span>` : ''}
           </div>
         </div>
       </div>
@@ -1039,7 +1054,13 @@
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
 
-      escaped = escaped.replace(/(https?:\/\/[^\s<]+)/g, `<a href="$1" target="_blank" style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">$1</a>`);
+      // Handle 📌 Source tags cleanly without duplicating 'Source:'
+      escaped = escaped.replace(/📌\s*(?:\*\*Source:\*\*|Source:)?\s*(.*)/g, `<div style="margin-top: 8px; font-size: 11px; color: #64748b; font-style: italic;">📌 <strong>Source:</strong> $1</div>`);
+      
+      // Convert markdown links [text](url) to html clickable links
+      escaped = escaped.replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, `<a href="$2" target="_blank" rel="noopener" style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">$1</a>`);
+      // Convert raw URLs
+      escaped = escaped.replace(/(^|[^"])((?:https?):\/\/[^\s<]+)/g, `$1<a href="$2" target="_blank" rel="noopener" style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">$2</a>`);
       escaped = escaped.replace(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g, `<a href="mailto:$1" style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">$1</a>`);
       escaped = escaped.replace(/(\+?[0-9]{1,3}[-.\s]?[0-9]{3}[-.\s]?[0-9]{3}[-.\s]?[0-9]{4})/g, `<a href="tel:$1" style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">$1</a>`);
       escaped = escaped.replace(/\n/g, '<br/>');

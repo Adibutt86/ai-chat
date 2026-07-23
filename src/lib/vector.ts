@@ -66,6 +66,10 @@ function cosineSimilarity(vecA: number[], vecB: number[]): number {
   return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
 }
 
+export function clearEmbeddingCache() {
+  embeddingCache.length = 0;
+}
+
 /**
  * Ensure database embeddings are loaded into the cache
  */
@@ -120,7 +124,7 @@ export async function searchRelevantChunks(
   agentId: string,
   query: string,
   limit = 10
-): Promise<{ chunkContent: string; score: number; documentId: string }[]> {
+): Promise<{ chunkContent: string; score: number; documentId: string; url?: string | null; name?: string | null }[]> {
   // Self-healing: automatically index any documents missing embeddings
   try {
     const emptyDocs = await prisma.document.findMany({
@@ -191,7 +195,7 @@ export async function searchRelevantChunks(
           score += 0.05;
         }
         
-        return { chunkContent: emb.chunkContent, score, documentId: emb.documentId };
+        return { chunkContent: emb.chunkContent, score, documentId: emb.documentId, url: emb.url || null, name: emb.name || null };
       });
     }
   } catch (err) {
@@ -241,7 +245,7 @@ export async function searchRelevantChunks(
           score += 0.05;
         }
         
-        return { chunkContent: emb.chunkContent, score, documentId: emb.documentId };
+        return { chunkContent: emb.chunkContent, score, documentId: emb.documentId, url: doc.url || null, name: doc.name || null };
       });
   }
 
@@ -269,7 +273,7 @@ export async function searchRelevantChunks(
       where: { agentId },
       take: 5,
     });
-    return textDocs.map(d => ({ chunkContent: d.content, score: 0.5, documentId: d.id }));
+    return textDocs.map(d => ({ chunkContent: d.content, score: 0.5, documentId: d.id, url: d.url || null, name: d.name || null }));
   }
 
   return finalMatches;

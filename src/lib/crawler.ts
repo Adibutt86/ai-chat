@@ -112,11 +112,9 @@ export async function crawlWebsite(
         },
       });
 
-      // Split into chunks and index embeddings
+      // Split into chunks and index embeddings in parallel for maximum performance
       const chunks = chunkText(cleanContent, 300);
-      for (const chunk of chunks) {
-        await indexDocumentChunk(doc.id, chunk);
-      }
+      await Promise.all(chunks.map(chunk => indexDocumentChunk(doc.id, chunk)));
 
       await prisma.document.update({
         where: { id: doc.id },

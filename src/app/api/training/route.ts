@@ -164,11 +164,9 @@ export async function PUT(request: Request) {
       },
     });
 
-    // Index embeddings chunks
+    // Index embeddings chunks concurrently for fast processing
     const chunks = chunkText(fileContent, 300);
-    for (const chunk of chunks) {
-      await indexDocumentChunk(doc.id, chunk);
-    }
+    await Promise.all(chunks.map(chunk => indexDocumentChunk(doc.id, chunk)));
 
     await prisma.training.create({
       data: {

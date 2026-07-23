@@ -107,6 +107,7 @@ export async function POST(request: Request) {
 
     const agent = await prisma.agent.findUnique({
       where: { id: targetAgentId },
+      include: { widgetSettings: true }
     });
 
     if (!agent) {
@@ -235,44 +236,58 @@ export async function POST(request: Request) {
     const matches = await searchRelevantChunks(targetAgentId, message, 10);
     let context = matches.map(m => m.chunkContent).join('\n\n');
 
-    // Fetch and inject business hours context
-    const businessHoursList = await prisma.businessHours.findMany({
-      where: { organizationId: agent.organizationId }
-    });
-    
+    // Fetch business hours context based on dashboard toggle
+    const showHours = agent.widgetSettings?.showHours ?? true;
     let hoursContext = '';
-    if (businessHoursList.length > 0) {
-      const tz = businessHoursList[0].timezone;
-      hoursContext = `Our Business Hours (Timezone: ${tz}):\n`;
-      const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      const sortedHoursList = [...businessHoursList].sort((a, b) => {
-        const dayA = a.dayOfWeek === 0 ? 7 : a.dayOfWeek;
-        const dayB = b.dayOfWeek === 0 ? 7 : b.dayOfWeek;
-        return dayA - dayB;
+    
+    if (showHours) {
+      // Enabled: Use custom dashboard configured Business Hours
+      const businessHoursList = await prisma.businessHours.findMany({
+        where: { organizationId: agent.organizationId }
       });
-      sortedHoursList.forEach(bh => {
-        const dayName = weekdays[bh.dayOfWeek];
-        if (bh.isEnabled) {
-          hoursContext += `- ${dayName}: ${bh.startTime} to ${bh.endTime}\n`;
-        } else {
-          hoursContext += `- ${dayName}: Closed / Unavailable\n`;
-        }
-      });
+      
+      if (businessHoursList.length > 0) {
+        const tz = businessHoursList[0].timezone;
+        hoursContext = `Our Business Working Hours (Timezone: ${tz}):\n`;
+        const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const sortedHoursList = [...businessHoursList].sort((a, b) => {
+          const dayA = a.dayOfWeek === 0 ? 7 : a.dayOfWeek;
+          const dayB = b.dayOfWeek === 0 ? 7 : b.dayOfWeek;
+          return dayA - dayB;
+        });
+        sortedHoursList.forEach(bh => {
+          const dayName = weekdays[bh.dayOfWeek];
+          if (bh.isEnabled) {
+            hoursContext += `- ${dayName}: ${bh.startTime} to ${bh.endTime}\n`;
+          } else {
+            hoursContext += `- ${dayName}: Closed / Unavailable\n`;
+          }
+        });
+      } else {
+        hoursContext = `Our Business Working Hours: Monday to Friday from 09:00 to 17:00 (UTC). Weekends are Closed.`;
+      }
     } else {
-      hoursContext = `Our Business Hours: Monday to Friday from 09:00 to 17:00 (UTC). Weekends are Closed.`;
+      // Disabled: Do not inject dashboard DB hours. The AI will rely strictly on crawled website content from RAG matches.
+      hoursContext = `Note: Use the crawled website content chunks to answer any questions about working hours or schedules.`;
     }
 
-    // Fetch and inject services context dynamically
-    const servicesList = await prisma.service.findMany({
-      where: { organizationId: agent.organizationId, isActive: true }
-    });
+    // Fetch and inject services context based on dashboard toggle
+    const showServices = agent.widgetSettings?.showServices ?? true;
     let servicesContext = '';
-    if (servicesList.length > 0) {
-      servicesContext = `Available Services for Booking:\n` + servicesList.map(s => 
-        `- ${s.name}: ${s.description || 'No description'} (Duration: ${s.durationMinutes} minutes, Price: ${s.price} ${s.currency})`
-      ).join('\n');
+    
+    if (showServices) {
+      const servicesList = await prisma.service.findMany({
+        where: { organizationId: agent.organizationId, isActive: true }
+      });
+      if (servicesList.length > 0) {
+        servicesContext = `Official Business Services (Configured in Dashboard):\n` + servicesList.map(s => 
+          `- ${s.name}: ${s.description || 'No description'} | Duration: ${s.durationMinutes} mins | Price: ${s.price} ${s.currency}`
+        ).join('\n');
+      } else {
+        servicesContext = `No active services configured in dashboard.`;
+      }
     } else {
-      servicesContext = `No services are currently configured for booking.`;
+      servicesContext = `Note: Use the crawled website content chunks to answer any questions about services or offerings.`;
     }
 
     context = `${hoursContext}\n\n${servicesContext}\n\n${context}`;
@@ -289,9 +304,8 @@ Your job is to answer visitors' questions using the provided website content and
 Rules:
 - Be friendly and conversational.
 - Keep responses concise and easy to understand.
-- Use the provided business working hours list to accurately answer any questions regarding opening hours, working days, timezone, or schedules.
-- To answer questions about business hours or schedules, list the days and times exactly as shown in the "Our official Business Working Hours" context block. Do not include website menus, shopping cart links, or layout text.
-- If services are listed in the "Available Services for Booking" context, you MUST use ONLY those services to answer questions about what services, products, or offerings are available. Completely ignore any conflicting services, offerings, or lorem-ipsum placeholder texts found in the raw crawled website content.
+- To answer questions about business working hours or schedules, list ONLY the clean working days and times from the context. Never output, append, or dump unrelated website boilerplate, lorem ipsum text, plugin features, or menu links.
+- When answering questions about available services, list ONLY the clean service name, description, duration, and price from the "Official Business Services" context. NEVER append, dump, or output raw scraped website HTML, lorem ipsum placeholder text, navigation menus, or contact footers.
 - Only answer the specific question asked. Do not append unrelated website descriptions, plugin download promotions, or general marketing slogans unless directly relevant.
 - Do not output, prepend, or reference unrelated questions, FAQ headers, or headings (such as "Question: what is day today") when replying. Output only the actual answer to the current question.
 - Never make up facts.

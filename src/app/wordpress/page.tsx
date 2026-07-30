@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Script from 'next/script';
 import Link from 'next/link';
 import Header from '@/app/components/Header';
+import Preloader from '@/app/components/Preloader';
 
 export default function WordpressPluginPage() {
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -28,6 +29,7 @@ export default function WordpressPluginPage() {
 
   return (
     <>
+      <Preloader />
       <link rel="stylesheet" href="/css/preload.min.css" />
       <link rel="stylesheet" href="/css/icomoon.css" />
       <link rel="stylesheet" href="/css/libs.min.css" />

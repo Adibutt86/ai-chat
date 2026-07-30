@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Header from '@/app/components/Header';
+import Preloader from '@/app/components/Preloader';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { motion } from 'framer-motion';
@@ -119,6 +120,7 @@ export default function Home() {
 
   return (
     <>
+      <Preloader />
       {/* Stylesheets loaded via HTML head for page-specific scope */}
       <link rel="stylesheet" href="/css/preload.min.css" />
       <link rel="stylesheet" href="/css/icomoon.css" />

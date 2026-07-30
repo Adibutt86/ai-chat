@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Script from 'next/script';
 import Link from 'next/link';
 import Header from '@/app/components/Header';
+import Preloader from '@/app/components/Preloader';
+import PartnerTicker from '@/app/components/PartnerTicker';
 
 export default function PricesPage() {
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -28,6 +30,7 @@ export default function PricesPage() {
 
   return (
     <>
+      <Preloader />
       <link rel="stylesheet" href="/css/preload.min.css" />
       <link rel="stylesheet" href="/css/icomoon.css" />
       <link rel="stylesheet" href="/css/libs.min.css" />
@@ -324,11 +327,8 @@ export default function PricesPage() {
                 <li>160+ Clients</li>
               </ul>
             </div>
-            <div className="ticker h3" id="ticker">
-              <span className="ticker-item mx-4">FRD Company</span>
-              <span className="ticker-item mx-4">Cryptochain</span>
-              <span className="ticker-item mx-4">SMMHelper</span>
-              <span className="ticker-item mx-4">Basic Data</span>
+            <div className="py-4 overflow-hidden w-100">
+              <PartnerTicker />
             </div>
           </div>
 

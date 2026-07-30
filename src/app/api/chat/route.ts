@@ -433,8 +433,16 @@ STRICT ANSWERING RULES:
           const validSourcesMap = new Map<string, string>();
           matches.forEach(m => {
             if (m.name || m.url) {
-              const label = m.name || 'Website Page';
               const link = m.url || '#';
+              const linkLower = link.toLowerCase();
+              const labelLower = (m.name || '').toLowerCase();
+              
+              // Skip CSS, JS, feed, or plugin asset sources
+              if (linkLower.includes('.css') || linkLower.includes('.js') || linkLower.includes('/feed') || linkLower.includes('wp-content/plugins') || labelLower.includes('.css')) {
+                return;
+              }
+
+              const label = m.name || 'Website Page';
               if (!validSourcesMap.has(label)) {
                 validSourcesMap.set(label, link);
               }

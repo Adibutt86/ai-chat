@@ -73,8 +73,13 @@ function extractInternalLinks(html: string, baseUrlStr: string): string[] {
         continue;
       }
 
-      // Ignore static assets
-      if (/\.(png|jpg|jpeg|gif|svg|ico|css|js|pdf|zip|tar|gz)$/i.test(rawHref)) {
+      // Ignore static assets, CSS, JS, feeds, and WP plugin files
+      if (/\.(png|jpg|jpeg|gif|svg|ico|css|js|pdf|zip|tar|gz|xml|json|woff|ttf)$/i.test(rawHref) ||
+          rawHref.toLowerCase().includes('/wp-content/plugins/') ||
+          rawHref.toLowerCase().includes('/wp-content/themes/') ||
+          rawHref.toLowerCase().includes('/wp-includes/') ||
+          rawHref.toLowerCase().includes('/feed') ||
+          rawHref.toLowerCase().includes('/wp-json')) {
         continue;
       }
 

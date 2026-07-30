@@ -58,6 +58,16 @@ function simulateLocalAIResponse(context: string, message: string): string {
   const query = message.toLowerCase();
   const normQuery = query.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "").trim();
 
+  if (normQuery.includes('pepper') || normQuery.includes('pepper the robot') || normQuery.includes('what is pepper')) {
+    return "🤖 **Pepper The Robot**\n\n" +
+      "Pepper is a friendly, humanoid robot designed by Nebula Creative to connect with people, assist customers, and enhance the physical store experience:\n\n" +
+      "• 💬 **Engaging & Friendly**: Greets visitors the moment they walk in, makes personalized product recommendations, and interacts with customers.\n" +
+      "• 🗺️ **Wayfinding & Directions**: Answers customer questions, provides navigation assistance, and displays promotional offers.\n" +
+      "• 🎮 **Interactive Features**: Entertains guests with games, dancing, jokes, and selfie poses.\n" +
+      "• 📊 **Customer Insights**: Gathers audience preferences and data during conversations to help businesses better understand their shoppers.\n" +
+      "• ⚡ **Automation**: Takes on routine, repetitive tasks so your human team can focus on high-value customer service.";
+  }
+
   if (normQuery.includes('customize widget') || normQuery.includes('model settings') || normQuery.includes('customize model') || normQuery.includes('how to customize') || normQuery.includes('widget settings')) {
     return "⚙️ **How to Customize Widget & Model Settings**\n\n" +
       "You can fully customize your chatbot widget and AI model from your Dashboard:\n\n" +

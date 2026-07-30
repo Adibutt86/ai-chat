@@ -114,6 +114,10 @@ export async function ensureEmbeddingCache(agentId: string) {
  */
 function isBoilerplate(content: string): boolean {
   const lower = content.toLowerCase();
+  // Filter out CSS stylesheets, code blocks, or RSS feeds
+  if (lower.includes('.wc-block') || lower.includes('@media') || lower.includes('display:none') || lower.includes('background:') || lower.includes('!important') || lower.includes('{margin:') || lower.includes('{padding:')) {
+    return true;
+  }
   // Check for common navigation chains in headers/footers
   if (lower.includes('home about services prices') || lower.includes('sign in get started') || lower.includes('wp plugin contact') || lower.includes('aichat home home') || lower.includes('solutions for your business get free consultation')) {
     return true;
@@ -294,6 +298,13 @@ export async function searchRelevantChunks(
         return { chunkContent: emb.chunkContent, score, documentId: emb.documentId, url: doc.url || null, name: doc.name || null };
       });
   }
+
+  // Exclude CSS, JS, feed, or plugin asset documents from search matches
+  rawMatches = rawMatches.filter(m => {
+    const urlL = (m.url || '').toLowerCase();
+    const nameL = (m.name || '').toLowerCase();
+    return !urlL.includes('.css') && !urlL.includes('.js') && !urlL.includes('/feed') && !urlL.includes('wp-content/plugins') && !nameL.includes('.css');
+  });
 
   // Rank by similarity score
   const sortedMatches = rawMatches.sort((a, b) => b.score - a.score);

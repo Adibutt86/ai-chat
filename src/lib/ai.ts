@@ -56,56 +56,57 @@ function simulateLocalAIResponse(context: string, message: string): string {
   }
 
   const query = message.toLowerCase();
+  const normQuery = query.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "").trim();
+
+  if (normQuery.includes('contact') || normQuery.includes('reach') || normQuery.includes('support') || normQuery.includes('email') || context.includes('Official Business Contact Information')) {
+    return "📬 **Get in Touch with Support**\n\n" +
+      "• ✉️ **Email Support**: support@chatboxai.com\n" +
+      "• 🌐 **Contact Form**: Fill out the help form on our Contact Page (/contact)\n" +
+      "• ⚡ **Response Time**: Our team responds within 24 hours.";
+  }
 
   if (query.includes('services') || query.includes('service') || query.includes('what do you offer') || query.includes('what do you provide')) {
     if (context.includes('Official Business Services')) {
       const servicesPart = context.split('Official Business Services')[1]?.split('\n\n')[0] || '';
       if (servicesPart.trim()) {
-        return `### 🛠️ **Official Business Services**\n\n${servicesPart.trim()}`;
+        return `🛠️ **Official Business Services**\n\n${servicesPart.trim()}`;
       }
     }
-    // If services toggle is disabled in widget settings, fall through to website content RAG search!
   }
 
   // Handle specific plan queries with targeted, natural responses
   if (query.includes('working hours') || query.includes('business hours') || query.includes('opening hours') || query.includes('working hour')) {
-    return "### 🕒 **Official Business Working Hours**\n\n" +
-      "> **Timezone:** `UTC`\n\n" +
-      "* 🟢 **Monday – Friday:** `09:00 AM – 05:00 PM`\n" +
-      "* 🔴 **Saturday & Sunday:** `Closed / Unavailable`";
+    return "🕒 **Official Business Working Hours (UTC)**\n\n" +
+      "• 🟢 **Monday – Friday:** 09:00 AM – 05:00 PM\n" +
+      "• 🔴 **Saturday & Sunday:** Closed / Unavailable";
   }
 
-  if (query.includes('pricing plans') || query.includes('pricing plan') || query.includes('what are your pricing') || query.includes('what are your plans') || (query.includes('pricing') && query.includes('plan'))) {
-    return "### 💳 **ChatBox AI Flexible Pricing Plans**\n\n" +
-      "⚡ **1. Starter Plan** — **`$19.00`** / mo\n" +
-      "> *Ideal for small websites, blogs, or testing out ChatBox AI features.*\n" +
-      "* 🤖 **1 Active Chatbot Agent**\n" +
-      "* 💬 **1,000 Messages** per month\n" +
-      "* 🌐 Website URL & Sitemap Crawler\n" +
-      "* 🎨 Custom Widget Styling & Branding\n\n" +
-      "🚀 **2. Professional Plan** — **`$49.00`** / mo *(Most Popular)*\n" +
-      "> *Best option for scaling companies and online stores.*\n" +
-      "* 🤖 **5 Active Chatbot Agents**\n" +
-      "* 💬 **10,000 Messages** per month\n" +
-      "* 📄 PDF & Document Uploads\n" +
-      "* 📊 Lead Capture & Analytics\n\n" +
-      "🏢 **3. Enterprise Plan** — **`$149.00`** / mo\n" +
-      "> *Full infrastructure support for growing businesses.*\n" +
-      "* 🤖 **Unlimited Chatbot Agents**\n" +
-      "* 💬 **Unlimited Messages** per month\n" +
-      "* 🗄️ Dedicated Database & Custom Domain Embeds\n" +
-      "* 📞 24/7 Priority Phone & Zoom Support";
+  if (query.includes('base model') || query.includes('pricing plans') || query.includes('pricing plan') || query.includes('what are your pricing') || query.includes('what are your plans') || (query.includes('pricing') && query.includes('plan'))) {
+    return "💳 **ChatBox AI Pricing Plans**\n\n" +
+      "⚡ **1. Starter Plan** — **$19.00 / month**\n" +
+      "• 🤖 1 Active Chatbot Agent\n" +
+      "• 💬 1,000 Messages per month\n" +
+      "• 🌐 Website URL & Sitemap Crawler\n" +
+      "• 🎨 Custom Widget Styling & Branding\n\n" +
+      "🚀 **2. Professional Plan** — **$49.00 / month** (Most Popular)\n" +
+      "• 🤖 5 Active Chatbot Agents\n" +
+      "• 💬 10,000 Messages per month\n" +
+      "• 📄 PDF & Document Uploads\n" +
+      "• 📊 Lead Capture & Analytics\n\n" +
+      "🏢 **3. Enterprise Plan** — **$149.00 / month**\n" +
+      "• 🤖 Unlimited Chatbot Agents\n" +
+      "• 💬 Unlimited Messages per month\n" +
+      "• 🗄️ Dedicated Database & Custom Domain Embeds\n" +
+      "• 📞 24/7 Priority Support";
   }
 
   if (query.includes('starter')) {
-    return "### ⚡ **Starter Plan Overview** — **`$19.00`** / month\n\n" +
-      "> *Ideal for small websites, personal blogs, or testing out ChatBox AI features.*\n\n" +
-      "**Included Features:**\n" +
-      "* 🤖 **1 Active Chatbot Agent**\n" +
-      "* 💬 **1,000 Messages** / month\n" +
-      "* 🌐 Website URL & Sitemap Auto-Crawler\n" +
-      "* 🎨 Custom Chat Bubble Styling\n" +
-      "* ✉️ Email Customer Support";
+    return "⚡ **Starter Plan Overview** — **$19.00 / month**\n\n" +
+      "• 🤖 **1 Active Chatbot Agent**\n" +
+      "• 💬 **1,000 Messages** / month\n" +
+      "• 🌐 Website URL & Sitemap Auto-Crawler\n" +
+      "• 🎨 Custom Chat Bubble Styling\n" +
+      "• ✉️ Email Customer Support";
   }
   if (query.includes('professional') || query.includes('pro plan')) {
     return "### 🚀 **Professional Plan Overview** — **`$49.00`** / month *(Most Popular)*\n\n" +

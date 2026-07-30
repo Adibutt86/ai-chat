@@ -107,7 +107,7 @@ export async function ensureEmbeddingCache(agentId: string) {
 function isBoilerplate(content: string): boolean {
   const lower = content.toLowerCase();
   // Check for common navigation chains in headers/footers
-  if (lower.includes('home about services prices') || lower.includes('sign in get started') || lower.includes('wp plugin contact')) {
+  if (lower.includes('home about services prices') || lower.includes('sign in get started') || lower.includes('wp plugin contact') || lower.includes('aichat home home') || lower.includes('solutions for your business get free consultation')) {
     return true;
   }
   // Filter out template lorem ipsum, old template services, and partner ticker text
@@ -193,9 +193,9 @@ export async function searchRelevantChunks(
         const chunkLower = (emb.chunkContent || '').toLowerCase();
         const qLower = query.toLowerCase();
 
-        // Heavy boost for actual pricing plan chunks when querying pricing/plans
-        if ((qLower.includes('price') || qLower.includes('plan') || qLower.includes('cost') || qLower.includes('pricing')) &&
-            (chunkLower.includes('starter') || chunkLower.includes('professional') || chunkLower.includes('enterprise') || chunkLower.includes('$19') || chunkLower.includes('$49'))) {
+        // Heavy boost for actual pricing plan chunks when querying pricing/plans/base model
+        if ((qLower.includes('price') || qLower.includes('plan') || qLower.includes('cost') || qLower.includes('pricing') || qLower.includes('base model')) &&
+            (chunkLower.includes('starter') || chunkLower.includes('professional') || chunkLower.includes('enterprise') || chunkLower.includes('$19') || chunkLower.includes('$49') || chunkLower.includes('base model'))) {
           score += 0.45;
         }
         
@@ -208,11 +208,17 @@ export async function searchRelevantChunks(
         if (urlLower.includes('prices') || urlLower.includes('pricing') || nameLower.includes('prices') || nameLower.includes('pricing')) {
           score += 0.2;
         }
+        // Heavy boost for contact chunks when querying contact info
+        if ((qLower.includes('contact') || qLower.includes('reach') || qLower.includes('email') || qLower.includes('support')) &&
+            (chunkLower.includes('contact') || chunkLower.includes('support') || chunkLower.includes('email') || urlLower.includes('contact') || nameLower.includes('contact'))) {
+          score += 0.45;
+        }
+
         if (urlLower.includes('about') || nameLower.includes('about')) {
           score += 0.05;
         }
         if (urlLower.includes('contact') || nameLower.includes('contact')) {
-          score += 0.05;
+          score += 0.2;
         }
         
         return { chunkContent: emb.chunkContent, score, documentId: emb.documentId, url: emb.url || null, name: emb.name || null };

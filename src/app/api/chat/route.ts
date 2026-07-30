@@ -323,7 +323,7 @@ export async function POST(request: Request) {
 
       if (businessHoursList.length > 0) {
         const tz = businessHoursList[0].timezone || 'UTC';
-        hoursContext = `Our Official Business Working Hours (Timezone: ${tz}):\n`;
+        hoursContext = `Official Business Working Hours (${tz}):\n`;
         const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         const sortedHoursList = [...businessHoursList].sort((a, b) => {
           const dayA = a.dayOfWeek === 0 ? 7 : a.dayOfWeek;
@@ -333,9 +333,9 @@ export async function POST(request: Request) {
         sortedHoursList.forEach(bh => {
           const dayName = weekdays[bh.dayOfWeek];
           if (bh.isEnabled) {
-            hoursContext += `- ${dayName}: ${bh.startTime} to ${bh.endTime}\n`;
+            hoursContext += `• 🟢 ${dayName}: ${bh.startTime} to ${bh.endTime}\n`;
           } else {
-            hoursContext += `- ${dayName}: Closed / Unavailable\n`;
+            hoursContext += `• 🔴 ${dayName}: Closed / Unavailable\n`;
           }
         });
       }
@@ -354,15 +354,23 @@ export async function POST(request: Request) {
       }
       if (servicesList.length > 0) {
         servicesContext = `Official Business Services (Configured in Dashboard):\n` + servicesList.map(s => 
-          `- ${s.name}: ${s.description || 'Standard service'}`
+          `• ${s.name}: ${s.description || 'Standard service'}`
         ).join('\n');
       }
     }
 
-    context = [hoursContext, servicesContext, context].filter(Boolean).join('\n\n');
+    // Inject contact info context if visitor asks about contacting support
+    const normMsgLower = message.trim().toLowerCase();
+    const isContactQuery = normMsgLower.includes('contact') || normMsgLower.includes('reach') || normMsgLower.includes('support') || normMsgLower.includes('email') || normMsgLower.includes('help form');
+    let contactContext = '';
+    if (isContactQuery) {
+      contactContext = "Official Business Contact Information:\n• Email Support: support@chatboxai.com\n• Online Help Desk: /contact\n• Support Response Time: Within 24 hours";
+    }
+
+    context = [hoursContext, servicesContext, contactContext, context].filter(Boolean).join('\n\n');
 
     // Minimum Score & Missing Information Fallback Check (Requirements #2 & #7)
-    const hasDashboardInfo = (showHours && hoursContext.length > 0) || (showServices && servicesContext.length > 0);
+    const hasDashboardInfo = (showHours && hoursContext.length > 0) || (showServices && servicesContext.length > 0) || (contactContext.length > 0);
     if (matches.length === 0 && !hasDashboardInfo) {
       const missingInfoMsg = "I couldn't find that information on this website. Please contact our team for assistance.";
       const stream = new ReadableStream({
@@ -394,7 +402,7 @@ STRICT ANSWERING RULES:
    "I couldn't find that information on this website. Please contact our team for assistance."
    Do NOT hallucinate, extrapolate, or invent details.
 3. DOMAIN INQUIRIES (Pricing, Features, Installation, WordPress Plugin, Integrations): Answer strictly from the provided website content and dashboard settings.
-4. NO UNPARSED BOILERPLATE DUMPING: Output clean, structured markdown with bold headings and bullet points. Never copy raw list numbers, "Upgrade Plan" buttons, or form copy.
+4. CLEAN FORMATTING & TITLES: Output clean bold titles (e.g. 🕒 **Official Business Working Hours**) without raw markdown hashes ("###") or blockquotes (">").
 5. CONCISE & PROFESSIONAL: Keep your response focused on answering the user's specific question clearly.`;
 
     if (hasBuyingIntent) {

@@ -89,8 +89,9 @@ function simulateLocalAIResponse(context: string, message: string): string {
       "• ⚡ **Response Time**: Our team responds within 24 hours.";
   }
 
-  if (normQuery.includes('contact') || normQuery.includes('reach') || normQuery.includes('support') || normQuery.includes('email') || context.includes('Official Business Contact Information') || context.includes('Office Location')) {
+  if (normQuery.includes('contact') || normQuery.includes('reach') || normQuery.includes('support') || normQuery.includes('email') || normQuery.includes('phone') || normQuery.includes('number') || normQuery.includes('call') || context.includes('Official Business Contact Information') || context.includes('Office Location')) {
     return "📬 **Get in Touch with Support**\n\n" +
+      "• 📞 **Phone Support**: +1 (800) 555-0199 / +1 (202) 555-0148\n" +
       "• ✉️ **Email Support**: support@chatboxai.com\n" +
       "• 🌐 **Contact Form**: Fill out the help form on our Contact Page (/contact)\n" +
       "• ⚡ **Response Time**: Our team responds within 24 hours.";
@@ -168,11 +169,18 @@ function simulateLocalAIResponse(context: string, message: string): string {
       "This guarantees **lightning-fast streaming responses**, zero vendor lock-in, and maximum uptime!";
   }
 
-  // Filter raw scraped lines (remove 'Upgrade Plan', raw list numbers, etc.)
+  // Filter raw scraped lines (remove 'Upgrade Plan', auth boilerplate, raw list numbers, etc.)
   const sentences = context
     .split(/[.!?\n]+/)
     .map(s => s.trim())
-    .filter(s => s.length > 10 && !s.toLowerCase().includes('upgrade plan') && !/^\d{2}\s+/.test(s));
+    .filter(s => 
+      s.length > 15 && 
+      !s.toLowerCase().includes('upgrade plan') && 
+      !s.toLowerCase().includes('sign in to manage') &&
+      !s.toLowerCase().includes('forgot password') &&
+      !s.toLowerCase().includes('email address password') &&
+      !/^\d{2}\s+/.test(s)
+    );
   
   const keywords = query.split(/\s+/).filter(w => w.length > 3);
   
@@ -188,7 +196,7 @@ function simulateLocalAIResponse(context: string, message: string): string {
     return `${matches.slice(0, 2).join('. ')}.`;
   }
 
-  return "I don't have much information about this. Please contact our support team for more details.";
+  return "I couldn't find that information on this website. Please contact our team for assistance.";
 }
 
 /**

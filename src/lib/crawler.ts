@@ -24,6 +24,11 @@ async function fetchPageRawHtmlAndText(url: string): Promise<{ html: string; tex
     if (!res.ok) {
       return { html: '', text: '' };
     }
+    const contentType = res.headers.get('content-type') || '';
+    if (!contentType.toLowerCase().includes('text/html') && !contentType.toLowerCase().includes('text/plain') && !contentType.toLowerCase().includes('application/xhtml+xml')) {
+      return { html: '', text: '' };
+    }
+
     const html = await res.text();
     let text = html;
     
@@ -73,10 +78,11 @@ function extractInternalLinks(html: string, baseUrlStr: string): string[] {
         continue;
       }
 
-      // Ignore static assets, CSS, JS, feeds, and WP plugin files
-      if (/\.(png|jpg|jpeg|gif|svg|ico|css|js|pdf|zip|tar|gz|xml|json|woff|ttf)$/i.test(rawHref) ||
-          rawHref.toLowerCase().includes('/wp-content/plugins/') ||
-          rawHref.toLowerCase().includes('/wp-content/themes/') ||
+      // Ignore static assets, Next.js internal bundles, API endpoints, CSS, JS, feeds, and WP plugin files
+      if (/\.(png|jpg|jpeg|gif|svg|ico|css|js|pdf|zip|tar|gz|xml|json|woff|woff2|eot|ttf|mp3|mp4|webp)$/i.test(rawHref) ||
+          rawHref.toLowerCase().includes('/_next/') ||
+          rawHref.toLowerCase().includes('/api/') ||
+          rawHref.toLowerCase().includes('/wp-content/') ||
           rawHref.toLowerCase().includes('/wp-includes/') ||
           rawHref.toLowerCase().includes('/feed') ||
           rawHref.toLowerCase().includes('/wp-json')) {

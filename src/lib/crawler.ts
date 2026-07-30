@@ -37,8 +37,9 @@ async function fetchPageRawHtmlAndText(url: string): Promise<{ html: string; tex
     text = text.replace(/<style[^>]*>([\s\S]*?)<\/style>/gi, '');
     text = text.replace(/<svg[^>]*>([\s\S]*?)<\/svg>/gi, '');
 
-    // Insert newlines for structural elements so accordion items and headings stay separated
-    text = text.replace(/<\/(div|p|h1|h2|h3|h4|h5|h6|li|tr|section|article|header|footer|summary|button)>/gi, '\n');
+    // Insert newlines for structural elements & accordion items so accordion questions and answers stay separated
+    text = text.replace(/<(div|details|summary|dt|dd|button)[^>]*class=["'][^"']*accordion[^"']*["'][^>]*>/gi, '\n');
+    text = text.replace(/<\/(div|p|h1|h2|h3|h4|h5|h6|li|tr|section|article|header|footer|summary|button|details|dt|dd)>/gi, '\n');
     text = text.replace(/<br\s*\/?>/gi, '\n');
     
     // Strip remaining HTML tags

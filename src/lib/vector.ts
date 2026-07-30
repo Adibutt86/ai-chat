@@ -30,18 +30,22 @@ export async function indexDocumentChunk(
         .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '')
     : '';
 
-  const vector = await getEmbedding(cleanChunk);
-  
-  // Store metadata in standard DB
-  const emb = await prisma.embedding.create({
-    data: {
-      documentId,
-      chunkContent: cleanChunk,
-    },
-  });
+  if (!cleanChunk || cleanChunk.trim().length === 0) return;
 
-  // Store vector in DB using pgvector
+  const vector = await getEmbedding(cleanChunk);
+  let embId = 'mem_' + Math.random().toString(36).substring(2, 9);
+  
+  // Store metadata in standard DB safely
   try {
+    const emb = await prisma.embedding.create({
+      data: {
+        documentId,
+        chunkContent: cleanChunk,
+      },
+    });
+    embId = emb.id;
+
+    // Store vector in DB using pgvector
     const vectorSqlStr = `[${vector.join(',')}]`;
     await prisma.$executeRaw`
       UPDATE "Embedding"
@@ -49,14 +53,14 @@ export async function indexDocumentChunk(
       WHERE "id" = ${emb.id}
     `;
   } catch (err) {
-    console.error("Error saving vector to database:", err);
+    console.error("Error saving embedding chunk to PostgreSQL:", err);
   }
 
   // Store in cache for high-fidelity vector search queries
   embeddingCache.push({
-    id: emb.id,
+    id: embId,
     documentId,
-    chunkContent,
+    chunkContent: cleanChunk,
     vector,
   });
 }

@@ -45,10 +45,25 @@
     const position = config.widgetSettings?.position || 'bottom-right';
 
     style.innerHTML = `
-      /* Strict style isolation: revert child tags to default agent styles, preventing host website leakage */
-      :where(#chatbox-widget-container) :where(button, textarea, h4, p, span, a, svg, div) {
-        all: revert;
-        box-sizing: border-box;
+      /* Strict CSS Isolation Reset: Prevents WordPress Theme CSS leakage */
+      #chatbox-widget-container,
+      #chatbox-widget-container *,
+      #chatbox-widget-container *::before,
+      #chatbox-widget-container *::after {
+        box-sizing: border-box !important;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+        -webkit-font-smoothing: antialiased;
+        letter-spacing: normal;
+        text-transform: none;
+        text-indent: 0;
+        text-shadow: none;
+      }
+
+      #chatbox-widget-container button,
+      #chatbox-widget-container input,
+      #chatbox-widget-container textarea {
+        font-family: inherit !important;
+        margin: 0;
       }
 
       #chatbox-widget-container {

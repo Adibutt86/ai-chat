@@ -22,13 +22,21 @@ export async function indexDocumentChunk(
   documentId: string,
   chunkContent: string
 ): Promise<void> {
-  const vector = await getEmbedding(chunkContent);
+  const cleanChunk = chunkContent
+    ? chunkContent
+        .replace(/\u0000/g, '')
+        .replace(/\x00/g, '')
+        .replace(/[\uD800-\uDFFF]/g, '')
+        .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '')
+    : '';
+
+  const vector = await getEmbedding(cleanChunk);
   
   // Store metadata in standard DB
   const emb = await prisma.embedding.create({
     data: {
       documentId,
-      chunkContent,
+      chunkContent: cleanChunk,
     },
   });
 

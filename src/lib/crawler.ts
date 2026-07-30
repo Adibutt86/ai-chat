@@ -1,6 +1,15 @@
 import { indexDocumentChunk } from './vector';
 import { prisma } from './db';
 
+export function sanitizeUtf8(str: string): string {
+  if (!str) return '';
+  return str
+    .replace(/\u0000/g, '')
+    .replace(/\x00/g, '')
+    .replace(/[\uD800-\uDFFF]/g, '')
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '');
+}
+
 /**
  * Strips HTML tags, script, and style blocks to get clean text copy.
  */
@@ -41,7 +50,7 @@ async function fetchPageRawHtmlAndText(url: string): Promise<{ html: string; tex
                
     // Consolidate duplicate empty lines while preserving structural spacing
     text = text.split('\n').map(l => l.trim()).filter(l => l.length > 0).join('\n');
-    return { html, text };
+    return { html: sanitizeUtf8(html), text: sanitizeUtf8(text) };
   } catch (error) {
     console.error(`Crawl Error fetching URL ${url}:`, error);
     return { html: '', text: '' };

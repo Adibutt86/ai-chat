@@ -12,11 +12,13 @@ export async function GET(request: Request) {
 
   return NextResponse.json(config || {
     id: 'global-config',
-    activeProvider: 'gemini',
+    activeProvider: 'claude',
     geminiKey: '',
     openaiKey: '',
     claudeKey: '',
     openrouterKey: '',
+    resendApiKey: '',
+    fromEmail: 'onboarding@resend.dev',
   });
 }
 
@@ -25,24 +27,28 @@ export async function POST(request: Request) {
   if (!session || session.role !== 'admin') return authError();
 
   try {
-    const { activeProvider, geminiKey, openaiKey, claudeKey, openrouterKey } = await request.json();
+    const { activeProvider, geminiKey, openaiKey, claudeKey, openrouterKey, resendApiKey, fromEmail } = await request.json();
 
     const config = await prisma.globalSettings.upsert({
       where: { id: 'global-config' },
       update: {
-        activeProvider,
+        activeProvider: activeProvider || 'claude',
         geminiKey,
         openaiKey,
         claudeKey,
         openrouterKey,
+        resendApiKey,
+        fromEmail,
       },
       create: {
         id: 'global-config',
-        activeProvider: activeProvider || 'gemini',
+        activeProvider: activeProvider || 'claude',
         geminiKey: geminiKey || '',
         openaiKey: openaiKey || '',
         claudeKey: claudeKey || '',
         openrouterKey: openrouterKey || '',
+        resendApiKey: resendApiKey || '',
+        fromEmail: fromEmail || 'onboarding@resend.dev',
       },
     });
 

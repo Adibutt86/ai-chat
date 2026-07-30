@@ -258,6 +258,8 @@ model GlobalSettings {
   openaiKey        String   @default("")
   claudeKey        String   @default("")
   openrouterKey    String   @default("")
+  resendApiKey     String   @default("")
+  fromEmail        String   @default("onboarding@resend.dev")
   updatedAt        DateTime @updatedAt
 }
 
@@ -309,7 +311,7 @@ model Booking {
   startTime       DateTime
   endTime         DateTime
   timezone        String       @default("UTC")
-  status          String       @default("confirmed") // pending, confirmed, cancelled, completed, no_show
+  status          String       @default("pending") // pending, confirmed, cancelled, completed, no_show
   googleEventId   String?
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt

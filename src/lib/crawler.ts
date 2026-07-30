@@ -113,7 +113,7 @@ export async function crawlWebsite(
       });
 
       // Split into chunks and index embeddings in parallel for maximum performance
-      const chunks = chunkText(cleanContent, 300);
+      const chunks = chunkText(cleanContent, 800);
       await Promise.all(chunks.map(chunk => indexDocumentChunk(doc.id, chunk)));
 
       await prisma.document.update({
@@ -158,23 +158,35 @@ export async function crawlWebsite(
   }
 }
 
-/**
- * Text chunker helper
- */
-export function chunkText(text: string, chunkSize = 400): string[] {
-  const words = text.split(' ');
+export function chunkText(text: string, chunkSize = 800, overlap = 150): string[] {
+  const cleanText = text.replace(/\s+/g, ' ').trim();
+  if (!cleanText) return [];
+  if (cleanText.length <= chunkSize) return [cleanText];
+
   const chunks: string[] = [];
-  let currentChunk: string[] = [];
-  
-  for (const word of words) {
-    currentChunk.push(word);
-    if (currentChunk.join(' ').length >= chunkSize) {
-      chunks.push(currentChunk.join(' '));
-      currentChunk = [];
+  let start = 0;
+
+  while (start < cleanText.length) {
+    let end = start + chunkSize;
+    
+    // Adjust end to boundary space if possible
+    if (end < cleanText.length) {
+      const lastSpace = cleanText.lastIndexOf(' ', end);
+      if (lastSpace > start + chunkSize * 0.6) {
+        end = lastSpace;
+      }
+    } else {
+      end = cleanText.length;
     }
+
+    const chunk = cleanText.substring(start, end).trim();
+    if (chunk.length > 20) {
+      chunks.push(chunk);
+    }
+
+    if (end >= cleanText.length) break;
+    start = Math.max(start + 1, end - overlap);
   }
-  if (currentChunk.length > 0) {
-    chunks.push(currentChunk.join(' '));
-  }
+
   return chunks;
 }

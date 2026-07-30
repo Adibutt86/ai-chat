@@ -2,11 +2,21 @@ import { NextResponse } from 'next/server';
 import { getSessionUser, authError } from '@/lib/api-auth';
 import { prisma } from '@/lib/db';
 
+async function resolveOrgId(session: any): Promise<string | null> {
+  if (session.orgId) return session.orgId;
+  if (!session.userId) return null;
+  const member = await prisma.member.findFirst({
+    where: { userId: session.userId },
+    select: { organizationId: true },
+  });
+  return member?.organizationId || null;
+}
+
 export async function GET(request: Request) {
   const session = await getSessionUser(request);
   if (!session) return authError();
 
-  const orgId = session.orgId;
+  const orgId = await resolveOrgId(session);
   if (!orgId) {
     return NextResponse.json({ error: 'Organization not found in session' }, { status: 400 });
   }
@@ -23,7 +33,7 @@ export async function POST(request: Request) {
   const session = await getSessionUser(request);
   if (!session) return authError();
 
-  const orgId = session.orgId;
+  const orgId = await resolveOrgId(session);
   if (!orgId) {
     return NextResponse.json({ error: 'Organization not found in session' }, { status: 400 });
   }
@@ -42,7 +52,7 @@ export async function POST(request: Request) {
         avatarUrl,
         themeColor: themeColor || '#2563eb',
         language: language || 'en',
-        model: model || 'gemini-2.5-flash',
+        model: model || 'anthropic.claude-3-haiku-20240307-v1:0',
         temperature: temperature !== undefined ? parseFloat(temperature) : 0.7,
         systemPrompt: systemPrompt || "You are a helpful AI assistant. Answer questions based on the provided context.",
         organizationId: orgId,
@@ -75,12 +85,13 @@ export async function PUT(request: Request) {
       return NextResponse.json({ error: 'id is required' }, { status: 400 });
     }
 
-    // Ensure agent belongs to organization
+    const orgId = await resolveOrgId(session);
+
+    // Ensure agent exists and user has access
     const existingAgent = await prisma.agent.findFirst({
-      where: {
-        id,
-        organizationId: session.orgId,
-      },
+      where: session.role === 'admin'
+        ? { id }
+        : (orgId ? { id, organizationId: orgId } : { id }),
     });
 
     if (!existingAgent) {
@@ -119,12 +130,12 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: 'agentId is required' }, { status: 400 });
     }
 
-    // Ensure agent belongs to organization
+    const orgId = await resolveOrgId(session);
+
     const agent = await prisma.agent.findFirst({
-      where: {
-        id: agentId,
-        organizationId: session.orgId,
-      },
+      where: session.role === 'admin'
+        ? { id: agentId }
+        : (orgId ? { id: agentId, organizationId: orgId } : { id: agentId }),
     });
 
     if (!agent) {

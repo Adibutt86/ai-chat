@@ -188,11 +188,11 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
               >
-                <Link className="services_list-item d-flex flex-column" href="/service">
+                <Link className="services_list-item d-flex flex-column" href="/wordpress">
                   <i className="icon-chart-bar icon"></i>
-                  <span className="title h5">Data Analysis</span>
+                  <span className="title h5">Smart RAG Training</span>
                   <p className="text">
-                    Phasellus fringilla tuc dignissim diam. Duis nec tempus ligula. Curabitur vel pretium. Vestibulum metus pur esta
+                    Automatically scrape your website pages, docs, and FAQs to train custom AI models in seconds.
                   </p>
                 </Link>
               </motion.li>
@@ -203,11 +203,11 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
-                <Link className="services_list-item d-flex flex-column" href="/service">
+                <Link className="services_list-item d-flex flex-column" href="/prices">
                   <i className="icon-cloud icon"></i>
-                  <span className="title h5">Optimization</span>
+                  <span className="title h5">Multi-LLM Engine</span>
                   <p className="text">
-                    Phasellus fringilla dignissim diam. Duis nec tempus ligula. Curabitur vel pretium. Vestibulum metus pur esta
+                    Powered by Amazon Bedrock Claude 3 Haiku, Google Gemini, and OpenAI for fast, accurate responses.
                   </p>
                 </Link>
               </motion.li>
@@ -218,11 +218,11 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                <Link className="services_list-item d-flex flex-column" href="/service">
+                <Link className="services_list-item d-flex flex-column" href="/wordpress">
                   <i className="icon-filesearch icon"></i>
-                  <span className="title h5">Content Track</span>
+                  <span className="title h5">Seamless Widget Embed</span>
                   <p className="text">
-                    Phasellus fringilla tuc dignissim diam. Duis nec tempus ligula. Curabitur vel pretium. Vestibulum metus pur esta
+                    Easy one-line script snippet for WordPress, Next.js, Shopify, or custom HTML sites.
                   </p>
                 </Link>
               </motion.li>
@@ -233,11 +233,11 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.3 }}
               >
-                <Link className="services_list-item d-flex flex-column" href="/service">
+                <Link className="services_list-item d-flex flex-column" href="/contact">
                   <i className="icon-protect icon"></i>
-                  <span className="title h5">Risk Manage</span>
+                  <span className="title h5">Lead Capture & Analytics</span>
                   <p className="text">
-                    Phasellus fringilla dignissim diam. Duis nec tempus ligula. Curabitur vel pretium. Vestibulum metus pur esta
+                    Collect visitor emails, track conversation transcripts, and capture qualified sales leads 24/7.
                   </p>
                 </Link>
               </motion.li>
@@ -259,7 +259,7 @@ export default function Home() {
                 </h4>
               </div>
               <p className="about_main-text">
-                Phasellus dapibus non sem sit amet dictum. Nunc non eros aliquam, vulputate lectus eget, cursus risus. Vestibulum nec erat et nunc eleifend finibus quis in nunc
+                ChatBox AI helps businesses automate customer support, capture qualified leads, and engage website visitors round the clock using custom-trained AI assistants.
               </p>
               <ul className="about_main-list d-flex flex-column">
                 <motion.li 
@@ -273,9 +273,9 @@ export default function Home() {
                     <i className="icon-rabbit icon"></i>
                   </span>
                   <div className="main">
-                    <h6 className="main_title">Detects your platform and makes installation on your websites a breeze</h6>
+                    <h6 className="main_title">Detects your platform and makes installation on your website a breeze</h6>
                     <p className="main_text">
-                      Phasellus dapibus non sem sit amet dictum. Nunc non eros aliquam, vulputate lectus eget, cursus risus. Vestibulum nec erat et nunc eleifend finibus quis in nunc
+                      Supports one-click WordPress plugin integration, Next.js, Shopify, and custom HTML embed widgets in less than 2 minutes.
                     </p>
                   </div>
                 </motion.li>
@@ -292,7 +292,7 @@ export default function Home() {
                   <div className="main">
                     <h6 className="main_title">Advanced catalog of top analytics and marketing services to address your business needs</h6>
                     <p className="main_text">
-                      Vulputate lectus eget, cursus risus. Vestibulum nec erat et nunc eleifend finibus quis in nunc
+                      Track chat transcripts, visitor country analytics, lead details, and conversation performance in real time.
                     </p>
                   </div>
                 </motion.li>
@@ -307,9 +307,9 @@ export default function Home() {
                     <i className="icon-moneyglass icon"></i>
                   </span>
                   <div className="main">
-                    <h6 className="main_title">More users from searches using smart algorithm ASO tools</h6>
+                    <h6 className="main_title">Turn website traffic into sales with smart AI conversational prompts</h6>
                     <p className="main_text">
-                      Nunc non eros aliquam, vulputate lectus eget, cursus risus. Vestibulum nec erat et nunc eleifend finibus quis in nunc. Aliquam erat volutpat
+                      Turn casual site visitors into paying customers with proactive AI chat prompts, automated FAQ resolution, and instant booking flows.
                     </p>
                   </div>
                 </motion.li>
@@ -326,8 +326,6 @@ export default function Home() {
           </div>
         </section>
 
-
-
         {/* FAQ Accordion Section */}
         <div className="faq">
           <div className="container">
@@ -340,7 +338,7 @@ export default function Home() {
                     onClick={() => setActiveFaq(activeFaq === 'item-1' ? null : 'item-1')}
                     style={{ cursor: 'pointer' }}
                   >
-                    How it works with your business
+                    How ChatBox AI works with your business
                     <span className={`title_icon ${activeFaq === 'item-1' ? 'transform' : ''}`}>
                       <i className="icon-arrow-left icon arrow-rotate"></i>
                     </span>
@@ -349,33 +347,33 @@ export default function Home() {
                     <div className="body">
                       <div className="main">
                         <p className="main_general">
-                          Suspendisse hendrerit, augue accumsan dictum tincidunt, sem sapien lobortis nibh, vitae auctor mi tortor et ipsum. Duis vitae augue vitae mi suscipit rutrum vitae non eros.
+                          ChatBox AI integrates directly into your workflow in 3 simple steps to automate customer support and boost lead generation.
                         </p>
                         <ul className="main_list">
                           <li className="main_list-item">
                             <span className="number">01</span>
                             <div className="main">
-                               <h6 className="main_title">Choosing the optimal solution</h6>
+                               <h6 className="main_title">Index Your Knowledge Base</h6>
                                <p className="main_text">
-                                 Nullam elementum, magna at suscipit lobortis, dui nibh molestie enim, sed scelerisque ex odio sit amet purus. Pellentesque fermentum mauris eget ligula Praesent lacinia ligula nec ligula convallis. Duis sagittis suscipit risus vitae tincidunt
+                                 Paste your website URL, sitemap, or upload documentation to automatically train your custom AI chatbot in seconds.
                                </p>
                             </div>
                           </li>
                           <li className="main_list-item">
                             <span className="number">02</span>
                             <div className="main">
-                               <h6 className="main_title">Big Data Discover, Elaborate, Optimization</h6>
+                               <h6 className="main_title">Customize Widget & Model Settings</h6>
                                <p className="main_text">
-                                 Nullam elementum, magna at suscipit lobortis, dui nibh molestie enim, sed scelerisque ex odio sit amet purus. Pellentesque fermentum mauris eget ligula. Praesent lacinia ligula nec ligula convallis, eu facilisis nulla lobortis. Phasellus nec gravida elit
+                                 Adjust widget colors, avatar, position, welcome message, and system instructions to match your brand style.
                                </p>
                             </div>
                           </li>
                           <li className="main_list-item">
                             <span className="number">03</span>
                             <div className="main">
-                               <h6 className="main_title">Support and Promote Services</h6>
+                               <h6 className="main_title">Embed & Automate 24/7 Support</h6>
                                <p className="main_text">
-                                 Nullam elementum, magna at suscipit lobortis, dui nibh molestie enim, sed scelerisque ex odio sit amet purus. Pellentesque fermentum mauris eget ligula.Praesent lacinia ligula nec ligula convallis, eu facilisis nulla lobortis. Phasellus nec gravida elit. Duis sagittis suscipit risus vitae tincidunt lorem
+                                 Copy-paste a single script snippet to deploy your chatbot and automate visitor support and lead capture instantly.
                                </p>
                             </div>
                           </li>
@@ -394,7 +392,7 @@ export default function Home() {
                     onClick={() => setActiveFaq(activeFaq === 'item-2' ? null : 'item-2')}
                     style={{ cursor: 'pointer' }}
                   >
-                    All Services that we provide
+                    All Services & Features that we provide
                     <span className={`title_icon ${activeFaq === 'item-2' ? 'transform' : ''}`}>
                       <i className="icon-arrow-left icon arrow-rotate"></i>
                     </span>
@@ -403,33 +401,33 @@ export default function Home() {
                     <div className="body">
                       <div className="main">
                         <p className="main_general">
-                          Suspendisse hendrerit, augue accumsan dictum tincidunt, sem sapien lobortis nibh, vitae auctor mi tortor et ipsum. Duis vitae augue vitae mi suscipit rutrum vitae non eros.
+                          Our platform offers end-to-end AI capabilities designed for websites, SaaS platforms, e-commerce stores, and agencies.
                         </p>
                         <ul className="main_list">
                           <li className="main_list-item">
                             <span className="number">01</span>
                             <div className="main">
-                               <h6 className="main_title">Choosing the optimal solution</h6>
+                               <h6 className="main_title">AI Knowledge Base Training</h6>
                                <p className="main_text">
-                                 Nullam elementum, magna at suscipit lobortis, dui nibh molestie enim, sed scelerisque ex odio sit amet purus. Pellentesque fermentum mauris eget ligula Praesent lacinia ligula nec ligula convallis. Duis sagittis suscipit risus vitae tincidunt
+                                 Index sitemaps, PDFs, FAQs, and custom text to give your bot accurate, context-aware website knowledge.
                                </p>
                             </div>
                           </li>
                           <li className="main_list-item">
                             <span className="number">02</span>
                             <div className="main">
-                               <h6 className="main_title">Big Data Discover, Elaborate, Optimization</h6>
+                               <h6 className="main_title">Amazon Bedrock & Claude Engine</h6>
                                <p className="main_text">
-                                 Nullam elementum, magna at suscipit lobortis, dui nibh molestie enim, sed scelerisque ex odio sit amet purus. Pellentesque fermentum mauris eget ligula. Praesent lacinia ligula nec ligula convallis, eu facilisis nulla lobortis. Phasellus nec gravida elit
+                                 Experience high-speed, low-cost streaming responses with Amazon Bedrock Claude 3 Haiku model integration.
                                </p>
                             </div>
                           </li>
                           <li className="main_list-item">
                             <span className="number">03</span>
                             <div className="main">
-                               <h6 className="main_title">Support and Promote Services</h6>
+                               <h6 className="main_title">Lead Capture & Appointment Booking</h6>
                                <p className="main_text">
-                                 Nullam elementum, magna at suscipit lobortis, dui nibh molestie enim, sed scelerisque ex odio sit amet purus. Pellentesque fermentum mauris eget ligula.Praesent lacinia ligula nec ligula convallis, eu facilisis nulla lobortis. Phasellus nec gravida elit. Duis sagittis suscipit risus vitae tincidunt lorem
+                                 Collect visitor email addresses and schedule appointments directly inside the interactive chat widget.
                                </p>
                             </div>
                           </li>
@@ -448,7 +446,7 @@ export default function Home() {
                     onClick={() => setActiveFaq(activeFaq === 'item-3' ? null : 'item-3')}
                     style={{ cursor: 'pointer' }}
                   >
-                    Advanced Solutions & Prices
+                    Advanced Solutions & Flexible Pricing
                     <span className={`title_icon ${activeFaq === 'item-3' ? 'transform' : ''}`}>
                       <i className="icon-arrow-left icon arrow-rotate"></i>
                     </span>
@@ -457,33 +455,33 @@ export default function Home() {
                     <div className="body">
                       <div className="main">
                         <p className="main_general">
-                          Suspendisse hendrerit, augue accumsan dictum tincidunt, sem sapien lobortis nibh, vitae auctor mi tortor et ipsum. Duis vitae augue vitae mi suscipit rutrum vitae non eros.
+                          Choose from flexible pricing plans built to scale with your business from day one.
                         </p>
                         <ul className="main_list">
                           <li className="main_list-item">
                             <span className="number">01</span>
                             <div className="main">
-                               <h6 className="main_title">Choosing the optimal solution</h6>
+                               <h6 className="main_title">Starter & Pro Subscription Plans</h6>
                                <p className="main_text">
-                                 Nullam elementum, magna at suscipit lobortis, dui nibh molestie enim, sed scelerisque ex odio sit amet purus. Pellentesque fermentum mauris eget ligula Praesent lacinia ligula nec ligula convallis. Duis sagittis suscipit risus vitae tincidunt
+                                 Affordable pricing options for personal blogs, growing SaaS platforms, and enterprise e-commerce sites.
                                </p>
                             </div>
                           </li>
                           <li className="main_list-item">
                             <span className="number">02</span>
                             <div className="main">
-                               <h6 className="main_title">Big Data Discover, Elaborate, Optimization</h6>
+                               <h6 className="main_title">Multi-Agent Management</h6>
                                <p className="main_text">
-                                 Nullam elementum, magna at suscipit lobortis, dui nibh molestie enim, sed scelerisque ex odio sit amet purus. Pellentesque fermentum mauris eget ligula. Praesent lacinia ligula nec ligula convallis, eu facilisis nulla lobortis. Phasellus nec gravida elit
+                                 Create multiple AI personas with unique system prompts, widget styles, and specialized knowledge bases.
                                </p>
                             </div>
                           </li>
                           <li className="main_list-item">
                             <span className="number">03</span>
                             <div className="main">
-                               <h6 className="main_title">Support and Promote Services</h6>
+                               <h6 className="main_title">High Availability & Vector Security</h6>
                                <p className="main_text">
-                                 Nullam elementum, magna at suscipit lobortis, dui nibh molestie enim, sed scelerisque ex odio sit amet purus. Pellentesque fermentum mauris eget ligula.Praesent lacinia ligula nec ligula convallis, eu facilisis nulla lobortis. Phasellus nec gravida elit. Duis sagittis suscipit risus vitae tincidunt lorem
+                                 Enterprise-grade database security, vector embeddings, and zero downtime for continuous 24/7 availability.
                                </p>
                             </div>
                           </li>
@@ -508,7 +506,7 @@ export default function Home() {
           </div>
           <div className="container d-md-flex flex-column align-items-center">
             <h3 className="join_header">
-              Join <span className="join_header-wrapper"><Counter value={68000} suffix="+" /></span> growing businesses that use Sitech to drive Customer Experience
+              Join <span className="join_header-wrapper"><Counter value={68000} suffix="+" /></span> growing businesses that use ChatBox AI to drive Customer Experience
             </h3>
             <ul className="join_list d-flex flex-column flex-md-row justify-content-md-center">
               <li className="join_list-item">
@@ -557,14 +555,14 @@ export default function Home() {
               <div className="feedback_main-header">
                 <div className="wrapper">
                   <span className="tw-height h4">
-                    <span className="text">Ask us any</span>
+                    <span className="text">Ask us anything</span>
                   </span>
-                  <h4 className="feedback_main-header_title type" data-text="Ask us any">
-                    Ask us any
+                  <h4 className="feedback_main-header_title type" data-text="Ask us anything">
+                    Ask us anything
                   </h4>
                 </div>
                 <p className="feedback_main-header_text">
-                  Suspendisse ligula magna, laoreet non egestas ac, lobortis at nulla. Suspendisse efficitur neque nec neque porttitor tincidunt. Donec iaculis lacus vitae velit finibus ullamcorper
+                  Have questions about setting up ChatBox AI for your website or business? Get in touch with us today and our AI specialists will be happy to assist you.
                 </p>
               </div>
               <form className="feedback_main-form form d-flex flex-column" action="#" method="post">

@@ -162,39 +162,39 @@ export default function PricesPage() {
                 <i className="icon-arrow-left icon arrow-rotate"></i>
               </h3>
               <p className="challenges_header-text">
-                Nullam elementum, magna at suscipit lobortis, dui nibh molestie enim, sed scelerisque ex odio sit amet purus. Pellentesque fermentum mauris
+                ChatBox AI eliminates slow support response times, missed lead captures, and high customer service overhead by delivering instant, custom-trained AI chat assistants.
               </p>
             </div>
             <ul className="challenges_list d-flex flex-column flex-sm-row flex-wrap">
               <li className="challenges_list-item">
                 <span className="number">01</span>
                 <span className="separator"></span>
-                <h5 className="title">How and Where to Start</h5>
+                <h5 className="title">Instant Website Setup</h5>
               </li>
               <li className="challenges_list-item">
                 <span className="number">02</span>
                 <span className="separator"></span>
-                <h5 className="title">Time to Get New Strategy</h5>
+                <h5 className="title">Automated RAG Search</h5>
               </li>
               <li className="challenges_list-item">
                 <span className="number">03</span>
                 <span className="separator"></span>
-                <h5 className="title">Tool Selection</h5>
+                <h5 className="title">Multi-LLM Provider Engine</h5>
               </li>
               <li className="challenges_list-item">
                 <span className="number">04</span>
                 <span className="separator"></span>
-                <h5 className="title">Find the Right Place Market</h5>
+                <h5 className="title">WordPress & Web Embeds</h5>
               </li>
               <li className="challenges_list-item">
                 <span className="number">05</span>
                 <span className="separator"></span>
-                <h5 className="title">New System Support</h5>
+                <h5 className="title">Continuous 24/7 Support</h5>
               </li>
               <li className="challenges_list-item">
                 <span className="number">06</span>
                 <span className="separator"></span>
-                <h5 className="title">Take New Level of Management</h5>
+                <h5 className="title">Lead & Transcript Analytics</h5>
               </li>
             </ul>
           </div>
@@ -204,10 +204,10 @@ export default function PricesPage() {
         <section className="model section">
           <div className="container d-xl-flex align-items-center justify-content-between">
             <div className="model_header">
-              <h4 className="model_header-title">Fine-Tuned Model Prices Updates</h4>
-              <p className="model_header-subtitle">Create your own custom models by fine-tuning our base models with your own data.</p>
+              <h4 className="model_header-title">Custom AI Models & Bedrock Integration</h4>
+              <p className="model_header-subtitle">Deploy specialized AI models tailored to your brand's unique data requirements.</p>
               <p className="model_header-text">
-                Nunc quis tellus leo. Vivamus lorem magna, tempus at suscipit quis, viverra ut dolor. Suspendisse in urna id urna facilisis dapibus ut at enim. Sed tempus tincidunt neque nec tincidunt. Nam imperdiet felis nulla
+                Easily connect custom Amazon Bedrock credentials, Anthropic Claude keys, or Google Gemini endpoints with flexible rate limits and zero lock-in.
               </p>
               <Link className="model_header-btn btn btn--neon" href="/contact">Talk to Specialist</Link>
             </div>

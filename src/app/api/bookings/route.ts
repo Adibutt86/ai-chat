@@ -159,7 +159,7 @@ export async function POST(request: Request) {
         startTime: start,
         endTime: end,
         timezone: timezone || 'UTC',
-        status: 'confirmed',
+        status: 'pending',
       },
       include: {
         service: true,
@@ -196,9 +196,9 @@ export async function POST(request: Request) {
       }
     }
 
-    // 6. Send email notification to customer
+    // 6. Send email notification to customer (Pending Approval)
     try {
-      await sendBookingNotification('BOOKING_CONFIRMED', {
+      await sendBookingNotification('BOOKING_CREATED', {
         bookingId: booking.id,
         customerName: booking.customerName,
         customerEmail: booking.customerEmail,
@@ -209,7 +209,7 @@ export async function POST(request: Request) {
         businessName: agent.organization.name
       });
     } catch (err) {
-      console.error('Failed to send confirmation email:', err);
+      console.error('Failed to send booking created email:', err);
     }
 
     // Return confirmation
@@ -265,6 +265,34 @@ export async function PATCH(request: Request) {
       where: { id },
       data: { status }
     });
+
+    // If status is confirmed (admin approved), send approval confirmation email notification
+    if (status === 'confirmed') {
+      try {
+        const service = await prisma.service.findUnique({
+          where: { id: booking.serviceId }
+        });
+        const agent = await prisma.agent.findUnique({
+          where: { id: booking.agentId },
+          include: { organization: true }
+        });
+
+        if (service && agent) {
+          await sendBookingNotification('BOOKING_CONFIRMED', {
+            bookingId: booking.id,
+            customerName: booking.customerName,
+            customerEmail: booking.customerEmail,
+            serviceName: service.name,
+            startTime: booking.startTime,
+            endTime: booking.endTime,
+            timezone: booking.timezone,
+            businessName: agent.organization.name
+          });
+        }
+      } catch (err) {
+        console.error('Failed to send approval email:', err);
+      }
+    }
 
     // If status is cancelled, clean up Google Calendar event
     if (status === 'cancelled') {

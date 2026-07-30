@@ -73,34 +73,49 @@ export default function WordpressPluginPage() {
           <div className="container d-lg-flex align-items-stretch gap-4">
             
             {/* Left Block: Transformed into step instructions */}
-            <div className="d-flex flex-column bg-dark p-4 p-md-5 rounded-4 text-white" style={{ flex: 1, minHeight: 'auto', backgroundColor: '#141920', border: '1px solid #1B2129' }}>
-              <h4 className="text-white mb-4" style={{ fontWeight: 800 }}>Installation Instructions</h4>
+            <div className="d-flex flex-column p-4 p-md-5 rounded-4" style={{ flex: 1, minHeight: 'auto', backgroundColor: '#141920', border: '1px solid #1B2129', color: '#ffffff' }}>
+              <h4 className="mb-4" style={{ fontWeight: 800, color: '#ffffff' }}>Installation & Configuration Guide</h4>
               
-              <div className="d-flex flex-column gap-4 text-white">
-                <div className="d-flex gap-3 align-items-start text-white">
-                  <span className="badge rounded-circle p-3 d-flex align-items-center justify-content-center bg-primary text-white" style={{ width: '36px', height: '36px', fontWeight: 'bold' }}>1</span>
+              <div className="d-flex flex-column gap-4" style={{ color: '#ffffff' }}>
+                <div className="d-flex gap-3 align-items-start" style={{ color: '#ffffff' }}>
+                  <span className="badge rounded-circle p-3 d-flex align-items-center justify-content-center" style={{ width: '36px', height: '36px', fontWeight: 'bold', backgroundColor: '#2563eb', color: '#ffffff' }}>1</span>
                   <div>
-                    <h5 className="text-white mb-2" style={{ fontWeight: 700 }}>Download the Plugin</h5>
-                    <p className="small mb-3 text-white">Download the lightweight ChatBox AI widget loader plugin `.zip` archive.</p>
-                    <a className="btn btn--neon" href="/public/chatbox-widget.js" download style={{ padding: '10px 24px', fontSize: '14px' }}>
+                    <h5 className="mb-2" style={{ fontWeight: 700, color: '#ffffff' }}>Download Official WordPress Plugin ZIP</h5>
+                    <p className="small mb-3" style={{ color: '#CBD5E1' }}>Download the official ChatBox AI WordPress plugin <code>.zip</code> package ready for upload.</p>
+                    <a className="btn btn--neon" href="/api/download-wordpress-plugin" download style={{ padding: '10px 24px', fontSize: '14px' }}>
                       <i className="icon-arrow-down icon mr-2"></i> Download WordPress Plugin (.zip)
                     </a>
                   </div>
                 </div>
 
-                <div className="d-flex gap-3 align-items-start text-white">
-                  <span className="badge rounded-circle p-3 d-flex align-items-center justify-content-center bg-primary text-white" style={{ width: '36px', height: '36px', fontWeight: 'bold' }}>2</span>
+                <div className="d-flex gap-3 align-items-start" style={{ color: '#ffffff' }}>
+                  <span className="badge rounded-circle p-3 d-flex align-items-center justify-content-center" style={{ width: '36px', height: '36px', fontWeight: 'bold', backgroundColor: '#2563eb', color: '#ffffff' }}>2</span>
                   <div>
-                    <h5 className="text-white mb-1" style={{ fontWeight: 700 }}>Upload to WordPress</h5>
-                    <p className="small text-white">Go to your WordPress Admin panel &gt; <strong>Plugins</strong> &gt; <strong>Add New</strong> &gt; <strong>Upload Plugin</strong>. Choose the downloaded `.zip` file, click install, and then activate it.</p>
+                    <h5 className="mb-1" style={{ fontWeight: 700, color: '#ffffff' }}>Upload to WordPress</h5>
+                    <p className="small" style={{ color: '#CBD5E1' }}>Go to your WordPress Admin panel &gt; <strong style={{ color: '#ffffff' }}>Plugins</strong> &gt; <strong style={{ color: '#ffffff' }}>Add New</strong> &gt; <strong style={{ color: '#ffffff' }}>Upload Plugin</strong>. Select the downloaded <code>chatbox-ai-widget.zip</code> file, click Install Now, and Activate the plugin.</p>
                   </div>
                 </div>
 
-                <div className="d-flex gap-3 align-items-start text-white">
-                  <span className="badge rounded-circle p-3 d-flex align-items-center justify-content-center bg-primary text-white" style={{ width: '36px', height: '36px', fontWeight: 'bold' }}>3</span>
+                <div className="d-flex gap-3 align-items-start" style={{ color: '#ffffff' }}>
+                  <span className="badge rounded-circle p-3 d-flex align-items-center justify-content-center" style={{ width: '36px', height: '36px', fontWeight: 'bold', backgroundColor: '#2563eb', color: '#ffffff' }}>3</span>
                   <div>
-                    <h5 className="text-white mb-1" style={{ fontWeight: 700 }}>Configure Agent ID</h5>
-                    <p className="small text-white">Open the new **ChatBox AI Settings** item in your sidebar, paste your custom **Agent ID** from your Dashboard, and save changes!</p>
+                    <h5 className="mb-2" style={{ fontWeight: 700, color: '#ffffff' }}>Select Connection Mode & Testing Options</h5>
+                    <p className="small mb-3" style={{ color: '#CBD5E1' }}>Open <strong style={{ color: '#ffffff' }}>ChatBox AI</strong> in your WordPress sidebar and choose your options:</p>
+                    
+                    <div className="d-flex flex-column gap-2">
+                      <div className="p-3 rounded-3" style={{ background: '#1C232D', border: '1px solid #2B3545', color: '#ffffff' }}>
+                        <h6 className="mb-1 font-weight-bold" style={{ color: '#38BDF8' }}>⚡ Option A: Auto Connect (By Website Domain)</h6>
+                        <p className="small mb-0" style={{ color: '#E2E8F0' }}>Automatically pairs your chatbot using your WordPress site URL. No copying or pasting of IDs required!</p>
+                      </div>
+                      <div className="p-3 rounded-3" style={{ background: '#1C232D', border: '1px solid #2B3545', color: '#ffffff' }}>
+                        <h6 className="mb-1 font-weight-bold" style={{ color: '#4ADE80' }}>🔑 Option B: Connect By Agent ID</h6>
+                        <p className="small mb-0" style={{ color: '#E2E8F0' }}>Paste your specific Agent ID (e.g. <code style={{ color: '#FACC15', backgroundColor: 'rgba(250, 204, 21, 0.1)', padding: '2px 6px', borderRadius: '4px' }}>cm78xyz...</code>) from your ChatBox AI Dashboard for multi-agent setups.</p>
+                      </div>
+                      <div className="p-3 rounded-3" style={{ background: '#1C232D', border: '1px solid #2B3545', color: '#ffffff' }}>
+                        <h6 className="mb-1 font-weight-bold" style={{ color: '#F472B6' }}>🧪 Option C: Show Now for Logged-In Users & WP Admin Backend</h6>
+                        <p className="small mb-0" style={{ color: '#E2E8F0' }}>Check <em>"Show Now for Logged-In Users Only"</em> or <em>"Enable inside WP-Admin Backend"</em> during testing so you can test the chatbot privately without exposing it to public site visitors!</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

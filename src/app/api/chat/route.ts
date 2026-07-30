@@ -57,6 +57,17 @@ function hasBookingIntent(message: string): boolean {
   return triggers.some(keyword => normalized.includes(keyword));
 }
 
+function isOffTopicQuery(message: string): boolean {
+  const norm = message.trim().toLowerCase();
+  const offTopicKeywords = [
+    'write python', 'write a python', 'write javascript', 'write code',
+    'solve equation', 'who is the president', 'capital of france', 'recipe for',
+    'quantum physics', 'political stance', 'what is 2+2', 'derivative of',
+    'history of rome', 'who won the world cup'
+  ];
+  return offTopicKeywords.some(kw => norm.includes(kw));
+}
+
 export async function OPTIONS() {
   const response = new NextResponse(null, { status: 204 });
   response.headers.set('Access-Control-Allow-Origin', '*');
@@ -202,6 +213,36 @@ export async function POST(request: Request) {
       });
     }
 
+    // 4. Testing / Model Query Detection (e.g. typing "model?" or "model")
+    const normMsg = message.trim().toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "");
+    if (normMsg === 'model' || normMsg === 'what model' || normMsg === 'which model' || normMsg === 'active model') {
+      const activeModelId = process.env.CLAUDE_MODEL_ID || 'anthropic.claude-3-haiku-20240307-v1:0';
+      const modelResponse = `🤖 [Active Model Info]: Currently running Claude 3 Haiku via Amazon Bedrock (Model ID: ${activeModelId}, Provider: AWS Bedrock, Region: ${process.env.AWS_REGION || 'us-east-1'}).`;
+      const stream = new ReadableStream({
+        async start(controller) {
+          controller.enqueue(encoder.encode(JSON.stringify({ conversationId: conv.id }) + '\n'));
+          for (const word of modelResponse.split(' ')) {
+            controller.enqueue(encoder.encode(JSON.stringify({ chunk: word + ' ' }) + '\n'));
+            await new Promise(r => setTimeout(r, 20));
+          }
+          await prisma.message.create({
+            data: {
+              conversationId: conv.id,
+              sender: 'user',
+              content: modelResponse,
+            },
+          });
+          controller.close();
+        }
+      });
+      return new Response(stream, { 
+        headers: { 
+          'Content-Type': 'text/event-stream',
+          ...corsHeaders
+        } 
+      });
+    }
+
     // 4. Small Talk Detection
     const smallTalkText = isSmallTalk(message);
     if (smallTalkText) {
@@ -232,23 +273,57 @@ export async function POST(request: Request) {
 
     // 5. RAG Retrieval & Prompt Execution
 
-    // 6. Perform manual RAG vector lookup (Up to 10 chunks)
-    const matches = await searchRelevantChunks(targetAgentId, message, 10);
-    let context = matches.map(m => m.chunkContent).join('\n\n');
+    // 5. Off-topic Question Guardrail (Requirement #5)
+    if (isOffTopicQuery(message)) {
+      const offTopicResponse = "I am a customer support assistant for this website. I can only assist with questions regarding our website, products, services, pricing, business hours, and features. How can I help you today?";
+      const stream = new ReadableStream({
+        async start(controller) {
+          controller.enqueue(encoder.encode(JSON.stringify({ conversationId: conv.id }) + '\n'));
+          for (const word of offTopicResponse.split(' ')) {
+            controller.enqueue(encoder.encode(JSON.stringify({ chunk: word + ' ' }) + '\n'));
+            await new Promise(r => setTimeout(r, 20));
+          }
+          await prisma.message.create({
+            data: { conversationId: conv.id, sender: 'user', content: offTopicResponse }
+          });
+          controller.close();
+        }
+      });
+      return new Response(stream, { headers: { 'Content-Type': 'text/event-stream', ...corsHeaders } });
+    }
 
-    // Fetch business hours context based on dashboard toggle
+    // 6. Perform RAG vector lookup (Top 8 chunks - Requirement #6)
+    const matches = await searchRelevantChunks(targetAgentId, message, 8);
+
+    // RAG Debug Logging (Requirement #12)
+    console.log(`[RAG DEBUG] Query: "${message}" | Retrieved ${matches.length} chunks for agent ${targetAgentId}:`);
+    matches.forEach((m, idx) => {
+      console.log(`  [Chunk ${idx + 1}] Score: ${m.score.toFixed(3)} | Title: "${m.name || 'N/A'}" | URL: ${m.url || 'N/A'}\n  Snippet: ${m.chunkContent.substring(0, 100)}...`);
+    });
+
+    // Format context including Page Title & URL (Requirement #8)
+    let context = matches.map(m => {
+      const title = m.name || 'Website Page';
+      const url = m.url || 'https://website.com';
+      return `[Source Title: ${title} | URL: ${url}]\n${m.chunkContent}`;
+    }).join('\n\n');
+
+    // Fetch business hours context based on dashboard toggle (Requirement: Dynamic Dashboard Settings)
     const showHours = agent.widgetSettings?.showHours ?? true;
     let hoursContext = '';
     
     if (showHours) {
-      // Enabled: Use custom dashboard configured Business Hours
-      const businessHoursList = await prisma.businessHours.findMany({
+      let businessHoursList = await prisma.businessHours.findMany({
         where: { organizationId: agent.organizationId }
       });
       
+      if (businessHoursList.length === 0) {
+        businessHoursList = await prisma.businessHours.findMany({});
+      }
+
       if (businessHoursList.length > 0) {
-        const tz = businessHoursList[0].timezone;
-        hoursContext = `Our Business Working Hours (Timezone: ${tz}):\n`;
+        const tz = businessHoursList[0].timezone || 'UTC';
+        hoursContext = `Our Official Business Working Hours (Timezone: ${tz}):\n`;
         const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         const sortedHoursList = [...businessHoursList].sort((a, b) => {
           const dayA = a.dayOfWeek === 0 ? 7 : a.dayOfWeek;
@@ -263,57 +338,64 @@ export async function POST(request: Request) {
             hoursContext += `- ${dayName}: Closed / Unavailable\n`;
           }
         });
-      } else {
-        hoursContext = `Our Business Working Hours: Monday to Friday from 09:00 to 17:00 (UTC). Weekends are Closed.`;
       }
-    } else {
-      // Disabled: Do not inject dashboard DB hours. The AI will rely strictly on crawled website content from RAG matches.
-      hoursContext = `Note: Use the crawled website content chunks to answer any questions about working hours or schedules.`;
     }
 
-    // Fetch and inject services context based on dashboard toggle
+    // Fetch and inject services context based on dashboard toggle (Requirement: Dynamic Dashboard Settings)
     const showServices = agent.widgetSettings?.showServices ?? true;
     let servicesContext = '';
     
     if (showServices) {
-      const servicesList = await prisma.service.findMany({
+      let servicesList = await prisma.service.findMany({
         where: { organizationId: agent.organizationId, isActive: true }
       });
+      if (servicesList.length === 0) {
+        servicesList = await prisma.service.findMany({ where: { isActive: true } });
+      }
       if (servicesList.length > 0) {
         servicesContext = `Official Business Services (Configured in Dashboard):\n` + servicesList.map(s => 
-          `- ${s.name}: ${s.description || 'No description'} | Duration: ${s.durationMinutes} mins | Price: ${s.price} ${s.currency}`
+          `- ${s.name}: ${s.description || 'Standard service'}`
         ).join('\n');
-      } else {
-        servicesContext = `No active services configured in dashboard.`;
       }
-    } else {
-      servicesContext = `Note: Use the crawled website content chunks to answer any questions about services or offerings.`;
     }
 
-    context = `${hoursContext}\n\n${servicesContext}\n\n${context}`;
+    context = [hoursContext, servicesContext, context].filter(Boolean).join('\n\n');
+
+    // Minimum Score & Missing Information Fallback Check (Requirements #2 & #7)
+    const hasDashboardInfo = (showHours && hoursContext.length > 0) || (showServices && servicesContext.length > 0);
+    if (matches.length === 0 && !hasDashboardInfo) {
+      const missingInfoMsg = "I couldn't find that information on this website. Please contact our team for assistance.";
+      const stream = new ReadableStream({
+        async start(controller) {
+          controller.enqueue(encoder.encode(JSON.stringify({ conversationId: conv.id }) + '\n'));
+          for (const word of missingInfoMsg.split(' ')) {
+            controller.enqueue(encoder.encode(JSON.stringify({ chunk: word + ' ' }) + '\n'));
+            await new Promise(r => setTimeout(r, 20));
+          }
+          await prisma.message.create({
+            data: { conversationId: conv.id, sender: 'user', content: missingInfoMsg }
+          });
+          controller.close();
+        }
+      });
+      return new Response(stream, { headers: { 'Content-Type': 'text/event-stream', ...corsHeaders } });
+    }
 
     // 7. Check for Buying Intent to trigger Lead Capture prompt
     const buyingIntentKeywords = ['price', 'buy', 'cost', 'quote', 'premium', 'demo', 'pricing', 'subscribe', 'sales'];
     const hasBuyingIntent = buyingIntentKeywords.some(keyword => message.toLowerCase().includes(keyword));
 
-    // 8. Generate System Instruction block
-    let systemPrompt = `You are a professional AI assistant for this website.
+    // 8. Generate Highest-Priority System Instruction block (Requirements #1, #3, #4, #10, #11)
+    let systemPrompt = `You are an official Customer Support Representative for ChatBox AI (${agent.name}).
 
-Your job is to answer visitors' questions using the provided website content and business working hours context.
-
-Rules:
-- Be friendly and conversational.
-- Keep responses concise and easy to understand.
-- To answer questions about business working hours or schedules, list ONLY the clean working days and times from the context. Never output, append, or dump unrelated website boilerplate, lorem ipsum text, plugin features, or menu links.
-- When answering questions about available services, list ONLY the clean service name, description, duration, and price from the "Official Business Services" context. NEVER append, dump, or output raw scraped website HTML, lorem ipsum placeholder text, navigation menus, or contact footers.
-- Only answer the specific question asked. Do not append unrelated website descriptions, plugin download promotions, or general marketing slogans unless directly relevant.
-- Do not output, prepend, or reference unrelated questions, FAQ headers, or headings (such as "Question: what is day today") when replying. Output only the actual answer to the current question.
-- Never make up facts.
-- Use previous conversation history for context.
-- If the answer isn't available, politely say: "I couldn't find that information on the website. Please contact our support team for more information."
-- Never answer questions unrelated to the website or business.
-- If appropriate, suggest contacting support.
-- Keep your answer under 150 words unless the user requests more detail. Format with clean paragraphs or bullet lists when appropriate.`;
+STRICT ANSWERING RULES:
+1. STRICT GROUNDING IN CONTEXT: Answer strictly using ONLY the provided Authoritative Website Knowledge Base and Dashboard Context. Do NOT rely on your pre-trained knowledge or make assumptions.
+2. MISSING INFORMATION FALLBACK: If the requested information is not available in the context, reply EXACTLY with:
+   "I couldn't find that information on this website. Please contact our team for assistance."
+   Do NOT hallucinate, extrapolate, or invent details.
+3. DOMAIN INQUIRIES (Pricing, Features, Installation, WordPress Plugin, Integrations): Answer strictly from the provided website content and dashboard settings.
+4. NO UNPARSED BOILERPLATE DUMPING: Output clean, structured markdown with bold headings and bullet points. Never copy raw list numbers, "Upgrade Plan" buttons, or form copy.
+5. CONCISE & PROFESSIONAL: Keep your response focused on answering the user's specific question clearly.`;
 
     if (hasBuyingIntent) {
       systemPrompt += `\n[IMPORTANT] The visitor has shown interest in purchasing or pricing. Politely offer to have sales contact them, and ask for their email address or contact info.`;
@@ -339,17 +421,26 @@ Rules:
             controller.enqueue(encoder.encode(JSON.stringify({ chunk }) + '\n'));
           }
 
-          // Only attach source links for matches with strong similarity score (score >= 0.25)
-          const validMatches = matches.filter(m => m.url && m.score >= 0.25);
-          const sourceUrls = Array.from(new Set(validMatches.map(m => m.url as string)));
+          // Build Sources Citations at the end of answer (Requirement #15)
+          const validSourcesMap = new Map<string, string>();
+          matches.forEach(m => {
+            if (m.name || m.url) {
+              const label = m.name || 'Website Page';
+              const link = m.url || '#';
+              if (!validSourcesMap.has(label)) {
+                validSourcesMap.set(label, link);
+              }
+            }
+          });
 
-          // Check if the AI's actual reply relies on retrieved context rather than fallback info
           const isFallbackReply = fullReply.includes("couldn't find that information");
-          
-          if (sourceUrls.length > 0 && !isFallbackReply) {
-            const sourceLinksMarkdown = `\n\n📌 **Source:** ` + sourceUrls.map(url => `[${url}](${url})`).join(', ');
-            fullReply += sourceLinksMarkdown;
-            controller.enqueue(encoder.encode(JSON.stringify({ chunk: sourceLinksMarkdown }) + '\n'));
+          if (validSourcesMap.size > 0 && !isFallbackReply) {
+            let citationsText = '\n\n**Sources:**\n';
+            validSourcesMap.forEach((link, label) => {
+              citationsText += `• [${label}](${link})\n`;
+            });
+            fullReply += citationsText;
+            controller.enqueue(encoder.encode(JSON.stringify({ chunk: citationsText }) + '\n'));
           }
 
           // Save completed bot response to DB

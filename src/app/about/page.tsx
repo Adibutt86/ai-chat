@@ -56,7 +56,7 @@ export default function AboutPage() {
           <div className="page_header">
             <h2 className="page_header-title type" data-text="About Us">About Us</h2>
             <span className="tw-height h2"><span className="text">About Us</span></span>
-            <h5 className="page_header-subtitle">Taking your business to new markets is easier than ever</h5>
+            <h5 className="page_header-subtitle">Empowering businesses with custom AI chatbot assistants that engage, support, and convert visitors 24/7</h5>
           </div>
           
           <div className="page_slider-controls">
@@ -126,23 +126,23 @@ export default function AboutPage() {
             <div className="services_content d-lg-flex align-items-center">
               <ul className="services_content-numbers d-flex flex-column">
                 <li className="block">
-                  <h6 className="label">Advanced Solutions for Startups</h6>
-                  <span className="h1" style={{ fontWeight: 800 }}>240+</span>
+                  <h6 className="label">Custom AI Chatbots Deployed</h6>
+                  <span className="h1" style={{ fontWeight: 800 }}>2,400+</span>
                 </li>
                 <li className="block">
-                  <h6 className="label">Investors on-boarded on the platform</h6>
-                  <span className="h1" style={{ fontWeight: 800 }}>1720</span>
+                  <h6 className="label">Daily Conversations Automated</h6>
+                  <span className="h1" style={{ fontWeight: 800 }}>150K+</span>
                 </li>
                 <li className="block">
-                  <h6 className="label">Promotion cases and new products</h6>
-                  <span className="h1" style={{ fontWeight: 800 }}>8100+</span>
+                  <h6 className="label">Satisfied Businesses & Brands</h6>
+                  <span className="h1" style={{ fontWeight: 800 }}>8,100+</span>
                 </li>
               </ul>
               
               <div className="services_content-video video">
                 <span className="cover">
                   <picture>
-                    <img src="/img/about/cover.jpg" alt="About our services" />
+                    <img src="/img/about/cover.jpg" alt="About our AI chatbot services" />
                   </picture>
                   <a className="video-btn btn--neon" href="https://www.youtube.com/watch?v=XHOmBV4js_E" target="_blank" rel="noopener noreferrer">
                     <i className="icon-play icon"></i>
@@ -153,31 +153,31 @@ export default function AboutPage() {
 
             <ul className="services_list">
               <li className="wrapper">
-                <Link className="services_list-item d-flex flex-column" href="/service">
+                <Link className="services_list-item d-flex flex-column" href="/wordpress">
                   <i className="icon-chart-bar icon"></i>
-                  <span className="title h5">Data Analysis</span>
-                  <p className="text">Phasellus fringilla tuc dignissim diam. Duis nec tempus ligula. Curabitur vel pretium. Vestibulum metus pur esta</p>
+                  <span className="title h5">Smart RAG Training</span>
+                  <p className="text">Instantly train your AI chatbot by scraping website content, documents, and FAQs to deliver accurate answers.</p>
                 </Link>
               </li>
               <li className="wrapper">
-                <Link className="services_list-item d-flex flex-column" href="/service">
+                <Link className="services_list-item d-flex flex-column" href="/prices">
                   <i className="icon-cloud icon"></i>
-                  <span className="title h5">Optimization</span>
-                  <p className="text">Phasellus fringilla dignissim diam. Duis nec tempus ligula. Curabitur vel pretium. Vestibulum metus pur esta</p>
+                  <span className="title h5">Multi-LLM Engine</span>
+                  <p className="text">Seamlessly switch between Google Gemini, Anthropic Claude, and OpenAI GPT-4 for unmatched speed & accuracy.</p>
                 </Link>
               </li>
               <li className="wrapper">
-                <Link className="services_list-item d-flex flex-column" href="/service">
+                <Link className="services_list-item d-flex flex-column" href="/wordpress">
                   <i className="icon-filesearch icon"></i>
-                  <span className="title h5">Content Track</span>
-                  <p className="text">Phasellus fringilla tuc dignissim diam. Duis nec tempus ligula. Curabitur vel pretium. Vestibulum metus pur esta</p>
+                  <span className="title h5">Seamless Widget Embed</span>
+                  <p className="text">Deploy your custom AI chatbot widget to WordPress, Next.js, Shopify, or any custom website with one line of code.</p>
                 </Link>
               </li>
               <li className="wrapper">
-                <Link className="services_list-item d-flex flex-column" href="/service">
+                <Link className="services_list-item d-flex flex-column" href="/contact">
                   <i className="icon-protect icon"></i>
-                  <span className="title h5">Risk Manage</span>
-                  <p className="text">Phasellus fringilla dignissim diam. Duis nec tempus ligula. Curabitur vel pretium. Vestibulum metus pur esta</p>
+                  <span className="title h5">Lead Capture & Analytics</span>
+                  <p className="text">Capture qualified visitor emails, view detailed chat transcripts, and track user engagement in real time.</p>
                 </Link>
               </li>
             </ul>
@@ -198,10 +198,10 @@ export default function AboutPage() {
             <div className="feedback_main">
               <div className="feedback_main-header">
                 <div className="wrapper">
-                  <span className="tw-height h4"><span className="text">Ask us any</span></span>
-                  <h4 className="feedback_main-header_title type" data-text="Ask us any">Ask us any</h4>
+                  <span className="tw-height h4"><span className="text">Ask us anything</span></span>
+                  <h4 className="feedback_main-header_title type" data-text="Ask us anything">Ask us anything</h4>
                 </div>
-                <p className="feedback_main-header_text">Suspendisse ligula magna, laoreet non egestas ac, lobortis at nulla. Suspendisse efficitur neque nec neque porttitor tincidunt. Donec iaculis lacus vitae velit finibus ullamcorper</p>
+                <p className="feedback_main-header_text">Have questions about setting up ChatBox AI for your website or business? Get in touch with us today and our AI specialists will be happy to assist you.</p>
               </div>
               <form className="feedback_main-form form d-flex flex-column" action="#" method="post">
                 <input className="field required" type="text" id="feedbackName" name="feedbackName" placeholder="Name" required />

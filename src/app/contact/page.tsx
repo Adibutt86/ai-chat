@@ -159,15 +159,15 @@ export default function ContactPage() {
                       <div className="body">
                         <div className="main">
                           <p className="main_general">
-                            Suspendisse hendrerit, augue accumsan dictum tincidunt, sem sapien lobortis nibh, vitae auctor mi tortor et ipsum. Duis vitae augue vitae mi suscipit rutrum vitae non eros.
+                            ChatBox AI connects seamlessly to your website in less than 2 minutes to provide instant 24/7 AI-powered customer support and lead collection.
                           </p>
                           <ul className="main_list">
                             <li className="main_list-item">
                               <span className="number">01</span>
                               <div className="main">
-                                <h6 className="main_title">Choosing the optimal solution</h6>
+                                <h6 className="main_title">Choosing the optimal AI model solution</h6>
                                 <p className="main_text">
-                                  Nullam elementum, magna at suscipit lobortis, dui nibh molestie enim, sed scelerisque ex odio sit amet purus. Pellentesque fermentum mauris
+                                  Select between Amazon Bedrock Claude 3 Haiku for ultra-fast, low-cost streaming, or Google Gemini and OpenAI GPT models.
                                 </p>
                               </div>
                             </li>
@@ -186,7 +186,7 @@ export default function ContactPage() {
                       onClick={() => setActiveFaq(activeFaq === 'item-2' ? null : 'item-2')}
                       style={{ cursor: 'pointer' }}
                     >
-                      All Services that we provide
+                      All Services & Integrations that we provide
                       <span className={`title_icon ${activeFaq === 'item-2' ? 'transform' : ''}`}>
                         <i className="icon-arrow-left icon arrow-rotate"></i>
                       </span>
@@ -195,7 +195,7 @@ export default function ContactPage() {
                       <div className="body">
                         <div className="main">
                           <p className="main_general">
-                            Suspendisse hendrerit, augue accumsan dictum tincidunt, sem sapien lobortis nibh, vitae auctor mi tortor et ipsum. Duis vitae augue vitae mi suscipit rutrum vitae non eros.
+                            We support WordPress plugin embeds, Next.js, Shopify, custom HTML widgets, PDF indexing, and sitemap crawling out of the box.
                           </p>
                         </div>
                       </div>
@@ -221,10 +221,10 @@ export default function ContactPage() {
             <div className="feedback_main">
               <div className="feedback_main-header">
                 <div className="wrapper">
-                  <span className="tw-height h4"><span className="text">Ask us any</span></span>
-                  <h4 className="feedback_main-header_title type" data-text="Ask us any">Ask us any</h4>
+                  <span className="tw-height h4"><span className="text">Ask us anything</span></span>
+                  <h4 className="feedback_main-header_title type" data-text="Ask us anything">Ask us anything</h4>
                 </div>
-                <p className="feedback_main-header_text">Suspendisse ligula magna, laoreet non egestas ac, lobortis at nulla. Suspendisse efficitur neque nec neque porttitor tincidunt. Donec iaculis lacus vitae velit finibus ullamcorper</p>
+                <p className="feedback_main-header_text">Have questions about setting up ChatBox AI for your website or business? Get in touch with us today and our AI specialists will be happy to assist you.</p>
               </div>
               <form className="feedback_main-form form d-flex flex-column" action="#" method="post">
                 <input className="field required" type="text" id="feedbackName" name="feedbackName" placeholder="Name" required />

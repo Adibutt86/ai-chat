@@ -1,4 +1,4 @@
-import { formatInTimezone } from './availability';
+import { prisma } from './db';
 
 export type NotificationEvent = 
   | 'BOOKING_CREATED'
@@ -18,10 +18,7 @@ interface NotificationPayload {
 }
 
 /**
- * Send a booking notification email.
- * This is an abstraction that logs notifications locally and is ready
- * to be wired up with any transactional email service (e.g. Nodemailer, Resend, SendGrid)
- * using the configured environment variables.
+ * Send a booking notification email via Resend API or console log fallback.
  */
 export async function sendBookingNotification(
   event: NotificationEvent,
@@ -38,8 +35,8 @@ export async function sendBookingNotification(
   });
 
   const subjectMap: Record<NotificationEvent, string> = {
-    BOOKING_CREATED: `Appointment Booked: ${payload.serviceName}`,
-    BOOKING_CONFIRMED: `Appointment Confirmed: ${payload.serviceName}`,
+    BOOKING_CREATED: `Appointment Booked (Pending Approval): ${payload.serviceName}`,
+    BOOKING_CONFIRMED: `Appointment Approved & Confirmed: ${payload.serviceName}`,
     BOOKING_CANCELLED: `Appointment Cancelled: ${payload.serviceName}`,
     BOOKING_RESCHEDULED: `Appointment Rescheduled: ${payload.serviceName}`,
   };
@@ -52,7 +49,7 @@ export async function sendBookingNotification(
     Event: ${event.replace('_', ' ')}
     Time: ${formattedStart} (Timezone: ${payload.timezone})
     Business: ${payload.businessName}
-    Confirmation ID: ${payload.bookingId}
+    Booking Reference ID: ${payload.bookingId}
 
     If you have any questions, please contact ${payload.businessName}.
 
@@ -70,10 +67,47 @@ ${emailBody}
 =======================================
   `);
 
-  // To wire up a real provider in the future:
-  // if (process.env.SMTP_HOST && process.env.SMTP_USER) {
-  //   // Execute transporter.sendMail(...)
-  // }
+  // Wire up Resend Email Provider
+  try {
+    const config = await prisma.globalSettings.findUnique({
+      where: { id: 'global-config' }
+    });
+
+    const apiKey = config?.resendApiKey || process.env.RESEND_API_KEY;
+    const fromEmail = config?.fromEmail || process.env.FROM_EMAIL || 'onboarding@resend.dev';
+
+    if (apiKey && apiKey.length > 5) {
+      console.log(`[RESEND] Sending email via Resend API to ${payload.customerEmail}...`);
+      const resendRes = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          from: fromEmail,
+          to: [payload.customerEmail],
+          subject: subject,
+          html: `<div style="font-family: sans-serif; padding: 24px; color: #1e293b; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; rounded-radius: 12px;">
+            <h2 style="color: #2563eb; margin-top: 0;">${subject}</h2>
+            <p>Hello <strong>${payload.customerName}</strong>,</p>
+            <p>Your appointment status for <strong>${payload.serviceName}</strong> with <strong>${payload.businessName}</strong> is now <span style="display: inline-block; padding: 4px 10px; background: #e0f2fe; color: #0369a1; border-radius: 6px; font-weight: bold;">${event.replace('_', ' ')}</span>.</p>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 16px; border-radius: 8px; margin: 20px 0;">
+              <p style="margin: 6px 0;">📅 <strong>Date & Time:</strong> ${formattedStart}</p>
+              <p style="margin: 6px 0;">🌐 <strong>Timezone:</strong> ${payload.timezone}</p>
+              <p style="margin: 6px 0;">🏢 <strong>Business:</strong> ${payload.businessName}</p>
+              <p style="margin: 6px 0;">🔑 <strong>Booking ID:</strong> <code>${payload.bookingId}</code></p>
+            </div>
+            <p style="color: #64748b; font-size: 14px;">Thank you for scheduling with ${payload.businessName}!</p>
+          </div>`
+        })
+      });
+      const resData = await resendRes.json();
+      console.log(`[RESEND RESULT]:`, resData);
+    }
+  } catch (err) {
+    console.error('Error delivering email via Resend API:', err);
+  }
 
   return true;
 }

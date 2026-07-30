@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.1098.0",
     "@google/genai": "^2.12.0",
     "@prisma/client": "^6.2.1",
     "@radix-ui/react-accordion": "^1.2.16",
@@ -35,6 +36,7 @@
     "dotenv": "^17.4.2",
     "framer-motion": "^12.42.2",
     "jsonwebtoken": "^9.0.3",
+    "jszip": "^3.10.1",
     "lottie-react": "^2.4.1",
     "lucide-react": "^1.25.0",
     "next": "16.2.10",

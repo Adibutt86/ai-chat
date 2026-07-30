@@ -110,6 +110,18 @@ function isBoilerplate(content: string): boolean {
   if (lower.includes('home about services prices') || lower.includes('sign in get started') || lower.includes('wp plugin contact')) {
     return true;
   }
+  // Filter out template lorem ipsum, old template services, and partner ticker text
+  if (lower.includes('phasellus') || lower.includes('vestibulum') || lower.includes('60/billed') || lower.includes('bug monitoring') || lower.includes('1000+ partners') || lower.includes('smmhelper') || lower.includes('cryptochain') || lower.includes('frd company')) {
+    return true;
+  }
+  // Filter out raw numbered index dumps (e.g. 01 Instant Website Setup 02 Automated RAG Search...)
+  if (/01\s+[A-Za-z]+.*02\s+[A-Za-z]+/.test(content)) {
+    return true;
+  }
+  // Filter out raw help form copy
+  if (lower.includes('fill out the help form') || lower.includes('engineers will get back to you')) {
+    return true;
+  }
   // Short menus / footer list patterns
   if (lower.includes('privacy policy') && lower.includes('terms of service') && lower.length < 150) {
     return true;
@@ -145,7 +157,7 @@ export async function searchRelevantChunks(
   const queryVector = await getEmbedding(query);
   const vectorSqlStr = `[${queryVector.join(',')}]`;
 
-  let rawMatches: { chunkContent: string; score: number; documentId: string }[] = [];
+  let rawMatches: { chunkContent: string; score: number; documentId: string; url: string | null; name: string | null }[] = [];
   let fetchedFromDb = false;
 
   try {
@@ -178,6 +190,14 @@ export async function searchRelevantChunks(
         // Prioritize FAQ, Services, Pricing, About, and Contact pages
         const urlLower = (emb.url || '').toLowerCase();
         const nameLower = (emb.name || '').toLowerCase();
+        const chunkLower = (emb.chunkContent || '').toLowerCase();
+        const qLower = query.toLowerCase();
+
+        // Heavy boost for actual pricing plan chunks when querying pricing/plans
+        if ((qLower.includes('price') || qLower.includes('plan') || qLower.includes('cost') || qLower.includes('pricing')) &&
+            (chunkLower.includes('starter') || chunkLower.includes('professional') || chunkLower.includes('enterprise') || chunkLower.includes('$19') || chunkLower.includes('$49'))) {
+          score += 0.45;
+        }
         
         if (urlLower.includes('faq') || nameLower.includes('faq')) {
           score += 0.15;
@@ -186,7 +206,7 @@ export async function searchRelevantChunks(
           score += 0.1;
         }
         if (urlLower.includes('prices') || urlLower.includes('pricing') || nameLower.includes('prices') || nameLower.includes('pricing')) {
-          score += 0.1;
+          score += 0.2;
         }
         if (urlLower.includes('about') || nameLower.includes('about')) {
           score += 0.05;
@@ -252,50 +272,53 @@ export async function searchRelevantChunks(
   // Rank by similarity score
   const sortedMatches = rawMatches.sort((a, b) => b.score - a.score);
 
-  // Merge duplicate or highly similar chunks
-  const uniqueMatches: typeof sortedMatches = [];
+  // Minimum similarity threshold check (Requirement #7)
+  const MIN_SCORE_THRESHOLD = 0.22;
+  const filteredMatches = sortedMatches.filter(m => m.score >= MIN_SCORE_THRESHOLD);
+
+  // Merge duplicate or highly similar chunks (Requirement #13 & token optimization)
+  const uniqueMatches: { chunkContent: string; score: number; documentId: string; url: string | null; name: string | null }[] = [];
   const seen = new Set<string>();
   
-  for (const m of sortedMatches) {
-    // Basic deduplication normalized prefix check
-    const normalized = m.chunkContent.trim().toLowerCase().substring(0, 100);
+  for (const m of filteredMatches) {
+    const normalized = m.chunkContent.trim().toLowerCase().substring(0, 120);
     if (!seen.has(normalized)) {
       seen.add(normalized);
       uniqueMatches.push(m);
     }
   }
 
-  const finalMatches = uniqueMatches.slice(0, limit);
-
-  // Fallback: If no matches in cache, look up text content directly from database
-  if (finalMatches.length === 0) {
-    const textDocs = await prisma.document.findMany({
-      where: { agentId },
-      take: 5,
-    });
-    return textDocs.map(d => ({ chunkContent: d.content, score: 0.5, documentId: d.id, url: d.url || null, name: d.name || null }));
-  }
-
-  return finalMatches;
+  // Retrieve top 6-8 relevant chunks (Requirement #6)
+  return uniqueMatches.slice(0, Math.min(limit, 8));
 }
 
-/**
- * Text chunker helper to prevent circular dependency
- */
-export function chunkText(text: string, chunkSize = 400): string[] {
-  const words = text.split(' ');
+export function chunkText(text: string, chunkSize = 800, overlap = 150): string[] {
+  const cleanText = text.replace(/\s+/g, ' ').trim();
+  if (!cleanText) return [];
+  if (cleanText.length <= chunkSize) return [cleanText];
+
   const chunks: string[] = [];
-  let currentChunk: string[] = [];
-  
-  for (const word of words) {
-    currentChunk.push(word);
-    if (currentChunk.join(' ').length >= chunkSize) {
-      chunks.push(currentChunk.join(' '));
-      currentChunk = [];
+  let start = 0;
+
+  while (start < cleanText.length) {
+    let end = start + chunkSize;
+    if (end < cleanText.length) {
+      const lastSpace = cleanText.lastIndexOf(' ', end);
+      if (lastSpace > start + chunkSize * 0.6) {
+        end = lastSpace;
+      }
+    } else {
+      end = cleanText.length;
     }
+
+    const chunk = cleanText.substring(start, end).trim();
+    if (chunk.length > 20) {
+      chunks.push(chunk);
+    }
+
+    if (end >= cleanText.length) break;
+    start = Math.max(start + 1, end - overlap);
   }
-  if (currentChunk.length > 0) {
-    chunks.push(currentChunk.join(' '));
-  }
+
   return chunks;
 }

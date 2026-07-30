@@ -10,11 +10,13 @@ export default function MasterPanel() {
   const router = useRouter();
 
   // API Overrides Config State
-  const [activeProvider, setActiveProvider] = useState('gemini');
+  const [activeProvider, setActiveProvider] = useState('claude');
   const [geminiApiKey, setGeminiApiKey] = useState('');
   const [openaiApiKey, setOpenaiApiKey] = useState('');
   const [claudeApiKey, setClaudeApiKey] = useState('');
   const [openrouterApiKey, setOpenrouterApiKey] = useState('');
+  const [resendApiKey, setResendApiKey] = useState('');
+  const [fromEmail, setFromEmail] = useState('onboarding@resend.dev');
 
   const [signupDisabled, setSignupDisabled] = useState(false);
   const [allowedDomains, setAllowedDomains] = useState('*');
@@ -32,11 +34,13 @@ export default function MasterPanel() {
       const res = await fetch('/api/global-config');
       if (res.ok) {
         const data = await res.json();
-        setActiveProvider(data.activeProvider || 'gemini');
+        setActiveProvider(data.activeProvider || 'claude');
         setGeminiApiKey(data.geminiKey || '');
         setOpenaiApiKey(data.openaiKey || '');
         setClaudeApiKey(data.claudeKey || '');
         setOpenrouterApiKey(data.openrouterKey || '');
+        setResendApiKey(data.resendApiKey || '');
+        setFromEmail(data.fromEmail || 'onboarding@resend.dev');
       }
     } catch (err) {
       console.error('Error fetching global configurations:', err);
@@ -83,6 +87,8 @@ export default function MasterPanel() {
           openaiKey: openaiApiKey,
           claudeKey: claudeApiKey,
           openrouterKey: openrouterApiKey,
+          resendApiKey,
+          fromEmail,
         }),
       });
 
@@ -189,57 +195,55 @@ export default function MasterPanel() {
                 onChange={(e) => setActiveProvider(e.target.value)}
                 className="w-full bg-zinc-950 border border-zinc-850 rounded-xl px-4 py-3 text-zinc-300 font-semibold focus:ring-1 focus:ring-red-500 outline-none"
               >
-                <option value="gemini">Google Gemini Models (text-embedding-004 + gemini-2.5-flash)</option>
-                <option value="openai">OpenAI Models (text-embedding-3-small + gpt-4o)</option>
-                <option value="claude">Anthropic Claude Models (Claude 3.5 Sonnet)</option>
-                <option value="openrouter">OpenRouter Serverless Models (Gemini, Llama, Qwen)</option>
+                <option value="claude">Amazon Bedrock — Anthropic Claude 3 Haiku (Active & Primary)</option>
               </select>
-              <p className="text-[10px] text-zinc-500 mt-1">Changing the active model applies system-wide to all user chats and embeddings.</p>
+              <p className="text-[10px] text-zinc-500 mt-1">Amazon Bedrock (Claude 3 Haiku) is set as the exclusive AI engine for all user chats and embeddings.</p>
             </div>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Google Gemini API Key</label>
+                <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">AWS Access Key ID (Amazon Bedrock)</label>
                 <input
-                  type="password"
-                  value={geminiApiKey}
-                  onChange={(e) => setGeminiApiKey(e.target.value)}
-                  className="w-full bg-zinc-950 border border-zinc-850 rounded-xl px-4 py-3 text-zinc-300 font-mono text-xs focus:ring-1 focus:ring-red-500 outline-none"
-                  placeholder="AIzaSy..."
+                  type="text"
+                  readOnly
+                  value="AKIASUFKCZAIYYYCQJ4M"
+                  className="w-full bg-zinc-950 border border-zinc-850 rounded-xl px-4 py-3 text-emerald-400 font-mono text-xs focus:ring-1 focus:ring-red-500 outline-none cursor-not-allowed"
                 />
               </div>
 
               <div>
-                <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">OpenAI API Key (ChatGPT)</label>
+                <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">AWS Region & Model</label>
                 <input
-                  type="password"
-                  value={openaiApiKey}
-                  onChange={(e) => setOpenaiApiKey(e.target.value)}
-                  className="w-full bg-zinc-950 border border-zinc-855 rounded-xl px-4 py-3 text-zinc-300 font-mono text-xs focus:ring-1 focus:ring-red-500 outline-none"
-                  placeholder="sk-proj-..."
+                  type="text"
+                  readOnly
+                  value="us-east-1 | anthropic.claude-3-haiku-20240307-v1:0"
+                  className="w-full bg-zinc-950 border border-zinc-855 rounded-xl px-4 py-3 text-zinc-400 font-mono text-xs outline-none cursor-not-allowed"
                 />
               </div>
 
-              <div>
-                <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Anthropic Claude API Key</label>
-                <input
-                  type="password"
-                  value={claudeApiKey}
-                  onChange={(e) => setClaudeApiKey(e.target.value)}
-                  className="w-full bg-zinc-950 border border-zinc-855 rounded-xl px-4 py-3 text-zinc-300 font-mono text-xs focus:ring-1 focus:ring-red-500 outline-none"
-                  placeholder="sk-ant-..."
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">OpenRouter API Key</label>
-                <input
-                  type="password"
-                  value={openrouterApiKey}
-                  onChange={(e) => setOpenrouterApiKey(e.target.value)}
-                  className="w-full bg-zinc-950 border border-zinc-855 rounded-xl px-4 py-3 text-zinc-300 font-mono text-xs focus:ring-1 focus:ring-red-500 outline-none"
-                  placeholder="sk-or-v1-..."
-                />
+              <div className="pt-4 border-t border-zinc-800 space-y-4">
+                <h4 className="text-xs uppercase tracking-wider text-red-400 font-bold">✉️ Resend Email Service Settings</h4>
+                <div>
+                  <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Resend API Key</label>
+                  <input
+                    type="password"
+                    placeholder="re_123456789..."
+                    value={resendApiKey}
+                    onChange={(e) => setResendApiKey(e.target.value)}
+                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white text-xs focus:ring-1 focus:ring-red-500 outline-none"
+                  />
+                  <p className="text-[10px] text-zinc-500 mt-1">Get your free API key at <a href="https://resend.com" target="_blank" rel="noreferrer" className="text-red-400 underline">resend.com</a> to enable automated email notifications.</p>
+                </div>
+                <div>
+                  <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">From Sender Email</label>
+                  <input
+                    type="email"
+                    placeholder="onboarding@resend.dev"
+                    value={fromEmail}
+                    onChange={(e) => setFromEmail(e.target.value)}
+                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white text-xs focus:ring-1 focus:ring-red-500 outline-none"
+                  />
+                </div>
               </div>
             </div>
 

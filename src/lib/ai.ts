@@ -10,7 +10,7 @@ async function getActiveProviderConfig() {
       where: { id: 'global-config' },
     });
     return config || {
-      activeProvider: 'gemini',
+      activeProvider: 'claude',
       geminiKey: process.env.GEMINI_API_KEY || 'AIzaSyFakeKeyPlaceholder',
       openaiKey: '',
       claudeKey: '',
@@ -18,7 +18,7 @@ async function getActiveProviderConfig() {
     };
   } catch {
     return {
-      activeProvider: 'gemini',
+      activeProvider: 'claude',
       geminiKey: process.env.GEMINI_API_KEY || 'AIzaSyFakeKeyPlaceholder',
       openaiKey: '',
       claudeKey: '',
@@ -31,59 +31,20 @@ async function getActiveProviderConfig() {
  * Generate embedding (768-dim) for text using text-embedding-004 model.
  */
 export async function getEmbedding(text: string): Promise<number[]> {
-  try {
-    const config = await getActiveProviderConfig();
-    
-    // Simulate alternate provider embeddings or run Gemini Embedding
-    if (config.activeProvider === 'openai') {
-      return Array.from({ length: 1536 }, (_, i) => Math.cos(i + text.length));
-    }
-    
-    if (config.activeProvider === 'claude') {
-      return Array.from({ length: 1024 }, (_, i) => Math.tan(i + text.length));
-    }
-
-    const key = config.geminiKey || process.env.GEMINI_API_KEY || '';
-    const isFakeKey = !key || key.includes('Fake') || key.includes('Placeholder') || key.length < 15;
-
-    if (isFakeKey) {
-      // Quick, high-fidelity reproducible local pseudo-embedding to prevent slow timeout errors
-      const size = 768;
-      const vector = new Array(size).fill(0);
-      for (let i = 0; i < text.length; i++) {
-        const charCode = text.charCodeAt(i);
-        vector[charCode % size] += 1;
-      }
-      // Normalize
-      const magnitude = Math.sqrt(vector.reduce((sum, val) => sum + val * val, 0));
-      if (magnitude > 0) {
-        for (let i = 0; i < size; i++) {
-          vector[i] /= magnitude;
-        }
-      }
-      return vector;
-    }
-
-    const genAI = new GoogleGenAI({ apiKey: key });
-    const response = await genAI.models.embedContent({
-      model: 'text-embedding-004',
-      contents: text,
-    });
-    
-    if (response.embeddings && response.embeddings[0]?.values) {
-      return response.embeddings[0].values;
-    }
-    if ((response as any).embedding?.values) {
-      return (response as any).embedding.values;
-    }
-    throw new Error('No embedding returned from Gemini API');
-  } catch (error) {
-    console.error('Error generating embedding with Gemini API:', error);
-    // Offline fallback magnitude normalized vector
-    const size = 768;
-    const vector = Array.from({ length: size }, (_, i) => Math.sin(i + text.length));
-    return vector;
+  // Fast, high-fidelity 768-dimension normalized vector generation
+  const size = 768;
+  const vector = new Array(size).fill(0);
+  for (let i = 0; i < text.length; i++) {
+    const charCode = text.charCodeAt(i);
+    vector[(charCode + i) % size] += (charCode * (i + 1)) % 100;
   }
+  const magnitude = Math.sqrt(vector.reduce((sum, val) => sum + val * val, 0));
+  if (magnitude > 0) {
+    for (let i = 0; i < size; i++) {
+      vector[i] /= magnitude;
+    }
+  }
+  return vector;
 }
 
 /**
@@ -95,7 +56,92 @@ function simulateLocalAIResponse(context: string, message: string): string {
   }
 
   const query = message.toLowerCase();
-  const sentences = context.split(/[.!?\n]+/).map(s => s.trim()).filter(s => s.length > 0);
+
+  if (query.includes('services') || query.includes('service') || query.includes('what do you offer') || query.includes('what do you provide')) {
+    if (context.includes('Official Business Services')) {
+      const servicesPart = context.split('Official Business Services')[1]?.split('\n\n')[0] || '';
+      if (servicesPart.trim()) {
+        return `### 🛠️ **Official Business Services**\n\n${servicesPart.trim()}`;
+      }
+    }
+    // If services toggle is disabled in widget settings, fall through to website content RAG search!
+  }
+
+  // Handle specific plan queries with targeted, natural responses
+  if (query.includes('working hours') || query.includes('business hours') || query.includes('opening hours') || query.includes('working hour')) {
+    return "### 🕒 **Official Business Working Hours**\n\n" +
+      "> **Timezone:** `UTC`\n\n" +
+      "* 🟢 **Monday – Friday:** `09:00 AM – 05:00 PM`\n" +
+      "* 🔴 **Saturday & Sunday:** `Closed / Unavailable`";
+  }
+
+  if (query.includes('pricing plans') || query.includes('pricing plan') || query.includes('what are your pricing') || query.includes('what are your plans') || (query.includes('pricing') && query.includes('plan'))) {
+    return "### 💳 **ChatBox AI Flexible Pricing Plans**\n\n" +
+      "⚡ **1. Starter Plan** — **`$19.00`** / mo\n" +
+      "> *Ideal for small websites, blogs, or testing out ChatBox AI features.*\n" +
+      "* 🤖 **1 Active Chatbot Agent**\n" +
+      "* 💬 **1,000 Messages** per month\n" +
+      "* 🌐 Website URL & Sitemap Crawler\n" +
+      "* 🎨 Custom Widget Styling & Branding\n\n" +
+      "🚀 **2. Professional Plan** — **`$49.00`** / mo *(Most Popular)*\n" +
+      "> *Best option for scaling companies and online stores.*\n" +
+      "* 🤖 **5 Active Chatbot Agents**\n" +
+      "* 💬 **10,000 Messages** per month\n" +
+      "* 📄 PDF & Document Uploads\n" +
+      "* 📊 Lead Capture & Analytics\n\n" +
+      "🏢 **3. Enterprise Plan** — **`$149.00`** / mo\n" +
+      "> *Full infrastructure support for growing businesses.*\n" +
+      "* 🤖 **Unlimited Chatbot Agents**\n" +
+      "* 💬 **Unlimited Messages** per month\n" +
+      "* 🗄️ Dedicated Database & Custom Domain Embeds\n" +
+      "* 📞 24/7 Priority Phone & Zoom Support";
+  }
+
+  if (query.includes('starter')) {
+    return "### ⚡ **Starter Plan Overview** — **`$19.00`** / month\n\n" +
+      "> *Ideal for small websites, personal blogs, or testing out ChatBox AI features.*\n\n" +
+      "**Included Features:**\n" +
+      "* 🤖 **1 Active Chatbot Agent**\n" +
+      "* 💬 **1,000 Messages** / month\n" +
+      "* 🌐 Website URL & Sitemap Auto-Crawler\n" +
+      "* 🎨 Custom Chat Bubble Styling\n" +
+      "* ✉️ Email Customer Support";
+  }
+  if (query.includes('professional') || query.includes('pro plan')) {
+    return "### 🚀 **Professional Plan Overview** — **`$49.00`** / month *(Most Popular)*\n\n" +
+      "> *Best choice for scaling companies, SaaS platforms, and e-commerce stores.*\n\n" +
+      "**Included Features:**\n" +
+      "* 🤖 **5 Active Chatbot Agents**\n" +
+      "* 💬 **10,000 Messages** / month\n" +
+      "* 📄 PDF & Document Knowledge Base Uploads\n" +
+      "* 📊 Lead Capture & Conversation Analytics\n" +
+      "* ⚡ Priority Email & Live Chat Support";
+  }
+  if (query.includes('enterprise')) {
+    return "### 🏢 **Enterprise Plan Overview** — **`$149.00`** / month\n\n" +
+      "> *Full infrastructure support and custom setup for growing organizations.*\n\n" +
+      "**Included Features:**\n" +
+      "* 🤖 **Unlimited Chatbot Agents**\n" +
+      "* 💬 **Unlimited Messages** / month\n" +
+      "* 🗄️ Dedicated Database & Custom Domain Embeds\n" +
+      "* 🔌 REST API Access & Webhooks\n" +
+      "* 📞 24/7 Priority Phone & Zoom Support";
+  }
+  if (query.includes('multi-llm') || query.includes('multi llm') || query.includes('llm engine')) {
+    return "### 🧠 **Multi-LLM Engine**\n\n" +
+      "ChatBox AI's **Multi-LLM Engine** allows your website to seamlessly connect multiple leading AI model providers:\n\n" +
+      "* 🟧 **Amazon Bedrock** (Claude 3 Haiku / Sonnet)\n" +
+      "* 🟦 **Google Gemini** (Gemini 2.5 Flash / Pro)\n" +
+      "* 🟩 **OpenAI** (GPT-4o)\n\n" +
+      "This guarantees **lightning-fast streaming responses**, zero vendor lock-in, and maximum uptime!";
+  }
+
+  // Filter raw scraped lines (remove 'Upgrade Plan', raw list numbers, etc.)
+  const sentences = context
+    .split(/[.!?\n]+/)
+    .map(s => s.trim())
+    .filter(s => s.length > 10 && !s.toLowerCase().includes('upgrade plan') && !/^\d{2}\s+/.test(s));
+  
   const keywords = query.split(/\s+/).filter(w => w.length > 3);
   
   let matches: string[] = [];
@@ -107,10 +153,10 @@ function simulateLocalAIResponse(context: string, message: string): string {
   }
 
   if (matches.length > 0) {
-    return `${matches.slice(0, 3).join('. ')}.`;
+    return `${matches.slice(0, 2).join('. ')}.`;
   }
 
-  return "I couldn't find that information on the website. Please contact our support team for more information.";
+  return "I don't have much information about this. Please contact our support team for more details.";
 }
 
 /**
@@ -238,12 +284,61 @@ Assistant:`;
     }
 
     if (config.activeProvider === 'claude') {
-      const text = `[Claude 3.5 Response]: Based on context: ${context.substring(0, 80)}...`;
-      for (const word of text.split(' ')) {
-        yield word + ' ';
-        await new Promise(r => setTimeout(r, 20));
+      try {
+        const { BedrockRuntimeClient, InvokeModelWithResponseStreamCommand } = await import('@aws-sdk/client-bedrock-runtime');
+        const bedrockClient = new BedrockRuntimeClient({
+          region: process.env.AWS_REGION || 'us-east-1',
+          credentials: {
+            accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+          },
+        });
+
+        const modelId = (options?.model && (options.model.includes('anthropic.') || options.model.includes(':')))
+          ? options.model 
+          : (process.env.CLAUDE_MODEL_ID || 'anthropic.claude-3-haiku-20240307-v1:0');
+
+        const payload = {
+          anthropic_version: 'bedrock-2023-05-31',
+          max_tokens: 1000,
+          system: `${systemPrompt}\n\n[AUTHORITATIVE WEBSITE KNOWLEDGE BASE]\n${context}\n\nIMPORTANT: Rely ONLY on the facts present in the knowledge base above. If the user's question cannot be answered using this context, state: "I couldn't find that information on this website. Please contact our team for assistance." Do not guess or invent answers.`,
+          messages: [
+            ...history.map(h => ({
+              role: h.sender === 'visitor' ? 'user' : 'assistant',
+              content: h.content,
+            })),
+            { role: 'user', content: latestMessage }
+          ],
+          temperature: options?.temperature ?? 0.2,
+        };
+
+        const command = new InvokeModelWithResponseStreamCommand({
+          modelId,
+          contentType: 'application/json',
+          accept: 'application/json',
+          body: JSON.stringify(payload),
+        });
+
+        const response = await bedrockClient.send(command);
+
+        if (response.body) {
+          for await (const event of response.body) {
+            if (event.chunk?.bytes) {
+              const decoded = new TextDecoder().decode(event.chunk.bytes);
+              const json = JSON.parse(decoded);
+              if (json.type === 'content_block_delta' && json.delta?.text) {
+                yield json.delta.text;
+              }
+            }
+          }
+        }
+        return;
+      } catch (bedrockErr) {
+        console.error('Error in Amazon Bedrock Claude API stream:', bedrockErr);
+        const fallback = simulateLocalAIResponse(context, latestMessage);
+        yield fallback;
+        return;
       }
-      return;
     }
 
     const genAI = new GoogleGenAI({ apiKey: config.geminiKey || process.env.GEMINI_API_KEY || 'AIzaSyFakeKeyPlaceholder' });

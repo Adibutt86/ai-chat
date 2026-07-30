@@ -37,7 +37,7 @@ export default function AgentsManager({
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [themeColor, setThemeColor] = useState('#2563eb');
-  const [model, setModel] = useState('gemini-2.5-flash');
+  const [model, setModel] = useState('anthropic.claude-3-haiku-20240307-v1:0');
   const [temperature, setTemperature] = useState(0.7);
   const [systemPrompt, setSystemPrompt] = useState(
     "You are a helpful AI assistant. Answer questions based on the provided context. If the answer is not in the context, say 'I don't have enough information. Please contact support.'"
@@ -49,7 +49,7 @@ export default function AgentsManager({
     setName('');
     setDescription('');
     setThemeColor('#2563eb');
-    setModel('gemini-2.5-flash');
+    setModel('anthropic.claude-3-haiku-20240307-v1:0');
     setTemperature(0.7);
     setSystemPrompt(
       "You are a helpful AI assistant. Answer questions based on the provided context. If the answer is not in the context, say 'I don't have enough information. Please contact support.'"
@@ -64,7 +64,7 @@ export default function AgentsManager({
     setName(agent.name);
     setDescription(agent.description || '');
     setThemeColor(agent.themeColor || '#2563eb');
-    setModel(agent.model || 'gemini-2.5-flash');
+    setModel(agent.model || 'anthropic.claude-3-haiku-20240307-v1:0');
     setTemperature(agent.temperature !== undefined ? agent.temperature : 0.7);
     setSystemPrompt(
       agent.systemPrompt ||
@@ -73,26 +73,35 @@ export default function AgentsManager({
     setShowModal(true);
   };
 
+  const [isSaving, setIsSaving] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const data = {
-      name,
-      description,
-      themeColor,
-      model,
-      temperature,
-      systemPrompt,
-    };
+    setIsSaving(true);
+    try {
+      const data = {
+        name,
+        description,
+        themeColor,
+        model,
+        temperature,
+        systemPrompt,
+      };
 
-    if (isEditMode && editAgentId) {
-      await onUpdateAgent({ id: editAgentId, ...data });
-    } else {
-      await onCreateAgent(data);
+      if (isEditMode && editAgentId) {
+        await onUpdateAgent({ id: editAgentId, ...data });
+      } else {
+        await onCreateAgent(data);
+      }
+      
+      setShowModal(false);
+      setName('');
+      setDescription('');
+    } catch (err) {
+      console.error('Error saving agent properties:', err);
+    } finally {
+      setIsSaving(false);
     }
-    
-    setShowModal(false);
-    setName('');
-    setDescription('');
   };
 
   const handleDelete = async (e: React.MouseEvent, agentId: string) => {
@@ -191,9 +200,9 @@ export default function AgentsManager({
             <div className="bg-blue-950/30 border border-blue-900/40 p-4 rounded-xl text-xs text-blue-300 space-y-2">
               <span className="font-semibold text-white block">💡 Setup Instructions:</span>
               <ul className="list-disc pl-4 space-y-1">
-                <li><strong>System Instructions</strong>: Define the chatbot's instructions, scope, boundaries, and tone of voice.</li>
-                <li><strong>AI Model</strong>: Use <em>Gemini 2.5 Flash</em> for fast response streaming, or <em>Gemini 2.5 Pro</em> for complex query tasks.</li>
-                <li><strong>Temperature</strong>: Lower settings (0.1–0.3) provide precise, factual RAG answers. Higher settings (0.7+) make it more conversational.</li>
+                <li><strong>System Instructions</strong>: Define your chatbot's persona, scope, boundaries, and tone of voice.</li>
+                <li><strong>AI Model</strong>: Powered by <em>Amazon Bedrock — Claude 3 Haiku</em> for ultra-fast, low-cost streaming responses.</li>
+                <li><strong>Temperature</strong>: Lower settings (0.1–0.3) deliver exact, factual RAG answers. Higher settings (0.7+) create a creative, conversational tone.</li>
               </ul>
             </div>
 
@@ -239,9 +248,9 @@ export default function AgentsManager({
                     onChange={(e) => setModel(e.target.value)}
                     className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-1 focus:ring-blue-600"
                   >
-                    <option value="gemini-2.5-flash">Gemini 2.5 Flash (Recommended)</option>
-                    <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
-                    <option value="meta-llama/llama-3.1-8b-instruct:free">Llama 3.1 8B (OpenRouter Free)</option>
+                    <option value="anthropic.claude-3-haiku-20240307-v1:0">Claude 3 Haiku (Amazon Bedrock - Default)</option>
+                    <option value="anthropic.claude-3-5-haiku-20241022-v1:0">Claude 3.5 Haiku (Amazon Bedrock)</option>
+                    <option value="anthropic.claude-3-5-sonnet-20241022-v2:0">Claude 3.5 Sonnet (Amazon Bedrock)</option>
                   </select>
                 </div>
                 <div>
@@ -278,9 +287,10 @@ export default function AgentsManager({
                 </button>
                 <button
                   type="submit"
-                  className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-white font-medium transition duration-150"
+                  disabled={isSaving}
+                  className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-4 py-2 rounded-lg text-white font-medium transition duration-150"
                 >
-                  {isEditMode ? 'Save Changes' : 'Create Agent'}
+                  {isSaving ? 'Saving...' : (isEditMode ? 'Save Changes' : 'Create Agent')}
                 </button>
               </div>
             </form>

@@ -215,8 +215,21 @@ export async function* generateChatResponseStream(
     return;
   }
 
-  // OpenRouter Integration
-  if (config.activeProvider === 'openrouter') {
+  const targetModel = options?.model || '';
+  let provider = config.activeProvider || 'claude';
+
+  if (targetModel.includes('gemini')) {
+    provider = 'gemini';
+  } else if (targetModel.includes('llama') || targetModel.includes('openrouter')) {
+    provider = 'openrouter';
+  } else if (targetModel.includes('gpt') || targetModel.includes('openai')) {
+    provider = 'openai';
+  } else if (targetModel.includes('anthropic') || targetModel.includes('claude')) {
+    provider = 'claude';
+  }
+
+  // OpenRouter Provider Integration
+  if (provider === 'openrouter') {
     try {
       const openrouterApiKey = config.openrouterKey || process.env.OPENROUTER_API_KEY || '';
       const openrouterUrl = 'https://openrouter.ai/api/v1/chat/completions';
@@ -283,17 +296,89 @@ export async function* generateChatResponseStream(
     }
   }
 
-  if (config.activeProvider === 'gemini' && isFakeGeminiKey) {
-    const text = simulateLocalAIResponse(context, latestMessage);
-    for (const chunk of text.split(' ')) {
-      yield chunk + ' ';
-      await new Promise(r => setTimeout(r, 45));
+  // OpenAI Provider Integration
+  if (provider === 'openai') {
+    const openaiApiKey = config.openaiKey || process.env.OPENAI_API_KEY || '';
+    if (!openaiApiKey) {
+      const fallback = simulateLocalAIResponse(context, latestMessage);
+      yield fallback;
+      return;
     }
-    return;
+
+    try {
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${openaiApiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: options?.model || 'gpt-4o',
+          messages: [
+            { role: 'system', content: `${systemPrompt}\n\nContext:\n${context}` },
+            ...history.map(h => ({ role: h.sender === 'visitor' ? 'user' : 'assistant', content: h.content })),
+            { role: 'user', content: latestMessage }
+          ],
+          temperature: options?.temperature ?? 0.7,
+          stream: true
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`OpenAI API error: ${response.statusText}`);
+      }
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+
+      if (reader) {
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+
+          for (const line of lines) {
+            const cleanLine = line.trim();
+            if (!cleanLine || cleanLine === 'data: [DONE]') continue;
+            if (cleanLine.startsWith('data: ')) {
+              try {
+                const parsed = JSON.parse(cleanLine.substring(6));
+                const text = parsed.choices[0]?.delta?.content || '';
+                if (text) {
+                  yield text;
+                }
+              } catch (e) {
+                // Ignore parse errors
+              }
+            }
+          }
+        }
+      }
+      return;
+    } catch (openaiErr) {
+      console.error('Error in OpenAI API stream:', openaiErr);
+      const fallback = simulateLocalAIResponse(context, latestMessage);
+      yield fallback;
+      return;
+    }
   }
 
-  try {
-    const prompt = `
+  // Gemini Provider Integration
+  if (provider === 'gemini') {
+    if (isFakeGeminiKey) {
+      const text = simulateLocalAIResponse(context, latestMessage);
+      for (const chunk of text.split(' ')) {
+        yield chunk + ' ';
+        await new Promise(r => setTimeout(r, 45));
+      }
+      return;
+    }
+
+    try {
+      const prompt = `
 System Instruction:
 ${systemPrompt}
 
@@ -306,99 +391,81 @@ ${history.map(h => `${h.sender === 'visitor' ? 'User' : 'Assistant'}: ${h.conten
 User: ${latestMessage}
 Assistant:`;
 
-    if (config.activeProvider === 'openai') {
-      const text = `[OpenAI GPT-4o Response]: Based on context: ${context.substring(0, 80)}...`;
-      for (const word of text.split(' ')) {
-        yield word + ' ';
-        await new Promise(r => setTimeout(r, 20));
+      const genAI = new GoogleGenAI({ apiKey: config.geminiKey || process.env.GEMINI_API_KEY || 'AIzaSyFakeKeyPlaceholder' });
+      const responseStream = await genAI.models.generateContentStream({
+        model: options?.model && options.model.includes('gemini') ? options.model : 'gemini-2.5-flash',
+        contents: prompt,
+        config: {
+          temperature: options?.temperature ?? 0.7,
+        }
+      });
+
+      let fullText = '';
+      for await (const chunk of responseStream) {
+        const text = chunk.text || '';
+        fullText += text;
+        yield text;
       }
       return;
+    } catch (error) {
+      console.error('Error generating chat stream content with Gemini:', error);
+      const fallback = simulateLocalAIResponse(context, latestMessage);
+      yield fallback;
+      return;
     }
+  }
 
-    if (config.activeProvider === 'claude') {
-      try {
-        const { BedrockRuntimeClient, InvokeModelWithResponseStreamCommand } = await import('@aws-sdk/client-bedrock-runtime');
-        const bedrockClient = new BedrockRuntimeClient({
-          region: process.env.AWS_REGION || 'us-east-1',
-          credentials: {
-            accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
-            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
-          },
-        });
-
-        const modelId = (options?.model && (options.model.includes('anthropic.') || options.model.includes(':')))
-          ? options.model 
-          : (process.env.CLAUDE_MODEL_ID || 'anthropic.claude-3-haiku-20240307-v1:0');
-
-        const payload = {
-          anthropic_version: 'bedrock-2023-05-31',
-          max_tokens: 1000,
-          system: `${systemPrompt}\n\n[AUTHORITATIVE WEBSITE KNOWLEDGE BASE]\n${context}\n\nIMPORTANT: Rely ONLY on the facts present in the knowledge base above. If the user's question cannot be answered using this context, state: "I couldn't find that information on this website. Please contact our team for assistance." Do not guess or invent answers.`,
-          messages: [
-            ...history.map(h => ({
-              role: h.sender === 'visitor' ? 'user' : 'assistant',
-              content: h.content,
-            })),
-            { role: 'user', content: latestMessage }
-          ],
-          temperature: options?.temperature ?? 0.2,
-        };
-
-        const command = new InvokeModelWithResponseStreamCommand({
-          modelId,
-          contentType: 'application/json',
-          accept: 'application/json',
-          body: JSON.stringify(payload),
-        });
-
-        const response = await bedrockClient.send(command);
-
-        if (response.body) {
-          for await (const event of response.body) {
-            if (event.chunk?.bytes) {
-              const decoded = new TextDecoder().decode(event.chunk.bytes);
-              const json = JSON.parse(decoded);
-              if (json.type === 'content_block_delta' && json.delta?.text) {
-                yield json.delta.text;
-              }
-            }
-          }
-        }
-        return;
-      } catch (bedrockErr) {
-        console.error('Error in Amazon Bedrock Claude API stream:', bedrockErr);
-        const fallback = simulateLocalAIResponse(context, latestMessage);
-        yield fallback;
-        return;
-      }
-    }
-
-    const genAI = new GoogleGenAI({ apiKey: config.geminiKey || process.env.GEMINI_API_KEY || 'AIzaSyFakeKeyPlaceholder' });
-    const responseStream = await genAI.models.generateContentStream({
-      model: 'gemini-2.5-flash',
-      contents: prompt,
-      config: {
-        temperature: options?.temperature ?? 0.7,
-      }
+  // AWS Bedrock Claude Provider Integration (Default)
+  try {
+    const { BedrockRuntimeClient, InvokeModelWithResponseStreamCommand } = await import('@aws-sdk/client-bedrock-runtime');
+    const bedrockClient = new BedrockRuntimeClient({
+      region: process.env.AWS_REGION || 'us-east-1',
+      credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+      },
     });
 
-    let fullText = '';
-    for await (const chunk of responseStream) {
-      const text = chunk.text || '';
-      fullText += text;
-      yield text;
-    }
+    const modelId = (options?.model && (options.model.includes('anthropic.') || options.model.includes(':')))
+      ? options.model 
+      : (process.env.CLAUDE_MODEL_ID || 'anthropic.claude-3-haiku-20240307-v1:0');
 
-    const isInfoMissing = !fullText || 
-      fullText.toLowerCase().includes("don't have enough information") || 
-      fullText.toLowerCase().includes("contact support") ||
-      fullText.toLowerCase().includes("couldn't find");
+    const payload = {
+      anthropic_version: 'bedrock-2023-05-31',
+      max_tokens: 1000,
+      system: `${systemPrompt}\n\n[AUTHORITATIVE WEBSITE KNOWLEDGE BASE]\n${context}\n\nIMPORTANT: Rely ONLY on the facts present in the knowledge base above. If the user's question cannot be answered using this context, state: "I couldn't find that information on this website. Please contact our team for assistance." Do not guess or invent answers.`,
+      messages: [
+        ...history.map(h => ({
+          role: h.sender === 'visitor' ? 'user' : 'assistant',
+          content: h.content,
+        })),
+        { role: 'user', content: latestMessage }
+      ],
+      temperature: options?.temperature ?? 0.2,
+    };
 
-    if (isInfoMissing && (!fullText || fullText.trim().length === 0)) {
-      yield "I couldn't find that information on the website. Please contact our support team for more information.";
+    const command = new InvokeModelWithResponseStreamCommand({
+      modelId,
+      contentType: 'application/json',
+      accept: 'application/json',
+      body: JSON.stringify(payload),
+    });
+
+    const response = await bedrockClient.send(command);
+
+    if (response.body) {
+      for await (const event of response.body) {
+        if (event.chunk?.bytes) {
+          const decoded = new TextDecoder().decode(event.chunk.bytes);
+          const json = JSON.parse(decoded);
+          if (json.type === 'content_block_delta' && json.delta?.text) {
+            yield json.delta.text;
+          }
+        }
+      }
     }
-  } catch (error) {
-    console.error('Error generating chat stream content with Gemini:', error);
+  } catch (bedrockErr) {
+    console.error('Error in Amazon Bedrock Claude API stream:', bedrockErr);
     const fallback = simulateLocalAIResponse(context, latestMessage);
     yield fallback;
   }

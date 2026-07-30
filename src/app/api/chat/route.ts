@@ -359,12 +359,12 @@ export async function POST(request: Request) {
       }
     }
 
-    // Inject contact info context if visitor asks about contacting support
+    // Inject contact & office location context if visitor asks about contacting support or locations
     const normMsgLower = message.trim().toLowerCase();
-    const isContactQuery = normMsgLower.includes('contact') || normMsgLower.includes('reach') || normMsgLower.includes('support') || normMsgLower.includes('email') || normMsgLower.includes('help form');
+    const isContactQuery = normMsgLower.includes('contact') || normMsgLower.includes('reach') || normMsgLower.includes('support') || normMsgLower.includes('email') || normMsgLower.includes('help form') || normMsgLower.includes('office') || normMsgLower.includes('location') || normMsgLower.includes('address') || normMsgLower.includes('headquarter') || normMsgLower.includes('where are you');
     let contactContext = '';
     if (isContactQuery) {
-      contactContext = "Official Business Contact Information:\n• Email Support: support@chatboxai.com\n• Online Help Desk: /contact\n• Support Response Time: Within 24 hours";
+      contactContext = "Official Business Contact & Office Location Information:\n• Email Support: support@chatboxai.com\n• Online Help Desk: /contact\n• Office Location: 123 Tech Avenue, Suite 400, Washington, D.C., USA\n• Support Response Time: Within 24 hours";
     }
 
     context = [hoursContext, servicesContext, contactContext, context].filter(Boolean).join('\n\n');

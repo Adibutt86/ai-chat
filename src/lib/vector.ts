@@ -228,9 +228,9 @@ export async function searchRelevantChunks(
         if (urlLower.includes('prices') || urlLower.includes('pricing') || nameLower.includes('prices') || nameLower.includes('pricing')) {
           score += 0.2;
         }
-        // Heavy boost for contact chunks when querying contact info
-        if ((qLower.includes('contact') || qLower.includes('reach') || qLower.includes('email') || qLower.includes('support')) &&
-            (chunkLower.includes('contact') || chunkLower.includes('support') || chunkLower.includes('email') || urlLower.includes('contact') || nameLower.includes('contact'))) {
+        // Heavy boost for contact and location chunks when querying contact/office info
+        if ((qLower.includes('contact') || qLower.includes('reach') || qLower.includes('email') || qLower.includes('support') || qLower.includes('office') || qLower.includes('location') || qLower.includes('address')) &&
+            (chunkLower.includes('contact') || chunkLower.includes('support') || chunkLower.includes('email') || chunkLower.includes('office') || chunkLower.includes('location') || urlLower.includes('contact') || nameLower.includes('contact'))) {
           score += 0.45;
         }
 

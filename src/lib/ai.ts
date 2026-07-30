@@ -71,7 +71,15 @@ function simulateLocalAIResponse(context: string, message: string): string {
       "Smart RAG (Retrieval-Augmented Generation) Training automatically crawls your website pages, sitemaps, PDFs, and FAQs to build a custom vector knowledge base in seconds. This allows your ChatBox AI chatbot to answer visitor questions accurately using your official business content.";
   }
 
-  if (normQuery.includes('contact') || normQuery.includes('reach') || normQuery.includes('support') || normQuery.includes('email') || context.includes('Official Business Contact Information')) {
+  if (normQuery.includes('office') || normQuery.includes('location') || normQuery.includes('address') || normQuery.includes('where are you')) {
+    return "📍 **Official Office Locations**\n\n" +
+      "• 🏢 **Headquarters**: 123 Tech Avenue, Suite 400, Washington, D.C., USA\n" +
+      "• ✉️ **Email Support**: support@chatboxai.com\n" +
+      "• 🌐 **Contact Page**: Fill out the help form on our Contact Page (/contact)\n" +
+      "• ⚡ **Response Time**: Our team responds within 24 hours.";
+  }
+
+  if (normQuery.includes('contact') || normQuery.includes('reach') || normQuery.includes('support') || normQuery.includes('email') || context.includes('Official Business Contact Information') || context.includes('Office Location')) {
     return "📬 **Get in Touch with Support**\n\n" +
       "• ✉️ **Email Support**: support@chatboxai.com\n" +
       "• 🌐 **Contact Form**: Fill out the help form on our Contact Page (/contact)\n" +

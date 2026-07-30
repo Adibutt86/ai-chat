@@ -72,7 +72,7 @@ function simulateLocalAIResponse(context: string, message: string): string {
     return "⚙️ **How to Customize Widget & Model Settings**\n\n" +
       "You can fully customize your chatbot widget and AI model from your Dashboard:\n\n" +
       "1. **Widget Appearance**: Go to **Dashboard > Widget Settings** to adjust bubble primary color, header text, welcome message, avatar icon, position (Bottom Right / Left), and toggle Business Hours or Services displays.\n" +
-      "2. **AI Model & Persona**: Go to **Dashboard > Agent Properties** to select your active model (Amazon Bedrock Claude 3 Haiku, Google Gemini, OpenAI), adjust temperature/creativity, and set custom system instructions.\n" +
+      "2. **AI Model & Persona**: Go to **Dashboard > Agent Properties** to select your active model (Amazon Bedrock Claude 3 Haiku, Claude 3.5), adjust temperature/creativity, and set custom system instructions.\n" +
       "3. **Instant Live Sync**: Click **Save Settings** — all changes update on your live website widget automatically!";
   }
 
@@ -161,12 +161,11 @@ function simulateLocalAIResponse(context: string, message: string): string {
       "* 📞 24/7 Priority Phone & Zoom Support";
   }
   if (query.includes('multi-llm') || query.includes('multi llm') || query.includes('llm engine')) {
-    return "### 🧠 **Multi-LLM Engine**\n\n" +
-      "ChatBox AI's **Multi-LLM Engine** allows your website to seamlessly connect multiple leading AI model providers:\n\n" +
-      "* 🟧 **Amazon Bedrock** (Claude 3 Haiku / Sonnet)\n" +
-      "* 🟦 **Google Gemini** (Gemini 2.5 Flash / Pro)\n" +
-      "* 🟩 **OpenAI** (GPT-4o)\n\n" +
-      "This guarantees **lightning-fast streaming responses**, zero vendor lock-in, and maximum uptime!";
+    return "### 🧠 **AI Engine Integration**\n\n" +
+      "ChatBox AI is powered by **Amazon Bedrock** providing industry-leading performance and accuracy:\n\n" +
+      "* 🟧 **Claude 3 Haiku** (Ultra-fast, low latency responses)\n" +
+      "* 🟧 **Claude 3.5 Haiku & Sonnet** (High fidelity reasoning)\n\n" +
+      "This guarantees **lightning-fast streaming responses**, enterprise security, and maximum uptime!";
   }
 
   // Filter raw scraped lines (remove 'Upgrade Plan', auth boilerplate, raw list numbers, etc.)
@@ -434,9 +433,9 @@ Assistant:`;
       },
     });
 
-    const modelId = (options?.model && (options.model.includes('anthropic.') || options.model.includes(':')))
+    let modelId = (options?.model && (options.model.includes('anthropic.') || options.model.includes(':')))
       ? options.model 
-      : (process.env.CLAUDE_MODEL_ID || 'anthropic.claude-3-haiku-20240307-v1:0');
+      : (process.env.CLAUDE_MODEL_ID || 'us.anthropic.claude-3-haiku-20240307-v1:0');
 
     const payload = {
       anthropic_version: 'bedrock-2023-05-31',
@@ -452,28 +451,77 @@ Assistant:`;
       temperature: options?.temperature ?? 0.2,
     };
 
-    const command = new InvokeModelWithResponseStreamCommand({
+    let command = new InvokeModelWithResponseStreamCommand({
       modelId,
       contentType: 'application/json',
       accept: 'application/json',
       body: JSON.stringify(payload),
     });
 
-    const response = await bedrockClient.send(command);
+    try {
+      const response = await bedrockClient.send(command);
 
-    if (response.body) {
-      for await (const event of response.body) {
-        if (event.chunk?.bytes) {
-          const decoded = new TextDecoder().decode(event.chunk.bytes);
-          const json = JSON.parse(decoded);
-          if (json.type === 'content_block_delta' && json.delta?.text) {
-            yield json.delta.text;
+      if (response.body) {
+        for await (const event of response.body) {
+          if (event.chunk?.bytes) {
+            const decoded = new TextDecoder().decode(event.chunk.bytes);
+            const json = JSON.parse(decoded);
+            if (json.type === 'content_block_delta' && json.delta?.text) {
+              yield json.delta.text;
+            }
           }
         }
       }
+      return;
+    } catch (firstErr: any) {
+      // Retry with direct model id if cross-region profile failed
+      if (modelId.startsWith('us.')) {
+        modelId = modelId.replace('us.', '');
+        command = new InvokeModelWithResponseStreamCommand({
+          modelId,
+          contentType: 'application/json',
+          accept: 'application/json',
+          body: JSON.stringify(payload),
+        });
+        const response = await bedrockClient.send(command);
+        if (response.body) {
+          for await (const event of response.body) {
+            if (event.chunk?.bytes) {
+              const decoded = new TextDecoder().decode(event.chunk.bytes);
+              const json = JSON.parse(decoded);
+              if (json.type === 'content_block_delta' && json.delta?.text) {
+                yield json.delta.text;
+              }
+            }
+          }
+        }
+        return;
+      }
+      throw firstErr;
     }
   } catch (bedrockErr) {
     console.error('Error in Amazon Bedrock Claude API stream:', bedrockErr);
+    
+    // Automatic Live Fallback to Gemini API if available
+    const geminiKey = config.geminiKey || process.env.GEMINI_API_KEY || '';
+    if (geminiKey && geminiKey.length > 15 && !geminiKey.includes('Fake')) {
+      try {
+        const prompt = `System Instruction:\n${systemPrompt}\n\nReference Context:\n${context}\n\nChat History:\n${history.map(h => `${h.sender === 'visitor' ? 'User' : 'Assistant'}: ${h.content}`).join('\n')}\n\nUser: ${latestMessage}\nAssistant:`;
+        const genAI = new GoogleGenAI({ apiKey: geminiKey });
+        const responseStream = await genAI.models.generateContentStream({
+          model: 'gemini-2.5-flash',
+          contents: prompt,
+          config: { temperature: options?.temperature ?? 0.7 }
+        });
+        for await (const chunk of responseStream) {
+          if (chunk.text) yield chunk.text;
+        }
+        return;
+      } catch (geminiErr) {
+        console.error('Gemini fallback stream error:', geminiErr);
+      }
+    }
+
     const fallback = simulateLocalAIResponse(context, latestMessage);
     yield fallback;
   }

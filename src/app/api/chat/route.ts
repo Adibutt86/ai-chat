@@ -185,112 +185,7 @@ export async function POST(request: Request) {
       });
     }
 
-    // 3. Greetings Detection
-    if (isGreeting(message)) {
-      const greetingResponse = "Hello! I am a professional AI assistant for this website. How can I help you today?";
-      const stream = new ReadableStream({
-        async start(controller) {
-          controller.enqueue(encoder.encode(JSON.stringify({ conversationId: conv.id }) + '\n'));
-          for (const word of greetingResponse.split(' ')) {
-            controller.enqueue(encoder.encode(JSON.stringify({ chunk: word + ' ' }) + '\n'));
-            await new Promise(r => setTimeout(r, 30));
-          }
-          await prisma.message.create({
-            data: {
-              conversationId: conv.id,
-              sender: 'user',
-              content: greetingResponse,
-            },
-          });
-          controller.close();
-        }
-      });
-      return new Response(stream, { 
-        headers: { 
-          'Content-Type': 'text/event-stream',
-          ...corsHeaders
-        } 
-      });
-    }
-
-    // 4. Testing / Model Query Detection (e.g. typing "model?" or "model")
-    const normMsg = message.trim().toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "");
-    if (normMsg === 'model' || normMsg === 'what model' || normMsg === 'which model' || normMsg === 'active model') {
-      const activeModelId = process.env.CLAUDE_MODEL_ID || 'anthropic.claude-3-haiku-20240307-v1:0';
-      const modelResponse = `🤖 [Active Model Info]: Currently running Claude 3 Haiku via Amazon Bedrock (Model ID: ${activeModelId}, Provider: AWS Bedrock, Region: ${process.env.AWS_REGION || 'us-east-1'}).`;
-      const stream = new ReadableStream({
-        async start(controller) {
-          controller.enqueue(encoder.encode(JSON.stringify({ conversationId: conv.id }) + '\n'));
-          for (const word of modelResponse.split(' ')) {
-            controller.enqueue(encoder.encode(JSON.stringify({ chunk: word + ' ' }) + '\n'));
-            await new Promise(r => setTimeout(r, 20));
-          }
-          await prisma.message.create({
-            data: {
-              conversationId: conv.id,
-              sender: 'user',
-              content: modelResponse,
-            },
-          });
-          controller.close();
-        }
-      });
-      return new Response(stream, { 
-        headers: { 
-          'Content-Type': 'text/event-stream',
-          ...corsHeaders
-        } 
-      });
-    }
-
-    // 4. Small Talk Detection
-    const smallTalkText = isSmallTalk(message);
-    if (smallTalkText) {
-      const stream = new ReadableStream({
-        async start(controller) {
-          controller.enqueue(encoder.encode(JSON.stringify({ conversationId: conv.id }) + '\n'));
-          for (const word of smallTalkText.split(' ')) {
-            controller.enqueue(encoder.encode(JSON.stringify({ chunk: word + ' ' }) + '\n'));
-            await new Promise(r => setTimeout(r, 30));
-          }
-          await prisma.message.create({
-            data: {
-              conversationId: conv.id,
-              sender: 'user',
-              content: smallTalkText,
-            },
-          });
-          controller.close();
-        }
-      });
-      return new Response(stream, { 
-        headers: { 
-          'Content-Type': 'text/event-stream',
-          ...corsHeaders
-        } 
-      });
-    }
-
-    // 5. RAG Retrieval & Prompt Execution
-
-    // 5. Off-topic Question Guardrail (Requirement #5)
-    if (isOffTopicQuery(message)) {
-      const offTopicResponse = "I am a customer support assistant for this website. I can only assist with questions regarding our website, products, services, pricing, business hours, and features. How can I help you today?";
-      const stream = new ReadableStream({
-        async start(controller) {
-          controller.enqueue(encoder.encode(JSON.stringify({ conversationId: conv.id }) + '\n'));
-          for (const word of offTopicResponse.split(' ')) {
-            controller.enqueue(encoder.encode(JSON.stringify({ chunk: word + ' ' }) + '\n'));
-            await new Promise(r => setTimeout(r, 20));
-          }
-          await prisma.message.create({
-            data: { conversationId: conv.id, sender: 'user', content: offTopicResponse }
-          });
-          controller.close();
-        }
-      });
-      return new Response(stream, { headers: { 'Content-Type': 'text/event-stream', ...corsHeaders } });
-    }
+    // Perform RAG vector lookup (Top 8 chunks)
 
     // 6. Perform RAG vector lookup (Top 8 chunks - Requirement #6)
     const matches = await searchRelevantChunks(targetAgentId, message, 8);
@@ -387,25 +282,7 @@ export async function POST(request: Request) {
 
     context = [hoursContext, servicesContext, contactContext, context].filter(Boolean).join('\n\n');
 
-    // Minimum Score & Missing Information Fallback Check (Requirements #2 & #7)
-    const hasDashboardInfo = (showHours && hoursContext.length > 0) || (showServices && servicesContext.length > 0) || (contactContext.length > 0);
-    if (matches.length === 0 && !hasDashboardInfo) {
-      const missingInfoMsg = "I couldn't find that information on this website. Please contact our team for assistance.";
-      const stream = new ReadableStream({
-        async start(controller) {
-          controller.enqueue(encoder.encode(JSON.stringify({ conversationId: conv.id }) + '\n'));
-          for (const word of missingInfoMsg.split(' ')) {
-            controller.enqueue(encoder.encode(JSON.stringify({ chunk: word + ' ' }) + '\n'));
-            await new Promise(r => setTimeout(r, 20));
-          }
-          await prisma.message.create({
-            data: { conversationId: conv.id, sender: 'user', content: missingInfoMsg }
-          });
-          controller.close();
-        }
-      });
-      return new Response(stream, { headers: { 'Content-Type': 'text/event-stream', ...corsHeaders } });
-    }
+    // Grounding Context Assembly
 
     // 7. Check for Buying Intent to trigger Lead Capture prompt
     const buyingIntentKeywords = ['price', 'buy', 'cost', 'quote', 'premium', 'demo', 'pricing', 'subscribe', 'sales'];
@@ -421,7 +298,8 @@ STRICT ANSWERING RULES:
    Do NOT hallucinate, extrapolate, or invent details.
 3. DOMAIN INQUIRIES (Pricing, Features, Installation, WordPress Plugin, Integrations): Answer strictly from the provided website content and dashboard settings.
 4. CLEAN FORMATTING & TITLES: Output clean bold titles (e.g. 🕒 **Official Business Working Hours**) without raw markdown hashes ("###") or blockquotes (">").
-5. CONCISE & PROFESSIONAL: Keep your response focused on answering the user's specific question clearly.`;
+5. CONCISE & PROFESSIONAL: Keep your response focused on answering the user's specific question clearly.
+6. TYPOS & MISSPELLINGS: Automatically interpret visitor questions even if they contain spelling mistakes, typos, or informal phrasing (e.g., "phon numbr", "pricin plan", "workin hour").`;
 
     if (hasBuyingIntent) {
       systemPrompt += `\n[IMPORTANT] The visitor has shown interest in purchasing or pricing. Politely offer to have sales contact them, and ask for their email address or contact info.`;

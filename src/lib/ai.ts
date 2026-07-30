@@ -10,7 +10,7 @@ async function getActiveProviderConfig() {
       where: { id: 'global-config' },
     });
     return config || {
-      activeProvider: 'claude',
+      activeProvider: 'gemini',
       geminiKey: process.env.GEMINI_API_KEY || 'AIzaSyFakeKeyPlaceholder',
       openaiKey: '',
       claudeKey: '',
@@ -18,7 +18,7 @@ async function getActiveProviderConfig() {
     };
   } catch {
     return {
-      activeProvider: 'claude',
+      activeProvider: 'gemini',
       geminiKey: process.env.GEMINI_API_KEY || 'AIzaSyFakeKeyPlaceholder',
       openaiKey: '',
       claudeKey: '',
@@ -502,7 +502,7 @@ Assistant:`;
   } catch (bedrockErr) {
     console.error('Error in Amazon Bedrock Claude API stream:', bedrockErr);
     
-    // Automatic Live Fallback to Gemini API if available
+    // Automatic Live Fallback to Gemini API
     const geminiKey = config.geminiKey || process.env.GEMINI_API_KEY || '';
     if (geminiKey && geminiKey.length > 15 && !geminiKey.includes('Fake')) {
       try {

@@ -130,7 +130,7 @@ export default function ContactPage() {
                       </a>
                     </li>
                   </ul>
-                  <a className="link link--underline" href="mailto:sitechcompany@email.com">sitechcompany@email.com</a>
+                  <a className="link link--underline" href="mailto:support@chatboxai.com">support@chatboxai.com</a>
                 </div>
               </li>
             </ul>
@@ -292,7 +292,7 @@ export default function ContactPage() {
           </div>
           <div className="footer_bottom">
             <div className="footer_bottom-contacts d-flex flex-column">
-              <a className="link" href="mailto:sitechcompany@email.com">sitechcompany@email.com</a>
+              <a className="link" href="mailto:support@chatboxai.com">support@chatboxai.com</a>
               <a className="link" href="tel:+1202303404">+1 202 303 404</a>
             </div>
             <div className="footer_bottom-socials">

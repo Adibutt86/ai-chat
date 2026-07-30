@@ -173,9 +173,11 @@ export async function crawlWebsite(
         },
       });
 
-      // Split into 800-char chunks (150-char overlap) and generate vector embeddings
+      // Split into 800-char chunks (150-char overlap) and index vector embeddings sequentially
       const chunks = chunkText(pageData.text, 800);
-      await Promise.all(chunks.map(chunk => indexDocumentChunk(doc.id, chunk)));
+      for (const chunk of chunks) {
+        await indexDocumentChunk(doc.id, chunk);
+      }
 
       await prisma.document.update({
         where: { id: doc.id },

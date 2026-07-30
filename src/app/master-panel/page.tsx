@@ -191,16 +191,13 @@ export default function MasterPanel() {
             <div>
               <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Active Global AI Provider</label>
               <select
-                value={activeProvider}
-                onChange={(e) => setActiveProvider(e.target.value)}
-                className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-zinc-300 font-semibold focus:ring-1 focus:ring-red-500 outline-none"
+                value="claude"
+                disabled
+                className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-emerald-400 font-semibold focus:ring-1 focus:ring-red-500 outline-none cursor-not-allowed"
               >
-                <option value="claude">Amazon Bedrock — Anthropic Claude 3 Haiku</option>
-                <option value="gemini">Google Gemini — gemini-2.5-flash</option>
-                <option value="openrouter">OpenRouter — Llama 3.1 8B / Custom Models</option>
-                <option value="openai">OpenAI — GPT-4o</option>
+                <option value="claude">Amazon Bedrock — Anthropic Claude 3 Haiku (Active & Primary)</option>
               </select>
-              <p className="text-[10px] text-zinc-500 mt-1">Select default engine for global LLM requests or when agent-level model is not specified.</p>
+              <p className="text-[10px] text-zinc-500 mt-1">Amazon Bedrock (Claude 3 Haiku) is set as the exclusive AI engine for all chat queries and embeddings.</p>
             </div>
 
             <div className="space-y-4">
@@ -221,39 +218,6 @@ export default function MasterPanel() {
                   readOnly
                   value="us-east-1 | anthropic.claude-3-haiku-20240307-v1:0"
                   className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-zinc-400 font-mono text-xs outline-none cursor-not-allowed"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Google Gemini API Key</label>
-                <input
-                  type="password"
-                  placeholder="AIzaSy..."
-                  value={geminiApiKey}
-                  onChange={(e) => setGeminiApiKey(e.target.value)}
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white text-xs focus:ring-1 focus:ring-red-500 outline-none font-mono"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">OpenRouter API Key</label>
-                <input
-                  type="password"
-                  placeholder="sk-or-v1-..."
-                  value={openrouterApiKey}
-                  onChange={(e) => setOpenrouterApiKey(e.target.value)}
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white text-xs focus:ring-1 focus:ring-red-500 outline-none font-mono"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">OpenAI API Key</label>
-                <input
-                  type="password"
-                  placeholder="sk-proj-..."
-                  value={openaiApiKey}
-                  onChange={(e) => setOpenaiApiKey(e.target.value)}
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white text-xs focus:ring-1 focus:ring-red-500 outline-none font-mono"
                 />
               </div>
 

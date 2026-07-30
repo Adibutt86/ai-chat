@@ -317,8 +317,26 @@ export async function POST(request: Request) {
         where: { organizationId: agent.organizationId }
       });
       
-      if (businessHoursList.length === 0) {
-        businessHoursList = await prisma.businessHours.findMany({});
+      if (businessHoursList.length === 0 && agent.organizationId) {
+        const DEFAULT_HOURS = [
+          { dayOfWeek: 1, isEnabled: true, startTime: '09:00', endTime: '17:00' },
+          { dayOfWeek: 2, isEnabled: true, startTime: '09:00', endTime: '17:00' },
+          { dayOfWeek: 3, isEnabled: true, startTime: '09:00', endTime: '17:00' },
+          { dayOfWeek: 4, isEnabled: true, startTime: '09:00', endTime: '17:00' },
+          { dayOfWeek: 5, isEnabled: true, startTime: '09:00', endTime: '17:00' },
+          { dayOfWeek: 6, isEnabled: false, startTime: '09:00', endTime: '17:00' },
+          { dayOfWeek: 0, isEnabled: false, startTime: '09:00', endTime: '17:00' },
+        ];
+        await prisma.businessHours.createMany({
+          data: DEFAULT_HOURS.map(h => ({
+            ...h,
+            organizationId: agent.organizationId,
+            timezone: 'UTC'
+          }))
+        });
+        businessHoursList = await prisma.businessHours.findMany({
+          where: { organizationId: agent.organizationId }
+        });
       }
 
       if (businessHoursList.length > 0) {

@@ -24,7 +24,15 @@ export async function GET(request: Request) {
   const globalConfig = await prisma.globalSettings.findUnique({
     where: { id: 'global-config' },
   });
-  const activeProvider = globalConfig?.activeProvider || 'gemini';
+  const activeProvider = globalConfig?.activeProvider || 'claude';
+
+  let businessHours: any[] = [];
+  if (agent.widgetSettings?.showHours && agent.organizationId) {
+    businessHours = await prisma.businessHours.findMany({
+      where: { organizationId: agent.organizationId },
+      orderBy: { dayOfWeek: 'asc' },
+    });
+  }
 
   // Set CORS headers so standard client web loaders can request embedding setup
   const response = NextResponse.json({
@@ -33,6 +41,7 @@ export async function GET(request: Request) {
     avatarUrl: agent.avatarUrl,
     themeColor: agent.themeColor,
     activeProvider,
+    businessHours,
     widgetSettings: agent.widgetSettings || {
       primaryColor: '#2563eb',
       secondaryColor: '#1e40af',

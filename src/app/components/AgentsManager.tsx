@@ -251,9 +251,6 @@ export default function AgentsManager({
                     <option value="anthropic.claude-3-haiku-20240307-v1:0">Claude 3 Haiku (Amazon Bedrock - Default)</option>
                     <option value="anthropic.claude-3-5-haiku-20241022-v1:0">Claude 3.5 Haiku (Amazon Bedrock)</option>
                     <option value="anthropic.claude-3-5-sonnet-20241022-v2:0">Claude 3.5 Sonnet (Amazon Bedrock)</option>
-                    <option value="gemini-2.5-flash">Google Gemini 2.5 Flash</option>
-                    <option value="meta-llama/llama-3.1-8b-instruct:free">OpenRouter - Llama 3.1 8B Free</option>
-                    <option value="gpt-4o">OpenAI - GPT-4o</option>
                   </select>
                 </div>
                 <div>

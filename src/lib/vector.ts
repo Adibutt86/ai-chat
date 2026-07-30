@@ -205,6 +205,12 @@ export async function searchRelevantChunks(
           score += 0.45;
         }
 
+        // Heavy boost for customize widget / model settings queries
+        if ((qLower.includes('customize') || qLower.includes('widget settings') || qLower.includes('model settings') || qLower.includes('agent properties')) &&
+            (chunkLower.includes('customize') || chunkLower.includes('widget') || chunkLower.includes('setting') || chunkLower.includes('model'))) {
+          score += 0.45;
+        }
+
         if (urlLower.includes('faq') || nameLower.includes('faq')) {
           score += 0.15;
         }

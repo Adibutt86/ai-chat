@@ -4,7 +4,7 @@ import { prisma } from './db';
 /**
  * Strips HTML tags, script, and style blocks to get clean text copy.
  */
-async function fetchPageText(url: string): Promise<string> {
+async function fetchPageRawHtmlAndText(url: string): Promise<{ html: string; text: string }> {
   try {
     const res = await fetch(url, {
       headers: {
@@ -13,16 +13,21 @@ async function fetchPageText(url: string): Promise<string> {
       next: { revalidate: 0 }
     });
     if (!res.ok) {
-      return '';
+      return { html: '', text: '' };
     }
     const html = await res.text();
     let text = html;
     
-    // Strip script and style blocks
+    // Strip script, style, and svg blocks
     text = text.replace(/<script[^>]*>([\s\S]*?)<\/script>/gi, '');
     text = text.replace(/<style[^>]*>([\s\S]*?)<\/style>/gi, '');
+    text = text.replace(/<svg[^>]*>([\s\S]*?)<\/svg>/gi, '');
+
+    // Insert newlines for structural elements so accordion items and headings stay separated
+    text = text.replace(/<\/(div|p|h1|h2|h3|h4|h5|h6|li|tr|section|article|header|footer|summary|button)>/gi, '\n');
+    text = text.replace(/<br\s*\/?>/gi, '\n');
     
-    // Strip all HTML tags
+    // Strip remaining HTML tags
     text = text.replace(/<[^>]+>/g, ' ');
     
     // Clean up HTML entity values
@@ -30,19 +35,59 @@ async function fetchPageText(url: string): Promise<string> {
                .replace(/&amp;/g, '&')
                .replace(/&lt;/g, '<')
                .replace(/&gt;/g, '>')
-               .replace(/&quot;/g, '"');
+               .replace(/&quot;/g, '"')
+               .replace(/&#39;/g, "'")
+               .replace(/&#x27;/g, "'");
                
-    // Consolidate whitespace
-    text = text.replace(/\s+/g, ' ').trim();
-    return text;
+    // Consolidate duplicate empty lines while preserving structural spacing
+    text = text.split('\n').map(l => l.trim()).filter(l => l.length > 0).join('\n');
+    return { html, text };
   } catch (error) {
     console.error(`Crawl Error fetching URL ${url}:`, error);
-    return '';
+    return { html: '', text: '' };
   }
 }
 
 /**
- * Lightweight web crawler that retrieves text and simulates page visits.
+ * Extract internal domain page links from HTML href attributes
+ */
+function extractInternalLinks(html: string, baseUrlStr: string): string[] {
+  const links = new Set<string>();
+  try {
+    const baseUrl = new URL(baseUrlStr);
+    const hrefRegex = /href=["']([^"']+)["']/gi;
+    let match;
+
+    while ((match = hrefRegex.exec(html)) !== null) {
+      const rawHref = match[1]?.trim();
+      if (!rawHref || rawHref.startsWith('#') || rawHref.startsWith('javascript:') || rawHref.startsWith('mailto:') || rawHref.startsWith('tel:')) {
+        continue;
+      }
+
+      // Ignore static assets
+      if (/\.(png|jpg|jpeg|gif|svg|ico|css|js|pdf|zip|tar|gz)$/i.test(rawHref)) {
+        continue;
+      }
+
+      try {
+        const absoluteUrl = new URL(rawHref, baseUrl.origin);
+        // Only crawl links on the exact same domain
+        if (absoluteUrl.hostname === baseUrl.hostname) {
+          const cleanUrl = absoluteUrl.origin + (absoluteUrl.pathname.endsWith('/') ? absoluteUrl.pathname.slice(0, -1) : absoluteUrl.pathname);
+          links.add(cleanUrl || absoluteUrl.origin);
+        }
+      } catch (e) {
+        // Ignore invalid URLs
+      }
+    }
+  } catch (err) {
+    console.error('Error extracting internal links:', err);
+  }
+  return Array.from(links);
+}
+
+/**
+ * Dynamic Multi-Page Web Crawler that crawls all internal sections and pages of a website.
  */
 export async function crawlWebsite(
   agentId: string,
@@ -60,60 +105,67 @@ export async function crawlWebsite(
       data: {
         agentId,
         sourceType: 'website',
-        sourceName: `${url} (${crawlOption === 'sitemap' ? 'Sitemap Indexing' : 'Single URL Indexing'})`,
+        sourceName: `${url} (Crawling Website Sections & Pages)`,
         status: 'running',
-        message: crawlOption === 'sitemap' ? 'Reading pages and crawling sitemap...' : 'Reading target page content...',
+        message: 'Discovering and indexing all sections & internal pages...',
       },
     });
 
-    // Setup pathnames based on sitemap vs url crawl choices
-    const pathnames = crawlOption === 'sitemap' 
-      ? ['', '/about', '/prices', '/contact', '/wordpress']
-      : [''];
-
     const parsedUrl = new URL(url);
     const domain = parsedUrl.origin;
-    const basePath = parsedUrl.pathname === '/' ? '' : parsedUrl.pathname;
+    
+    // Initialize crawl queue with starting URL and standard website sections
+    const toCrawl: string[] = [url];
+    if (crawlOption === 'sitemap') {
+      toCrawl.push(`${domain}/about`, `${domain}/prices`, `${domain}/contact`, `${domain}/wordpress`);
+    }
 
+    const crawledUrls = new Set<string>();
     let indexedCount = 0;
+    const MAX_PAGES_LIMIT = 25; // Crawl up to 25 discovered sections/pages per run
 
-    for (const path of pathnames) {
-      // Build final page url targeting local pages or absolute pathnames
-      let pageUrl = crawlOption === 'sitemap' ? `${domain}${path}` : url;
-      if (crawlOption === 'sitemap' && basePath && path) {
-        // Handle sub-directory sitemap path prepends if input contains path
-        pageUrl = `${domain}${basePath}${path}`;
+    while (toCrawl.length > 0 && crawledUrls.size < MAX_PAGES_LIMIT) {
+      const targetPageUrl = toCrawl.shift()!;
+      const normalizedTargetUrl = targetPageUrl.replace(/\/$/, '');
+      
+      if (crawledUrls.has(normalizedTargetUrl)) continue;
+      crawledUrls.add(normalizedTargetUrl);
+
+      // Fetch page HTML & clean text
+      const pageData = await fetchPageRawHtmlAndText(targetPageUrl);
+      if (!pageData.text || pageData.text.length < 50) continue;
+
+      // Extract new internal section links discovered on this page
+      if (crawledUrls.size < MAX_PAGES_LIMIT) {
+        const internalLinks = extractInternalLinks(pageData.html, targetPageUrl);
+        for (const link of internalLinks) {
+          const normLink = link.replace(/\/$/, '');
+          if (!crawledUrls.has(normLink) && !toCrawl.includes(link)) {
+            toCrawl.push(link);
+          }
+        }
       }
 
-      const rawTitle = crawlOption === 'sitemap'
-        ? (path === '' ? 'Home' : path.replace(/^\//, ''))
-        : (parsedUrl.pathname === '/' || parsedUrl.pathname === '' ? 'Home' : parsedUrl.pathname.replace(/^\//, '').replace(/\/$/, ''));
-      const pageTitle = rawTitle.toUpperCase() + ' Page';
+      // Generate page section title
+      const urlObj = new URL(targetPageUrl);
+      const pathName = urlObj.pathname === '/' || urlObj.pathname === '' ? 'Home' : urlObj.pathname.replace(/^\//, '').replace(/\/$/, '').replace(/-/g, ' ');
+      const pageTitle = pathName.toUpperCase() + ' Page';
 
-      // Fetch actual page HTML content
-      let cleanContent = await fetchPageText(pageUrl);
-
-      // Fallback: If dynamic fetch failed or text is empty, generate generic message
-      if (!cleanContent || cleanContent.length < 50) {
-        console.log(`Using generic fallback for page: ${pageUrl}`);
-        cleanContent = `Content for ${pageTitle} (${pageUrl}).`;
-      }
-
-      // Save document record
+      // Save document record in database
       const doc = await prisma.document.create({
         data: {
           agentId,
           websiteId,
           name: pageTitle,
           type: 'website_page',
-          url: pageUrl,
-          content: cleanContent,
+          url: targetPageUrl,
+          content: pageData.text,
           status: 'indexing',
         },
       });
 
-      // Split into chunks and index embeddings in parallel for maximum performance
-      const chunks = chunkText(cleanContent, 800);
+      // Split into 800-char chunks (150-char overlap) and generate vector embeddings
+      const chunks = chunkText(pageData.text, 800);
       await Promise.all(chunks.map(chunk => indexDocumentChunk(doc.id, chunk)));
 
       await prisma.document.update({

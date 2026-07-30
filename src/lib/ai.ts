@@ -58,6 +58,14 @@ function simulateLocalAIResponse(context: string, message: string): string {
   const query = message.toLowerCase();
   const normQuery = query.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "").trim();
 
+  if (normQuery.includes('customize widget') || normQuery.includes('model settings') || normQuery.includes('customize model') || normQuery.includes('how to customize') || normQuery.includes('widget settings')) {
+    return "⚙️ **How to Customize Widget & Model Settings**\n\n" +
+      "You can fully customize your chatbot widget and AI model from your Dashboard:\n\n" +
+      "1. **Widget Appearance**: Go to **Dashboard > Widget Settings** to adjust bubble primary color, header text, welcome message, avatar icon, position (Bottom Right / Left), and toggle Business Hours or Services displays.\n" +
+      "2. **AI Model & Persona**: Go to **Dashboard > Agent Properties** to select your active model (Amazon Bedrock Claude 3 Haiku, Google Gemini, OpenAI), adjust temperature/creativity, and set custom system instructions.\n" +
+      "3. **Instant Live Sync**: Click **Save Settings** — all changes update on your live website widget automatically!";
+  }
+
   if (normQuery.includes('smart rag') || normQuery.includes('rag training') || normQuery.includes('what is smart rag')) {
     return "🧠 **Smart RAG Training**\n\n" +
       "Smart RAG (Retrieval-Augmented Generation) Training automatically crawls your website pages, sitemaps, PDFs, and FAQs to build a custom vector knowledge base in seconds. This allows your ChatBox AI chatbot to answer visitor questions accurately using your official business content.";

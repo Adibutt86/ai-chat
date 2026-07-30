@@ -353,7 +353,7 @@ export async function POST(request: Request) {
         servicesList = await prisma.service.findMany({ where: { isActive: true } });
       }
       if (servicesList.length > 0) {
-        servicesContext = `Official Business Services (Configured in Dashboard):\n` + servicesList.map(s => 
+        servicesContext = `Official Business Services:\n` + servicesList.map(s => 
           `• ${s.name}: ${s.description || 'Standard service'}`
         ).join('\n');
       }

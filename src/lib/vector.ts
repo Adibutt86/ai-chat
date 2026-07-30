@@ -199,6 +199,12 @@ export async function searchRelevantChunks(
           score += 0.45;
         }
         
+        // Heavy boost for feature queries (Smart RAG, Multi-LLM, Lead Capture, Embed, etc.)
+        if ((qLower.includes('smart rag') || qLower.includes('rag training') || qLower.includes('rag') || qLower.includes('multi-llm') || qLower.includes('lead capture') || qLower.includes('embed') || qLower.includes('knowledge base')) &&
+            (chunkLower.includes('smart rag') || chunkLower.includes('rag') || chunkLower.includes('multi-llm') || chunkLower.includes('lead capture') || chunkLower.includes('embed') || chunkLower.includes('knowledge base'))) {
+          score += 0.45;
+        }
+
         if (urlLower.includes('faq') || nameLower.includes('faq')) {
           score += 0.15;
         }
@@ -279,7 +285,7 @@ export async function searchRelevantChunks(
   const sortedMatches = rawMatches.sort((a, b) => b.score - a.score);
 
   // Minimum similarity threshold check (Requirement #7)
-  const MIN_SCORE_THRESHOLD = 0.22;
+  const MIN_SCORE_THRESHOLD = 0.10;
   const filteredMatches = sortedMatches.filter(m => m.score >= MIN_SCORE_THRESHOLD);
 
   // Merge duplicate or highly similar chunks (Requirement #13 & token optimization)

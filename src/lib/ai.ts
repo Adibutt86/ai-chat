@@ -58,6 +58,11 @@ function simulateLocalAIResponse(context: string, message: string): string {
   const query = message.toLowerCase();
   const normQuery = query.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "").trim();
 
+  if (normQuery.includes('smart rag') || normQuery.includes('rag training') || normQuery.includes('what is smart rag')) {
+    return "🧠 **Smart RAG Training**\n\n" +
+      "Smart RAG (Retrieval-Augmented Generation) Training automatically crawls your website pages, sitemaps, PDFs, and FAQs to build a custom vector knowledge base in seconds. This allows your ChatBox AI chatbot to answer visitor questions accurately using your official business content.";
+  }
+
   if (normQuery.includes('contact') || normQuery.includes('reach') || normQuery.includes('support') || normQuery.includes('email') || context.includes('Official Business Contact Information')) {
     return "📬 **Get in Touch with Support**\n\n" +
       "• ✉️ **Email Support**: support@chatboxai.com\n" +

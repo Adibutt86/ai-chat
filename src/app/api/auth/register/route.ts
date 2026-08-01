@@ -51,7 +51,7 @@ export async function POST(request: Request) {
           description: websiteUrl ? `Automated assistant for ${websiteUrl}` : 'General customer support assistant',
           themeColor: '#2563eb',
           language: 'en',
-          model: 'anthropic.claude-3-haiku-20240307-v1:0',
+          model: 'claude-3-5-sonnet-20241022',
           temperature: 0.7,
           organizationId: org.id,
         },

@@ -207,9 +207,9 @@ export default function Home() {
               >
                 <Link className="services_list-item d-flex flex-column" href="/prices">
                   <i className="icon-cloud icon"></i>
-                  <span className="title h5">Multi-LLM Engine</span>
+                  <span className="title h5">Anthropic Claude AI Engine</span>
                   <p className="text">
-                    Powered by Amazon Bedrock Claude 3 Haiku, Google Gemini, and OpenAI for fast, accurate responses.
+                    Powered exclusively by Anthropic Claude AI models for fast, accurate, and high-fidelity responses.
                   </p>
                 </Link>
               </motion.li>

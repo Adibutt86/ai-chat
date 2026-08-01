@@ -52,7 +52,7 @@ export async function POST(request: Request) {
         avatarUrl,
         themeColor: themeColor || '#2563eb',
         language: language || 'en',
-        model: model || 'anthropic.claude-3-haiku-20240307-v1:0',
+        model: model || 'claude-3-5-sonnet-20241022',
         temperature: temperature !== undefined ? parseFloat(temperature) : 0.7,
         systemPrompt: systemPrompt || "You are a helpful AI assistant. Answer questions based on the provided context.",
         organizationId: orgId,

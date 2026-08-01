@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { searchRelevantChunks } from '@/lib/vector';
-import { generateChatResponseStream } from '@/lib/ai';
+import { generateResponse, generateResponseStream } from '@/services/ai/anthropic.service';
 
 const searchCache = new Map<string, string>();
 
@@ -66,6 +66,23 @@ function isOffTopicQuery(message: string): boolean {
     'history of rome', 'who won the world cup'
   ];
   return offTopicKeywords.some(kw => norm.includes(kw));
+}
+
+function isModelQuery(message: string): boolean {
+  const norm = message.trim().toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "");
+  const triggers = [
+    'what model',
+    'which model',
+    'model name',
+    'model are you',
+    'model is working',
+    'current model',
+    'active model',
+    'what ai model',
+    'which ai model',
+    'model'
+  ];
+  return triggers.some(t => norm.includes(t));
 }
 
 export async function OPTIONS() {
@@ -182,6 +199,44 @@ export async function POST(request: Request) {
           'Content-Type': 'text/event-stream',
           ...corsHeaders
         } 
+      });
+    }
+
+    // Instant Active Model Query Response
+    if (isModelQuery(message)) {
+      const currentModelId = agent.model || process.env.ANTHROPIC_MODEL || 'claude-3-5-sonnet-20241022';
+      let friendlyModelName = currentModelId;
+      if (currentModelId.includes('3-5-sonnet') || currentModelId.includes('3.5-sonnet')) friendlyModelName = 'Claude 3.5 Sonnet';
+      else if (currentModelId.includes('3-5-haiku') || currentModelId.includes('3.5-haiku')) friendlyModelName = 'Claude 3.5 Haiku';
+      else if (currentModelId.includes('3-7-sonnet') || currentModelId.includes('3.7-sonnet')) friendlyModelName = 'Claude 3.7 Sonnet';
+      else if (currentModelId.includes('opus')) friendlyModelName = 'Claude 3 Opus';
+      else if (currentModelId.includes('3-haiku')) friendlyModelName = 'Claude 3 Haiku';
+
+      const replyText = `🤖 I am currently running on **${friendlyModelName}** (\`${currentModelId}\`).`;
+
+      const stream = new ReadableStream({
+        async start(controller) {
+          controller.enqueue(encoder.encode(JSON.stringify({ conversationId: conv.id }) + '\n'));
+          controller.enqueue(encoder.encode(JSON.stringify({ chunk: replyText }) + '\n'));
+
+          await prisma.message.create({
+            data: {
+              conversationId: conv.id,
+              sender: 'assistant',
+              content: replyText,
+            },
+          });
+          controller.close();
+        }
+      });
+
+      return new Response(stream, {
+        headers: {
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive',
+          ...corsHeaders,
+        },
       });
     }
 
@@ -314,13 +369,18 @@ STRICT ANSWERING RULES:
         controller.enqueue(encoder.encode(JSON.stringify({ conversationId: conv.id }) + '\n'));
         try {
           let fullReply = '';
-          for await (const chunk of generateChatResponseStream(
-            systemPrompt,
-            context,
-            history,
-            message,
-            { temperature: agent.temperature, model: agent.model }
-          )) {
+          for await (const chunk of generateResponseStream({
+            model: agent.model || process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-5',
+            systemPrompt: `${systemPrompt}\n\n[AUTHORITATIVE WEBSITE KNOWLEDGE BASE]\n${context}`,
+            messages: [
+              ...history.map(h => ({
+                role: h.sender === 'visitor' ? ('user' as const) : ('assistant' as const),
+                content: h.content,
+              })),
+              { role: 'user' as const, content: message },
+            ],
+            temperature: agent.temperature ?? 0.7,
+          })) {
             fullReply += chunk;
             controller.enqueue(encoder.encode(JSON.stringify({ chunk }) + '\n'));
           }
@@ -384,7 +444,8 @@ Token Estimate: ~${Math.round((message.length + fullReply.length) / 4)}
 `);
         } catch (err: any) {
           console.error("Error during streaming generation:", err);
-          controller.enqueue(encoder.encode(JSON.stringify({ chunk: " I couldn't find that information on the website. Please contact our support team for more information." }) + '\n'));
+          const userErr = ` ⚠️ Anthropic API Error: ${err?.message || 'Failed to connect to Anthropic Claude API'}. Please verify ANTHROPIC_API_KEY in .env.`;
+          controller.enqueue(encoder.encode(JSON.stringify({ chunk: userErr }) + '\n'));
         } finally {
           controller.close();
         }

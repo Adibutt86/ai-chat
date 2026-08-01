@@ -168,10 +168,10 @@ export default function ContactPage() {
                             <li className="main_list-item">
                               <span className="number">01</span>
                               <div className="main">
-                                <h6 className="main_title">Choosing the optimal AI model solution</h6>
-                                <p className="main_text">
-                                  Select between Amazon Bedrock Claude 3 Haiku for ultra-fast, low-cost streaming, or Google Gemini and OpenAI GPT models.
-                                </p>
+                                 <h6 className="main_title">Powered by Anthropic Claude AI</h6>
+                                 <p className="main_text">
+                                   Deploy Anthropic Claude 3.5 Sonnet, Claude 3.5 Haiku, or Claude 3.7 Sonnet for high-speed, intelligent customer support.
+                                 </p>
                               </div>
                             </li>
                           </ul>

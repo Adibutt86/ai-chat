@@ -191,32 +191,32 @@ export default function MasterPanel() {
             <div>
               <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Active Global AI Provider</label>
               <select
-                value="claude"
+                value="gemini"
                 disabled
                 className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-emerald-400 font-semibold focus:ring-1 focus:ring-red-500 outline-none cursor-not-allowed"
               >
-                <option value="claude">Amazon Bedrock — Anthropic Claude 3 Haiku (Active & Primary)</option>
+                <option value="anthropic">Anthropic Claude API (Active & Primary)</option>
               </select>
-              <p className="text-[10px] text-zinc-500 mt-1">Amazon Bedrock (Claude 3 Haiku) is set as the exclusive AI engine for all chat queries and embeddings.</p>
+              <p className="text-[10px] text-zinc-500 mt-1">Anthropic Claude API is set as the primary AI engine for all chat queries and responses.</p>
             </div>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">AWS Access Key ID (Amazon Bedrock)</label>
+                <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Anthropic API Status</label>
                 <input
                   type="text"
                   readOnly
-                  value="AKIASUFKCZAIYYYCQJ4M"
+                  value="ANTHROPIC_API_KEY Configured & Active"
                   className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-emerald-400 font-mono text-xs focus:ring-1 focus:ring-red-500 outline-none cursor-not-allowed"
                 />
               </div>
 
               <div>
-                <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">AWS Region & Model</label>
+                <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Default AI Model</label>
                 <input
                   type="text"
                   readOnly
-                  value="us-east-1 | anthropic.claude-3-haiku-20240307-v1:0"
+                  value="claude-3-5-sonnet-20241022"
                   className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-zinc-400 font-mono text-xs outline-none cursor-not-allowed"
                 />
               </div>

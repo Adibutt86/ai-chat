@@ -37,7 +37,7 @@ export default function AgentsManager({
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [themeColor, setThemeColor] = useState('#2563eb');
-  const [model, setModel] = useState('anthropic.claude-3-haiku-20240307-v1:0');
+  const [model, setModel] = useState('claude-3-5-sonnet-20241022');
   const [temperature, setTemperature] = useState(0.7);
   const [systemPrompt, setSystemPrompt] = useState(
     "You are a helpful AI assistant. Answer questions based on the provided context. If the answer is not in the context, say 'I don't have enough information. Please contact support.'"
@@ -49,7 +49,7 @@ export default function AgentsManager({
     setName('');
     setDescription('');
     setThemeColor('#2563eb');
-    setModel('anthropic.claude-3-haiku-20240307-v1:0');
+    setModel('claude-3-5-sonnet-20241022');
     setTemperature(0.7);
     setSystemPrompt(
       "You are a helpful AI assistant. Answer questions based on the provided context. If the answer is not in the context, say 'I don't have enough information. Please contact support.'"
@@ -64,7 +64,7 @@ export default function AgentsManager({
     setName(agent.name);
     setDescription(agent.description || '');
     setThemeColor(agent.themeColor || '#2563eb');
-    setModel(agent.model || 'anthropic.claude-3-haiku-20240307-v1:0');
+    setModel(agent.model || 'claude-3-5-sonnet-20241022');
     setTemperature(agent.temperature !== undefined ? agent.temperature : 0.7);
     setSystemPrompt(
       agent.systemPrompt ||
@@ -201,7 +201,7 @@ export default function AgentsManager({
               <span className="font-semibold text-white block">💡 Setup Instructions:</span>
               <ul className="list-disc pl-4 space-y-1">
                 <li><strong>System Instructions</strong>: Define your chatbot's persona, scope, boundaries, and tone of voice.</li>
-                <li><strong>AI Model</strong>: Powered by <em>Amazon Bedrock — Claude 3 Haiku</em> for ultra-fast, low-cost streaming responses.</li>
+                <li><strong>AI Model</strong>: Powered by <em>Anthropic Claude 3.5 Sonnet</em> for high-quality, intelligent streaming responses.</li>
                 <li><strong>Temperature</strong>: Lower settings (0.1–0.3) deliver exact, factual RAG answers. Higher settings (0.7+) create a creative, conversational tone.</li>
               </ul>
             </div>
@@ -248,9 +248,11 @@ export default function AgentsManager({
                     onChange={(e) => setModel(e.target.value)}
                     className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-1 focus:ring-blue-600"
                   >
-                    <option value="anthropic.claude-3-haiku-20240307-v1:0">Claude 3 Haiku (Amazon Bedrock - Default)</option>
-                    <option value="anthropic.claude-3-5-haiku-20241022-v1:0">Claude 3.5 Haiku (Amazon Bedrock)</option>
-                    <option value="anthropic.claude-3-5-sonnet-20241022-v2:0">Claude 3.5 Sonnet (Amazon Bedrock)</option>
+                    <option value="claude-3-5-sonnet-20241022">Claude 3.5 Sonnet (Default & Recommended)</option>
+                    <option value="claude-3-5-haiku-20241022">Claude 3.5 Haiku (Fast & Low Cost)</option>
+                    <option value="claude-3-7-sonnet-20250219">Claude 3.7 Sonnet (Advanced Reasoning)</option>
+                    <option value="claude-3-opus-20240229">Claude 3 Opus (Complex Tasks)</option>
+                    <option value="claude-3-haiku-20240307">Claude 3 Haiku</option>
                   </select>
                 </div>
                 <div>

@@ -164,8 +164,8 @@ export default function AboutPage() {
               <li className="wrapper">
                 <Link className="services_list-item d-flex flex-column" href="/prices">
                   <i className="icon-cloud icon"></i>
-                  <span className="title h5">Multi-LLM Engine</span>
-                  <p className="text">Seamlessly switch between Google Gemini, Anthropic Claude, and OpenAI GPT-4 for unmatched speed & accuracy.</p>
+                  <span className="title h5">Anthropic Claude AI Engine</span>
+                  <p className="text">Powered by Anthropic Claude 3.5 Sonnet for unmatched speed, reasoning, and response accuracy.</p>
                 </Link>
               </li>
               <li className="wrapper">

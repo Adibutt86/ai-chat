@@ -840,7 +840,7 @@
             </button>
           </div>
           <div class="chatbox-branding">
-            Powered by <a href="#" target="_blank" rel="noopener">ChatBox AI</a> ${config.activeProvider ? `<span style="opacity:0.75; font-size:11px; margin-left:4px;">(${config.activeProvider.toUpperCase()})</span>` : ''}
+            Powered by <a href="#" target="_blank" rel="noopener">Nebula</a>
           </div>
         </div>
       </div>

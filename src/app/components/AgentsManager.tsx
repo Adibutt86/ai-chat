@@ -1,4 +1,5 @@
 'use client';
+// Anthropic Claude Agent Properties Manager
 
 import React, { useState } from 'react';
 import { Bot, Plus, Check, Trash2, Edit } from 'lucide-react';

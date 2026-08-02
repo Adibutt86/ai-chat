@@ -120,8 +120,10 @@ async function fetchPageRawHtmlAndText(url: string): Promise<{ html: string; tex
 
     const res = await fetch(url, {
       headers: {
-        'User-Agent': 'ChatBoxAICrawler/1.0',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
       },
+      signal: AbortSignal.timeout(8000),
       next: { revalidate: 0 }
     });
     if (!res.ok || res.status !== 200) {
@@ -367,11 +369,9 @@ export async function crawlWebsite(
         },
       });
 
-      // Split into 800-char chunks (150-char overlap) and index vector embeddings sequentially
+      // Split into 800-char chunks (150-char overlap) and index vector embeddings concurrently
       const chunks = chunkText(pageData.text, 800);
-      for (const chunk of chunks) {
-        await indexDocumentChunk(doc.id, chunk);
-      }
+      await Promise.all(chunks.map(chunk => indexDocumentChunk(doc.id, chunk)));
 
       await prisma.document.update({
         where: { id: doc.id },

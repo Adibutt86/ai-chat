@@ -294,19 +294,27 @@
         box-sizing: border-box !important;
         overscroll-behavior: contain !important;
         overscroll-behavior-y: contain !important;
+        scrollbar-width: thin !important;
+        scrollbar-color: #94a3b8 #f1f5f9 !important;
       }
       #chatbox-body::-webkit-scrollbar {
-        width: 6px;
+        width: 7px !important;
+        height: 7px !important;
       }
       #chatbox-body::-webkit-scrollbar-track {
-        background: #f1f5f9;
+        background: #f1f5f9 !important;
+        border-radius: 4px !important;
       }
       #chatbox-body::-webkit-scrollbar-thumb {
-        background: #94a3b8;
-        border-radius: 3px;
+        background-color: #94a3b8 !important;
+        border-radius: 4px !important;
+        border: 1px solid #f1f5f9 !important;
       }
       #chatbox-body::-webkit-scrollbar-thumb:hover {
-        background: #64748b;
+        background-color: #64748b !important;
+      }
+      #chatbox-body::-webkit-scrollbar-thumb:active {
+        background-color: #475569 !important;
       }
       
       /* Messages Styles */

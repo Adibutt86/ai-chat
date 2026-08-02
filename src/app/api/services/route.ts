@@ -18,10 +18,12 @@ export async function GET(request: Request) {
         return NextResponse.json({ error: 'Agent not found' }, { status: 404 });
       }
 
+      const bookableOnly = searchParams.get('bookableOnly') === 'true';
       const services = await prisma.service.findMany({
         where: {
           organizationId: agent.organizationId,
-          isActive: true
+          isActive: true,
+          ...(bookableOnly ? { isBookingEnabled: true } : {})
         },
         orderBy: { createdAt: 'asc' }
       });
@@ -69,7 +71,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { name, description, durationMinutes, price, currency, isActive } = await request.json();
+    const { name, description, durationMinutes, price, currency, isActive, isBookingEnabled } = await request.json();
 
     if (!name || !durationMinutes) {
       return NextResponse.json({ error: 'Name and duration are required' }, { status: 400 });
@@ -83,6 +85,7 @@ export async function POST(request: Request) {
         price: parseFloat(price || '0'),
         currency: currency || 'USD',
         isActive: isActive !== undefined ? isActive : true,
+        isBookingEnabled: isBookingEnabled !== undefined ? isBookingEnabled : true,
         organizationId: orgId,
       },
     });
@@ -103,7 +106,7 @@ export async function PUT(request: Request) {
   }
 
   try {
-    const { id, name, description, durationMinutes, price, currency, isActive } = await request.json();
+    const { id, name, description, durationMinutes, price, currency, isActive, isBookingEnabled } = await request.json();
 
     if (!id) {
       return NextResponse.json({ error: 'Service ID is required' }, { status: 400 });
@@ -127,6 +130,7 @@ export async function PUT(request: Request) {
         price: price !== undefined ? parseFloat(price) : undefined,
         currency: currency !== undefined ? currency : undefined,
         isActive: isActive !== undefined ? isActive : undefined,
+        isBookingEnabled: isBookingEnabled !== undefined ? isBookingEnabled : undefined,
       },
     });
 

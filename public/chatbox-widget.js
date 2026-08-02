@@ -1406,10 +1406,10 @@
           <div class="booking-skeleton"></div>
         `;
         
-        fetch(`${origin}/api/services?agentId=${agentId}`)
+        fetch(`${origin}/api/services?agentId=${agentId}&bookableOnly=true`)
           .then(res => res.json())
           .then((services) => {
-            const activeServices = services.filter(s => s.isActive);
+            const activeServices = services.filter(s => s.isActive && s.isBookingEnabled !== false);
             if (activeServices.length === 0) {
               wizard.innerHTML = `
                 <h4>Select Service</h4>

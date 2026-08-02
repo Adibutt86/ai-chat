@@ -77,6 +77,10 @@ export async function getAvailableTimeSlots(
     throw new Error('Service or Agent not found');
   }
 
+  if (!service.isActive || service.isBookingEnabled === false) {
+    return []; // Online booking is disabled for this service
+  }
+
   const orgId = agent.organizationId;
 
   // 2. Load Scheduling Settings & Exclusions

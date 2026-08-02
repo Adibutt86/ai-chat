@@ -22,6 +22,7 @@ interface Service {
   price: number;
   currency: string;
   isActive: boolean;
+  isBookingEnabled?: boolean;
   createdAt: string;
 }
 
@@ -42,6 +43,7 @@ export default function ServicesManager() {
   const [price, setPrice] = useState(0);
   const [currency, setCurrency] = useState('USD');
   const [isActive, setIsActive] = useState(true);
+  const [isBookingEnabled, setIsBookingEnabled] = useState(true);
 
   // Save loading state
   const [saving, setSaving] = useState(false);
@@ -76,6 +78,7 @@ export default function ServicesManager() {
     setPrice(0);
     setCurrency('USD');
     setIsActive(true);
+    setIsBookingEnabled(true);
     setShowAddModal(true);
   };
 
@@ -87,6 +90,7 @@ export default function ServicesManager() {
     setPrice(service.price);
     setCurrency(service.currency);
     setIsActive(service.isActive);
+    setIsBookingEnabled(service.isBookingEnabled !== false);
     setShowEditModal(true);
   };
 
@@ -98,7 +102,7 @@ export default function ServicesManager() {
       const res = await fetch('/api/services', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, description, durationMinutes, price, currency, isActive }),
+        body: JSON.stringify({ name, description, durationMinutes, price, currency, isActive, isBookingEnabled }),
       });
       if (res.ok) {
         setShowAddModal(false);
@@ -122,7 +126,7 @@ export default function ServicesManager() {
       const res = await fetch('/api/services', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: editingService.id, name, description, durationMinutes, price, currency, isActive }),
+        body: JSON.stringify({ id: editingService.id, name, description, durationMinutes, price, currency, isActive, isBookingEnabled }),
       });
       if (res.ok) {
         setShowEditModal(false);
@@ -167,6 +171,22 @@ export default function ServicesManager() {
       }
     } catch {
       alert('Failed to toggle status');
+    }
+  };
+
+  const handleToggleBooking = async (service: Service) => {
+    try {
+      const current = service.isBookingEnabled !== false;
+      const res = await fetch('/api/services', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: service.id, isBookingEnabled: !current }),
+      });
+      if (res.ok) {
+        fetchServices();
+      }
+    } catch {
+      alert('Failed to toggle booking option');
     }
   };
 
@@ -217,17 +237,30 @@ export default function ServicesManager() {
             >
               <div>
                 <div className="flex justify-between items-start mb-3">
-                  <h3 className="font-semibold text-lg text-zinc-900 truncate pr-16">{service.name}</h3>
-                  <button
-                    onClick={() => handleToggleActive(service)}
-                    className={`text-xs px-2.5 py-1 rounded-full font-semibold border ${
-                      service.isActive 
-                        ? 'bg-emerald-50 text-emerald-600 border-emerald-200' 
-                        : 'bg-zinc-100 text-zinc-500 border-zinc-200'
-                    } cursor-pointer`}
-                  >
-                    {service.isActive ? 'Active' : 'Disabled'}
-                  </button>
+                  <h3 className="font-semibold text-lg text-zinc-900 truncate pr-4">{service.name}</h3>
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <button
+                      onClick={() => handleToggleBooking(service)}
+                      className={`text-xs px-2.5 py-1 rounded-full font-semibold border ${
+                        service.isBookingEnabled !== false
+                          ? 'bg-blue-50 text-blue-600 border-blue-200'
+                          : 'bg-zinc-100 text-zinc-400 border-zinc-200'
+                      } cursor-pointer`}
+                      title="Toggle Online Booking"
+                    >
+                      {service.isBookingEnabled !== false ? '📅 Bookable' : 'No Booking'}
+                    </button>
+                    <button
+                      onClick={() => handleToggleActive(service)}
+                      className={`text-xs px-2.5 py-1 rounded-full font-semibold border ${
+                        service.isActive 
+                          ? 'bg-emerald-50 text-emerald-600 border-emerald-200' 
+                          : 'bg-zinc-100 text-zinc-500 border-zinc-200'
+                      } cursor-pointer`}
+                    >
+                      {service.isActive ? 'Active' : 'Disabled'}
+                    </button>
+                  </div>
                 </div>
                 <p className="text-zinc-600 text-sm line-clamp-3 mb-6 min-h-[60px]">
                   {service.description || 'No description provided.'}
@@ -341,7 +374,7 @@ export default function ServicesManager() {
                     <option value="PKR">PKR (Rs)</option>
                   </select>
                 </div>
-                <div className="flex items-center pt-6 pl-2">
+                <div className="space-y-2 pt-4 pl-2">
                   <label className="flex items-center gap-2 text-sm text-zinc-700 cursor-pointer select-none">
                     <input
                       type="checkbox"
@@ -349,7 +382,16 @@ export default function ServicesManager() {
                       onChange={(e) => setIsActive(e.target.checked)}
                       className="rounded border-zinc-300 bg-zinc-50 text-blue-600 focus:ring-blue-600 h-4 w-4 cursor-pointer"
                     />
-                    <span>Active and bookable</span>
+                    <span>Active Service</span>
+                  </label>
+                  <label className="flex items-center gap-2 text-sm text-blue-700 font-medium cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      checked={isBookingEnabled}
+                      onChange={(e) => setIsBookingEnabled(e.target.checked)}
+                      className="rounded border-zinc-300 bg-zinc-50 text-blue-600 focus:ring-blue-600 h-4 w-4 cursor-pointer"
+                    />
+                    <span>Enable for Online Booking</span>
                   </label>
                 </div>
               </div>
@@ -449,7 +491,7 @@ export default function ServicesManager() {
                     <option value="PKR">PKR (Rs)</option>
                   </select>
                 </div>
-                <div className="flex items-center pt-6 pl-2">
+                <div className="space-y-2 pt-4 pl-2">
                   <label className="flex items-center gap-2 text-sm text-zinc-700 cursor-pointer select-none">
                     <input
                       type="checkbox"
@@ -457,7 +499,16 @@ export default function ServicesManager() {
                       onChange={(e) => setIsActive(e.target.checked)}
                       className="rounded border-zinc-300 bg-zinc-50 text-blue-600 focus:ring-blue-600 h-4 w-4 cursor-pointer"
                     />
-                    <span>Active and bookable</span>
+                    <span>Active Service</span>
+                  </label>
+                  <label className="flex items-center gap-2 text-sm text-blue-700 font-medium cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      checked={isBookingEnabled}
+                      onChange={(e) => setIsBookingEnabled(e.target.checked)}
+                      className="rounded border-zinc-300 bg-zinc-50 text-blue-600 focus:ring-blue-600 h-4 w-4 cursor-pointer"
+                    />
+                    <span>Enable for Online Booking</span>
                   </label>
                 </div>
               </div>

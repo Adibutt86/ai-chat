@@ -1314,18 +1314,22 @@
       }
     });
 
-    // Intercept mouse wheel scrolling over chatbox to scroll chat messages instead of outer WordPress webpage
+    // Intercept mouse wheel scrolling over chatbox to scroll chat messages fast & smooth
     body.addEventListener('wheel', (e) => {
-      const delta = e.deltaY;
       const isScrollable = body.scrollHeight > body.clientHeight;
-      if (isScrollable) {
-        const atTop = body.scrollTop <= 0;
-        const atBottom = body.scrollTop + body.clientHeight >= body.scrollHeight - 2;
-        if ((delta < 0 && !atTop) || (delta > 0 && !atBottom)) {
-          e.preventDefault();
-          e.stopPropagation();
-          body.scrollTop += delta;
-        }
+      if (!isScrollable) return;
+
+      const delta = e.deltaY;
+      const atTop = body.scrollTop <= 0;
+      const atBottom = body.scrollTop + body.clientHeight >= body.scrollHeight - 2;
+
+      if ((delta < 0 && !atTop) || (delta > 0 && !atBottom)) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // 2.2x speed multiplier for fast, responsive mouse wheel scrolling
+        const multiplier = 2.2;
+        body.scrollTop += delta * multiplier;
       }
     }, { passive: false });
 

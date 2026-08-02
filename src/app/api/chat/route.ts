@@ -318,7 +318,7 @@ export async function POST(request: Request) {
 
       if (businessHoursList.length > 0) {
         const tz = businessHoursList[0].timezone || 'UTC';
-        hoursContext = `Official Dashboard Business Working Hours (${tz}):\n`;
+        hoursContext = `Business Hours (${tz}):\nOur support team is available during the following hours (${tz}):\n`;
         const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         const sortedHoursList = [...businessHoursList].sort((a, b) => {
           const dayA = a.dayOfWeek === 0 ? 7 : a.dayOfWeek;
@@ -330,7 +330,7 @@ export async function POST(request: Request) {
           if (bh.isEnabled) {
             hoursContext += `• ${dayName}: ${bh.startTime} to ${bh.endTime}\n`;
           } else {
-            hoursContext += `• ${dayName}: Closed / Unavailable\n`;
+            hoursContext += `• ${dayName}: Closed\n`;
           }
         });
       }
@@ -378,7 +378,7 @@ STRICT ANSWERING RULES:
 1. GREETINGS & PLEASANTRIES: For greetings, pleasantries, or polite introductions (e.g. "hi", "hello", "how are you", "who are you", "good morning", "thank you"), respond warmly and professionally as the website's AI assistant, introduce yourself, and offer to help with any website or support inquiries.
 2. HUMAN CONVERSATIONAL SYNTHESIS: Synthesize information into clear, readable, natural human conversational sentences. Use clean bullet points (•) and clear line breaks.
 3. NO EMOJIS OR SYMBOLS: Do NOT include any emojis, icons, or symbols (such as 💳, ⚡, 🚀, 🏢, 🕒, 📍, 🛠️, 🎁, 🤖, 🟢, 🔴, 🧠, 🌐, 🎯, etc.) in your responses. Keep responses completely free of icon clutter.
-4. BOLD MAIN HEADINGS: Always format main topic section headers in bold text without emojis (for example: **ChatBox AI Plans & Pricing** or **Official Business Working Hours**).
+4. BOLD MAIN HEADINGS: Always format main topic section headers in bold text without emojis (for example: **ChatBox AI Plans & Pricing** or **Business Hours**).
 5. STRICT GROUNDING & INTELLIGENT FLEET SYNTHESIS: For questions about specific vehicle models (e.g. Mercedes-Benz S-Class, BMW 7 Series, executive sedans, SUVs, or minivans) or service options, answer helpful and naturally using the fleet and service information available on the website (e.g. our global chauffeured fleet features a wide range of luxury executive sedans, SUVs, and vans with customizable seating and climate control). Never output cold robotic disclaimers such as "The website does not provide a detailed breakdown of the specific fleet..." or "I couldn't find that information on this website...".
 6. MISSING INFORMATION FALLBACK: For questions completely unrelated to the website or services, politely suggest reaching out to our support team directly.
 7. TYPOS & MISSPELLINGS: Automatically interpret visitor questions even if they contain spelling mistakes, typos, or informal phrasing (e.g. "phon numbr", "pricin plan", "workin hour").
@@ -386,7 +386,8 @@ STRICT ANSWERING RULES:
 9. NO METADATA DISCLAIMERS OR REPETITIVE PREAMBLES: Do NOT begin your answer with boilerplate disclaimers or repetitive preamble phrases such as "Based on the information available on this website...", "Based on the context provided...", "The website does not provide a detailed breakdown...", "Here is what I can share about...", "According to the website...", or "Based on the website data...". Jump straight into answering the visitor's question naturally, directly, and conversationally.
 10. ELEGANT SPACING & TYPOGRAPHY: Ensure every response is cleanly formatted with proper spaces between all words, sentences, and headers. Never run words together or output concatenated text without spaces. Break content into clean, logical paragraphs with clear line breaks.
 11. SHORT & DIRECT RESPONSES: Keep answers short, direct, and tightly focused on the user's specific intent. Avoid long background explanations, unnecessary fluff, or listing unasked details unless explicitly requested.
-12. RELATED QUESTIONS (ALWAYS INCLUDE 2-3 FOLLOW-UPS): At the end of every answer to an important question, ALWAYS append a section titled "**Related questions:**" containing 2 to 3 relevant, natural follow-up questions (bullet points •) that help guide the user to their next logical inquiry.`;
+12. RELATED QUESTIONS (ALWAYS INCLUDE 2-3 FOLLOW-UPS): At the end of every answer to an important question, ALWAYS append a section titled "**Related questions:**" containing 2 to 3 relevant, natural follow-up questions (bullet points •) that help guide the user to their next logical inquiry.
+13. NO FOOTER NOTES ON BUSINESS HOURS: When providing business hours, do NOT include any footer notes such as "If you need to get in touch outside of these hours, feel free to leave a message and we will get back to you on the next working day."`;
 
     if (hasBuyingIntent) {
       systemPrompt += `\n[IMPORTANT] The visitor has shown interest in purchasing or pricing. Politely offer to have sales contact them, and ask for their email address or contact info.`;

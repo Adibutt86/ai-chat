@@ -1014,8 +1014,9 @@
       const showLeadForm = config.widgetSettings?.showLeadForm !== false;
       const showServices = config.widgetSettings?.showServices === true;
       const showHours = config.widgetSettings?.showHours === true;
+      const showTripForm = config.widgetSettings?.showTripForm === true;
 
-      if (showBooking || showLeadForm || showServices || showHours) {
+      if (showBooking || showLeadForm || showServices || showHours || showTripForm) {
         html += '<div class="chatbox-suggestions-container" id="chatbox-welcome-suggestions">';
         if (showBooking) {
           html += `
@@ -1028,6 +1029,13 @@
           html += `
             <button class="chatbox-suggestion-pill" id="chatbox-suggest-lead" data-title="Leave Message" aria-label="Leave Message">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            </button>
+          `;
+        }
+        if (showTripForm) {
+          html += `
+            <button class="chatbox-suggestion-pill" id="chatbox-suggest-trip" data-title="Trip Details" aria-label="Trip Details">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
             </button>
           `;
         }
@@ -1162,6 +1170,14 @@
           scrollToBottom();
         };
       }
+      const suggestTripBtn = document.getElementById('chatbox-suggest-trip');
+      if (suggestTripBtn) {
+        suggestTripBtn.onclick = () => {
+          removeSuggestions();
+          appendTripFormWidget();
+          scrollToBottom();
+        };
+      }
       const suggestHoursBtn = document.getElementById('chatbox-suggest-hours');
       if (suggestHoursBtn) {
         suggestHoursBtn.onclick = () => {
@@ -1276,10 +1292,19 @@
     });
 
     window.chatboxSendQuery = function(queryText) {
+      if (!queryText) return;
       const inputEl = document.getElementById('chatbox-input');
       const sendBtn = document.getElementById('chatbox-send-btn');
-      if (inputEl && sendBtn) {
+      if (inputEl) {
         inputEl.value = queryText;
+        inputEl.dispatchEvent(new Event('input'));
+        if (sendBtn) {
+          sendBtn.disabled = false;
+        }
+      }
+      if (typeof handleSend === 'function') {
+        handleSend();
+      } else if (sendBtn) {
         sendBtn.click();
       }
     };
@@ -1295,6 +1320,7 @@
         const rawBlock = relatedMatch[1];
         const lines = rawBlock.split('\n').map(l => l.trim()).filter(Boolean);
         let pillsHtml = '';
+        let firstAttrQ = '';
         lines.forEach(line => {
           const cleanQ = line
             .replace(/^(?:•|\*|-|✓|&#10004;|\d+\.)\s*/, '')
@@ -1303,6 +1329,7 @@
             .trim();
           if (cleanQ && cleanQ.length > 3 && !cleanQ.toLowerCase().includes('related questions')) {
             const attrQ = cleanQ.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+            if (!firstAttrQ) firstAttrQ = attrQ;
             pillsHtml += `
               <button class="chatbox-related-pill" onclick="window.chatboxSendQuery('${attrQ}')" type="button">
                 <span class="chatbox-related-icon">✓</span>
@@ -1314,7 +1341,7 @@
         if (pillsHtml) {
           relatedQuestionsHtml = `
             <div class="chatbox-related-questions-box">
-              <div class="chatbox-related-header">Related questions:</div>
+              <div class="chatbox-related-header" ${firstAttrQ ? `onclick="window.chatboxSendQuery('${firstAttrQ}')" style="cursor: pointer;"` : ''}>Related questions:</div>
               ${pillsHtml}
             </div>
           `;
@@ -1348,12 +1375,32 @@
               </div>
             `;
           } else if (line.trim()) {
-            const cleanLine = line.replace(/(?:-|\*|\s)*\s*(?:\*\*)?/g, '').trim();
+            let cleanLine = line
+              .replace(/^[\s\-\*\•]+/, '')
+              .replace(/\*\*/g, '')
+              .trim();
+
+            // Shorten titles like "Official Business Working Hours" or "Official Dashboard Business Working Hours" to "Business Hours"
+            if (cleanLine.toLowerCase().includes('business') && cleanLine.toLowerCase().includes('hours')) {
+              cleanLine = cleanLine.replace(/(?:Official\s*|Dashboard\s*)?Business\s*Working\s*Hours/gi, 'Business Hours');
+            }
+
             if (!hasHours) {
               headerText += (headerText ? '<br/>' : '') + cleanLine;
             } else {
-              // Exclude typical cart and shop navigation template lists
-              if (!cleanLine.includes('Cart') && !cleanLine.includes('Jeans') && !cleanLine.includes('WP DESGIN') && !cleanLine.includes('Close cart')) {
+              // Exclude typical footer notes like "If you need to get in touch outside of these hours..." or shopping cart boilerplate
+              const lineLower = cleanLine.toLowerCase().replace(/\s+/g, '');
+              const isExcluded = 
+                lineLower.includes('outsideofthesehours') || 
+                lineLower.includes('leaveamessage') || 
+                lineLower.includes('nextworkingday') || 
+                lineLower.includes('getbacktoyou') || 
+                cleanLine.includes('Cart') || 
+                cleanLine.includes('Jeans') || 
+                cleanLine.includes('WP DESGIN') || 
+                cleanLine.includes('Close cart');
+
+              if (!isExcluded) {
                 footerText += (footerText ? '<br/>' : '') + cleanLine;
               }
             }
@@ -1994,6 +2041,151 @@
       scrollToLatestIfNeeded();
     }
 
+    function appendTripFormWidget(shouldSave = true) {
+      const widgetContainer = document.createElement('div');
+      widgetContainer.className = 'chatbox-message-row bot booking-wizard-container';
+      widgetContainer.style.maxWidth = '92%';
+
+      const form = document.createElement('div');
+      form.className = 'booking-wizard';
+      form.innerHTML = `
+        <h4 style="margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+          <span>🚘</span> Please Enter Trip Details
+        </h4>
+        <p style="font-size: 11.5px; color: #64748b; margin-bottom: 12px; margin-top: 0; line-height: 1.4;">Fill out your trip preferences below and our team will assist you promptly.</p>
+        
+        <div style="display: flex; gap: 8px;">
+          <div style="flex: 1;">
+            <label class="booking-label">First Name *</label>
+            <input type="text" id="trip-first-name" class="booking-input" required placeholder="First Name" />
+          </div>
+          <div style="flex: 1;">
+            <label class="booking-label">Last Name *</label>
+            <input type="text" id="trip-last-name" class="booking-input" required placeholder="Last Name" />
+          </div>
+        </div>
+
+        <label class="booking-label">Company</label>
+        <input type="text" id="trip-company" class="booking-input" placeholder="Company (Optional)" />
+
+        <label class="booking-label">Phone *</label>
+        <input type="tel" id="trip-phone" class="booking-input" required placeholder="Phone Number" />
+
+        <label class="booking-label">Choose Your Required Service: *</label>
+        <select id="trip-service-type" class="booking-input" style="font-weight: 500; cursor: pointer;">
+          <option value="Airport Transfer">Airport Transfer</option>
+          <option value="Point-To-Point Transfer">Point-To-Point Transfer</option>
+          <option value="Multi-Stop Road Show">Multi-Stop Road Show</option>
+          <option value="Airport Meet&Greet Services">Airport Meet&Greet Services</option>
+          <option value="Other Inquiries">Other Inquiries</option>
+        </select>
+
+        <label class="booking-label">Email *</label>
+        <input type="email" id="trip-email" class="booking-input" required placeholder="Email Address" />
+
+        <label class="booking-label">Additional Message</label>
+        <textarea id="trip-message" class="booking-input booking-textarea" rows="2" placeholder="Additional details or specific instructions..."></textarea>
+
+        <button id="trip-submit-btn" class="booking-btn booking-btn-primary" style="margin-top: 6px; margin-bottom: 0;">Submit Trip Request</button>
+      `;
+
+      widgetContainer.innerHTML = avatarImg.replace('chatbox-avatar', 'chatbox-message-avatar').replace('style="', 'style="align-self: flex-start; ');
+      widgetContainer.appendChild(form);
+
+      body.appendChild(widgetContainer);
+      scrollToLatestIfNeeded();
+
+      if (shouldSave) {
+        saveMessage('bot', '[trip-form]', true);
+      }
+
+      // Auto-expanding textarea for Additional Message
+      const msgArea = form.querySelector('#trip-message');
+      if (msgArea) {
+        const autoExpandMsg = () => {
+          msgArea.style.height = 'auto';
+          msgArea.style.height = Math.max(48, msgArea.scrollHeight) + 'px';
+        };
+        msgArea.oninput = autoExpandMsg;
+      }
+
+      // Submit Handler
+      form.querySelector('#trip-submit-btn').onclick = () => {
+        const firstName = form.querySelector('#trip-first-name').value.trim();
+        const lastName = form.querySelector('#trip-last-name').value.trim();
+        const company = form.querySelector('#trip-company').value.trim();
+        const phone = form.querySelector('#trip-phone').value.trim();
+        const serviceType = form.querySelector('#trip-service-type').value;
+        const email = form.querySelector('#trip-email').value.trim();
+        const message = form.querySelector('#trip-message').value.trim();
+
+        if (!firstName) {
+          alert('Please enter your First Name.');
+          form.querySelector('#trip-first-name').focus();
+          return;
+        }
+        if (!lastName) {
+          alert('Please enter your Last Name.');
+          form.querySelector('#trip-last-name').focus();
+          return;
+        }
+        if (!phone) {
+          alert('Phone * - Please fill out this field.');
+          form.querySelector('#trip-phone').focus();
+          return;
+        }
+        if (!email) {
+          alert('Please enter your Email Address.');
+          form.querySelector('#trip-email').focus();
+          return;
+        }
+
+        const submitBtn = form.querySelector('#trip-submit-btn');
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Submitting...';
+
+        fetch(`${origin}/api/trip-inquiries`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            agentId,
+            firstName,
+            lastName,
+            company,
+            phone,
+            serviceType,
+            email,
+            message,
+          }),
+        })
+          .then(r => r.json())
+          .then(data => {
+            if (data.success) {
+              form.innerHTML = `
+                <div style="text-align: center; padding: 14px 6px;">
+                  <div style="font-size: 28px; margin-bottom: 6px;">✅</div>
+                  <strong style="color: #0f172a; font-size: 14px;">Trip Details Received!</strong>
+                  <p style="font-size: 12px; color: #64748b; margin-top: 6px; margin-bottom: 0; line-height: 1.4;">
+                    Thank you, <strong>${firstName}</strong>! Your trip request for <strong>${serviceType}</strong> has been received. Our team will contact you shortly.
+                  </p>
+                </div>
+              `;
+              scrollToLatestIfNeeded();
+            } else {
+              alert(data.error || 'Failed to submit trip details.');
+              submitBtn.disabled = false;
+              submitBtn.innerText = 'Submit Trip Request';
+            }
+          })
+          .catch(() => {
+            alert('Error submitting trip details. Please try again.');
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'Submit Trip Request';
+          });
+      };
+      scrollToLatestIfNeeded();
+    }
+
     async function handleSend() {
       const message = input.value.trim();
       if (!message) return;
@@ -2122,6 +2314,8 @@
       chatMessages.forEach(msg => {
         if (msg.isBooking) {
           appendBookingWidget(false);
+        } else if (msg.text === '[trip-form]') {
+          appendTripFormWidget(false);
         } else {
           appendMessage(msg.sender, msg.text, false);
         }

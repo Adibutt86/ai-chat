@@ -23,6 +23,7 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
   const [showLeadForm, setShowLeadForm] = useState(true);
   const [showServices, setShowServices] = useState(false);
   const [showHours, setShowHours] = useState(false);
+  const [showTripForm, setShowTripForm] = useState(false);
   const [dataSourceMode, setDataSourceMode] = useState<'dashboard' | 'website'>('dashboard');
 
   // Per-point Knowledge Retrieval Source Modes
@@ -56,6 +57,7 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
             setShowLeadForm(data.showLeadForm !== undefined ? data.showLeadForm : true);
             setShowServices(data.showServices !== undefined ? data.showServices : false);
             setShowHours(data.showHours !== undefined ? data.showHours : false);
+            setShowTripForm(data.showTripForm !== undefined ? data.showTripForm : false);
             setDataSourceMode(data.dataSourceMode === 'website' ? 'website' : 'dashboard');
             
             setBookingSourceMode(data.bookingSourceMode === 'website' ? 'website' : 'dashboard');
@@ -96,6 +98,7 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
           showLeadForm,
           showServices,
           showHours,
+          showTripForm,
           dataSourceMode,
           bookingSourceMode,
           contactSourceMode,
@@ -501,6 +504,24 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
                     </div>
                   </div>
                 )}
+              </div>
+
+              {/* Point 5: Trip Details Form */}
+              <div className="bg-zinc-950/60 border border-zinc-800 p-4 rounded-xl space-y-2">
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={showTripForm}
+                    onChange={(e) => setShowTripForm(e.target.checked)}
+                    className="mt-1 rounded border-zinc-800 text-blue-600 focus:ring-blue-600 bg-zinc-900 h-4 w-4 cursor-pointer"
+                  />
+                  <div>
+                    <div className="font-semibold text-white">🚘 Trip Details Form ("Please Enter Trip Details")</div>
+                    <div className="text-xs text-zinc-400 mt-0.5 leading-snug">
+                      Disabled by default. Enable for websites requiring specialized trip details inquiry forms (First Name, Last Name, Company, Phone, Service Choice, Email, Message).
+                    </div>
+                  </div>
+                </label>
               </div>
             </div>
           </div>

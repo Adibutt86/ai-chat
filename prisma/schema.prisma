@@ -80,6 +80,7 @@ model Agent {
   manualKnowledge ManualKnowledge[]
   widgetSettings WidgetSettings?
   bookings       Booking[]
+  tripInquiries  TripInquiry[]
 }
 
 model Website {
@@ -213,6 +214,7 @@ model WidgetSettings {
   showServices   Boolean        @default(false)
   showHours      Boolean        @default(false)
   showPricing    Boolean        @default(false)
+  showTripForm   Boolean        @default(false)
 
   // Data Source Retrieval Policy per point: "dashboard" | "website"
   dataSourceMode     String         @default("dashboard")
@@ -383,4 +385,23 @@ model CalendarConnection {
   organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
+}
+
+model TripInquiry {
+  id           String   @id @default(cuid())
+  agentId      String
+  firstName    String
+  lastName     String
+  company      String?
+  phone        String
+  serviceType  String   // Airport Transfer, Point-To-Point Transfer, Multi-Stop Road Show, Airport Meet&Greet Services, Other Inquiries
+  email        String
+  message      String?
+  status       String   @default("new")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  agent        Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  @@index([agentId])
 }

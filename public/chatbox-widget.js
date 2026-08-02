@@ -277,9 +277,9 @@
       }
       
       #chatbox-body {
-        flex: 1 1 auto !important;
+        flex: 1 1 0% !important;
         min-height: 0 !important;
-        height: 100% !important;
+        max-height: 100% !important;
         padding: 14px 14px;
         overflow-y: auto !important;
         overflow-x: hidden !important;
@@ -291,19 +291,20 @@
         -webkit-overflow-scrolling: touch !important;
         touch-action: pan-y !important;
         pointer-events: auto !important;
+        box-sizing: border-box !important;
       }
       #chatbox-body::-webkit-scrollbar {
-        width: 5px;
+        width: 6px;
       }
       #chatbox-body::-webkit-scrollbar-track {
-        background: transparent;
+        background: #f1f5f9;
       }
       #chatbox-body::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 4px;
+        background: #94a3b8;
+        border-radius: 3px;
       }
       #chatbox-body::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8;
+        background: #64748b;
       }
       
       /* Messages Styles */
@@ -348,6 +349,10 @@
         font-size: 13.5px;
         line-height: 1.5;
         box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+        white-space: normal !important;
+        letter-spacing: normal !important;
       }
       .chatbox-message-row.bot .chatbox-message {
         background-color: #ffffff;
@@ -1238,16 +1243,24 @@
       // Convert markdown bold **text** to <strong>
       escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
+      // Convert markdown links [text](url) to html clickable links first
+      escaped = escaped.replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, (match, label, linkUrl) => {
+        const cleanLabel = label
+          .replace(/Page$/i, ' Page')
+          .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+          .trim();
+        return `<a href="${linkUrl}" target="_blank" rel="noopener" style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">${cleanLabel}</a>`;
+      });
+
       // Convert bullet points (•, *, -) to styled inline checkmark list items
-      escaped = escaped.replace(/(?:^|\n)\s*(?:•|\*|-)\s+(.*?)(?=\n|$)/gi, (match, content) => {
+      escaped = escaped.replace(/(?:^|\n)\s*(?:•|\*|-)\s*(.*?)(?=\n|$)/gi, (match, content) => {
+        if (!content.trim()) return '';
         return `\n<div class="chatbox-list-item"><span class="chatbox-list-icon">✓</span><span>${content.trim()}</span></div>`;
       });
 
       // Handle 📌 Source tags cleanly without duplicating 'Source:'
       escaped = escaped.replace(/📌\s*(?:\*\*Source:\*\*|Source:)?\s*(.*)/g, `<div style="margin-top: 8px; font-size: 11px; color: #64748b; font-style: italic;">📌 <strong>Source:</strong> $1</div>`);
       
-      // Convert markdown links [text](url) to html clickable links
-      escaped = escaped.replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, `<a href="$2" target="_blank" rel="noopener" style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">$1</a>`);
       // Convert raw URLs
       escaped = escaped.replace(/(^|[^"])((?:https?):\/\/[^\s<]+)/g, `$1<a href="$2" target="_blank" rel="noopener" style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">$2</a>`);
       escaped = escaped.replace(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g, `<a href="mailto:$1" style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">$1</a>`);

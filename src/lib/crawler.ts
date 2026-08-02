@@ -11,17 +11,121 @@ export function sanitizeUtf8(str: string): string {
 }
 
 /**
+ * Strict Public Page Filter
+ * Verifies that a URL and HTML content represent a publicly published, live website page.
+ * Blocks WordPress backend, draft, private, preview, scheduled, or admin pages.
+ */
+export function isPublicUrl(urlStr: string): boolean {
+  try {
+    const url = new URL(urlStr);
+    const pathname = url.pathname.toLowerCase();
+    const search = url.search.toLowerCase();
+
+    // 1. Block WordPress backend, admin, authentication, and internal paths
+    const forbiddenPaths = [
+      '/wp-admin',
+      '/wp-login.php',
+      '/wp-json',
+      '/wp-includes',
+      '/wp-content/plugins',
+      '/wp-cron.php',
+      '/wp-config',
+      '/xmlrpc.php',
+      '/admin',
+      '/dashboard',
+      '/login',
+      '/register',
+      '/signup',
+      '/cart',
+      '/checkout',
+      '/my-account',
+      '/logout',
+      '/preview',
+      '/feed'
+    ];
+
+    if (forbiddenPaths.some(p => pathname.startsWith(p) || pathname.includes(p))) {
+      return false;
+    }
+
+    // 2. Block query parameters indicating draft, preview, edit, or scheduled post states
+    const forbiddenQueryParams = [
+      'preview=',
+      'preview_id=',
+      'draft=',
+      'post_status=draft',
+      'post_status=private',
+      'post_status=future',
+      'action=edit',
+      'action=elementor'
+    ];
+
+    if (forbiddenQueryParams.some(param => search.includes(param))) {
+      return false;
+    }
+
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function isPublicPageContent(html: string, headers?: Headers, status?: number): boolean {
+  if (status && status !== 200) {
+    return false; // Only crawl HTTP 200 OK pages
+  }
+
+  if (headers) {
+    const xRobots = headers.get('x-robots-tag') || '';
+    if (xRobots.toLowerCase().includes('noindex') || xRobots.toLowerCase().includes('none')) {
+      return false;
+    }
+  }
+
+  if (!html) return false;
+
+  const lowerHtml = html.toLowerCase();
+
+  // Check noindex meta tag
+  if (/<meta[^>]*name=["']robots["'][^>]*content=["'][^"']*noindex[^"']*["']/i.test(html)) {
+    return false;
+  }
+
+  // Block WordPress draft / private / preview body markers or login forms
+  if (
+    lowerHtml.includes('post-status-draft') ||
+    lowerHtml.includes('post-status-private') ||
+    lowerHtml.includes('post-status-future') ||
+    lowerHtml.includes('wp-admin-bar') ||
+    lowerHtml.includes('loginform') ||
+    lowerHtml.includes('you must be logged in') ||
+    lowerHtml.includes('protected: ') ||
+    lowerHtml.includes('private: ') ||
+    lowerHtml.includes('this post is password protected')
+  ) {
+    return false;
+  }
+
+  return true;
+}
+
+/**
  * Strips HTML tags, script, and style blocks to get clean text copy.
  */
 async function fetchPageRawHtmlAndText(url: string): Promise<{ html: string; text: string }> {
   try {
+    if (!isPublicUrl(url)) {
+      console.log(`[Crawler Filter] Ignored non-public / backend URL: ${url}`);
+      return { html: '', text: '' };
+    }
+
     const res = await fetch(url, {
       headers: {
         'User-Agent': 'ChatBoxAICrawler/1.0',
       },
       next: { revalidate: 0 }
     });
-    if (!res.ok) {
+    if (!res.ok || res.status !== 200) {
       return { html: '', text: '' };
     }
     const contentType = res.headers.get('content-type') || '';
@@ -30,6 +134,12 @@ async function fetchPageRawHtmlAndText(url: string): Promise<{ html: string; tex
     }
 
     const html = await res.text();
+
+    if (!isPublicPageContent(html, res.headers, res.status)) {
+      console.log(`[Crawler Filter] Ignored non-public / draft page content at URL: ${url}`);
+      return { html: '', text: '' };
+    }
+
     let text = html;
     
     // Strip script, style, and svg blocks
@@ -95,7 +205,9 @@ function extractInternalLinks(html: string, baseUrlStr: string): string[] {
         // Only crawl links on the exact same domain
         if (absoluteUrl.hostname === baseUrl.hostname) {
           const cleanUrl = absoluteUrl.origin + (absoluteUrl.pathname.endsWith('/') ? absoluteUrl.pathname.slice(0, -1) : absoluteUrl.pathname);
-          links.add(cleanUrl || absoluteUrl.origin);
+          if (isPublicUrl(cleanUrl)) {
+            links.add(cleanUrl || absoluteUrl.origin);
+          }
         }
       } catch (e) {
         // Ignore invalid URLs
@@ -136,9 +248,16 @@ export async function crawlWebsite(
     const domain = parsedUrl.origin;
     
     // Initialize crawl queue with starting URL and standard website sections
-    const toCrawl: string[] = [url];
+    const toCrawl: string[] = [];
+    if (isPublicUrl(url)) toCrawl.push(url);
+
     if (crawlOption === 'sitemap') {
-      toCrawl.push(`${domain}/about`, `${domain}/prices`, `${domain}/contact`, `${domain}/wordpress`);
+      ['/about', '/prices', '/contact', '/services'].forEach(path => {
+        const fullUrl = `${domain}${path}`;
+        if (isPublicUrl(fullUrl) && !toCrawl.includes(fullUrl)) {
+          toCrawl.push(fullUrl);
+        }
+      });
     }
 
     const crawledUrls = new Set<string>();
@@ -149,6 +268,7 @@ export async function crawlWebsite(
       const targetPageUrl = toCrawl.shift()!;
       const normalizedTargetUrl = targetPageUrl.replace(/\/$/, '');
       
+      if (!isPublicUrl(normalizedTargetUrl)) continue;
       if (crawledUrls.has(normalizedTargetUrl)) continue;
       crawledUrls.add(normalizedTargetUrl);
 

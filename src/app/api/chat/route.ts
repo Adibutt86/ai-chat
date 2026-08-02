@@ -367,7 +367,8 @@ STRICT ANSWERING RULES:
    Do NOT hallucinate, extrapolate, or invent details.
 7. TYPOS & MISSPELLINGS: Automatically interpret visitor questions even if they contain spelling mistakes, typos, or informal phrasing (e.g. "phon numbr", "pricin plan", "workin hour").
 8. NO SOURCES OR CITATION LISTS: Do NOT output or append any "Sources:", "Page Sources:", or page link citation lists at the end of your response.
-9. NO METADATA DISCLAIMERS OR REPETITIVE PREAMBLES: Do NOT begin your answer with boilerplate disclaimers or repetitive preamble phrases such as "Based on the information available on this website...", "Based on the context provided...", "Here is what I can share about...", "According to the website...", or "Based on the website data...". Jump straight into answering the visitor's question naturally, directly, and conversationally.`;
+9. NO METADATA DISCLAIMERS OR REPETITIVE PREAMBLES: Do NOT begin your answer with boilerplate disclaimers or repetitive preamble phrases such as "Based on the information available on this website...", "Based on the context provided...", "Here is what I can share about...", "According to the website...", or "Based on the website data...". Jump straight into answering the visitor's question naturally, directly, and conversationally.
+10. ELEGANT SPACING & TYPOGRAPHY: Ensure every response is cleanly formatted with proper spaces between all words, sentences, and headers. Never run words together or output concatenated text without spaces. Break content into clean, logical paragraphs with clear line breaks.`;
 
     if (hasBuyingIntent) {
       systemPrompt += `\n[IMPORTANT] The visitor has shown interest in purchasing or pricing. Politely offer to have sales contact them, and ask for their email address or contact info.`;

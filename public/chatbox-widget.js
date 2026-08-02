@@ -414,10 +414,21 @@
         gap: 8px;
         flex-shrink: 0;
         overflow-x: auto;
+        overflow-y: visible !important;
         scrollbar-width: none;
+        position: relative;
+        z-index: 999;
       }
       #chatbox-sticky-suggestions::-webkit-scrollbar {
         display: none;
+      }
+
+      .chatbox-suggestions-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        position: relative;
+        overflow: visible !important;
       }
       
       .chatbox-suggestion-pill {
@@ -454,16 +465,16 @@
         box-shadow: 0 4px 10px ${primaryColor}35;
       }
 
-      /* Hover Tooltip Popup */
+      /* Hover Tooltip Popup - Placed ABOVE the pill so it is never hidden at the bottom */
       .chatbox-suggestion-pill::after {
         content: attr(data-title);
         position: absolute;
-        top: 42px;
+        bottom: calc(100% + 8px);
         left: 50%;
-        transform: translateX(-50%) translateY(-4px) scale(0.9);
+        transform: translateX(-50%) translateY(4px) scale(0.9);
         background-color: #0f172a;
         color: #ffffff;
-        padding: 5px 9px;
+        padding: 5px 10px;
         border-radius: 6px;
         font-size: 11px;
         font-weight: 600;
@@ -477,12 +488,12 @@
       .chatbox-suggestion-pill::before {
         content: '';
         position: absolute;
-        top: 36px;
+        bottom: calc(100% + 2px);
         left: 50%;
         transform: translateX(-50%);
-        border-width: 0 5px 6px 5px;
+        border-width: 6px 5px 0 5px;
         border-style: solid;
-        border-color: transparent transparent #0f172a transparent;
+        border-color: #0f172a transparent transparent transparent;
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.2s ease;

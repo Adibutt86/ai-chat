@@ -37,25 +37,43 @@ function isSmallTalk(message: string): string | null {
 function hasBookingIntent(message: string): boolean {
   const normalized = message.trim().toLowerCase();
   
-  // Exclude setup/configuration questions from launching the booking flow
+  // Exclude setup/configuration or general inquiry questions
   if (normalized.includes('connect') || normalized.includes('integrate') || normalized.includes('setup') || normalized.includes('how to')) {
     return false;
   }
 
-  const triggers = [
-    'book',
-    'schedule',
-    'appointment',
-    'consultation',
-    'meeting',
-    'reserve',
-    'slot',
-    'calendar',
-    'available',
-    'availability',
-    'free time'
+  // Explicit phrases indicating direct intent to launch the booking flow
+  const explicitPhrases = [
+    'book an appointment',
+    'book appointment',
+    'schedule an appointment',
+    'schedule appointment',
+    'book a ride',
+    'book ride',
+    'book now',
+    'schedule now',
+    'want to book',
+    'like to book',
+    'make a reservation',
+    'make a booking',
+    'reserve a slot',
+    'book a meeting',
+    'schedule a meeting',
+    'i want to book'
   ];
-  return triggers.some(keyword => normalized.includes(keyword));
+
+  if (explicitPhrases.some(phrase => normalized.includes(phrase))) {
+    return true;
+  }
+
+  // Exact single word triggers for very short prompts (e.g. "book", "booking", "schedule")
+  const shortMsgWords = normalized.split(/\s+/);
+  if (shortMsgWords.length <= 3) {
+    const singleTriggers = ['book', 'booking', 'schedule', 'reservation'];
+    return singleTriggers.some(t => shortMsgWords.includes(t));
+  }
+
+  return false;
 }
 
 function isOffTopicQuery(message: string): boolean {

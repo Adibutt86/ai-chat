@@ -1355,6 +1355,9 @@
         }
       }
 
+      // Preprocess multi-line business hours format (e.g. "Monday\n9:00 AM to 4:00 PM") into "Monday: 9:00 AM to 4:00 PM"
+      text = text.replace(/((?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday))\s*\n\s*((?:\d{1,2}:\d{2}|\d{1,2}\s*(?:AM|PM)|Closed|Unavailable).*?)(?=\n|$)/gi, '$1: $2');
+
       // Check if the response contains Business Working Hours
       if (text.includes('Business Working Hours') || text.includes('Business Hours') || text.includes('Working Hours')) {
         const lines = text.split('\n');
@@ -1440,6 +1443,9 @@
       // Strip out any trailing Sources: blocks
       escaped = escaped.replace(/(?:\n)*\s*(?:\*\*)?Sources?:?(?:\*\*)?[\s\S]*$/gi, '');
 
+      // Auto-bold standard section headings like Call Us, Visit or Write to Us, Online Enquiry
+      escaped = escaped.replace(/(^|\n)(Call Us|Visit or Write to Us|Online Enquiry|Contact Us|Email Us|Office Location|Headquarters)(?::)?(?=\n|$)/gi, '$1<strong>$2</strong>');
+
       // Convert markdown bold **text** to <strong>
       escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
@@ -1461,10 +1467,18 @@
       // Handle 📌 Source tags cleanly without duplicating 'Source:'
       escaped = escaped.replace(/📌\s*(?:\*\*Source:\*\*|Source:)?\s*(.*)/g, `<div style="margin-top: 8px; font-size: 11px; color: #64748b; font-style: italic;">📌 <strong>Source:</strong> $1</div>`);
       
-      // Convert raw URLs
+      // Convert raw URLs & Email addresses
       escaped = escaped.replace(/(^|[^"])((?:https?):\/\/[^\s<]+)/g, `$1<a href="$2" target="_blank" rel="noopener" style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">$2</a>`);
       escaped = escaped.replace(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g, `<a href="mailto:$1" style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">$1</a>`);
-      escaped = escaped.replace(/(\+?[0-9]{1,3}[-.\s]?[0-9]{3}[-.\s]?[0-9]{3}[-.\s]?[0-9]{4})/g, `<a href="tel:$1" style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">$1</a>`);
+
+      // Convert phone numbers like 01 451 9717, +353 1 451 9717, +1 (800) 555-0199 into clickable tel links
+      escaped = escaped.replace(/(^|[^0-9+])((?:0\d{1,3}[\s.-]?\d{3}[\s.-]?\d{3,4}|\+?\d{1,3}[\s.-]?\(?\d{2,4}\)?[\s.-]?\d{3,4}[\s.-]?\d{3,4}))(?=[^0-9+]|$)/g, (match, prefix, phoneNum) => {
+        const cleanPhone = phoneNum.replace(/[^\d+]/g, '');
+        if (cleanPhone.length >= 7) {
+          return `${prefix}<a href="tel:${cleanPhone}" style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">📞 ${phoneNum.trim()}</a>`;
+        }
+        return match;
+      });
       
       // Process newlines and strip extra breaks around list items
       escaped = escaped.replace(/\n/g, '<br/>');

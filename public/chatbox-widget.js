@@ -278,12 +278,12 @@
       
       #chatbox-body {
         flex: 1;
-        padding: 20px;
+        padding: 14px 14px;
         overflow-y: auto;
         background-color: #f8fafc;
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 14px;
         scroll-behavior: smooth;
         scrollbar-width: none;
         -ms-overflow-style: none;
@@ -296,7 +296,7 @@
       .chatbox-message-row {
         display: flex;
         gap: 8px;
-        max-width: 85%;
+        max-width: 96%;
         opacity: 0;
         transform: translateY(8px);
         animation: chatbox-message-in 0.3s forwards cubic-bezier(0.16, 1, 0.3, 1);
@@ -309,9 +309,12 @@
       }
       .chatbox-message-row.bot {
         align-self: flex-start;
+        max-width: 98%;
+        width: 98%;
       }
       .chatbox-message-row.user {
         align-self: flex-end;
+        max-width: 90%;
         flex-direction: row-reverse;
       }
       .chatbox-message-avatar {
@@ -344,53 +347,124 @@
         border-bottom-right-radius: 4px;
       }
       
+      .chatbox-list-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin: 6px 0;
+        font-size: 13px;
+        line-height: 1.45;
+      }
+      .chatbox-list-item:first-of-type {
+        margin-top: 8px;
+      }
+      .chatbox-list-item:last-of-type {
+        margin-bottom: 8px;
+      }
+      .chatbox-list-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        background-color: ${primaryColor}18;
+        color: ${primaryColor};
+        font-size: 11px;
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      
       #chatbox-sticky-suggestions {
         background-color: #ffffff;
         border-bottom: 1px solid #f1f5f9;
-        padding: 10px 14px;
+        padding: 6px 14px;
         display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
+        align-items: center;
+        gap: 8px;
         flex-shrink: 0;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      #chatbox-sticky-suggestions::-webkit-scrollbar {
+        display: none;
       }
       
       .chatbox-suggestion-pill {
-        background-color: #ffffff;
+        position: relative;
+        background-color: #f8fafc;
         border: 1px solid #e2e8f0;
         color: #334155;
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 11px;
-        font-weight: 600;
-        text-align: left;
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        font-size: 15px;
         cursor: pointer;
-        transition: all 0.2s ease;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         display: inline-flex;
         align-items: center;
-        gap: 6px;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        justify-content: center;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.03);
         flex-shrink: 0;
-        margin: 0 0 5px 0 !important;
-      }
-      .chatbox-suggestion-pill img.emoji {
-        width: 14px !important;
-        height: 14px !important;
         margin: 0 !important;
-        display: inline-block !important;
-        vertical-align: middle !important;
+        padding: 0 !important;
+        outline: none;
+      }
+      .chatbox-suggestion-pill span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
       }
       .chatbox-suggestion-pill:hover {
         background-color: ${primaryColor};
         color: #ffffff !important;
         border-color: ${primaryColor};
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px ${primaryColor}35;
       }
-      .chatbox-suggestion-pill:hover strong {
-        color: #ffffff !important;
-      }
-      .chatbox-suggestion-pill strong {
-        color: #334155;
+
+      /* Hover Tooltip Popup */
+      .chatbox-suggestion-pill::after {
+        content: attr(data-title);
+        position: absolute;
+        top: 42px;
+        left: 50%;
+        transform: translateX(-50%) translateY(-4px) scale(0.9);
+        background-color: #0f172a;
+        color: #ffffff;
+        padding: 5px 9px;
+        border-radius: 6px;
+        font-size: 11px;
         font-weight: 600;
-        transition: color 0.2s;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 10000;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+      }
+      .chatbox-suggestion-pill::before {
+        content: '';
+        position: absolute;
+        top: 36px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 0 5px 6px 5px;
+        border-style: solid;
+        border-color: transparent transparent #0f172a transparent;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+        z-index: 10001;
+      }
+      .chatbox-suggestion-pill:hover::after {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+      }
+      .chatbox-suggestion-pill:hover::before {
+        opacity: 1;
       }
       
       /* Scrolling Helper */
@@ -632,6 +706,93 @@
         color: white;
         border-color: ${primaryColor};
       }
+
+      /* Mini Interactive Calendar Styles */
+      .booking-calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        background: #f8fafc;
+        padding: 6px 10px;
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
+      }
+      .booking-calendar-title {
+        font-weight: 600;
+        font-size: 13px;
+        color: #0f172a;
+      }
+      .booking-calendar-nav {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        width: 26px;
+        height: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 12px;
+        color: #1e293b;
+        transition: all 0.2s;
+      }
+      .booking-calendar-nav:hover {
+        background: ${primaryColor};
+        color: #ffffff;
+        border-color: ${primaryColor};
+      }
+      .booking-calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+        text-align: center;
+        margin-bottom: 8px;
+      }
+      .booking-calendar-day-header {
+        font-size: 10px;
+        font-weight: 700;
+        color: #64748b;
+        padding: 4px 0;
+        text-transform: uppercase;
+      }
+      .booking-calendar-cell {
+        padding: 7px 2px;
+        border-radius: 8px;
+        font-size: 12px;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 32px;
+      }
+      .booking-calendar-cell.available {
+        background-color: #f0fdf4;
+        color: #166534;
+        border-color: #bbf7d0;
+        font-weight: 600;
+      }
+      .booking-calendar-cell.available:hover {
+        background-color: ${primaryColor};
+        color: white !important;
+        border-color: ${primaryColor};
+        transform: scale(1.04);
+      }
+      .booking-calendar-cell.disabled {
+        color: #cbd5e1;
+        cursor: not-allowed;
+        background-color: #f8fafc;
+        opacity: 0.6;
+      }
+      .booking-calendar-cell.selected {
+        background-color: ${primaryColor} !important;
+        color: white !important;
+        font-weight: 700;
+        border-color: ${primaryColor} !important;
+      }
       .booking-input {
         width: 100%;
         border: 1px solid #e2e8f0;
@@ -745,42 +906,34 @@
       const showLeadForm = config.widgetSettings?.showLeadForm !== false;
       const showServices = config.widgetSettings?.showServices === true;
       const showHours = config.widgetSettings?.showHours === true;
-      const showPricing = config.widgetSettings?.showPricing === true;
 
-      if (showBooking || showLeadForm || showServices || showHours || showPricing) {
+      if (showBooking || showLeadForm || showServices || showHours) {
         html += '<div class="chatbox-suggestions-container" id="chatbox-welcome-suggestions">';
         if (showBooking) {
           html += `
-            <button class="chatbox-suggestion-pill" id="chatbox-suggest-book">
-              <span>📅</span> <strong>Book an Appointment</strong>
+            <button class="chatbox-suggestion-pill" id="chatbox-suggest-book" data-title="Book Appointment" aria-label="Book Appointment">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
             </button>
           `;
         }
         if (showLeadForm) {
           html += `
-            <button class="chatbox-suggestion-pill" id="chatbox-suggest-lead">
-              <span>📞</span> <strong>Leave a Message</strong>
-            </button>
-          `;
-        }
-        if (showHours) {
-          html += `
-            <button class="chatbox-suggestion-pill" id="chatbox-suggest-hours">
-              <span>🕒</span> <strong>Business Hours</strong>
+            <button class="chatbox-suggestion-pill" id="chatbox-suggest-lead" data-title="Leave Message" aria-label="Leave Message">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
             </button>
           `;
         }
         if (showServices) {
           html += `
-            <button class="chatbox-suggestion-pill" id="chatbox-suggest-services">
-              <span>💼</span> <strong>Our Services</strong>
+            <button class="chatbox-suggestion-pill" id="chatbox-suggest-services" data-title="Our Services" aria-label="Our Services">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
             </button>
           `;
         }
-        if (showPricing) {
+        if (showHours) {
           html += `
-            <button class="chatbox-suggestion-pill" id="chatbox-suggest-pricing">
-              <span>💲</span> <strong>Pricing Plans</strong>
+            <button class="chatbox-suggestion-pill" id="chatbox-suggest-hours" data-title="Business Hours" aria-label="Business Hours">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
             </button>
           `;
         }
@@ -878,21 +1031,27 @@
     });
 
     function connectSuggestionsListeners() {
+      function scrollToBottom() {
+        setTimeout(() => {
+          body.scrollTo({ top: body.scrollHeight, behavior: 'smooth' });
+        }, 60);
+      }
+
       const suggestBookBtn = document.getElementById('chatbox-suggest-book');
       if (suggestBookBtn) {
         suggestBookBtn.onclick = () => {
           removeSuggestions();
           appendMessage('user', 'I want to book an appointment');
           appendBookingWidget();
+          scrollToBottom();
         };
       }
       const suggestLeadBtn = document.getElementById('chatbox-suggest-lead');
       if (suggestLeadBtn) {
         suggestLeadBtn.onclick = () => {
           removeSuggestions();
-          input.value = 'I want to leave my contact details / get in touch';
-          input.dispatchEvent(new Event('input'));
-          handleSend();
+          appendLeadFormWidget();
+          scrollToBottom();
         };
       }
       const suggestHoursBtn = document.getElementById('chatbox-suggest-hours');
@@ -902,6 +1061,7 @@
           input.value = 'What are your business working hours?';
           input.dispatchEvent(new Event('input'));
           handleSend();
+          scrollToBottom();
         };
       }
       const suggestServicesBtn = document.getElementById('chatbox-suggest-services');
@@ -911,15 +1071,7 @@
           input.value = 'What services do you offer?';
           input.dispatchEvent(new Event('input'));
           handleSend();
-        };
-      }
-      const suggestPricingBtn = document.getElementById('chatbox-suggest-pricing');
-      if (suggestPricingBtn) {
-        suggestPricingBtn.onclick = () => {
-          removeSuggestions();
-          input.value = 'What are your pricing plans?';
-          input.dispatchEvent(new Event('input'));
-          handleSend();
+          scrollToBottom();
         };
       }
     }
@@ -1069,6 +1221,14 @@
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
 
+      // Convert markdown bold **text** to <strong>
+      escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+      // Convert bullet points (•, *, -) to styled inline checkmark list items
+      escaped = escaped.replace(/(?:^|\n)\s*(?:•|\*|-)\s+(.*?)(?=\n|$)/gi, (match, content) => {
+        return `\n<div class="chatbox-list-item"><span class="chatbox-list-icon">✓</span><span>${content.trim()}</span></div>`;
+      });
+
       // Handle 📌 Source tags cleanly without duplicating 'Source:'
       escaped = escaped.replace(/📌\s*(?:\*\*Source:\*\*|Source:)?\s*(.*)/g, `<div style="margin-top: 8px; font-size: 11px; color: #64748b; font-style: italic;">📌 <strong>Source:</strong> $1</div>`);
       
@@ -1078,7 +1238,13 @@
       escaped = escaped.replace(/(^|[^"])((?:https?):\/\/[^\s<]+)/g, `$1<a href="$2" target="_blank" rel="noopener" style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">$2</a>`);
       escaped = escaped.replace(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g, `<a href="mailto:$1" style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">$1</a>`);
       escaped = escaped.replace(/(\+?[0-9]{1,3}[-.\s]?[0-9]{3}[-.\s]?[0-9]{3}[-.\s]?[0-9]{4})/g, `<a href="tel:$1" style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">$1</a>`);
+      
+      // Process newlines and strip extra breaks around list items
       escaped = escaped.replace(/\n/g, '<br/>');
+      escaped = escaped.replace(/(?:<br\/>)*<div class="chatbox-list-item">/g, '<div class="chatbox-list-item">');
+      escaped = escaped.replace(/<\/div>(?:<br\/>)+<div class="chatbox-list-item">/g, '</div><div class="chatbox-list-item">');
+      escaped = escaped.replace(/<\/div>(?:<br\/>)+/g, '</div>');
+      escaped = escaped.replace(/(?:<br\/>){3,}/g, '<br/><br/>');
 
       return escaped;
     }
@@ -1218,28 +1384,134 @@
           });
       }
 
-      // Step 2: Select Date
+      // Step 2: Select Date (Visual Mini-Calendar with Real-Time Business Hours Availability)
       function renderStep2() {
-        const today = new Date().toISOString().split('T')[0];
+        let currentCalDate = new Date();
+        
         wizard.innerHTML = `
-          <h4>Select Date</h4>
-          <label class="booking-label">Choose appointment date</label>
-          <input type="date" min="${today}" id="booking-date-picker" class="booking-input" />
-          <button id="booking-date-next" class="booking-btn booking-btn-primary" style="margin-top: 6px;">Check Available Times</button>
+          <h4>📅 Select Date</h4>
+          <div class="booking-skeleton" style="height: 180px;"></div>
         `;
-
-        const datePicker = wizard.querySelector('#booking-date-picker');
-        const nextBtn = wizard.querySelector('#booking-date-next');
-
-        nextBtn.onclick = () => {
-          if (!datePicker.value) {
-            alert('Please select a valid date.');
-            return;
-          }
-          selectedDate = datePicker.value;
-          renderStep3();
-        };
         scrollToLatestIfNeeded();
+
+        Promise.all([
+          fetch(`${origin}/api/business-hours?agentId=${agentId}`).then(r => r.json()),
+          fetch(`${origin}/api/holidays?agentId=${agentId}`).then(r => r.json()).catch(() => [])
+        ])
+          .then(([businessHours, holidays]) => {
+            const enabledDays = new Set();
+            if (Array.isArray(businessHours)) {
+              businessHours.forEach(bh => {
+                if (bh.isEnabled) {
+                  enabledDays.add(bh.dayOfWeek); // 0 = Sunday, 1 = Monday, ...
+                }
+              });
+            } else {
+              [1, 2, 3, 4, 5].forEach(d => enabledDays.add(d));
+            }
+
+            const holidayMap = new Map();
+            if (Array.isArray(holidays)) {
+              holidays.forEach(h => holidayMap.set(h.date, h.name));
+            }
+
+            function renderCalendarView(year, month) {
+              const firstDay = new Date(year, month, 1);
+              const lastDay = new Date(year, month + 1, 0);
+              const monthName = firstDay.toLocaleString('default', { month: 'long' });
+              
+              const startDayOfWeek = firstDay.getDay(); // 0 = Sun
+              const totalDays = lastDay.getDate();
+              const today = new Date();
+              today.setHours(0,0,0,0);
+
+              let calHtml = `
+                <h4>📅 Select Date</h4>
+                <div class="booking-calendar-header">
+                  <button class="booking-calendar-nav" id="cal-prev" type="button">&lt;</button>
+                  <span class="booking-calendar-title">${monthName} ${year}</span>
+                  <button class="booking-calendar-nav" id="cal-next" type="button">&gt;</button>
+                </div>
+                <div class="booking-calendar-grid">
+                  <div class="booking-calendar-day-header">Su</div>
+                  <div class="booking-calendar-day-header">Mo</div>
+                  <div class="booking-calendar-day-header">Tu</div>
+                  <div class="booking-calendar-day-header">We</div>
+                  <div class="booking-calendar-day-header">Th</div>
+                  <div class="booking-calendar-day-header">Fr</div>
+                  <div class="booking-calendar-day-header">Sa</div>
+              `;
+
+              // Offset blanks for starting day of month
+              for (let i = 0; i < startDayOfWeek; i++) {
+                calHtml += `<div class="booking-calendar-cell disabled"></div>`;
+              }
+
+              for (let d = 1; d <= totalDays; d++) {
+                const dateObj = new Date(year, month, d);
+                dateObj.setHours(0,0,0,0);
+                const dayOfWeek = dateObj.getDay();
+
+                const dateISO = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+
+                const isPast = dateObj.getTime() < today.getTime();
+                const isOpenDay = enabledDays.has(dayOfWeek);
+                const holidayName = holidayMap.get(dateISO);
+
+                if (holidayName) {
+                  calHtml += `<div class="booking-calendar-cell disabled" style="background: #fff7ed; color: #c2410c; border-color: #ffedd5;" title="Holiday: ${holidayName}">${d}</div>`;
+                } else if (isPast || !isOpenDay) {
+                  calHtml += `<div class="booking-calendar-cell disabled" title="${!isOpenDay ? 'Closed / Unavailable' : 'Past date'}">${d}</div>`;
+                } else {
+                  calHtml += `<div class="booking-calendar-cell available" data-date="${dateISO}" title="Available">${d}</div>`;
+                }
+              }
+
+              calHtml += `</div>
+                <div style="font-size: 11px; color: #64748b; text-align: center; margin-top: 4px; font-weight: 500;">
+                  🟢 Green dates = Business Hours &bull; 🟧 Holiday
+                </div>
+              `;
+
+              wizard.innerHTML = calHtml;
+
+              wizard.querySelector('#cal-prev').onclick = () => {
+                currentCalDate.setMonth(currentCalDate.getMonth() - 1);
+                renderCalendarView(currentCalDate.getFullYear(), currentCalDate.getMonth());
+              };
+
+              wizard.querySelector('#cal-next').onclick = () => {
+                currentCalDate.setMonth(currentCalDate.getMonth() + 1);
+                renderCalendarView(currentCalDate.getFullYear(), currentCalDate.getMonth());
+              };
+
+              wizard.querySelectorAll('.booking-calendar-cell.available').forEach(cell => {
+                cell.onclick = () => {
+                  selectedDate = cell.getAttribute('data-date');
+                  renderStep3();
+                };
+              });
+
+              scrollToLatestIfNeeded();
+            }
+
+            renderCalendarView(currentCalDate.getFullYear(), currentCalDate.getMonth());
+          })
+          .catch(() => {
+            const todayStr = new Date().toISOString().split('T')[0];
+            wizard.innerHTML = `
+              <h4>📅 Select Date</h4>
+              <label class="booking-label">Choose appointment date</label>
+              <input type="date" min="${todayStr}" id="booking-date-picker" class="booking-input" />
+              <button id="booking-date-next" class="booking-btn booking-btn-primary" style="margin-top: 6px;">Check Available Times</button>
+            `;
+            wizard.querySelector('#booking-date-next').onclick = () => {
+              const datePicker = wizard.querySelector('#booking-date-picker');
+              if (!datePicker.value) { alert('Please select a date.'); return; }
+              selectedDate = datePicker.value;
+              renderStep3();
+            };
+          });
       }
 
       // Step 3: Select Time Slots
@@ -1437,6 +1709,84 @@
         `;
         scrollToLatestIfNeeded();
       }
+    }
+
+    function appendLeadFormWidget() {
+      const widgetRow = document.createElement('div');
+      widgetRow.className = 'chatbox-message-row bot';
+      
+      const wizard = document.createElement('div');
+      wizard.className = 'booking-wizard';
+      widgetRow.appendChild(wizard);
+      
+      messagesContainer.appendChild(widgetRow);
+      scrollToLatestIfNeeded();
+
+      wizard.innerHTML = `
+        <h4>📞 Leave a Message</h4>
+        <div style="font-size: 12.5px; color: #64748b; margin-bottom: 12px;">Fill out your details below and our team will get back to you shortly:</div>
+        
+        <label class="booking-label">Full Name *</label>
+        <input type="text" id="lead-name" class="booking-input" required placeholder="John Smith" />
+        
+        <label class="booking-label">Email Address *</label>
+        <input type="email" id="lead-email" class="booking-input" required placeholder="john@example.com" />
+        
+        <label class="booking-label">Phone Number</label>
+        <input type="tel" id="lead-phone" class="booking-input" placeholder="+1 555-0199" />
+        
+        <label class="booking-label">Your Message</label>
+        <textarea id="lead-notes" class="booking-input" style="height: 60px; resize: none;" placeholder="How can we help you?"></textarea>
+        
+        <button id="lead-submit-btn" class="booking-btn booking-btn-primary" style="margin-top: 8px;">Submit Message</button>
+      `;
+
+      const submitBtn = wizard.querySelector('#lead-submit-btn');
+      submitBtn.onclick = () => {
+        const nameVal = wizard.querySelector('#lead-name').value.trim();
+        const emailVal = wizard.querySelector('#lead-email').value.trim();
+        const phoneVal = wizard.querySelector('#lead-phone').value.trim();
+        const notesVal = wizard.querySelector('#lead-notes').value.trim();
+
+        if (!emailVal) {
+          alert('Email Address is required.');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Submitting...';
+
+        fetch(`${origin}/api/leads`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            agentId,
+            name: nameVal,
+            email: emailVal,
+            phone: phoneVal,
+            message: notesVal
+          })
+        })
+        .then(res => res.json())
+        .then(() => {
+          wizard.innerHTML = `
+            <h4 style="color: #10b981; display:flex; align-items:center; gap:6px;">
+              <svg style="width:18px;height:18px;fill:#10b981;" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              Message Received!
+            </h4>
+            <div style="font-size: 13px; color: #475569; line-height: 1.5;">
+              Thank you, <strong>${nameVal || 'valued visitor'}</strong>! Your message has been sent to our team. We will get in touch with you at <strong>${emailVal}</strong> soon.
+            </div>
+          `;
+          scrollToLatestIfNeeded();
+        })
+        .catch(() => {
+          submitBtn.disabled = false;
+          submitBtn.innerText = 'Submit Message';
+          alert('Error submitting message. Please try again.');
+        });
+      };
+      scrollToLatestIfNeeded();
     }
 
     async function handleSend() {

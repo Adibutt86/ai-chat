@@ -79,30 +79,82 @@ export async function getAvailableTimeSlots(
 
   const orgId = agent.organizationId;
 
-  // 2. Load business hours settings
-  // Parse the day of the week (Date.getDay() returns 0 for Sunday)
-  const targetDate = new Date(dateStr);
-  const dayOfWeek = targetDate.getDay();
+  // 2. Load Scheduling Settings & Exclusions
+  const schedulingSettings = await prisma.schedulingSettings.findUnique({
+    where: { organizationId: orgId }
+  }) || {
+    bufferMinutes: 15,
+    minNoticeHours: 2,
+    maxAdvanceDays: 30,
+    maxDailyBookings: 10,
+    slotIntervalMinutes: 30
+  };
+
+  // Rule 1: Check Holiday Exception
+  const isHoliday = await prisma.holiday.findUnique({
+    where: {
+      organizationId_date: {
+        organizationId: orgId,
+        date: dateStr
+      }
+    }
+  });
+
+  if (isHoliday) {
+    return []; // Closed for Holiday
+  }
+
+  // Rule 2: Check Maximum Booking Horizon (maxAdvanceDays)
+  const nowMs = Date.now();
+  const maxAdvanceMs = schedulingSettings.maxAdvanceDays * 24 * 60 * 60 * 1000;
+  const targetDate = new Date(`${dateStr}T00:00:00Z`);
+
+  if (targetDate.getTime() > nowMs + maxAdvanceMs) {
+    return []; // Date is beyond max advance booking window
+  }
+
+  // 3. Load business hours for day of week
+  const dayOfWeek = targetDate.getUTCDay();
 
   const businessHours = await prisma.businessHours.findFirst({
     where: { organizationId: orgId, dayOfWeek }
   });
 
-  // If closed or disabled, return no slots
   if (!businessHours || !businessHours.isEnabled) {
-    return [];
+    return []; // Closed on this day
   }
 
   const timezone = businessHours.timezone;
-  const startTimeStr = businessHours.startTime;
-  const endTimeStr = businessHours.endTime;
+  const dayStartUtc = localTimeToUtc(dateStr, businessHours.startTime, timezone);
+  const dayEndUtc = localTimeToUtc(dateStr, businessHours.endTime, timezone);
 
-  // 3. Compute business hours boundary in UTC for this specific day
-  const dayStartUtc = localTimeToUtc(dateStr, startTimeStr, timezone);
-  const dayEndUtc = localTimeToUtc(dateStr, endTimeStr, timezone);
+  // Rule 3: Check Maximum Daily Bookings Limit
+  const existingDailyCount = await prisma.booking.count({
+    where: {
+      organizationId: orgId,
+      status: { notIn: ['cancelled'] },
+      startTime: { lte: dayEndUtc },
+      endTime: { gte: dayStartUtc }
+    }
+  });
 
-  // 4. Fetch conflicts from Supabase Database
-  // Conflicting bookings must overlap with our target day range
+  if (existingDailyCount >= schedulingSettings.maxDailyBookings) {
+    return []; // Reached max daily booking cap
+  }
+
+  // 4. Build Conflict Periods (Database + Google Calendar + Breaks + Buffer Time)
+  const conflicts: { start: Date; end: Date }[] = [];
+
+  // Add Break Period (e.g. Lunch Break) if configured
+  if (businessHours.hasBreak && businessHours.breakStartTime && businessHours.breakEndTime) {
+    const breakStartUtc = localTimeToUtc(dateStr, businessHours.breakStartTime, timezone);
+    const breakEndUtc = localTimeToUtc(dateStr, businessHours.breakEndTime, timezone);
+    conflicts.push({ start: breakStartUtc, end: breakEndUtc });
+  }
+
+  // Fetch Database Bookings with Buffer Padding
+  const bufferMs = schedulingSettings.bufferMinutes * 60 * 1000;
+
   const existingBookings = await prisma.booking.findMany({
     where: {
       organizationId: orgId,
@@ -113,12 +165,14 @@ export async function getAvailableTimeSlots(
     select: { startTime: true, endTime: true }
   });
 
-  const conflicts: { start: Date; end: Date }[] = existingBookings.map(b => ({
-    start: new Date(b.startTime),
-    end: new Date(b.endTime)
-  }));
+  existingBookings.forEach(b => {
+    conflicts.push({
+      start: new Date(new Date(b.startTime).getTime() - bufferMs),
+      end: new Date(new Date(b.endTime).getTime() + bufferMs)
+    });
+  });
 
-  // 5. Fetch conflicts from Google Calendar (if connected)
+  // Fetch Google Calendar Busy Slots (with buffer padding)
   const connection = await prisma.calendarConnection.findUnique({
     where: { organizationId: orgId }
   });
@@ -132,32 +186,37 @@ export async function getAvailableTimeSlots(
         dayStartUtc.toISOString(),
         dayEndUtc.toISOString()
       );
-      conflicts.push(...googleConflicts);
+      googleConflicts.forEach(gc => {
+        conflicts.push({
+          start: new Date(gc.start.getTime() - bufferMs),
+          end: new Date(gc.end.getTime() + bufferMs)
+        });
+      });
     }
   }
 
-  // 6. Generate time slot intervals
-  // Slots start every 30 minutes, or matching service duration if larger
-  const slotIntervalMinutes = Math.min(30, service.durationMinutes);
+  // 5. Generate Available Time Slots
+  const slotIntervalMinutes = Math.min(
+    schedulingSettings.slotIntervalMinutes || 30,
+    service.durationMinutes
+  );
   const durationMs = service.durationMinutes * 60 * 1000;
   const intervalMs = slotIntervalMinutes * 60 * 1000;
 
+  const minNoticeMs = schedulingSettings.minNoticeHours * 60 * 60 * 1000;
+  const earliestAllowedMs = nowMs + minNoticeMs;
+
   const slots: TimeSlot[] = [];
   let currentSlotStartMs = dayStartUtc.getTime();
-  const now = Date.now();
-  const minBookingNoticeMs = 2 * 60 * 60 * 1000; // 2 hours minimum notice
 
   while (currentSlotStartMs + durationMs <= dayEndUtc.getTime()) {
     const slotStart = new Date(currentSlotStartMs);
     const slotEnd = new Date(currentSlotStartMs + durationMs);
 
-    // Rule A: Prevent booking slots that begin in the past or within the notice window
-    const isPast = currentSlotStartMs < now + minBookingNoticeMs;
-
-    if (!isPast) {
-      // Rule B: Verify if this slot overlaps with any conflicts (Postgres or Google Calendar)
+    // Minimum Notice Check
+    if (currentSlotStartMs >= earliestAllowedMs) {
+      // Verify Overlaps with Conflicts
       const hasConflict = conflicts.some(conflict => {
-        // Overlap occurs when (start1 < end2) AND (end1 > start2)
         return slotStart.getTime() < conflict.end.getTime() && slotEnd.getTime() > conflict.start.getTime();
       });
 

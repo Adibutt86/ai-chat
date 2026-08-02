@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { searchRelevantChunks } from '@/lib/vector';
-import { generateResponse, generateResponseStream } from '@/services/ai/anthropic.service';
+import { generateResponseStream } from '@/services/ai/anthropic.service';
+import { simulateLocalAIResponse } from '@/lib/ai';
 
 const searchCache = new Map<string, string>();
 
@@ -175,8 +176,9 @@ export async function POST(request: Request) {
 
     const encoder = new TextEncoder();
 
-    // Booking Intent Detection
-    if (hasBookingIntent(message)) {
+    // Booking Intent Detection - Only intercept if showBooking toggle is enabled in Widget Settings
+    const showBooking = agent.widgetSettings?.showBooking !== false;
+    if (showBooking && hasBookingIntent(message)) {
       const stream = new ReadableStream({
         async start(controller) {
           controller.enqueue(encoder.encode(JSON.stringify({ 
@@ -212,7 +214,7 @@ export async function POST(request: Request) {
       else if (currentModelId.includes('opus')) friendlyModelName = 'Claude 3 Opus';
       else if (currentModelId.includes('3-haiku')) friendlyModelName = 'Claude 3 Haiku';
 
-      const replyText = `🤖 I am currently running on **${friendlyModelName}** (\`${currentModelId}\`).`;
+      const replyText = `I am currently running on **${friendlyModelName}** (\`${currentModelId}\`).`;
 
       const stream = new ReadableStream({
         async start(controller) {
@@ -258,8 +260,10 @@ export async function POST(request: Request) {
       return `[Source Title: ${title} | URL: ${url}]\n${m.chunkContent}`;
     }).join('\n\n');
 
-    // Fetch business hours context based on dashboard toggle (Requirement: Dynamic Dashboard Settings)
-    const showHours = agent.widgetSettings?.showHours ?? true;
+    // 1. Business Working Hours:
+    // If showHours === true (ENABLED): use Dashboard Business Hours
+    // If showHours === false (DISABLED): search purely from Website Crawled Data (vector RAG chunks)
+    const showHours = agent.widgetSettings?.showHours === true;
     let hoursContext = '';
     
     if (showHours) {
@@ -291,7 +295,7 @@ export async function POST(request: Request) {
 
       if (businessHoursList.length > 0) {
         const tz = businessHoursList[0].timezone || 'UTC';
-        hoursContext = `Official Business Working Hours (${tz}):\n`;
+        hoursContext = `Official Dashboard Business Working Hours (${tz}):\n`;
         const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         const sortedHoursList = [...businessHoursList].sort((a, b) => {
           const dayA = a.dayOfWeek === 0 ? 7 : a.dayOfWeek;
@@ -301,16 +305,18 @@ export async function POST(request: Request) {
         sortedHoursList.forEach(bh => {
           const dayName = weekdays[bh.dayOfWeek];
           if (bh.isEnabled) {
-            hoursContext += `• 🟢 ${dayName}: ${bh.startTime} to ${bh.endTime}\n`;
+            hoursContext += `• ${dayName}: ${bh.startTime} to ${bh.endTime}\n`;
           } else {
-            hoursContext += `• 🔴 ${dayName}: Closed / Unavailable\n`;
+            hoursContext += `• ${dayName}: Closed / Unavailable\n`;
           }
         });
       }
     }
 
-    // Fetch and inject services context based on dashboard toggle (Requirement: Dynamic Dashboard Settings)
-    const showServices = agent.widgetSettings?.showServices ?? true;
+    // 2. Services:
+    // If showServices === true (ENABLED): use Dashboard Services data
+    // If showServices === false (DISABLED): search purely from Website Crawled Data (vector RAG chunks)
+    const showServices = agent.widgetSettings?.showServices === true;
     let servicesContext = '';
     
     if (showServices) {
@@ -321,18 +327,21 @@ export async function POST(request: Request) {
         servicesList = await prisma.service.findMany({ where: { isActive: true } });
       }
       if (servicesList.length > 0) {
-        servicesContext = `Official Business Services:\n` + servicesList.map(s => 
+        servicesContext = `Official Dashboard Business Services:\n` + servicesList.map(s => 
           `• ${s.name}: ${s.description || 'Standard service'}`
         ).join('\n');
       }
     }
 
-    // Inject contact & office location context if visitor asks about contacting support or locations
+    // 3. Contact Us / Lead Details:
+    // If showLeadForm === true (ENABLED): use Dashboard Contact Info
+    // If showLeadForm === false (DISABLED): search purely from Website Crawled Data (vector RAG chunks)
+    const showLeadForm = agent.widgetSettings?.showLeadForm !== false;
     const normMsgLower = message.trim().toLowerCase();
     const isContactQuery = normMsgLower.includes('contact') || normMsgLower.includes('reach') || normMsgLower.includes('support') || normMsgLower.includes('email') || normMsgLower.includes('phone') || normMsgLower.includes('call') || normMsgLower.includes('number') || normMsgLower.includes('help form') || normMsgLower.includes('office') || normMsgLower.includes('location') || normMsgLower.includes('address') || normMsgLower.includes('headquarter') || normMsgLower.includes('where are you');
     let contactContext = '';
-    if (isContactQuery) {
-      contactContext = "Official Business Contact & Office Location Information:\n• Phone Support: +1 (800) 555-0199 / +1 (202) 555-0148\n• Email Support: support@chatboxai.com\n• Online Help Desk: /contact\n• Office Location: 123 Tech Avenue, Suite 400, Washington, D.C., USA\n• Support Response Time: Within 24 hours";
+    if (showLeadForm && isContactQuery) {
+      contactContext = "Official Dashboard Business Contact & Location Information:\n• Phone Support: +1 (800) 555-0199 / +1 (202) 555-0148\n• Email Support: support@chatboxai.com\n• Online Help Desk: /contact\n• Office Location: 123 Tech Avenue, Suite 400, Washington, D.C., USA\n• Support Response Time: Within 24 hours";
     }
 
     context = [hoursContext, servicesContext, contactContext, context].filter(Boolean).join('\n\n');
@@ -348,13 +357,14 @@ export async function POST(request: Request) {
 
 STRICT ANSWERING RULES:
 1. GREETINGS & PLEASANTRIES: For greetings, pleasantries, or polite introductions (e.g. "hi", "hello", "how are you", "who are you", "good morning", "thank you"), respond warmly and professionally as the website's AI assistant, introduce yourself, and offer to help with any website or support inquiries.
-2. HUMAN CONVERSATIONAL SYNTHESIS: Synthesize information into warm, natural, human conversational sentences as if speaking directly to a valued client. Never repeat raw website marketing slogans or text blocks verbatim. Use friendly bullet points, clear line breaks, and helpful explanations.
-3. STRICT GROUNDING FOR FACTUAL QUESTIONS: For questions about products, services, pricing, business hours, features, or website content, answer strictly using ONLY the provided Authoritative Website Knowledge Base and Dashboard Context below.
-4. MISSING INFORMATION FALLBACK: For factual questions where the answer is NOT available in the website context, reply EXACTLY with:
+2. HUMAN CONVERSATIONAL SYNTHESIS: Synthesize information into clear, readable, natural human conversational sentences. Use clean bullet points (•) and clear line breaks.
+3. NO EMOJIS OR SYMBOLS: Do NOT include any emojis, icons, or symbols (such as 💳, ⚡, 🚀, 🏢, 🕒, 📍, 🛠️, 🎁, 🤖, 🟢, 🔴, 🧠, etc.) in your responses. Keep responses completely free of icon clutter.
+4. BOLD MAIN HEADINGS: Always format main topic section headers in bold text without emojis (for example: **ChatBox AI Plans & Pricing** or **Official Business Working Hours**).
+5. STRICT GROUNDING FOR FACTUAL QUESTIONS: For questions about products, services, pricing, business hours, features, or website content, answer strictly using ONLY the provided Authoritative Website Knowledge Base and Dashboard Context below.
+6. MISSING INFORMATION FALLBACK: For factual questions where the answer is NOT available in the website context, reply EXACTLY with:
    "I couldn't find that information on this website. Please contact our team for assistance."
    Do NOT hallucinate, extrapolate, or invent details.
-5. CLEAN FORMATTING & TITLES: Output clean bold titles (e.g. 🕒 **Official Business Working Hours**) without raw markdown hashes ("###") or blockquotes (">").
-6. TYPOS & MISSPELLINGS: Automatically interpret visitor questions even if they contain spelling mistakes, typos, or informal phrasing (e.g. "phon numbr", "pricin plan", "workin hour").`;
+7. TYPOS & MISSPELLINGS: Automatically interpret visitor questions even if they contain spelling mistakes, typos, or informal phrasing (e.g. "phon numbr", "pricin plan", "workin hour").`;
 
     if (hasBuyingIntent) {
       systemPrompt += `\n[IMPORTANT] The visitor has shown interest in purchasing or pricing. Politely offer to have sales contact them, and ask for their email address or contact info.`;
@@ -370,7 +380,7 @@ STRICT ANSWERING RULES:
         try {
           let fullReply = '';
           for await (const chunk of generateResponseStream({
-            model: agent.model || process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-5',
+            model: agent.model || process.env.ANTHROPIC_MODEL || 'claude-3-5-sonnet-20241022',
             systemPrompt: `${systemPrompt}\n\n[AUTHORITATIVE WEBSITE KNOWLEDGE BASE]\n${context}`,
             messages: [
               ...history.map(h => ({
@@ -443,9 +453,17 @@ Response Time: ${duration}ms
 Token Estimate: ~${Math.round((message.length + fullReply.length) / 4)}
 `);
         } catch (err: any) {
-          console.error("Error during streaming generation:", err);
-          const userErr = ` ⚠️ Anthropic API Error: ${err?.message || 'Failed to connect to Anthropic Claude API'}. Please verify ANTHROPIC_API_KEY in .env.`;
-          controller.enqueue(encoder.encode(JSON.stringify({ chunk: userErr }) + '\n'));
+          console.error("[Anthropic API Error]:", err?.message || err);
+          const errorReply = "Sorry, we have a connection issue.";
+          controller.enqueue(encoder.encode(JSON.stringify({ chunk: errorReply }) + '\n'));
+
+          await prisma.message.create({
+            data: {
+              conversationId: conv.id,
+              sender: 'assistant',
+              content: errorReply,
+            },
+          });
         } finally {
           controller.close();
         }

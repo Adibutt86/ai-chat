@@ -1,13 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Settings, Save, Sparkles, Sliders } from 'lucide-react';
+import { Settings, Save, Sparkles, Sliders, Upload, Copy, Check } from 'lucide-react';
 
 interface WidgetCustomizerProps {
   agentId: string;
 }
 
 export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
+  const [copiedId, setCopiedId] = useState(false);
   const [primaryColor, setPrimaryColor] = useState('#2563eb');
   const [borderRadius, setBorderRadius] = useState('0.75rem');
   const [welcomeMessage, setWelcomeMessage] = useState('Hi! How can I help you today?');
@@ -15,12 +16,13 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
   const [themeMode, setThemeMode] = useState('light');
   const [position, setPosition] = useState('bottom-right');
   
+  const [avatarUrl, setAvatarUrl] = useState('');
+  
   // Toggles for Quick Links
   const [showBooking, setShowBooking] = useState(true);
   const [showLeadForm, setShowLeadForm] = useState(true);
   const [showServices, setShowServices] = useState(false);
   const [showHours, setShowHours] = useState(false);
-  const [showPricing, setShowPricing] = useState(false);
 
   // Widget dimensions
   const [width, setWidth] = useState('380px');
@@ -36,6 +38,7 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
         if (res.ok) {
           const data = await res.json();
           if (data) {
+            setAvatarUrl(data.avatarUrl || '');
             setPrimaryColor(data.primaryColor || '#2563eb');
             setBorderRadius(data.borderRadius || '0.75rem');
             setWelcomeMessage(data.welcomeMessage || 'Hi! How can I help you today?');
@@ -46,7 +49,6 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
             setShowLeadForm(data.showLeadForm !== undefined ? data.showLeadForm : true);
             setShowServices(data.showServices !== undefined ? data.showServices : false);
             setShowHours(data.showHours !== undefined ? data.showHours : false);
-            setShowPricing(data.showPricing !== undefined ? data.showPricing : false);
             setWidth(data.width || '380px');
             setHeight(data.height || '600px');
           }
@@ -69,6 +71,7 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           agentId,
+          avatarUrl,
           primaryColor,
           borderRadius,
           welcomeMessage,
@@ -79,7 +82,6 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
           showLeadForm,
           showServices,
           showHours,
-          showPricing,
           width,
           height,
         }),
@@ -125,6 +127,56 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
               Settings updated successfully! Changes take effect immediately.
             </div>
           )}
+
+          <div>
+            <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Bot Avatar Image (Upload File or URL)</label>
+            <div className="flex gap-2 items-center">
+              <input
+                type="text"
+                value={avatarUrl}
+                onChange={(e) => setAvatarUrl(e.target.value)}
+                placeholder="Paste URL or click Upload"
+                className="flex-1 bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:ring-1 focus:ring-blue-600"
+              />
+              <label className="bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs px-3 py-2 rounded-lg cursor-pointer border border-zinc-700 font-medium shrink-0 flex items-center gap-1.5 transition">
+                <Upload className="h-3.5 w-3.5" />
+                <span>Upload</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        if (typeof reader.result === 'string') {
+                          setAvatarUrl(reader.result);
+                        }
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                />
+              </label>
+              <div className="h-9 w-9 rounded-full bg-zinc-950 border border-zinc-750 flex items-center justify-center overflow-hidden shrink-0">
+                {avatarUrl && avatarUrl.trim() !== '' ? (
+                  <img
+                    src={avatarUrl}
+                    alt="Avatar Preview"
+                    className="h-full w-full object-cover"
+                    onError={(e: any) => { e.target.style.display = 'none'; }}
+                  />
+                ) : (
+                  <svg className="h-5 w-5 text-zinc-400 p-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 2a10 10 0 0 1 10 10c0 5.523-4.477 10-10 10S2 17.523 2 12A10 10 0 0 1 12 2z"></path>
+                    <path d="M12 6v6l4 2"></path>
+                  </svg>
+                )}
+              </div>
+            </div>
+            <p className="text-[11px] text-zinc-500 mt-1">Upload a PNG/JPG file from your computer or paste an image URL.</p>
+          </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -224,8 +276,11 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
           {/* Quick suggested links configuration checklist */}
           <div className="border-t border-zinc-800 pt-5 space-y-4">
             <div>
-              <h4 className="text-xs uppercase tracking-wider text-zinc-400 font-bold mb-2">Suggested Actions / Quick Links</h4>
-              <p className="text-[11px] text-zinc-500">Enable default suggestion buttons to appear at the start of a chat conversation.</p>
+              <h4 className="text-xs uppercase tracking-wider text-zinc-400 font-bold mb-1">Suggested Actions / Quick Links</h4>
+              <p className="text-[11px] text-zinc-500 mb-2">Enable default suggestion buttons to appear at the start of a chat conversation.</p>
+              <div className="bg-blue-950/30 border border-blue-900/40 p-2.5 rounded-lg text-[11px] text-blue-300">
+                💡 <strong>Features:</strong> Sleek single-color vector icons, animated hover tooltips, and instant smooth-scroll to bottom on click.
+              </div>
             </div>
 
             <div className="space-y-3">
@@ -268,16 +323,6 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
                 />
                 <span>🕒 Business Working Hours</span>
               </label>
-
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={showPricing}
-                  onChange={(e) => setShowPricing(e.target.checked)}
-                  className="rounded border-zinc-800 text-blue-600 focus:ring-blue-600 bg-zinc-950 h-4 w-4"
-                />
-                <span><span>💲</span> Pricing Plans</span>
-              </label>
             </div>
           </div>
 
@@ -303,6 +348,41 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
             <pre className="bg-zinc-950 border border-zinc-850 p-4 rounded-xl text-xs font-mono text-blue-400 overflow-x-auto select-all leading-relaxed whitespace-pre-wrap">
               {scriptTagCode}
             </pre>
+          </div>
+
+          {/* WordPress Plugin Agent ID Card */}
+          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-3">
+            <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
+              <div className="flex items-center gap-2">
+                <Copy className="h-5 w-5 text-blue-500" />
+                <h3 className="text-base font-bold text-white">Agent ID (WordPress Connection)</h3>
+              </div>
+            </div>
+            <p className="text-xs text-zinc-400">Copy just your unique Agent ID below to paste into your WordPress Plugin settings page.</p>
+            <div className="flex items-center gap-2 bg-zinc-950 border border-zinc-800 p-2.5 rounded-xl">
+              <code className="flex-1 text-xs font-mono text-emerald-400 truncate px-2 selection:bg-blue-900">{agentId}</code>
+              <button
+                type="button"
+                onClick={() => {
+                  navigator.clipboard.writeText(agentId);
+                  setCopiedId(true);
+                  setTimeout(() => setCopiedId(false), 2500);
+                }}
+                className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3.5 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition cursor-pointer shrink-0"
+              >
+                {copiedId ? (
+                  <>
+                    <Check className="h-3.5 w-3.5" />
+                    <span>Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="h-3.5 w-3.5" />
+                    <span>Copy Agent ID</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
 
           {/* Interactive Simulation Frame */}

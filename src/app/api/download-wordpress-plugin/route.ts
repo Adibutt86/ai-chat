@@ -5,7 +5,10 @@ import JSZip from 'jszip';
 
 export async function GET() {
   try {
-    const filePath = path.join(process.cwd(), 'public', 'chatbox-ai-widget.php');
+    let filePath = path.join(process.cwd(), 'wordpress-plugin', 'chatbox-ai-widget.php');
+    if (!fs.existsSync(filePath)) {
+      filePath = path.join(process.cwd(), 'public', 'chatbox-ai-widget.php');
+    }
     const phpContent = fs.readFileSync(filePath, 'utf-8');
 
     const zip = new JSZip();

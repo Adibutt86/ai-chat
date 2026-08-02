@@ -250,10 +250,6 @@ export default function DashboardLayout() {
         {currentTab === 'settings' && selectedAgentId && (
           <SettingsTab agentId={selectedAgentId} />
         )}
-
-        {currentTab === 'api_keys' && selectedAgentId && (
-          <SettingsTab agentId={selectedAgentId} />
-        )}
       </main>
     </div>
   );

@@ -114,6 +114,9 @@ export async function PUT(request: Request) {
           isEnabled: h.isEnabled,
           startTime: h.startTime,
           endTime: h.endTime,
+          hasBreak: h.hasBreak ?? false,
+          breakStartTime: h.breakStartTime ?? '12:00',
+          breakEndTime: h.breakEndTime ?? '13:00',
           timezone: timezone || undefined
         }
       });

@@ -37,7 +37,6 @@ export default function Sidebar({ currentTab, setCurrentTab, agentsCount }: Side
     { id: 'services', name: 'Services', icon: Briefcase },
     { id: 'business_hours', name: 'Business Hours', icon: Clock },
     { id: 'widget', name: 'Widget Settings', icon: Code },
-    { id: 'api_keys', name: 'API Keys', icon: Key },
     { id: 'settings', name: 'Settings', icon: SettingsIcon },
   ];
 

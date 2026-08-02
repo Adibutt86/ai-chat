@@ -62,48 +62,48 @@ export function simulateLocalAIResponse(context: string, message: string): strin
   const isPleasantry = pleasantryPhrases.some(p => normQuery.includes(p));
 
   if (isGreeting || isPleasantry) {
-    return "Hello! 👋 I'm doing great, thank you for asking! I am your AI Customer Support Assistant. How can I help you today? Feel free to ask any questions about our website, services, business working hours, or pricing plans!";
+    return "Hello! I am doing great, thank you for asking! I am your AI Customer Support Assistant. How can I help you today? Feel free to ask any questions about our website, services, business working hours, or pricing plans!";
   }
 
   // 2. Free Trial / Demo Intent (Handles "trail" typo for "trial")
   if (normQuery.includes('trail') || normQuery.includes('trial') || normQuery.includes('free trial') || normQuery.includes('demo') || normQuery.includes('test')) {
-    return "🎁 **Free Trial & Live Demo**\n\nYes! We offer a 14-day free trial on all ChatBox AI plans so you can test website crawling, custom RAG vector search, and widget customization with zero risk.\n\n• ⚡ **No Credit Card Required** for trial setup.\n• 🌐 **Instant Crawling**: Crawl your website URL in under 2 minutes.\n• 🎨 **Widget Customization**: Test custom colors, brand icons, and business hours.";
+    return "**Free Trial & Live Demo**\n\nYes! We offer a 14-day free trial on all ChatBox AI plans so you can test website crawling, custom RAG vector search, and widget customization with zero risk.\n\n• **No Credit Card Required** for trial setup.\n• **Instant Crawling**: Crawl your website URL in under 2 minutes.\n• **Widget Customization**: Test custom colors, brand icons, and business hours.";
   }
 
   // 3. Thanks & Goodbye
   const thanksTriggers = ['thank', 'thanks', 'thx', 'great', 'awesome', 'cool', 'perfect', 'ok', 'okay', 'nice'];
   if (thanksTriggers.some(t => normQuery === t || normQuery.includes('thank'))) {
-    return "You are very welcome! 😊 Let me know if there is anything else I can help you with today.";
+    return "You are very welcome! Let me know if there is anything else I can help you with today.";
   }
 
   const byeTriggers = ['bye', 'goodbye', 'see you', 'cya', 'have a good day'];
   if (byeTriggers.some(t => normQuery.includes(t))) {
-    return "Goodbye! 👋 Have a wonderful day! Feel free to reach out anytime if you need further assistance.";
+    return "Goodbye! Have a wonderful day! Feel free to reach out anytime if you need further assistance.";
   }
 
   // 4. Pepper the Robot Query
   if (normQuery.includes('pepper') || normQuery.includes('what is pepper')) {
-    return "🤖 **Pepper The Robot**\n\nPepper is a friendly, humanoid robot designed by Nebula Creative to connect with people, assist customers, and enhance the physical store experience with interactive greeting, wayfinding, and games.";
+    return "**Pepper The Robot**\n\nPepper is a friendly, humanoid robot designed by Nebula Creative to connect with people, assist customers, and enhance the physical store experience with interactive greeting, wayfinding, and games.";
   }
 
   // 5. Services Query ("what services do you offer")
   if (normQuery.includes('service') || normQuery.includes('what do you offer') || normQuery.includes('what do you provide') || normQuery.includes('what can you do')) {
-    return "🛠️ **Our Official Services & Capabilities**\n\nWe provide end-to-end AI Chatbot and Customer Automation solutions for your business:\n\n• 🤖 **24/7 AI Customer Support**: Human-like conversational answers trained on your website pages and FAQs.\n• 🌐 **Smart Website Crawler**: Automatically indexes your website URLs, sitemaps, and PDFs in seconds.\n• 🎨 **Widget Customization**: Tailor brand colors, avatar icons, widget positions, and business hours displays.\n• 📊 **Lead Capture & Booking**: Collect visitor emails, phone numbers, and appointment requests automatically.";
+    return "**Our Official Services & Capabilities**\n\nWe provide end-to-end AI Chatbot and Customer Automation solutions for your business:\n\n• **24/7 AI Customer Support**: Human-like conversational answers trained on your website pages and FAQs.\n• **Smart Website Crawler**: Automatically indexes your website URLs, sitemaps, and PDFs in seconds.\n• **Widget Customization**: Tailor brand colors, avatar icons, widget positions, and business hours displays.\n• **Lead Capture & Booking**: Collect visitor emails, phone numbers, and appointment requests automatically.";
   }
 
   // 6. Pricing & Plans Query
   if (normQuery.includes('pricing') || normQuery.includes('plan') || normQuery.includes('cost') || normQuery.includes('how much')) {
-    return "💳 **ChatBox AI Plans & Pricing**\n\n• ⚡ **Starter Plan** ($19/mo): 1 Active Agent, 1,000 Messages/month, URL Crawler.\n• 🚀 **Professional Plan** ($49/mo): 5 Active Agents, 10,000 Messages/month, Document Uploads, Lead Capture.\n• 🏢 **Enterprise Plan** ($149/mo): Unlimited Agents & Messages, Dedicated Database, 24/7 Support.";
+    return "**ChatBox AI Plans & Pricing**\n\n• **Starter Plan** ($19/mo): 1 Active Agent, 1,000 Messages/month, URL Crawler.\n• **Professional Plan** ($49/mo): 5 Active Agents, 10,000 Messages/month, Document Uploads, Lead Capture.\n• **Enterprise Plan** ($149/mo): Unlimited Agents & Messages, Dedicated Database, 24/7 Support.";
   }
 
   // 7. Smart RAG Training Query ("what is smart rag")
   if (normQuery.includes('smart rag') || normQuery.includes('rag') || normQuery.includes('rag training') || normQuery.includes('vector search')) {
-    return "🧠 **Smart RAG (Retrieval-Augmented Generation)**\n\nSmart RAG is our automated AI knowledge training technology. It automatically crawls your website pages, sitemaps, PDFs, and FAQs to build a custom vector knowledge base in seconds.\n\n• 🌐 **Instant Auto-Crawling**: Index your website content in under 2 minutes.\n• 🎯 **Factual Accuracy**: Chatbots answer visitor questions strictly using your official business content.\n• ⚡ **Zero Manual Entry**: No need to type FAQs manually; the AI learns directly from your website pages.";
+    return "**Smart RAG (Retrieval-Augmented Generation)**\n\nSmart RAG is our automated AI knowledge training technology. It automatically crawls your website pages, sitemaps, PDFs, and FAQs to build a custom vector knowledge base in seconds.\n\n• **Instant Auto-Crawling**: Index your website content in under 2 minutes.\n• **Factual Accuracy**: Chatbots answer visitor questions strictly using your official business content.\n• **Zero Manual Entry**: No need to type FAQs manually; the AI learns directly from your website pages.";
   }
 
   // 8. Office / Contact Location
   if (normQuery.includes('office') || normQuery.includes('location') || normQuery.includes('address') || normQuery.includes('where are you')) {
-    return "📍 **Official Office Location**\n\n🏢 **Headquarters**: 123 Tech Avenue, Suite 400, Washington, D.C., USA\n✉️ **Email**: support@chatboxai.com\n📞 **Phone**: +1 (800) 555-0199";
+    return "**Official Office Location**\n\n**Headquarters**: 123 Tech Avenue, Suite 400, Washington, D.C., USA\n**Email**: support@chatboxai.com\n**Phone**: +1 (800) 555-0199";
   }
 
   // 9. Extract factual answers strictly from crawled website text context
@@ -163,25 +163,19 @@ export async function* generateChatResponseStream(
   latestMessage: string,
   options?: { temperature?: number; model?: string }
 ): AsyncGenerator<string, void, unknown> {
-  try {
-    for await (const chunk of generateResponseStream({
-      model: options?.model || process.env.ANTHROPIC_MODEL || 'claude-3-5-sonnet-20241022',
-      systemPrompt: `${systemPrompt}\n\n[AUTHORITATIVE WEBSITE KNOWLEDGE BASE]\n${context}`,
-      messages: [
-        ...history.map(h => ({
-          role: h.sender === 'visitor' ? ('user' as const) : ('assistant' as const),
-          content: h.content,
-        })),
-        { role: 'user' as const, content: latestMessage },
-      ],
-      temperature: options?.temperature ?? 0.7,
-    })) {
-      yield chunk;
-    }
-  } catch (error) {
-    console.error('[AI Provider Error] Anthropic Claude API error:', error);
-    const fallback = simulateLocalAIResponse(context, latestMessage);
-    yield fallback;
+  for await (const chunk of generateResponseStream({
+    model: options?.model || process.env.ANTHROPIC_MODEL || 'claude-3-5-sonnet-20241022',
+    systemPrompt: `${systemPrompt}\n\n[AUTHORITATIVE WEBSITE KNOWLEDGE BASE]\n${context}`,
+    messages: [
+      ...history.map(h => ({
+        role: h.sender === 'visitor' ? ('user' as const) : ('assistant' as const),
+        content: h.content,
+      })),
+      { role: 'user' as const, content: latestMessage },
+    ],
+    temperature: options?.temperature ?? 0.7,
+  })) {
+    yield chunk;
   }
 }
 

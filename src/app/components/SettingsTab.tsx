@@ -1,16 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Key, Plus, Trash2, Shield, Settings as SettingsIcon, Users, ToggleLeft, Grid, Calendar, RefreshCw } from 'lucide-react';
+import { Plus, Shield, Settings as SettingsIcon, Users, Calendar, RefreshCw } from 'lucide-react';
 
 interface SettingsTabProps {
   agentId: string;
 }
 
 export default function SettingsTab({ agentId }: SettingsTabProps) {
-  const [keys, setKeys] = useState<any[]>([]);
   const [members, setMembers] = useState<any[]>([]);
-  const [keyName, setKeyName] = useState('');
   const [memberEmail, setMemberEmail] = useState('');
   const [memberRole, setMemberRole] = useState('member');
   const [orgName, setOrgName] = useState('');
@@ -19,13 +17,6 @@ export default function SettingsTab({ agentId }: SettingsTabProps) {
   // Google Calendar Connection state
   const [calendarLoading, setCalendarLoading] = useState(false);
   const [calendarStatus, setCalendarStatus] = useState<any>(null);
-
-  // Plugins list state
-  const [plugins, setPlugins] = useState<any[]>([
-    { id: 'slack', name: 'Slack Notifications', desc: 'Alert channels when buying intent is captured.', active: true },
-    { id: 'zapier', name: 'Zapier Integration', desc: 'Sync conversations and metadata into CRM tools.', active: false },
-    { id: 'hubspot', name: 'HubSpot Sync', desc: 'Automatically map captured leads to HubSpot tables.', active: false }
-  ]);
 
   const fetchCalendarStatus = async () => {
     setCalendarLoading(true);
@@ -80,7 +71,6 @@ export default function SettingsTab({ agentId }: SettingsTabProps) {
       const res = await fetch('/api/settings');
       if (res.ok) {
         const data = await res.json();
-        setKeys(data.apiKeys || []);
         setMembers(data.organization?.members || []);
         setOrgName(data.organization?.name || 'My Organization');
       }
@@ -93,25 +83,6 @@ export default function SettingsTab({ agentId }: SettingsTabProps) {
     fetchSettingsData();
     fetchCalendarStatus();
   }, []);
-
-  const handleCreateKey = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const res = await fetch('/api/settings', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'create_key', keyName }),
-      });
-      if (res.ok) {
-        setKeyName('');
-        fetchSettingsData();
-        setSuccessMsg('Created new API access key');
-        setTimeout(() => setSuccessMsg(''), 3000);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   const handleInviteMember = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -132,32 +103,11 @@ export default function SettingsTab({ agentId }: SettingsTabProps) {
     }
   };
 
-  const handleDeleteKey = async (keyId: string) => {
-    try {
-      const res = await fetch(`/api/settings?keyId=${keyId}`, {
-        method: 'DELETE',
-      });
-      if (res.ok) {
-        fetchSettingsData();
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const togglePlugin = (pluginId: string) => {
-    setPlugins((prev: any[]) =>
-      prev.map((p: any) => (p.id === pluginId ? { ...p, active: !p.active } : p))
-    );
-    setSuccessMsg('Plugins updated successfully.');
-    setTimeout(() => setSuccessMsg(''), 3000);
-  };
-
   return (
     <div className="space-y-8 max-w-4xl">
       <div>
         <h2 className="text-2xl font-bold text-zinc-900">System Settings</h2>
-        <p className="text-zinc-550 text-sm">Manage enterprise organization details, API access keys, and team membership roles.</p>
+        <p className="text-zinc-550 text-sm">Manage enterprise organization details, Google Calendar synchronization, and team membership roles.</p>
       </div>
 
       {successMsg && (
@@ -247,45 +197,7 @@ export default function SettingsTab({ agentId }: SettingsTabProps) {
         )}
       </div>
 
-      {/* Plugins Manager Option block */}
-      <div className="bg-white border border-zinc-200 rounded-2xl p-6 space-y-4 shadow-sm">
-        <div className="flex items-center gap-2 border-b border-zinc-200 pb-3">
-          <Grid className="h-5 w-5 text-blue-600" />
-          <h3 className="text-base font-bold text-zinc-900">Integrations & Plugins</h3>
-        </div>
-        <p className="text-xs text-zinc-500">Toggle SaaS ecosystem triggers and data sync webhooks.</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-          {plugins.map((plugin: any) => (
-            <div key={plugin.id} className="p-4 bg-zinc-50 border border-zinc-200 rounded-xl flex flex-col justify-between hover:border-zinc-350 transition">
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-bold text-zinc-850">{plugin.name}</span>
-                  <span className={`text-[9px] px-2 py-0.5 rounded-full font-bold uppercase ${
-                    plugin.active 
-                      ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' 
-                      : 'bg-zinc-100 text-zinc-500 border border-zinc-200'
-                  }`}>
-                    {plugin.active ? 'Active' : 'Disabled'}
-                  </span>
-                </div>
-                <p className="text-[10.5px] text-zinc-500 leading-normal mb-4">{plugin.desc}</p>
-              </div>
-              <button
-                onClick={() => togglePlugin(plugin.id)}
-                className={`w-full py-2 rounded-lg text-xs font-semibold transition cursor-pointer ${
-                  plugin.active 
-                    ? 'bg-white hover:bg-zinc-100 border border-zinc-250 text-zinc-700' 
-                    : 'bg-blue-600 hover:bg-blue-700 text-white'
-                }`}
-              >
-                {plugin.active ? 'Disable Plugin' : 'Enable Plugin'}
-              </button>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Team Invitation */}
+      {/* Team Invitation & Active Members */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white border border-zinc-200 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
           <div className="space-y-4">
@@ -347,54 +259,6 @@ export default function SettingsTab({ agentId }: SettingsTabProps) {
               ))}
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Developer API Keys */}
-      <div className="bg-white border border-zinc-200 rounded-2xl p-6 space-y-6 shadow-sm">
-        <div className="flex items-center justify-between border-b border-zinc-200 pb-3">
-          <div className="flex items-center gap-2">
-            <Key className="h-5 w-5 text-blue-600" />
-            <h3 className="text-base font-bold text-zinc-900">Developer API Keys</h3>
-          </div>
-        </div>
-
-        <form onSubmit={handleCreateKey} className="flex gap-3 text-sm">
-          <input
-            type="text"
-            placeholder="Key Description (e.g. Production client)"
-            value={keyName}
-            onChange={(e) => setKeyName(e.target.value)}
-            className="flex-1 bg-zinc-50 border border-zinc-200 rounded-lg px-3 py-2 text-zinc-900 placeholder-zinc-400 focus:outline-none"
-            required
-          />
-          <button
-            type="submit"
-            className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-white font-semibold flex items-center gap-1.5 cursor-pointer transition"
-          >
-            <Plus className="h-4 w-4" /> Generate Key
-          </button>
-        </form>
-
-        <div className="space-y-2">
-          {keys.length === 0 ? (
-            <p className="text-xs text-zinc-550 italic">No developer keys active.</p>
-          ) : (
-            keys.map((k: any) => (
-              <div key={k.id} className="p-3 bg-zinc-50 border border-zinc-200 rounded-lg flex justify-between items-center text-xs">
-                <div>
-                  <p className="font-semibold text-zinc-800">{k.name}</p>
-                  <p className="font-mono text-blue-600 mt-1 text-[11px] select-all">{k.key}</p>
-                </div>
-                <button
-                  onClick={() => handleDeleteKey(k.id)}
-                  className="p-1.5 hover:bg-red-50 text-red-650 rounded-lg transition cursor-pointer"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </button>
-              </div>
-            ))
-          )}
         </div>
       </div>
     </div>

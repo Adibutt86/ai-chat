@@ -37,6 +37,8 @@ model Organization {
   usage               Usage[]
   services            Service[]
   businessHours       BusinessHours[]
+  schedulingSettings  SchedulingSettings?
+  holidays            Holiday[]
   bookings            Booking[]
   calendarConnection  CalendarConnection?
 }
@@ -288,6 +290,9 @@ model BusinessHours {
   isEnabled       Boolean      @default(true)
   startTime       String       @default("09:00") // HH:mm
   endTime         String       @default("17:00") // HH:mm
+  hasBreak        Boolean      @default(false)
+  breakStartTime  String?      @default("12:00") // HH:mm
+  breakEndTime    String?      @default("13:00") // HH:mm
   timezone        String       @default("UTC")
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
@@ -295,6 +300,34 @@ model BusinessHours {
   organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   @@unique([organizationId, dayOfWeek])
+  @@index([organizationId])
+}
+
+model SchedulingSettings {
+  id                  String       @id @default(cuid())
+  organizationId      String       @unique
+  bufferMinutes       Int          @default(15) // Pre/Post meeting buffer (mins)
+  minNoticeHours      Int          @default(2)  // Minimum advance notice (hours)
+  maxAdvanceDays      Int          @default(30) // Maximum booking horizon (days)
+  maxDailyBookings    Int          @default(10) // Max bookings allowed per day
+  slotIntervalMinutes Int          @default(30) // Slot granularity (15, 30, 45, 60 mins)
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  organization        Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}
+
+model Holiday {
+  id             String       @id @default(cuid())
+  organizationId String
+  date           String       // YYYY-MM-DD
+  name           String       // e.g. "Christmas", "New Year's Day", "Company Holiday"
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, date])
   @@index([organizationId])
 }
 

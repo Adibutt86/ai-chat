@@ -2,12 +2,13 @@
 // Anthropic Claude Agent Properties Manager
 
 import React, { useState } from 'react';
-import { Bot, Plus, Check, Trash2, Edit } from 'lucide-react';
+import { Bot, Plus, Check, Trash2, Edit, Upload } from 'lucide-react';
 
 interface Agent {
   id: string;
   name: string;
   description: string | null;
+  avatarUrl?: string | null;
   themeColor: string;
   model: string;
   temperature: number;
@@ -37,6 +38,7 @@ export default function AgentsManager({
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState('');
   const [themeColor, setThemeColor] = useState('#2563eb');
   const [model, setModel] = useState('claude-3-5-sonnet-20241022');
   const [temperature, setTemperature] = useState(0.7);
@@ -49,6 +51,7 @@ export default function AgentsManager({
     setEditAgentId(null);
     setName('');
     setDescription('');
+    setAvatarUrl('');
     setThemeColor('#2563eb');
     setModel('claude-3-5-sonnet-20241022');
     setTemperature(0.7);
@@ -64,6 +67,7 @@ export default function AgentsManager({
     setEditAgentId(agent.id);
     setName(agent.name);
     setDescription(agent.description || '');
+    setAvatarUrl(agent.avatarUrl || '');
     setThemeColor(agent.themeColor || '#2563eb');
     setModel(agent.model || 'claude-3-5-sonnet-20241022');
     setTemperature(agent.temperature !== undefined ? agent.temperature : 0.7);
@@ -83,6 +87,7 @@ export default function AgentsManager({
       const data = {
         name,
         description,
+        avatarUrl,
         themeColor,
         model,
         temperature,
@@ -239,6 +244,58 @@ export default function AgentsManager({
                   className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-1 focus:ring-blue-600"
                   placeholder="e.g. Sales specialist assistant"
                 />
+              </div>
+
+              <div>
+                <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Avatar Image (Upload File or URL)</label>
+                <div className="flex gap-2 items-center">
+                  <input
+                    type="text"
+                    value={avatarUrl}
+                    onChange={(e) => setAvatarUrl(e.target.value)}
+                    className="flex-1 bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:ring-1 focus:ring-blue-600"
+                    placeholder="Paste URL or click Upload"
+                  />
+                  <label className="bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs px-3 py-2 rounded-lg cursor-pointer border border-zinc-700 font-medium shrink-0 flex items-center gap-1.5 transition">
+                    <Upload className="h-3.5 w-3.5" />
+                    <span>Upload</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onloadend = () => {
+                            if (typeof reader.result === 'string') {
+                              setAvatarUrl(reader.result);
+                            }
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                    />
+                  </label>
+                  <div className="h-9 w-9 rounded-full bg-zinc-900 border border-zinc-700 flex items-center justify-center overflow-hidden shrink-0">
+                    {avatarUrl && avatarUrl.trim() !== '' ? (
+                      <img
+                        src={avatarUrl}
+                        alt="Avatar Preview"
+                        className="h-full w-full object-cover"
+                        onError={(e: any) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                    ) : (
+                      <svg className="h-5 w-5 text-zinc-400 p-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M12 2a10 10 0 0 1 10 10c0 5.523-4.477 10-10 10S2 17.523 2 12A10 10 0 0 1 12 2z"></path>
+                        <path d="M12 6v6l4 2"></path>
+                      </svg>
+                    )}
+                  </div>
+                </div>
+                <p className="text-[11px] text-zinc-500 mt-1">Upload a PNG/JPG file from your computer or paste an image URL.</p>
               </div>
 
               <div className="grid grid-cols-2 gap-4">

@@ -13,13 +13,22 @@ export async function GET(request: Request) {
     where: { agentId },
   });
 
-  return NextResponse.json(settings);
+  const agent = await prisma.agent.findUnique({
+    where: { id: agentId },
+    select: { avatarUrl: true }
+  });
+
+  return NextResponse.json({
+    ...(settings || {}),
+    avatarUrl: agent?.avatarUrl || ''
+  });
 }
 
 export async function POST(request: Request) {
   try {
     const { 
-      agentId, 
+      agentId,
+      avatarUrl, 
       primaryColor, 
       secondaryColor, 
       borderRadius, 
@@ -38,6 +47,13 @@ export async function POST(request: Request) {
 
     if (!agentId) {
       return NextResponse.json({ error: 'agentId is required' }, { status: 400 });
+    }
+
+    if (avatarUrl !== undefined) {
+      await prisma.agent.update({
+        where: { id: agentId },
+        data: { avatarUrl }
+      });
     }
 
     const settings = await prisma.widgetSettings.upsert({
@@ -77,7 +93,7 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json(settings);
+    return NextResponse.json({ ...settings, avatarUrl });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

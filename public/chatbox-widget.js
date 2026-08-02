@@ -506,6 +506,62 @@
       .chatbox-suggestion-pill:hover::before {
         opacity: 1;
       }
+
+      /* Interactive Clickable Related Questions Pills */
+      .chatbox-related-questions-box {
+        margin-top: 10px;
+        padding-top: 8px;
+        border-top: 1px solid rgba(0,0,0,0.06);
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .chatbox-related-header {
+        font-size: 12px;
+        font-weight: 700;
+        color: #334155;
+        margin-bottom: 2px;
+      }
+      .chatbox-related-pill {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background-color: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 7px 11px;
+        color: #0f172a;
+        font-size: 12px;
+        font-weight: 500;
+        text-align: left;
+        cursor: pointer;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        width: 100%;
+        box-sizing: border-box;
+        line-height: 1.35;
+      }
+      .chatbox-related-pill:hover {
+        background-color: ${primaryColor}12;
+        border-color: ${primaryColor}60;
+        color: ${primaryColor};
+        transform: translateX(3px);
+        box-shadow: 0 2px 6px ${primaryColor}15;
+      }
+      .chatbox-related-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        background-color: #10b98120;
+        color: #10b981;
+        font-size: 10px;
+        font-weight: 800;
+        flex-shrink: 0;
+      }
       
       /* Scrolling Helper */
       #chatbox-scroll-latest {
@@ -1207,8 +1263,52 @@
       }
     });
 
+    window.chatboxSendQuery = function(queryText) {
+      const inputEl = document.getElementById('chatbox-input');
+      const sendBtn = document.getElementById('chatbox-send-btn');
+      if (inputEl && sendBtn) {
+        inputEl.value = queryText;
+        sendBtn.click();
+      }
+    };
+
     function formatMessageText(text) {
       if (!text) return '';
+
+      // Extract Related Questions block and convert into interactive clickable pills
+      let relatedQuestionsHtml = '';
+      const relatedRegex = /(?:\*\*)?Related questions:?(?:\*\*)?\s*([\s\S]*?)(?=$|\n\n[^\n•*-✓]|\n\*\*)/i;
+      const relatedMatch = text.match(relatedRegex);
+      if (relatedMatch) {
+        const rawBlock = relatedMatch[1];
+        const lines = rawBlock.split('\n').map(l => l.trim()).filter(Boolean);
+        let pillsHtml = '';
+        lines.forEach(line => {
+          const cleanQ = line
+            .replace(/^(?:•|\*|-|✓|&#10004;|\d+\.)\s*/, '')
+            .replace(/\*\*/g, '')
+            .replace(/^✓\s*/, '')
+            .trim();
+          if (cleanQ && cleanQ.length > 3 && !cleanQ.toLowerCase().includes('related questions')) {
+            const attrQ = cleanQ.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+            pillsHtml += `
+              <button class="chatbox-related-pill" onclick="window.chatboxSendQuery('${attrQ}')" type="button">
+                <span class="chatbox-related-icon">✓</span>
+                <span>${cleanQ}</span>
+              </button>
+            `;
+          }
+        });
+        if (pillsHtml) {
+          relatedQuestionsHtml = `
+            <div class="chatbox-related-questions-box">
+              <div class="chatbox-related-header">Related questions:</div>
+              ${pillsHtml}
+            </div>
+          `;
+          text = text.replace(relatedRegex, '');
+        }
+      }
 
       // Check if the response contains Business Working Hours
       if (text.includes('Business Working Hours') || text.includes('Business Hours') || text.includes('Working Hours')) {
@@ -1250,7 +1350,7 @@
         hoursHtml += '</div>';
 
         if (hasHours) {
-          return `<div style="font-weight: 500; margin-bottom: 6px;">${headerText}</div>${hoursHtml}${footerText ? `<div style="margin-top: 10px; font-size: 12px; color: #64748b;">${footerText}</div>` : ''}`;
+          return `<div style="font-weight: 500; margin-bottom: 6px;">${headerText}</div>${hoursHtml}${footerText ? `<div style="margin-top: 10px; font-size: 12px; color: #64748b;">${footerText}</div>` : ''}${relatedQuestionsHtml}`;
         }
       }
 
@@ -1297,7 +1397,7 @@
       escaped = escaped.replace(/<\/div>(?:<br\/>)+/g, '</div>');
       escaped = escaped.replace(/(?:<br\/>){3,}/g, '<br/><br/>');
 
-      return escaped;
+      return escaped + relatedQuestionsHtml;
     }
 
     function appendMessage(sender, text, shouldSave = true) {

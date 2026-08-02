@@ -908,6 +908,15 @@
       .booking-input:focus {
         border-color: ${primaryColor};
       }
+      .booking-textarea {
+        font-family: inherit;
+        resize: none;
+        overflow-y: hidden;
+        min-height: 48px;
+        line-height: 1.45;
+        box-sizing: border-box;
+        transition: height 0.15s ease-out;
+      }
       .booking-label {
         font-size: 10.5px;
         text-transform: uppercase;
@@ -1769,7 +1778,7 @@
           <input type="tel" id="booking-phone" class="booking-input" placeholder="+1 555-0199" />
           
           <label class="booking-label">Notes (Optional)</label>
-          <input type="text" id="booking-notes" class="booking-input" placeholder="Any details..." />
+          <textarea id="booking-notes" class="booking-input booking-textarea" rows="2" placeholder="Any details or special requests..."></textarea>
           
           <div style="display: flex; gap: 8px; margin-top: 8px;">
             <button id="booking-details-back" class="booking-btn" style="margin-bottom:0; flex:1; text-align:center; justify-content:center;">Back</button>
@@ -1781,7 +1790,16 @@
         wizard.querySelector('#booking-name').value = clientDetails.name;
         wizard.querySelector('#booking-email').value = clientDetails.email;
         wizard.querySelector('#booking-phone').value = clientDetails.phone;
-        wizard.querySelector('#booking-notes').value = clientDetails.notes;
+        
+        const notesArea = wizard.querySelector('#booking-notes');
+        notesArea.value = clientDetails.notes;
+
+        const autoExpandNotes = () => {
+          notesArea.style.height = 'auto';
+          notesArea.style.height = Math.max(48, notesArea.scrollHeight) + 'px';
+        };
+        notesArea.oninput = autoExpandNotes;
+        setTimeout(autoExpandNotes, 0);
 
         wizard.querySelector('#booking-details-back').onclick = renderStep3;
         wizard.querySelector('#booking-details-next').onclick = () => {

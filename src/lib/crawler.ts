@@ -96,8 +96,7 @@ export function isPublicPageContent(html: string, headers?: Headers, status?: nu
     lowerHtml.includes('post-status-draft') ||
     lowerHtml.includes('post-status-private') ||
     lowerHtml.includes('post-status-future') ||
-    lowerHtml.includes('wp-admin-bar') ||
-    lowerHtml.includes('loginform') ||
+    lowerHtml.includes('<form name="loginform"') ||
     lowerHtml.includes('you must be logged in') ||
     lowerHtml.includes('protected: ') ||
     lowerHtml.includes('private: ') ||
@@ -220,6 +219,62 @@ function extractInternalLinks(html: string, baseUrlStr: string): string[] {
 }
 
 /**
+ * Helper to discover and parse XML sitemaps (sitemap.xml, sitemap_index.xml, page-sitemap.xml, etc.)
+ */
+export async function fetchSitemapUrls(domain: string): Promise<string[]> {
+  const discoveredUrls = new Set<string>();
+  const sitemapCandidates = [
+    `${domain}/sitemap.xml`,
+    `${domain}/sitemap_index.xml`,
+    `${domain}/page-sitemap.xml`,
+    `${domain}/wp-sitemap.xml`,
+    `${domain}/post-sitemap.xml`,
+    `${domain}/product-sitemap.xml`,
+    `${domain}/portfolio-sitemap.xml`,
+  ];
+
+  const processedSitemaps = new Set<string>();
+  const sitemapQueue = [...sitemapCandidates];
+
+  while (sitemapQueue.length > 0) {
+    const sitemapUrl = sitemapQueue.shift()!;
+    if (processedSitemaps.has(sitemapUrl)) continue;
+    processedSitemaps.add(sitemapUrl);
+
+    try {
+      const res = await fetch(sitemapUrl, {
+        headers: { 'User-Agent': 'ChatBoxAICrawler/1.0' },
+        next: { revalidate: 0 },
+      });
+      if (!res.ok) continue;
+
+      const xml = await res.text();
+      const locMatches = Array.from(xml.matchAll(/<loc>(.*?)<\/loc>/gi)).map(m => m[1].trim());
+
+      for (const targetLoc of locMatches) {
+        if (targetLoc.endsWith('.xml') || targetLoc.includes('-sitemap')) {
+          if (!processedSitemaps.has(targetLoc)) {
+            sitemapQueue.push(targetLoc);
+          }
+        } else {
+          try {
+            const locObj = new URL(targetLoc);
+            const cleanUrl = locObj.origin + (locObj.pathname.endsWith('/') ? locObj.pathname.slice(0, -1) : locObj.pathname);
+            if (isPublicUrl(cleanUrl)) {
+              discoveredUrls.add(cleanUrl || locObj.origin);
+            }
+          } catch {}
+        }
+      }
+    } catch (e) {
+      // Ignore sitemap fetch errors
+    }
+  }
+
+  return Array.from(discoveredUrls);
+}
+
+/**
  * Dynamic Multi-Page Web Crawler that crawls all internal sections and pages of a website.
  */
 export async function crawlWebsite(
@@ -247,22 +302,26 @@ export async function crawlWebsite(
     const parsedUrl = new URL(url);
     const domain = parsedUrl.origin;
     
-    // Initialize crawl queue with starting URL and standard website sections
+    // Initialize crawl queue with starting URL
     const toCrawl: string[] = [];
     if (isPublicUrl(url)) toCrawl.push(url);
 
-    if (crawlOption === 'sitemap') {
-      ['/about', '/prices', '/contact', '/services'].forEach(path => {
-        const fullUrl = `${domain}${path}`;
-        if (isPublicUrl(fullUrl) && !toCrawl.includes(fullUrl)) {
-          toCrawl.push(fullUrl);
+    // Automatically attempt XML sitemap discovery to get complete website coverage
+    try {
+      const sitemapLinks = await fetchSitemapUrls(domain);
+      for (const link of sitemapLinks) {
+        if (!toCrawl.includes(link) && isPublicUrl(link)) {
+          toCrawl.push(link);
         }
-      });
+      }
+      console.log(`[Sitemap Crawler] Discovered ${sitemapLinks.length} URLs from XML sitemaps for domain ${domain}`);
+    } catch (sitemapErr) {
+      console.error('[Sitemap Crawler Error]', sitemapErr);
     }
 
     const crawledUrls = new Set<string>();
     let indexedCount = 0;
-    const MAX_PAGES_LIMIT = 25; // Crawl up to 25 discovered sections/pages per run
+    const MAX_PAGES_LIMIT = 100; // Increased limit to crawl up to 100 pages for complete coverage
 
     while (toCrawl.length > 0 && crawledUrls.size < MAX_PAGES_LIMIT) {
       const targetPageUrl = toCrawl.shift()!;

@@ -442,19 +442,20 @@
         background-color: #f8fafc;
         border: 1px solid #e2e8f0;
         color: #334155;
-        width: 34px;
-        height: 34px;
-        border-radius: 10px;
-        font-size: 15px;
+        height: 32px;
+        padding: 0 10px !important;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
         cursor: pointer;
         transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        gap: 6px;
         box-shadow: 0 1px 2px rgba(0,0,0,0.03);
         flex-shrink: 0;
         margin: 0 !important;
-        padding: 0 !important;
         outline: none;
       }
       .chatbox-suggestion-pill span {
@@ -462,6 +463,12 @@
         align-items: center;
         justify-content: center;
         line-height: 1;
+        font-size: 12px;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+      .chatbox-suggestion-pill svg {
+        flex-shrink: 0;
       }
       .chatbox-suggestion-pill:hover {
         background-color: ${primaryColor};
@@ -1026,36 +1033,41 @@
         html += '<div class="chatbox-suggestions-container" id="chatbox-welcome-suggestions">';
         if (showBooking) {
           html += `
-            <button class="chatbox-suggestion-pill" id="chatbox-suggest-book" data-title="Book Appointment" aria-label="Book Appointment">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <button class="chatbox-suggestion-pill" id="chatbox-suggest-book" data-title="Book" aria-label="Book">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              <span>Book</span>
             </button>
           `;
         }
         if (showLeadForm) {
           html += `
             <button class="chatbox-suggestion-pill" id="chatbox-suggest-lead" data-title="Contact" aria-label="Contact">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <span>Contact</span>
             </button>
           `;
         }
         if (showTripForm) {
           html += `
-            <button class="chatbox-suggestion-pill" id="chatbox-suggest-trip" data-title="Trip Details" aria-label="Trip Details">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+            <button class="chatbox-suggestion-pill" id="chatbox-suggest-trip" data-title="Trip" aria-label="Trip">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+              <span>Trip</span>
             </button>
           `;
         }
         if (showServices) {
           html += `
-            <button class="chatbox-suggestion-pill" id="chatbox-suggest-services" data-title="Our Services" aria-label="Our Services">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+            <button class="chatbox-suggestion-pill" id="chatbox-suggest-services" data-title="Services" aria-label="Services">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+              <span>Services</span>
             </button>
           `;
         }
         if (showHours) {
           html += `
-            <button class="chatbox-suggestion-pill" id="chatbox-suggest-hours" data-title="Business Hours" aria-label="Business Hours">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <button class="chatbox-suggestion-pill" id="chatbox-suggest-hours" data-title="Hours" aria-label="Hours">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <span>Hours</span>
             </button>
           `;
         }

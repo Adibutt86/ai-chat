@@ -417,6 +417,7 @@
         padding: 8px 14px;
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 8px;
         flex-shrink: 0;
         overflow: visible !important;
@@ -427,8 +428,10 @@
       .chatbox-suggestions-container {
         display: flex;
         align-items: center;
+        justify-content: center;
         flex-wrap: wrap;
         gap: 8px;
+        width: 100%;
         position: relative;
         overflow: visible !important;
         z-index: 9999;
@@ -510,6 +513,33 @@
       }
       .chatbox-suggestion-pill:hover::before {
         opacity: 1;
+      }
+
+      /* First & last pill tooltip edge-alignment to prevent clipping */
+      .chatbox-suggestions-container .chatbox-suggestion-pill:first-child::after {
+        left: 0;
+        transform: translateX(0) translateY(4px) scale(0.9);
+      }
+      .chatbox-suggestions-container .chatbox-suggestion-pill:first-child:hover::after {
+        transform: translateX(0) translateY(0) scale(1);
+      }
+      .chatbox-suggestions-container .chatbox-suggestion-pill:first-child::before {
+        left: 12px;
+        transform: translateX(0);
+      }
+
+      .chatbox-suggestions-container .chatbox-suggestion-pill:last-child::after {
+        left: auto;
+        right: 0;
+        transform: translateX(0) translateY(4px) scale(0.9);
+      }
+      .chatbox-suggestions-container .chatbox-suggestion-pill:last-child:hover::after {
+        transform: translateX(0) translateY(0) scale(1);
+      }
+      .chatbox-suggestions-container .chatbox-suggestion-pill:last-child::before {
+        left: auto;
+        right: 12px;
+        transform: translateX(0);
       }
 
       /* Interactive Clickable Related Questions Pills */

@@ -45,8 +45,24 @@ export default function ServicesManager() {
   const [isActive, setIsActive] = useState(true);
   const [isBookingEnabled, setIsBookingEnabled] = useState(true);
 
+  const [isGlobalBookingEnabled, setIsGlobalBookingEnabled] = useState(true);
+
   // Save loading state
   const [saving, setSaving] = useState(false);
+
+  const fetchSchedulingSettings = async () => {
+    try {
+      const res = await fetch('/api/scheduling-settings');
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.isBookingEnabled !== undefined) {
+          setIsGlobalBookingEnabled(data.isBookingEnabled !== false);
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const fetchServices = async () => {
     setLoading(true);
@@ -69,7 +85,22 @@ export default function ServicesManager() {
 
   useEffect(() => {
     fetchServices();
+    fetchSchedulingSettings();
   }, []);
+
+  const handleToggleGlobalBooking = async () => {
+    const nextState = !isGlobalBookingEnabled;
+    setIsGlobalBookingEnabled(nextState);
+    try {
+      await fetch('/api/scheduling-settings', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isBookingEnabled: nextState }),
+      });
+    } catch {
+      alert('Failed to update global booking status');
+    }
+  };
 
   const handleOpenAdd = () => {
     setName('');
@@ -202,6 +233,37 @@ export default function ServicesManager() {
           className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition cursor-pointer"
         >
           <Plus className="h-4 w-4" /> Add Service
+        </button>
+      </div>
+
+      {/* Global Online Booking Master Switch Banner */}
+      <div className={`border rounded-2xl p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 transition-colors ${
+        isGlobalBookingEnabled ? 'bg-blue-50/60 border-blue-200' : 'bg-amber-50/70 border-amber-200'
+      }`}>
+        <div>
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-zinc-900 text-base">Global Online Booking Status</span>
+            <span className={`text-xs px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider ${
+              isGlobalBookingEnabled ? 'bg-blue-600 text-white' : 'bg-amber-600 text-white'
+            }`}>
+              {isGlobalBookingEnabled ? 'Active (All Services)' : 'Paused (All Services)'}
+            </span>
+          </div>
+          <p className="text-zinc-600 text-xs mt-1 max-w-2xl">
+            {isGlobalBookingEnabled 
+              ? 'Online booking is active globally across your AI chatbot widget. Individual service toggles below control which specific services can be booked.' 
+              : 'Online booking is master-disabled across all services. Visitors will be notified that online booking is currently unavailable.'}
+          </p>
+        </div>
+        <button
+          onClick={handleToggleGlobalBooking}
+          className={`px-4 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer shrink-0 shadow-sm ${
+            isGlobalBookingEnabled 
+              ? 'bg-amber-500 hover:bg-amber-600 text-white' 
+              : 'bg-blue-600 hover:bg-blue-700 text-white'
+          }`}
+        >
+          {isGlobalBookingEnabled ? 'Pause Global Booking' : 'Enable Global Booking'}
         </button>
       </div>
 

@@ -319,6 +319,7 @@ model SchedulingSettings {
   maxAdvanceDays      Int          @default(30) // Maximum booking horizon (days)
   maxDailyBookings    Int          @default(10) // Max bookings allowed per day
   slotIntervalMinutes Int          @default(30) // Slot granularity (15, 30, 45, 60 mins)
+  isBookingEnabled    Boolean      @default(true) // Master global online booking toggle
   createdAt           DateTime     @default(now())
   updatedAt           DateTime     @updatedAt
 

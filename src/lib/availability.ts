@@ -78,7 +78,7 @@ export async function getAvailableTimeSlots(
   }
 
   if (!service.isActive || service.isBookingEnabled === false) {
-    return []; // Online booking is disabled for this service
+    return []; // Online booking is disabled for this individual service
   }
 
   const orgId = agent.organizationId;
@@ -91,8 +91,14 @@ export async function getAvailableTimeSlots(
     minNoticeHours: 2,
     maxAdvanceDays: 30,
     maxDailyBookings: 10,
-    slotIntervalMinutes: 30
+    slotIntervalMinutes: 30,
+    isBookingEnabled: true
   };
+
+  // Rule 0: Master Global Online Booking Switch Check
+  if ((schedulingSettings as any).isBookingEnabled === false) {
+    return []; // Global online booking is paused for all services
+  }
 
   // Rule 1: Check Holiday Exception
   const isHoliday = await prisma.holiday.findUnique({

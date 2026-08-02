@@ -41,7 +41,7 @@ export async function PUT(request: Request) {
   if (!orgId) return NextResponse.json({ error: 'Organization missing in session' }, { status: 400 });
 
   try {
-    const { bufferMinutes, minNoticeHours, maxAdvanceDays, maxDailyBookings, slotIntervalMinutes } = await request.json();
+    const { bufferMinutes, minNoticeHours, maxAdvanceDays, maxDailyBookings, slotIntervalMinutes, isBookingEnabled } = await request.json();
 
     const settings = await prisma.schedulingSettings.upsert({
       where: { organizationId: orgId },
@@ -50,7 +50,8 @@ export async function PUT(request: Request) {
         minNoticeHours: Number(minNoticeHours) || 2,
         maxAdvanceDays: Number(maxAdvanceDays) || 30,
         maxDailyBookings: Number(maxDailyBookings) || 10,
-        slotIntervalMinutes: Number(slotIntervalMinutes) || 30
+        slotIntervalMinutes: Number(slotIntervalMinutes) || 30,
+        ...(isBookingEnabled !== undefined ? { isBookingEnabled: Boolean(isBookingEnabled) } : {})
       },
       create: {
         organizationId: orgId,
@@ -58,7 +59,8 @@ export async function PUT(request: Request) {
         minNoticeHours: Number(minNoticeHours) || 2,
         maxAdvanceDays: Number(maxAdvanceDays) || 30,
         maxDailyBookings: Number(maxDailyBookings) || 10,
-        slotIntervalMinutes: Number(slotIntervalMinutes) || 30
+        slotIntervalMinutes: Number(slotIntervalMinutes) || 30,
+        isBookingEnabled: isBookingEnabled !== undefined ? Boolean(isBookingEnabled) : true,
       }
     });
 

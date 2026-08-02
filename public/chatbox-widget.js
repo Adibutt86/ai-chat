@@ -277,19 +277,33 @@
       }
       
       #chatbox-body {
-        flex: 1;
+        flex: 1 1 auto !important;
+        min-height: 0 !important;
+        height: 100% !important;
         padding: 14px 14px;
-        overflow-y: auto;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
         background-color: #f8fafc;
         display: flex;
         flex-direction: column;
         gap: 14px;
         scroll-behavior: smooth;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
+        -webkit-overflow-scrolling: touch !important;
+        touch-action: pan-y !important;
+        pointer-events: auto !important;
       }
       #chatbox-body::-webkit-scrollbar {
-        display: none;
+        width: 5px;
+      }
+      #chatbox-body::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      #chatbox-body::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+      #chatbox-body::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
       }
       
       /* Messages Styles */

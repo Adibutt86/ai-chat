@@ -292,6 +292,8 @@
         touch-action: pan-y !important;
         pointer-events: auto !important;
         box-sizing: border-box !important;
+        overscroll-behavior: contain !important;
+        overscroll-behavior-y: contain !important;
       }
       #chatbox-body::-webkit-scrollbar {
         width: 6px;
@@ -1311,6 +1313,25 @@
         }
       }
     });
+
+    // Intercept mouse wheel scrolling over chatbox to scroll chat messages instead of outer WordPress webpage
+    body.addEventListener('wheel', (e) => {
+      const delta = e.deltaY;
+      const isScrollable = body.scrollHeight > body.clientHeight;
+      if (isScrollable) {
+        const atTop = body.scrollTop <= 0;
+        const atBottom = body.scrollTop + body.clientHeight >= body.scrollHeight - 2;
+        if ((delta < 0 && !atTop) || (delta > 0 && !atBottom)) {
+          e.preventDefault();
+          e.stopPropagation();
+          body.scrollTop += delta;
+        }
+      }
+    }, { passive: false });
+
+    windowDiv.addEventListener('wheel', (e) => {
+      e.stopPropagation();
+    }, { passive: true });
 
     scrollLatestBtn.onclick = () => {
       scrollToBottom(true);

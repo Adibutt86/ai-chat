@@ -160,27 +160,47 @@
       }
 
       #chatbox-window {
-        display: none;
+        display: flex;
         opacity: 0;
-        transform: translateY(20px) scale(0.95);
+        visibility: hidden;
+        pointer-events: none;
+        transform-origin: ${position === 'bottom-right' ? 'bottom right' : 'bottom left'};
+        transform: translateY(24px) scale(0.84);
         width: ${config.widgetSettings?.width || '385px'};
         height: ${config.widgetSettings?.height || '590px'};
         background: #ffffff;
         border: 1px solid #f1f5f9;
         border-radius: ${borderRadius};
-        box-shadow: 0 12px 40px -4px rgba(0, 0, 0, 0.12), 0 8px 16px -4px rgba(0, 0, 0, 0.06);
+        box-shadow: 0 16px 48px -4px rgba(0, 0, 0, 0.18), 0 8px 24px -4px rgba(0, 0, 0, 0.08);
         position: absolute;
         bottom: 78px;
         ${position === 'bottom-right' ? 'right: 0;' : 'left: 0;'}
         flex-direction: column;
         overflow: hidden;
-        transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        pointer-events: auto;
+        transition: visibility 0.35s ease, opacity 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
       }
       #chatbox-window.active {
         display: flex;
+        visibility: visible;
         opacity: 1;
+        pointer-events: auto;
         transform: translateY(0) scale(1);
+        animation: chatboxSpringPop 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      }
+
+      @keyframes chatboxSpringPop {
+        0% {
+          opacity: 0;
+          transform: translateY(28px) scale(0.82);
+        }
+        70% {
+          opacity: 1;
+          transform: translateY(-5px) scale(1.02);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
       }
       
       #chatbox-header {

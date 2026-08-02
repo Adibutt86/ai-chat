@@ -1303,22 +1303,19 @@
       scrollToBottom(true);
     };
 
-    function scrollToBottom(force = false) {
-      if (force) {
-        body.scrollTop = body.scrollHeight;
+    function scrollToBottom(force = true) {
+      requestAnimationFrame(() => {
+        body.scrollTop = body.scrollHeight + 99999;
         scrollLatestBtn.classList.remove('visible');
-      } else {
-        body.scrollTo({
-          top: body.scrollHeight,
-          behavior: 'smooth'
-        });
-      }
+      });
+      setTimeout(() => {
+        body.scrollTop = body.scrollHeight + 99999;
+      }, 50);
     }
 
     function scrollToLatestIfNeeded() {
-      // Auto scroll if user is near bottom (e.g. less than 150px scrolled away)
-      const isNearBottom = body.scrollHeight - body.scrollTop - body.clientHeight < 150;
-      if (isNearBottom) {
+      const isNearBottom = body.scrollHeight - body.scrollTop - body.clientHeight < 250;
+      if (isNearBottom || body.scrollTop === 0) {
         scrollToBottom(true);
       } else {
         scrollLatestBtn.classList.add('visible');
@@ -1904,7 +1901,7 @@
               if (data.chunk && !isBookingTriggered) {
                 fullReply += data.chunk;
                 botMessageEl.innerHTML = formatMessageText(fullReply);
-                scrollToLatestIfNeeded();
+                scrollToBottom(true);
               }
             } catch (err) {
               console.error('Error parsing line:', err);

@@ -41,6 +41,7 @@ export async function POST(request: Request) {
       showServices,
       showHours,
       showPricing,
+      dataSourceMode,
       width,
       height
     } = await request.json();
@@ -71,6 +72,7 @@ export async function POST(request: Request) {
         showServices: showServices !== undefined ? showServices : false,
         showHours: showHours !== undefined ? showHours : false,
         showPricing: showPricing !== undefined ? showPricing : false,
+        dataSourceMode: dataSourceMode || 'dashboard',
         width: width || '380px',
         height: height || '600px',
       },
@@ -88,6 +90,7 @@ export async function POST(request: Request) {
         showServices: showServices !== undefined ? showServices : false,
         showHours: showHours !== undefined ? showHours : false,
         showPricing: showPricing !== undefined ? showPricing : false,
+        dataSourceMode: dataSourceMode || 'dashboard',
         width: width || '380px',
         height: height || '600px',
       },

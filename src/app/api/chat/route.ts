@@ -260,10 +260,14 @@ export async function POST(request: Request) {
       return `[Source Title: ${title} | URL: ${url}]\n${m.chunkContent}`;
     }).join('\n\n');
 
+    // Knowledge Retrieval Source Policy:
+    // If dataSourceMode === 'website': Chatbot fetches information strictly from live website crawled data (vector RAG chunks).
+    // If dataSourceMode === 'dashboard' (default): Chatbot uses structured content from dashboard settings (Hours, Services, Contact Details).
+    const dataSourceMode = agent.widgetSettings?.dataSourceMode || 'dashboard';
+    const isFetchFromWebsite = dataSourceMode === 'website';
+
     // 1. Business Working Hours:
-    // If showHours === true (ENABLED): use Dashboard Business Hours
-    // If showHours === false (DISABLED): search purely from Website Crawled Data (vector RAG chunks)
-    const showHours = agent.widgetSettings?.showHours === true;
+    const showHours = !isFetchFromWebsite && (agent.widgetSettings?.showHours === true);
     let hoursContext = '';
     
     if (showHours) {
@@ -314,9 +318,7 @@ export async function POST(request: Request) {
     }
 
     // 2. Services:
-    // If showServices === true (ENABLED): use Dashboard Services data
-    // If showServices === false (DISABLED): search purely from Website Crawled Data (vector RAG chunks)
-    const showServices = agent.widgetSettings?.showServices === true;
+    const showServices = !isFetchFromWebsite && (agent.widgetSettings?.showServices === true);
     let servicesContext = '';
     
     if (showServices) {
@@ -334,9 +336,7 @@ export async function POST(request: Request) {
     }
 
     // 3. Contact Us / Lead Details:
-    // If showLeadForm === true (ENABLED): use Dashboard Contact Info
-    // If showLeadForm === false (DISABLED): search purely from Website Crawled Data (vector RAG chunks)
-    const showLeadForm = agent.widgetSettings?.showLeadForm !== false;
+    const showLeadForm = !isFetchFromWebsite && (agent.widgetSettings?.showLeadForm !== false);
     const normMsgLower = message.trim().toLowerCase();
     const isContactQuery = normMsgLower.includes('contact') || normMsgLower.includes('reach') || normMsgLower.includes('support') || normMsgLower.includes('email') || normMsgLower.includes('phone') || normMsgLower.includes('call') || normMsgLower.includes('number') || normMsgLower.includes('help form') || normMsgLower.includes('office') || normMsgLower.includes('location') || normMsgLower.includes('address') || normMsgLower.includes('headquarter') || normMsgLower.includes('where are you');
     let contactContext = '';

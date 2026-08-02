@@ -23,6 +23,7 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
   const [showLeadForm, setShowLeadForm] = useState(true);
   const [showServices, setShowServices] = useState(false);
   const [showHours, setShowHours] = useState(false);
+  const [dataSourceMode, setDataSourceMode] = useState<'dashboard' | 'website'>('dashboard');
 
   // Widget dimensions
   const [width, setWidth] = useState('380px');
@@ -49,6 +50,7 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
             setShowLeadForm(data.showLeadForm !== undefined ? data.showLeadForm : true);
             setShowServices(data.showServices !== undefined ? data.showServices : false);
             setShowHours(data.showHours !== undefined ? data.showHours : false);
+            setDataSourceMode(data.dataSourceMode === 'website' ? 'website' : 'dashboard');
             setWidth(data.width || '380px');
             setHeight(data.height || '600px');
           }
@@ -82,6 +84,7 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
           showLeadForm,
           showServices,
           showHours,
+          dataSourceMode,
           width,
           height,
         }),
@@ -323,6 +326,50 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
                 />
                 <span>🕒 Business Working Hours</span>
               </label>
+            </div>
+
+            {/* Knowledge Retrieval Policy: Fetch from Website vs Fetch from Dashboard */}
+            <div className="border-t border-zinc-800/80 pt-4 space-y-3">
+              <div>
+                <h4 className="text-xs uppercase tracking-wider text-zinc-400 font-bold mb-1">Knowledge Retrieval Source</h4>
+                <p className="text-[11px] text-zinc-500">Select where the chatbot retrieves factual information for visitor inquiries:</p>
+              </div>
+
+              <div className="space-y-2">
+                <label className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition ${dataSourceMode === 'website' ? 'bg-blue-950/40 border-blue-600/80 text-white' : 'bg-zinc-950/50 border-zinc-800 text-zinc-400 hover:border-zinc-700'}`}>
+                  <input
+                    type="radio"
+                    name="dataSourceMode"
+                    value="website"
+                    checked={dataSourceMode === 'website'}
+                    onChange={() => setDataSourceMode('website')}
+                    className="mt-0.5 text-blue-600 focus:ring-blue-600 bg-zinc-950 border-zinc-800 h-4 w-4 cursor-pointer"
+                  />
+                  <div>
+                    <div className="text-xs font-bold text-white flex items-center gap-1.5">🌐 Fetch from Website</div>
+                    <div className="text-[11px] text-zinc-400 mt-0.5 leading-normal">
+                      Chatbot searches live website content (crawled vector RAG data).
+                    </div>
+                  </div>
+                </label>
+
+                <label className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition ${dataSourceMode === 'dashboard' ? 'bg-blue-950/40 border-blue-600/80 text-white' : 'bg-zinc-950/50 border-zinc-800 text-zinc-400 hover:border-zinc-700'}`}>
+                  <input
+                    type="radio"
+                    name="dataSourceMode"
+                    value="dashboard"
+                    checked={dataSourceMode === 'dashboard'}
+                    onChange={() => setDataSourceMode('dashboard')}
+                    className="mt-0.5 text-blue-600 focus:ring-blue-600 bg-zinc-950 border-zinc-800 h-4 w-4 cursor-pointer"
+                  />
+                  <div>
+                    <div className="text-xs font-bold text-white flex items-center gap-1.5">📊 Fetch from Dashboard</div>
+                    <div className="text-[11px] text-zinc-400 mt-0.5 leading-normal">
+                      Chatbot uses structured content from dashboard settings (Hours, Services, Contact Details).
+                    </div>
+                  </div>
+                </label>
+              </div>
             </div>
           </div>
 

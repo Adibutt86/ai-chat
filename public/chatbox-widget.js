@@ -1632,7 +1632,6 @@
       // Step 1: Select Service
       function renderStep1() {
         wizard.innerHTML = `
-          <h4>Select Service</h4>
           <div class="booking-skeleton"></div>
           <div class="booking-skeleton"></div>
         `;

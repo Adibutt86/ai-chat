@@ -1386,7 +1386,15 @@
             }
 
             if (!hasHours) {
-              headerText += (headerText ? '<br/>' : '') + cleanLine;
+              const lineLower = cleanLine.toLowerCase().replace(/\s+/g, '');
+              const isPreambleExcluded = 
+                lineLower.includes('oursupportteamisavailable') ||
+                lineLower.includes('supportteamisavailable') ||
+                lineLower.includes('availableduringthefollowinghours');
+
+              if (!isPreambleExcluded) {
+                headerText += (headerText ? '<br/>' : '') + cleanLine;
+              }
             } else {
               // Exclude typical footer notes like "If you need to get in touch outside of these hours..." or shopping cart boilerplate
               const lineLower = cleanLine.toLowerCase().replace(/\s+/g, '');
@@ -1409,7 +1417,10 @@
         hoursHtml += '</div>';
 
         if (hasHours) {
-          return `<div style="font-weight: 500; margin-bottom: 6px;">${headerText}</div>${hoursHtml}${footerText ? `<div style="margin-top: 10px; font-size: 12px; color: #64748b;">${footerText}</div>` : ''}${relatedQuestionsHtml}`;
+          if (!headerText || headerText.includes('Business Hours') || headerText.includes('Working Hours')) {
+            headerText = 'Business Hours';
+          }
+          return `<div style="font-weight: 600; font-size: 14px; margin-bottom: 6px; color: #0f172a;">${headerText}</div>${hoursHtml}${footerText ? `<div style="margin-top: 10px; font-size: 12px; color: #64748b;">${footerText}</div>` : ''}${relatedQuestionsHtml}`;
         }
       }
 

@@ -318,7 +318,7 @@ export async function POST(request: Request) {
 
       if (businessHoursList.length > 0) {
         const tz = businessHoursList[0].timezone || 'UTC';
-        hoursContext = `Business Hours (${tz}):\nOur support team is available during the following hours (${tz}):\n`;
+        hoursContext = `Business Hours (${tz}):\n`;
         const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         const sortedHoursList = [...businessHoursList].sort((a, b) => {
           const dayA = a.dayOfWeek === 0 ? 7 : a.dayOfWeek;
@@ -387,7 +387,7 @@ STRICT ANSWERING RULES:
 10. ELEGANT SPACING & TYPOGRAPHY: Ensure every response is cleanly formatted with proper spaces between all words, sentences, and headers. Never run words together or output concatenated text without spaces. Break content into clean, logical paragraphs with clear line breaks.
 11. SHORT & DIRECT RESPONSES: Keep answers short, direct, and tightly focused on the user's specific intent. Avoid long background explanations, unnecessary fluff, or listing unasked details unless explicitly requested.
 12. RELATED QUESTIONS (ALWAYS INCLUDE 2-3 FOLLOW-UPS): At the end of every answer to an important question, ALWAYS append a section titled "**Related questions:**" containing 2 to 3 relevant, natural follow-up questions (bullet points •) that help guide the user to their next logical inquiry.
-13. NO FOOTER NOTES ON BUSINESS HOURS: When providing business hours, do NOT include any footer notes such as "If you need to get in touch outside of these hours, feel free to leave a message and we will get back to you on the next working day."`;
+13. NO EXTRA PREAMBLE OR FOOTER NOTES ON BUSINESS HOURS: When providing business hours, output only the section header '**Business Hours**' followed by the daily hours list. Do NOT output preamble sentences such as 'Our support team is available during the following hours (UTC):' and do NOT output footer notes such as 'If you need to get in touch outside of these hours, feel free to leave a message...'`;
 
     if (hasBuyingIntent) {
       systemPrompt += `\n[IMPORTANT] The visitor has shown interest in purchasing or pricing. Politely offer to have sales contact them, and ask for their email address or contact info.`;

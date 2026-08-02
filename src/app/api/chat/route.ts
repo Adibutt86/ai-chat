@@ -368,7 +368,9 @@ STRICT ANSWERING RULES:
 7. TYPOS & MISSPELLINGS: Automatically interpret visitor questions even if they contain spelling mistakes, typos, or informal phrasing (e.g. "phon numbr", "pricin plan", "workin hour").
 8. NO SOURCES OR CITATION LISTS: Do NOT output or append any "Sources:", "Page Sources:", or page link citation lists at the end of your response.
 9. NO METADATA DISCLAIMERS OR REPETITIVE PREAMBLES: Do NOT begin your answer with boilerplate disclaimers or repetitive preamble phrases such as "Based on the information available on this website...", "Based on the context provided...", "Here is what I can share about...", "According to the website...", or "Based on the website data...". Jump straight into answering the visitor's question naturally, directly, and conversationally.
-10. ELEGANT SPACING & TYPOGRAPHY: Ensure every response is cleanly formatted with proper spaces between all words, sentences, and headers. Never run words together or output concatenated text without spaces. Break content into clean, logical paragraphs with clear line breaks.`;
+10. ELEGANT SPACING & TYPOGRAPHY: Ensure every response is cleanly formatted with proper spaces between all words, sentences, and headers. Never run words together or output concatenated text without spaces. Break content into clean, logical paragraphs with clear line breaks.
+11. SHORT & DIRECT RESPONSES: Keep answers short, direct, and tightly focused on the user's specific intent. Avoid long background explanations, unnecessary fluff, or listing unasked details unless explicitly requested.
+12. RELATED QUESTIONS (ALWAYS INCLUDE 2-3 FOLLOW-UPS): At the end of every answer to an important question, ALWAYS append a section titled "**Related questions:**" containing 2 to 3 relevant, natural follow-up questions (bullet points •) that help guide the user to their next logical inquiry.`;
 
     if (hasBuyingIntent) {
       systemPrompt += `\n[IMPORTANT] The visitor has shown interest in purchasing or pricing. Politely offer to have sales contact them, and ask for their email address or contact info.`;

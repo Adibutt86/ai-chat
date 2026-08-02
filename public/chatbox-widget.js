@@ -1448,13 +1448,14 @@
       // Convert markdown bold **text** to <strong>
       escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
-      // Convert markdown links [text](url) to html clickable links first
-      escaped = escaped.replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, (match, label, linkUrl) => {
+      // Convert markdown links [text](url) (supporting both absolute URLs and relative paths like /contact-us, /book-now)
+      escaped = escaped.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, label, linkUrl) => {
         const cleanLabel = label
           .replace(/Page$/i, ' Page')
           .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
           .trim();
-        return `<a href="${linkUrl}" target="_blank" rel="noopener" style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">${cleanLabel}</a>`;
+        const isExternal = linkUrl.startsWith('http://') || linkUrl.startsWith('https://');
+        return `<a href="${linkUrl}" ${isExternal ? 'target="_blank" rel="noopener"' : ''} style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">${cleanLabel}</a>`;
       });
 
       // Convert bullet points (•, *, -) to styled inline checkmark list items

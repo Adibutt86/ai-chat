@@ -360,7 +360,7 @@ export async function POST(request: Request) {
     const isContactQuery = normMsgLower.includes('contact') || normMsgLower.includes('reach') || normMsgLower.includes('support') || normMsgLower.includes('email') || normMsgLower.includes('phone') || normMsgLower.includes('call') || normMsgLower.includes('number') || normMsgLower.includes('help form') || normMsgLower.includes('office') || normMsgLower.includes('location') || normMsgLower.includes('address') || normMsgLower.includes('headquarter') || normMsgLower.includes('where are you');
     let contactContext = '';
     if (showLeadForm && isContactQuery) {
-      contactContext = "Official Dashboard Business Contact & Location Information:\n• Phone Support: +1 (800) 555-0199 / +1 (202) 555-0148\n• Email Support: support@chatboxai.com\n• Online Help Desk: /contact\n• Office Location: 123 Tech Avenue, Suite 400, Washington, D.C., USA\n• Support Response Time: Within 24 hours";
+      contactContext = "Official Dashboard Business Contact & Location Information:\n• Phone Support: +1 (800) 555-0199 / +1 (202) 555-0148\n• Email Support: support@chatboxai.com\n• Contact Page: [Contact Us](/contact-us)\n• Booking Page: [Book Appointment](/book-now)\n• Office Location: 123 Tech Avenue, Suite 400, Washington, D.C., USA\n• Support Response Time: Within 24 hours";
     }
 
     context = [hoursContext, servicesContext, contactContext, context].filter(Boolean).join('\n\n');
@@ -387,7 +387,8 @@ STRICT ANSWERING RULES:
 10. ELEGANT SPACING & TYPOGRAPHY: Ensure every response is cleanly formatted with proper spaces between all words, sentences, and headers. Never run words together or output concatenated text without spaces. Break content into clean, logical paragraphs with clear line breaks.
 11. SHORT & DIRECT RESPONSES: Keep answers short, direct, and tightly focused on the user's specific intent. Avoid long background explanations, unnecessary fluff, or listing unasked details unless explicitly requested.
 12. RELATED QUESTIONS (ALWAYS INCLUDE 2-3 FOLLOW-UPS): At the end of every answer to an important question, ALWAYS append a section titled "**Related questions:**" containing 2 to 3 relevant, natural follow-up questions (bullet points •) that help guide the user to their next logical inquiry.
-13. NO EXTRA PREAMBLE OR FOOTER NOTES ON BUSINESS HOURS: When providing business hours, output only the section header '**Business Hours**' followed by the daily hours list. Do NOT output preamble sentences such as 'Our support team is available during the following hours (UTC):' and do NOT output footer notes such as 'If you need to get in touch outside of these hours, feel free to leave a message...'`;
+13. NO EXTRA PREAMBLE OR FOOTER NOTES ON BUSINESS HOURS: When providing business hours, output only the section header '**Business Hours**' followed by the daily hours list. Do NOT output preamble sentences such as 'Our support team is available during the following hours (UTC):' and do NOT output footer notes such as 'If you need to get in touch outside of these hours, feel free to leave a message...'.
+14. DIRECT PAGE LINKS FOR BOOKING & CONTACT: When suggesting visitors contact support, leave a message, or book an appointment, ALWAYS include direct clickable markdown links (e.g. [Contact Us](/contact-us) or [Book Appointment](/book-now)).`;
 
     if (hasBuyingIntent) {
       systemPrompt += `\n[IMPORTANT] The visitor has shown interest in purchasing or pricing. Politely offer to have sales contact them, and ask for their email address or contact info.`;

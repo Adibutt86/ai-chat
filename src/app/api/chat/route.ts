@@ -177,8 +177,12 @@ export async function POST(request: Request) {
     const encoder = new TextEncoder();
 
     // Booking Intent Detection - Only intercept if showBooking toggle is enabled in Widget Settings
+    // Booking Intent Detection - Only trigger interactive booking flow if enabled AND configured to fetch from Dashboard
     const showBooking = agent.widgetSettings?.showBooking !== false;
-    if (showBooking && hasBookingIntent(message)) {
+    const bookingSourceMode = agent.widgetSettings?.bookingSourceMode || agent.widgetSettings?.dataSourceMode || 'dashboard';
+    const isBookingFromDashboard = bookingSourceMode === 'dashboard';
+
+    if (showBooking && isBookingFromDashboard && hasBookingIntent(message)) {
       const stream = new ReadableStream({
         async start(controller) {
           controller.enqueue(encoder.encode(JSON.stringify({ 
@@ -243,31 +247,28 @@ export async function POST(request: Request) {
     }
 
     // Perform RAG vector lookup (Top 8 chunks)
-
-    // 6. Perform RAG vector lookup (Top 8 chunks - Requirement #6)
     const matches = await searchRelevantChunks(targetAgentId, message, 8);
 
-    // RAG Debug Logging (Requirement #12)
+    // RAG Debug Logging
     console.log(`[RAG DEBUG] Query: "${message}" | Retrieved ${matches.length} chunks for agent ${targetAgentId}:`);
     matches.forEach((m, idx) => {
       console.log(`  [Chunk ${idx + 1}] Score: ${m.score.toFixed(3)} | Title: "${m.name || 'N/A'}" | URL: ${m.url || 'N/A'}\n  Snippet: ${m.chunkContent.substring(0, 100)}...`);
     });
 
-    // Format context including Page Title & URL (Requirement #8)
+    // Format context including Page Title & URL
     let context = matches.map(m => {
       const title = m.name || 'Website Page';
       const url = m.url || 'https://website.com';
       return `[Source Title: ${title} | URL: ${url}]\n${m.chunkContent}`;
     }).join('\n\n');
 
-    // Knowledge Retrieval Source Policy:
-    // If dataSourceMode === 'website': Chatbot fetches information strictly from live website crawled data (vector RAG chunks).
-    // If dataSourceMode === 'dashboard' (default): Chatbot uses structured content from dashboard settings (Hours, Services, Contact Details).
-    const dataSourceMode = agent.widgetSettings?.dataSourceMode || 'dashboard';
-    const isFetchFromWebsite = dataSourceMode === 'website';
+    // Individual Per-Point Knowledge Retrieval Source Policy:
+    const hoursSourceMode = agent.widgetSettings?.hoursSourceMode || agent.widgetSettings?.dataSourceMode || 'dashboard';
+    const servicesSourceMode = agent.widgetSettings?.servicesSourceMode || agent.widgetSettings?.dataSourceMode || 'dashboard';
+    const contactSourceMode = agent.widgetSettings?.contactSourceMode || agent.widgetSettings?.dataSourceMode || 'dashboard';
 
     // 1. Business Working Hours:
-    const showHours = !isFetchFromWebsite && (agent.widgetSettings?.showHours === true);
+    const showHours = (agent.widgetSettings?.showHours === true) && (hoursSourceMode === 'dashboard');
     let hoursContext = '';
     
     if (showHours) {
@@ -318,7 +319,7 @@ export async function POST(request: Request) {
     }
 
     // 2. Services:
-    const showServices = !isFetchFromWebsite && (agent.widgetSettings?.showServices === true);
+    const showServices = (agent.widgetSettings?.showServices === true) && (servicesSourceMode === 'dashboard');
     let servicesContext = '';
     
     if (showServices) {
@@ -336,7 +337,7 @@ export async function POST(request: Request) {
     }
 
     // 3. Contact Us / Lead Details:
-    const showLeadForm = !isFetchFromWebsite && (agent.widgetSettings?.showLeadForm !== false);
+    const showLeadForm = (agent.widgetSettings?.showLeadForm !== false) && (contactSourceMode === 'dashboard');
     const normMsgLower = message.trim().toLowerCase();
     const isContactQuery = normMsgLower.includes('contact') || normMsgLower.includes('reach') || normMsgLower.includes('support') || normMsgLower.includes('email') || normMsgLower.includes('phone') || normMsgLower.includes('call') || normMsgLower.includes('number') || normMsgLower.includes('help form') || normMsgLower.includes('office') || normMsgLower.includes('location') || normMsgLower.includes('address') || normMsgLower.includes('headquarter') || normMsgLower.includes('where are you');
     let contactContext = '';

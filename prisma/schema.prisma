@@ -214,8 +214,12 @@ model WidgetSettings {
   showHours      Boolean        @default(false)
   showPricing    Boolean        @default(false)
 
-  // Data Source Retrieval Policy: "dashboard" | "website"
-  dataSourceMode String         @default("dashboard")
+  // Data Source Retrieval Policy per point: "dashboard" | "website"
+  dataSourceMode     String         @default("dashboard")
+  bookingSourceMode  String         @default("dashboard")
+  contactSourceMode  String         @default("dashboard")
+  servicesSourceMode String         @default("dashboard")
+  hoursSourceMode    String         @default("dashboard")
   
   // Custom Sizing Options
   width          String         @default("380px")

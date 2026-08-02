@@ -25,6 +25,12 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
   const [showHours, setShowHours] = useState(false);
   const [dataSourceMode, setDataSourceMode] = useState<'dashboard' | 'website'>('dashboard');
 
+  // Per-point Knowledge Retrieval Source Modes
+  const [bookingSourceMode, setBookingSourceMode] = useState<'dashboard' | 'website'>('dashboard');
+  const [contactSourceMode, setContactSourceMode] = useState<'dashboard' | 'website'>('dashboard');
+  const [servicesSourceMode, setServicesSourceMode] = useState<'dashboard' | 'website'>('dashboard');
+  const [hoursSourceMode, setHoursSourceMode] = useState<'dashboard' | 'website'>('dashboard');
+
   // Widget dimensions
   const [width, setWidth] = useState('380px');
   const [height, setHeight] = useState('600px');
@@ -51,6 +57,12 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
             setShowServices(data.showServices !== undefined ? data.showServices : false);
             setShowHours(data.showHours !== undefined ? data.showHours : false);
             setDataSourceMode(data.dataSourceMode === 'website' ? 'website' : 'dashboard');
+            
+            setBookingSourceMode(data.bookingSourceMode === 'website' ? 'website' : 'dashboard');
+            setContactSourceMode(data.contactSourceMode === 'website' ? 'website' : 'dashboard');
+            setServicesSourceMode(data.servicesSourceMode === 'website' ? 'website' : 'dashboard');
+            setHoursSourceMode(data.hoursSourceMode === 'website' ? 'website' : 'dashboard');
+
             setWidth(data.width || '380px');
             setHeight(data.height || '600px');
           }
@@ -85,6 +97,10 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
           showServices,
           showHours,
           dataSourceMode,
+          bookingSourceMode,
+          contactSourceMode,
+          servicesSourceMode,
+          hoursSourceMode,
           width,
           height,
         }),
@@ -276,99 +292,215 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
             />
           </div>
 
-          {/* Quick suggested links configuration checklist */}
-          <div className="border-t border-zinc-800 pt-5 space-y-4">
+          {/* Suggested Actions / Quick Links with Independent Source Selection for Each Point */}
+          <div className="border-t border-zinc-800 pt-5 space-y-6">
             <div>
               <h4 className="text-xs uppercase tracking-wider text-zinc-400 font-bold mb-1">Suggested Actions / Quick Links</h4>
-              <p className="text-[11px] text-zinc-500 mb-2">Enable default suggestion buttons to appear at the start of a chat conversation.</p>
+              <p className="text-[11px] text-zinc-500 mb-2">Configure suggestion buttons and select independent Knowledge Retrieval Sources for each feature point.</p>
               <div className="bg-blue-950/30 border border-blue-900/40 p-2.5 rounded-lg text-[11px] text-blue-300">
-                💡 <strong>Features:</strong> Sleek single-color vector icons, animated hover tooltips, and instant smooth-scroll to bottom on click.
+                💡 <strong>Features:</strong> Sleek single-color vector icons, animated hover tooltips, and independent source retrieval configuration for every point.
               </div>
             </div>
 
-            <div className="space-y-3">
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={showBooking}
-                  onChange={(e) => setShowBooking(e.target.checked)}
-                  className="rounded border-zinc-800 text-blue-600 focus:ring-blue-600 bg-zinc-950 h-4 w-4"
-                />
-                <span>📅 Book an Appointment / Demowise</span>
-              </label>
+            <div className="space-y-6">
+              {/* Point 1: Book an Appointment */}
+              <div className="bg-zinc-950/60 border border-zinc-800 p-4 rounded-xl space-y-3">
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={showBooking}
+                    onChange={(e) => setShowBooking(e.target.checked)}
+                    className="rounded border-zinc-800 text-blue-600 focus:ring-blue-600 bg-zinc-900 h-4 w-4"
+                  />
+                  <span className="font-semibold text-white">📅 Book an Appointment / Demowise</span>
+                </label>
 
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={showLeadForm}
-                  onChange={(e) => setShowLeadForm(e.target.checked)}
-                  className="rounded border-zinc-800 text-blue-600 focus:ring-blue-600 bg-zinc-950 h-4 w-4"
-                />
-                <span>📞 Contact Us / Leave Details</span>
-              </label>
+                {showBooking && (
+                  <div className="pl-7 space-y-2 pt-1 border-t border-zinc-850">
+                    <label className="block text-[11px] uppercase tracking-wider text-zinc-400 font-bold mb-1">Knowledge Retrieval Source for Booking:</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <label className={`flex items-start gap-2 p-2.5 rounded-lg border cursor-pointer transition ${bookingSourceMode === 'website' ? 'bg-blue-950/40 border-blue-600/80 text-white' : 'bg-zinc-900/50 border-zinc-800 text-zinc-400 hover:border-zinc-700'}`}>
+                        <input
+                          type="radio"
+                          name="bookingSourceMode"
+                          value="website"
+                          checked={bookingSourceMode === 'website'}
+                          onChange={() => setBookingSourceMode('website')}
+                          className="mt-0.5 text-blue-600 focus:ring-blue-600 bg-zinc-950 border-zinc-800 h-3.5 w-3.5 cursor-pointer"
+                        />
+                        <div>
+                          <div className="text-xs font-bold text-white">🌐 Fetch from Website</div>
+                          <div className="text-[10px] text-zinc-400 leading-tight">Searches live website RAG data for booking info.</div>
+                        </div>
+                      </label>
 
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={showServices}
-                  onChange={(e) => setShowServices(e.target.checked)}
-                  className="rounded border-zinc-800 text-blue-600 focus:ring-blue-600 bg-zinc-950 h-4 w-4"
-                />
-                <span>💼 Our Services</span>
-              </label>
-
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={showHours}
-                  onChange={(e) => setShowHours(e.target.checked)}
-                  className="rounded border-zinc-800 text-blue-600 focus:ring-blue-600 bg-zinc-950 h-4 w-4"
-                />
-                <span>🕒 Business Working Hours</span>
-              </label>
-            </div>
-
-            {/* Knowledge Retrieval Policy: Fetch from Website vs Fetch from Dashboard */}
-            <div className="border-t border-zinc-800/80 pt-4 space-y-3">
-              <div>
-                <h4 className="text-xs uppercase tracking-wider text-zinc-400 font-bold mb-1">Knowledge Retrieval Source</h4>
-                <p className="text-[11px] text-zinc-500">Select where the chatbot retrieves factual information for visitor inquiries:</p>
+                      <label className={`flex items-start gap-2 p-2.5 rounded-lg border cursor-pointer transition ${bookingSourceMode === 'dashboard' ? 'bg-blue-950/40 border-blue-600/80 text-white' : 'bg-zinc-900/50 border-zinc-800 text-zinc-400 hover:border-zinc-700'}`}>
+                        <input
+                          type="radio"
+                          name="bookingSourceMode"
+                          value="dashboard"
+                          checked={bookingSourceMode === 'dashboard'}
+                          onChange={() => setBookingSourceMode('dashboard')}
+                          className="mt-0.5 text-blue-600 focus:ring-blue-600 bg-zinc-950 border-zinc-800 h-3.5 w-3.5 cursor-pointer"
+                        />
+                        <div>
+                          <div className="text-xs font-bold text-white">📊 Fetch from Dashboard</div>
+                          <div className="text-[10px] text-zinc-400 leading-tight">Triggers interactive booking flow & slots.</div>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                )}
               </div>
 
-              <div className="space-y-2">
-                <label className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition ${dataSourceMode === 'website' ? 'bg-blue-950/40 border-blue-600/80 text-white' : 'bg-zinc-950/50 border-zinc-800 text-zinc-400 hover:border-zinc-700'}`}>
+              {/* Point 2: Contact Us / Leave Details */}
+              <div className="bg-zinc-950/60 border border-zinc-800 p-4 rounded-xl space-y-3">
+                <label className="flex items-center gap-3 cursor-pointer">
                   <input
-                    type="radio"
-                    name="dataSourceMode"
-                    value="website"
-                    checked={dataSourceMode === 'website'}
-                    onChange={() => setDataSourceMode('website')}
-                    className="mt-0.5 text-blue-600 focus:ring-blue-600 bg-zinc-950 border-zinc-800 h-4 w-4 cursor-pointer"
+                    type="checkbox"
+                    checked={showLeadForm}
+                    onChange={(e) => setShowLeadForm(e.target.checked)}
+                    className="rounded border-zinc-800 text-blue-600 focus:ring-blue-600 bg-zinc-900 h-4 w-4"
                   />
-                  <div>
-                    <div className="text-xs font-bold text-white flex items-center gap-1.5">🌐 Fetch from Website</div>
-                    <div className="text-[11px] text-zinc-400 mt-0.5 leading-normal">
-                      Chatbot searches live website content (crawled vector RAG data).
-                    </div>
-                  </div>
+                  <span className="font-semibold text-white">📞 Contact Us / Leave Details</span>
                 </label>
 
-                <label className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition ${dataSourceMode === 'dashboard' ? 'bg-blue-950/40 border-blue-600/80 text-white' : 'bg-zinc-950/50 border-zinc-800 text-zinc-400 hover:border-zinc-700'}`}>
-                  <input
-                    type="radio"
-                    name="dataSourceMode"
-                    value="dashboard"
-                    checked={dataSourceMode === 'dashboard'}
-                    onChange={() => setDataSourceMode('dashboard')}
-                    className="mt-0.5 text-blue-600 focus:ring-blue-600 bg-zinc-950 border-zinc-800 h-4 w-4 cursor-pointer"
-                  />
-                  <div>
-                    <div className="text-xs font-bold text-white flex items-center gap-1.5">📊 Fetch from Dashboard</div>
-                    <div className="text-[11px] text-zinc-400 mt-0.5 leading-normal">
-                      Chatbot uses structured content from dashboard settings (Hours, Services, Contact Details).
+                {showLeadForm && (
+                  <div className="pl-7 space-y-2 pt-1 border-t border-zinc-850">
+                    <label className="block text-[11px] uppercase tracking-wider text-zinc-400 font-bold mb-1">Knowledge Retrieval Source for Contact:</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <label className={`flex items-start gap-2 p-2.5 rounded-lg border cursor-pointer transition ${contactSourceMode === 'website' ? 'bg-blue-950/40 border-blue-600/80 text-white' : 'bg-zinc-900/50 border-zinc-800 text-zinc-400 hover:border-zinc-700'}`}>
+                        <input
+                          type="radio"
+                          name="contactSourceMode"
+                          value="website"
+                          checked={contactSourceMode === 'website'}
+                          onChange={() => setContactSourceMode('website')}
+                          className="mt-0.5 text-blue-600 focus:ring-blue-600 bg-zinc-950 border-zinc-800 h-3.5 w-3.5 cursor-pointer"
+                        />
+                        <div>
+                          <div className="text-xs font-bold text-white">🌐 Fetch from Website</div>
+                          <div className="text-[10px] text-zinc-400 leading-tight">Searches live website content for contact details.</div>
+                        </div>
+                      </label>
+
+                      <label className={`flex items-start gap-2 p-2.5 rounded-lg border cursor-pointer transition ${contactSourceMode === 'dashboard' ? 'bg-blue-950/40 border-blue-600/80 text-white' : 'bg-zinc-900/50 border-zinc-800 text-zinc-400 hover:border-zinc-700'}`}>
+                        <input
+                          type="radio"
+                          name="contactSourceMode"
+                          value="dashboard"
+                          checked={contactSourceMode === 'dashboard'}
+                          onChange={() => setContactSourceMode('dashboard')}
+                          className="mt-0.5 text-blue-600 focus:ring-blue-600 bg-zinc-950 border-zinc-800 h-3.5 w-3.5 cursor-pointer"
+                        />
+                        <div>
+                          <div className="text-xs font-bold text-white">📊 Fetch from Dashboard</div>
+                          <div className="text-[10px] text-zinc-400 leading-tight">Uses structured dashboard contact info.</div>
+                        </div>
+                      </label>
                     </div>
                   </div>
+                )}
+              </div>
+
+              {/* Point 3: Our Services */}
+              <div className="bg-zinc-950/60 border border-zinc-800 p-4 rounded-xl space-y-3">
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={showServices}
+                    onChange={(e) => setShowServices(e.target.checked)}
+                    className="rounded border-zinc-800 text-blue-600 focus:ring-blue-600 bg-zinc-900 h-4 w-4"
+                  />
+                  <span className="font-semibold text-white">💼 Our Services</span>
                 </label>
+
+                {showServices && (
+                  <div className="pl-7 space-y-2 pt-1 border-t border-zinc-850">
+                    <label className="block text-[11px] uppercase tracking-wider text-zinc-400 font-bold mb-1">Knowledge Retrieval Source for Services:</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <label className={`flex items-start gap-2 p-2.5 rounded-lg border cursor-pointer transition ${servicesSourceMode === 'website' ? 'bg-blue-950/40 border-blue-600/80 text-white' : 'bg-zinc-900/50 border-zinc-800 text-zinc-400 hover:border-zinc-700'}`}>
+                        <input
+                          type="radio"
+                          name="servicesSourceMode"
+                          value="website"
+                          checked={servicesSourceMode === 'website'}
+                          onChange={() => setServicesSourceMode('website')}
+                          className="mt-0.5 text-blue-600 focus:ring-blue-600 bg-zinc-950 border-zinc-800 h-3.5 w-3.5 cursor-pointer"
+                        />
+                        <div>
+                          <div className="text-xs font-bold text-white">🌐 Fetch from Website</div>
+                          <div className="text-[10px] text-zinc-400 leading-tight">Searches live website content for services.</div>
+                        </div>
+                      </label>
+
+                      <label className={`flex items-start gap-2 p-2.5 rounded-lg border cursor-pointer transition ${servicesSourceMode === 'dashboard' ? 'bg-blue-950/40 border-blue-600/80 text-white' : 'bg-zinc-900/50 border-zinc-800 text-zinc-400 hover:border-zinc-700'}`}>
+                        <input
+                          type="radio"
+                          name="servicesSourceMode"
+                          value="dashboard"
+                          checked={servicesSourceMode === 'dashboard'}
+                          onChange={() => setServicesSourceMode('dashboard')}
+                          className="mt-0.5 text-blue-600 focus:ring-blue-600 bg-zinc-950 border-zinc-800 h-3.5 w-3.5 cursor-pointer"
+                        />
+                        <div>
+                          <div className="text-xs font-bold text-white">📊 Fetch from Dashboard</div>
+                          <div className="text-[10px] text-zinc-400 leading-tight">Uses services from dashboard settings.</div>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Point 4: Business Working Hours */}
+              <div className="bg-zinc-950/60 border border-zinc-800 p-4 rounded-xl space-y-3">
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={showHours}
+                    onChange={(e) => setShowHours(e.target.checked)}
+                    className="rounded border-zinc-800 text-blue-600 focus:ring-blue-600 bg-zinc-900 h-4 w-4"
+                  />
+                  <span className="font-semibold text-white">🕒 Business Working Hours</span>
+                </label>
+
+                {showHours && (
+                  <div className="pl-7 space-y-2 pt-1 border-t border-zinc-850">
+                    <label className="block text-[11px] uppercase tracking-wider text-zinc-400 font-bold mb-1">Knowledge Retrieval Source for Working Hours:</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <label className={`flex items-start gap-2 p-2.5 rounded-lg border cursor-pointer transition ${hoursSourceMode === 'website' ? 'bg-blue-950/40 border-blue-600/80 text-white' : 'bg-zinc-900/50 border-zinc-800 text-zinc-400 hover:border-zinc-700'}`}>
+                        <input
+                          type="radio"
+                          name="hoursSourceMode"
+                          value="website"
+                          checked={hoursSourceMode === 'website'}
+                          onChange={() => setHoursSourceMode('website')}
+                          className="mt-0.5 text-blue-600 focus:ring-blue-600 bg-zinc-950 border-zinc-800 h-3.5 w-3.5 cursor-pointer"
+                        />
+                        <div>
+                          <div className="text-xs font-bold text-white">🌐 Fetch from Website</div>
+                          <div className="text-[10px] text-zinc-400 leading-tight">Searches live website content for hours.</div>
+                        </div>
+                      </label>
+
+                      <label className={`flex items-start gap-2 p-2.5 rounded-lg border cursor-pointer transition ${hoursSourceMode === 'dashboard' ? 'bg-blue-950/40 border-blue-600/80 text-white' : 'bg-zinc-900/50 border-zinc-800 text-zinc-400 hover:border-zinc-700'}`}>
+                        <input
+                          type="radio"
+                          name="hoursSourceMode"
+                          value="dashboard"
+                          checked={hoursSourceMode === 'dashboard'}
+                          onChange={() => setHoursSourceMode('dashboard')}
+                          className="mt-0.5 text-blue-600 focus:ring-blue-600 bg-zinc-950 border-zinc-800 h-3.5 w-3.5 cursor-pointer"
+                        />
+                        <div>
+                          <div className="text-xs font-bold text-white">📊 Fetch from Dashboard</div>
+                          <div className="text-[10px] text-zinc-400 leading-tight">Uses working hours from dashboard settings.</div>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

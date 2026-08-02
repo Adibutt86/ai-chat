@@ -878,10 +878,13 @@
         transform: scale(1.04);
       }
       .booking-calendar-cell.disabled {
-        color: #cbd5e1;
-        cursor: not-allowed;
-        background-color: #f8fafc;
-        opacity: 0.6;
+        color: #94a3b8 !important;
+        cursor: not-allowed !important;
+        background-color: #f1f5f9 !important;
+        opacity: 0.45 !important;
+        pointer-events: none !important;
+        text-decoration: line-through;
+        user-select: none;
       }
       .booking-calendar-cell.selected {
         background-color: ${primaryColor} !important;

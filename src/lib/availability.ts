@@ -64,7 +64,7 @@ export async function getAvailableTimeSlots(
   dateStr: string // YYYY-MM-DD
 ): Promise<TimeSlot[]> {
   // 1. Load service and agent details
-  const service = await prisma.service.findUnique({
+  let service = await prisma.service.findUnique({
     where: { id: serviceId }
   });
 
@@ -73,8 +73,25 @@ export async function getAvailableTimeSlots(
     select: { organizationId: true }
   });
 
-  if (!service || !agent) {
-    throw new Error('Service or Agent not found');
+  if (!agent) {
+    throw new Error('Agent not found');
+  }
+
+  if (!service) {
+    // Virtual fallback service when no specific service is selected or enabled
+    service = {
+      id: 'general_appointment',
+      organizationId: agent.organizationId || '',
+      name: 'General Appointment',
+      description: 'General Business Appointment based on Dashboard Business Hours',
+      durationMinutes: 30,
+      price: 0,
+      currency: 'USD',
+      isActive: true,
+      isBookingEnabled: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
   }
 
   if (!service.isActive || service.isBookingEnabled === false) {

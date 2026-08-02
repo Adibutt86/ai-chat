@@ -69,7 +69,7 @@ export async function GET(request: Request) {
 // POST: Create a new booking (public - called by chatbot)
 export async function POST(request: Request) {
   try {
-    const {
+    let {
       agentId,
       serviceId,
       customerName,
@@ -138,12 +138,31 @@ export async function POST(request: Request) {
     const bookingDate = new Date(start);
     bookingDate.setUTCHours(0, 0, 0, 0);
 
-    const service = await prisma.service.findUnique({
+    let service = await prisma.service.findUnique({
       where: { id: serviceId }
     });
 
     if (!service) {
-      return NextResponse.json({ error: 'Service not found' }, { status: 404 });
+      // Auto-create or resolve General Appointment service for the organization
+      let genService = await prisma.service.findFirst({
+        where: { organizationId: orgId, name: 'General Appointment' }
+      });
+      if (!genService) {
+        genService = await prisma.service.create({
+          data: {
+            organizationId: orgId,
+            name: 'General Appointment',
+            description: 'General Business Appointment based on Dashboard Business Hours',
+            durationMinutes: 30,
+            price: 0,
+            currency: 'USD',
+            isActive: true,
+            isBookingEnabled: true
+          }
+        });
+      }
+      service = genService;
+      serviceId = genService.id;
     }
 
     const booking = await prisma.booking.create({

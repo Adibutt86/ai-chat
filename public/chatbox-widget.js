@@ -1420,12 +1420,20 @@
         fetch(`${origin}/api/services?agentId=${agentId}&bookableOnly=true`)
           .then(res => res.json())
           .then((services) => {
-            const activeServices = services.filter(s => s.isActive && s.isBookingEnabled !== false);
+            const activeServices = Array.isArray(services)
+              ? services.filter(s => s.isActive && s.isBookingEnabled !== false)
+              : [];
+            
             if (activeServices.length === 0) {
-              wizard.innerHTML = `
-                <h4>Select Service</h4>
-                <div style="font-size: 13px; color: #ef4444; margin-bottom: 6px;">No bookable services are currently available.</div>
-              `;
+              // Automatically switch to Business Hours appointment system!
+              selectedService = {
+                id: 'general_appointment',
+                name: 'General Appointment',
+                durationMinutes: 30,
+                price: 0,
+                currency: 'USD'
+              };
+              renderStep2();
               return;
             }
             
@@ -1448,10 +1456,15 @@
             scrollToLatestIfNeeded();
           })
           .catch(() => {
-            wizard.innerHTML = `
-              <h4>Select Service</h4>
-              <div style="font-size: 12.5px; color: #ef4444; margin-bottom: 6px;">Failed to load services. Please try again.</div>
-            `;
+            // Fallback automatically to Business Hours appointment system
+            selectedService = {
+              id: 'general_appointment',
+              name: 'General Appointment',
+              durationMinutes: 30,
+              price: 0,
+              currency: 'USD'
+            };
+            renderStep2();
           });
       }
 

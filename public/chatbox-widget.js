@@ -375,6 +375,12 @@
         color: #ffffff;
         border-bottom-right-radius: 4px;
       }
+      .chatbox-message strong {
+        font-weight: 600;
+        display: inline-block;
+        padding-bottom: 4px;
+        margin-bottom: 2px;
+      }
       
       .chatbox-list-item {
         display: flex;

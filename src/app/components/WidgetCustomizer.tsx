@@ -7,6 +7,63 @@ interface WidgetCustomizerProps {
   agentId: string;
 }
 
+const THEME_PRESETS = [
+  {
+    id: 'light',
+    name: 'Classic Light',
+    icon: '☀️',
+    primaryColor: '#2563eb',
+    themeMode: 'light',
+    borderRadius: '0.75rem',
+    badge: 'Standard',
+  },
+  {
+    id: 'dark',
+    name: 'Sleek Dark',
+    icon: '🌙',
+    primaryColor: '#6366f1',
+    themeMode: 'dark',
+    borderRadius: '0.75rem',
+    badge: 'Popular',
+  },
+  {
+    id: 'glass',
+    name: 'Frosted Glass',
+    icon: '✨',
+    primaryColor: '#06b6d4',
+    themeMode: 'light',
+    borderRadius: '1.25rem',
+    badge: 'Glossy',
+  },
+  {
+    id: 'cyber',
+    name: 'Cyber Neon',
+    icon: '⚡',
+    primaryColor: '#10b981',
+    themeMode: 'dark',
+    borderRadius: '0.5rem',
+    badge: 'High Tech',
+  },
+  {
+    id: 'pastel',
+    name: 'Soft Rose',
+    icon: '🌸',
+    primaryColor: '#e11d48',
+    themeMode: 'light',
+    borderRadius: '1.5rem',
+    badge: 'Boutique',
+  },
+  {
+    id: 'vibrant',
+    name: 'Sunset Gradient',
+    icon: '🌈',
+    primaryColor: '#8b5cf6',
+    themeMode: 'dark',
+    borderRadius: '1rem',
+    badge: 'Dynamic',
+  },
+];
+
 export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
   const [copiedId, setCopiedId] = useState(false);
   const [primaryColor, setPrimaryColor] = useState('#2563eb');
@@ -149,6 +206,62 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
               Settings updated successfully! Changes take effect immediately.
             </div>
           )}
+
+          {/* Style Templates & Theme Presets */}
+          <div className="space-y-3 pt-1 border-b border-zinc-800 pb-5">
+            <div className="flex items-center justify-between">
+              <label className="block text-xs uppercase tracking-wider text-zinc-400 font-bold">
+                🎨 Widget Style Templates & Presets
+              </label>
+              <span className="text-[11px] text-zinc-500">1-Click Theme Styling</span>
+            </div>
+            
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {THEME_PRESETS.map((preset) => {
+                const isActive = primaryColor === preset.primaryColor && themeMode === preset.themeMode && borderRadius === preset.borderRadius;
+                return (
+                  <button
+                    key={preset.id}
+                    type="button"
+                    onClick={() => {
+                      setPrimaryColor(preset.primaryColor);
+                      setThemeMode(preset.themeMode);
+                      setBorderRadius(preset.borderRadius);
+                    }}
+                    className={`relative text-left p-3 rounded-xl border transition-all cursor-pointer overflow-hidden ${
+                      isActive
+                        ? 'bg-zinc-950 border-blue-500 ring-2 ring-blue-500/20 shadow-lg shadow-blue-950/40'
+                        : 'bg-zinc-950/60 border-zinc-800 hover:border-zinc-700 hover:bg-zinc-950'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-base">{preset.icon}</span>
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                        preset.themeMode === 'dark' ? 'bg-indigo-950/80 text-indigo-300 border border-indigo-800/60' : 'bg-amber-950/60 text-amber-300 border border-amber-800/60'
+                      }`}>
+                        {preset.badge}
+                      </span>
+                    </div>
+
+                    <div className="font-semibold text-xs text-white mb-1.5 truncate">{preset.name}</div>
+                    
+                    {/* Swatch Bar */}
+                    <div className="flex items-center gap-1.5">
+                      <div
+                        className="h-2 flex-1 rounded-full shadow-inner"
+                        style={{ backgroundColor: preset.primaryColor }}
+                      />
+                      <div
+                        className={`h-2 w-5 rounded-full border border-zinc-700 ${
+                          preset.themeMode === 'dark' ? 'bg-zinc-900' : 'bg-slate-100'
+                        }`}
+                      />
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
 
           <div>
             <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Bot Avatar Image (Upload File or URL)</label>

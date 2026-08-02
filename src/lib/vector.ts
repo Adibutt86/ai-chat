@@ -190,7 +190,7 @@ export async function searchRelevantChunks(
       JOIN "Document" doc ON emb."documentId" = doc."id"
       WHERE doc."agentId" = ${agentId} AND emb."embedding" IS NOT NULL
       ORDER BY emb."embedding" <=> ${vectorSqlStr}::vector ASC
-      LIMIT 50
+      LIMIT 250
     `;
 
     if (candidates && candidates.length > 0) {
@@ -208,6 +208,20 @@ export async function searchRelevantChunks(
         const nameLower = (emb.name || '').toLowerCase();
         const chunkLower = (emb.chunkContent || '').toLowerCase();
         const qLower = query.toLowerCase();
+
+        // Hybrid RAG Keyword Score Boost: calculate exact term overlap from visitor query
+        const queryWords = qLower.replace(/[^\w\s]/g, '').split(/\s+/).filter(w => w.length > 2 && !['what', 'where', 'when', 'which', 'about', 'does', 'have', 'from', 'this', 'that', 'with', 'your', 'for', 'is', 'are', 'the'].includes(w));
+        if (queryWords.length > 0) {
+          let wordMatches = 0;
+          for (const w of queryWords) {
+            if (chunkLower.includes(w) || urlLower.includes(w) || nameLower.includes(w)) {
+              wordMatches++;
+            }
+          }
+          if (wordMatches > 0) {
+            score += (wordMatches / queryWords.length) * 0.45;
+          }
+        }
 
         // Heavy boost for actual pricing plan chunks when querying pricing/plans/base model
         if ((qLower.includes('price') || qLower.includes('plan') || qLower.includes('cost') || qLower.includes('pricing') || qLower.includes('base model')) &&

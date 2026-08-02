@@ -141,10 +141,13 @@ async function fetchPageRawHtmlAndText(url: string): Promise<{ html: string; tex
 
     let text = html;
     
-    // Strip script, style, and svg blocks
+    // Strip script, style, header, nav, footer, and svg blocks
     text = text.replace(/<script[^>]*>([\s\S]*?)<\/script>/gi, '');
     text = text.replace(/<style[^>]*>([\s\S]*?)<\/style>/gi, '');
     text = text.replace(/<svg[^>]*>([\s\S]*?)<\/svg>/gi, '');
+    text = text.replace(/<header[^>]*>([\s\S]*?)<\/header>/gi, '');
+    text = text.replace(/<nav[^>]*>([\s\S]*?)<\/nav>/gi, '');
+    text = text.replace(/<footer[^>]*>([\s\S]*?)<\/footer>/gi, '');
 
     // Insert newlines for structural elements & accordion items so accordion questions and answers stay separated
     text = text.replace(/<(div|details|summary|dt|dd|button)[^>]*class=["'][^"']*accordion[^"']*["'][^>]*>/gi, '\n');

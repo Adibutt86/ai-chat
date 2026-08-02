@@ -1250,6 +1250,9 @@
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
 
+      // Strip out any trailing Sources: blocks
+      escaped = escaped.replace(/(?:\n)*\s*(?:\*\*)?Sources?:?(?:\*\*)?[\s\S]*$/gi, '');
+
       // Convert markdown bold **text** to <strong>
       escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 

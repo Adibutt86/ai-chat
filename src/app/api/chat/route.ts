@@ -364,7 +364,8 @@ STRICT ANSWERING RULES:
 6. MISSING INFORMATION FALLBACK: For factual questions where the answer is NOT available in the website context, reply EXACTLY with:
    "I couldn't find that information on this website. Please contact our team for assistance."
    Do NOT hallucinate, extrapolate, or invent details.
-7. TYPOS & MISSPELLINGS: Automatically interpret visitor questions even if they contain spelling mistakes, typos, or informal phrasing (e.g. "phon numbr", "pricin plan", "workin hour").`;
+7. TYPOS & MISSPELLINGS: Automatically interpret visitor questions even if they contain spelling mistakes, typos, or informal phrasing (e.g. "phon numbr", "pricin plan", "workin hour").
+8. NO SOURCES OR CITATION LISTS: Do NOT output or append any "Sources:", "Page Sources:", or page link citation lists at the end of your response.`;
 
     if (hasBuyingIntent) {
       systemPrompt += `\n[IMPORTANT] The visitor has shown interest in purchasing or pricing. Politely offer to have sales contact them, and ask for their email address or contact info.`;
@@ -414,16 +415,6 @@ STRICT ANSWERING RULES:
               }
             }
           });
-
-          const isFallbackReply = fullReply.includes("couldn't find that information");
-          if (validSourcesMap.size > 0 && !isFallbackReply) {
-            let citationsText = '\n\n**Sources:**\n';
-            validSourcesMap.forEach((link, label) => {
-              citationsText += `• [${label}](${link})\n`;
-            });
-            fullReply += citationsText;
-            controller.enqueue(encoder.encode(JSON.stringify({ chunk: citationsText }) + '\n'));
-          }
 
           // Save completed bot response to DB
           await prisma.message.create({

@@ -390,10 +390,22 @@
         border-bottom-left-radius: 4px;
         border: 1px solid #f1f5f9;
       }
+      .chatbox-message-row.bot .chatbox-message a,
+      .chatbox-message-row.bot .chatbox-link {
+        color: ${primaryColor} !important;
+        text-decoration: underline !important;
+        font-weight: 500 !important;
+      }
       .chatbox-message-row.user .chatbox-message {
         background-color: ${primaryColor};
         color: #ffffff;
         border-bottom-right-radius: 4px;
+      }
+      .chatbox-message-row.user .chatbox-message a,
+      .chatbox-message-row.user .chatbox-link {
+        color: #ffffff !important;
+        text-decoration: underline !important;
+        font-weight: 600 !important;
       }
       .chatbox-message strong {
         font-weight: 600;
@@ -1561,7 +1573,7 @@
           .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
           .trim();
         const isExternal = linkUrl.startsWith('http://') || linkUrl.startsWith('https://');
-        return `<a href="${linkUrl}" ${isExternal ? 'target="_blank" rel="noopener"' : ''} style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">${cleanLabel}</a>`;
+        return `<a href="${linkUrl}" ${isExternal ? 'target="_blank" rel="noopener"' : ''} class="chatbox-link">${cleanLabel}</a>`;
       });
 
       // Convert bullet points (•, *, -) to styled inline checkmark list items
@@ -1574,14 +1586,14 @@
       escaped = escaped.replace(/📌\s*(?:\*\*Source:\*\*|Source:)?\s*(.*)/g, `<div style="margin-top: 8px; font-size: 11px; color: #64748b; font-style: italic;">📌 <strong>Source:</strong> $1</div>`);
       
       // Convert raw URLs & Email addresses
-      escaped = escaped.replace(/(^|[^"])((?:https?):\/\/[^\s<]+)/g, `$1<a href="$2" target="_blank" rel="noopener" style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">$2</a>`);
-      escaped = escaped.replace(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g, `<a href="mailto:$1" style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">$1</a>`);
+      escaped = escaped.replace(/(^|[^"])((?:https?):\/\/[^\s<]+)/g, `$1<a href="$2" target="_blank" rel="noopener" class="chatbox-link">$2</a>`);
+      escaped = escaped.replace(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g, `<a href="mailto:$1" class="chatbox-link">$1</a>`);
 
       // Convert phone numbers like 01 451 9717, +353 1 451 9717, +1 (800) 555-0199 into clickable tel links
       escaped = escaped.replace(/(^|[^0-9+])((?:0\d{1,3}[\s.-]?\d{3}[\s.-]?\d{3,4}|\+?\d{1,3}[\s.-]?\(?\d{2,4}\)?[\s.-]?\d{3,4}[\s.-]?\d{3,4}))(?=[^0-9+]|$)/g, (match, prefix, phoneNum) => {
         const cleanPhone = phoneNum.replace(/[^\d+]/g, '');
         if (cleanPhone.length >= 7) {
-          return `${prefix}<a href="tel:${cleanPhone}" style="color: ${primaryColor}; text-decoration: underline; font-weight: 500;">📞 ${phoneNum.trim()}</a>`;
+          return `${prefix}<a href="tel:${cleanPhone}" class="chatbox-link">📞 ${phoneNum.trim()}</a>`;
         }
         return match;
       });

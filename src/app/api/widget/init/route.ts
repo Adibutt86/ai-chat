@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { getCrawledWebsiteLinks } from '@/lib/crawled-links';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -19,6 +20,9 @@ export async function GET(request: Request) {
   if (!agent) {
     return NextResponse.json({ error: 'Agent not found' }, { status: 404 });
   }
+
+  // Fetch dynamic crawled page links (Book Now, Contact Us, all pages)
+  const crawledLinks = await getCrawledWebsiteLinks(agent.id);
 
   // Fetch global active provider setting
   const globalConfig = await prisma.globalSettings.findUnique({
@@ -42,6 +46,7 @@ export async function GET(request: Request) {
     themeColor: agent.themeColor,
     activeProvider,
     businessHours,
+    crawledLinks,
     widgetSettings: agent.widgetSettings || {
       primaryColor: '#2563eb',
       secondaryColor: '#1e40af',

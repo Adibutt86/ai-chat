@@ -360,6 +360,111 @@ export async function PATCH(request: Request) {
   }
 }
 
+// DELETE: Delete a booking (authenticated admin or public customer)
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    let id = searchParams.get('id');
+    let customerEmail = searchParams.get('customerEmail');
+
+    if (!id) {
+      try {
+        const body = await request.json();
+        id = body.id || id;
+        customerEmail = body.customerEmail || customerEmail;
+      } catch {
+        // no body
+      }
+    }
+
+    if (!id) {
+      const errorRes = NextResponse.json({ error: 'Booking ID is required' }, { status: 400 });
+      errorRes.headers.set('Access-Control-Allow-Origin', '*');
+      return errorRes;
+    }
+
+    const session = await getSessionUser(request);
+    let booking;
+
+    if (session && session.orgId) {
+      booking = await prisma.booking.findFirst({
+        where: { id, organizationId: session.orgId }
+      });
+    } else {
+      // Public / customer delete
+      booking = await prisma.booking.findUnique({
+        where: { id }
+      });
+      if (booking && customerEmail) {
+        if (booking.customerEmail.toLowerCase() !== customerEmail.toLowerCase()) {
+          booking = null;
+        }
+      }
+    }
+
+    if (!booking) {
+      const errorRes = NextResponse.json({ error: 'Booking not found or access denied' }, { status: 404 });
+      errorRes.headers.set('Access-Control-Allow-Origin', '*');
+      return errorRes;
+    }
+
+    // 1. Clean up Google Calendar event if synchronized
+    if (booking.googleEventId) {
+      const connection = await prisma.calendarConnection.findUnique({
+        where: { organizationId: booking.organizationId }
+      });
+      if (connection && connection.calendarId) {
+        const accessToken = await getValidAccessToken(booking.organizationId);
+        if (accessToken) {
+          await deleteGoogleEvent(accessToken, connection.calendarId, booking.googleEventId);
+        }
+      }
+    }
+
+    // 2. Send cancellation notification email
+    try {
+      const service = await prisma.service.findUnique({
+        where: { id: booking.serviceId }
+      });
+      const agent = await prisma.agent.findUnique({
+        where: { id: booking.agentId },
+        include: { organization: true }
+      });
+
+      if (service && agent) {
+        await sendBookingNotification('BOOKING_CANCELLED', {
+          bookingId: booking.id,
+          customerName: booking.customerName,
+          customerEmail: booking.customerEmail,
+          serviceName: service.name,
+          startTime: booking.startTime,
+          endTime: booking.endTime,
+          timezone: booking.timezone,
+          businessName: agent.organization.name
+        });
+      }
+    } catch (err) {
+      console.error('Failed to send cancellation email on delete:', err);
+    }
+
+    // 3. Delete booking record from DB
+    await prisma.booking.delete({
+      where: { id: booking.id }
+    });
+
+    const response = NextResponse.json({ success: true, message: 'Booking deleted successfully', deletedId: booking.id });
+    response.headers.set('Access-Control-Allow-Origin', '*');
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PATCH, DELETE');
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+    return response;
+  } catch (error: any) {
+    console.error('Error deleting booking:', error);
+    const errorRes = NextResponse.json({ error: error.message || 'Server error' }, { status: 500 });
+    errorRes.headers.set('Access-Control-Allow-Origin', '*');
+    return errorRes;
+  }
+}
+
 export async function OPTIONS() {
   const response = new NextResponse(null, { status: 204 });
   response.headers.set('Access-Control-Allow-Origin', '*');

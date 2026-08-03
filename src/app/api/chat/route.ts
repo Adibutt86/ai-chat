@@ -3,6 +3,7 @@ import { prisma } from '@/lib/db';
 import { searchRelevantChunks } from '@/lib/vector';
 import { generateResponseStream } from '@/services/ai/anthropic.service';
 import { simulateLocalAIResponse } from '@/lib/ai';
+import { getCrawledWebsiteLinks } from '@/lib/crawled-links';
 
 const searchCache = new Map<string, string>();
 
@@ -354,16 +355,27 @@ export async function POST(request: Request) {
       }
     }
 
-    // 3. Contact Us / Lead Details:
+    // 3. Dynamic Crawled Website Page Links (Book Now, Contact Us, Navigation Pages)
+    const crawledLinks = await getCrawledWebsiteLinks(targetAgentId);
+    const bookPageUrl = crawledLinks.bookNowUrl || '/book-now';
+    const contactPageUrl = crawledLinks.contactUsUrl || '/contact-us';
+
+    let crawledPagesContext = '';
+    if (crawledLinks.allPages.length > 0) {
+      crawledPagesContext = `CRAWLED WEBSITE NAVIGATION & PAGE DIRECTORY:\n` + 
+        crawledLinks.allPages.map(p => `• ${p.name}: [${p.name}](${p.url})`).join('\n');
+    }
+
+    // 4. Contact Us / Lead Details:
     const showLeadForm = (agent.widgetSettings?.showLeadForm !== false) && (contactSourceMode === 'dashboard');
     const normMsgLower = message.trim().toLowerCase();
     const isContactQuery = normMsgLower.includes('contact') || normMsgLower.includes('reach') || normMsgLower.includes('support') || normMsgLower.includes('email') || normMsgLower.includes('phone') || normMsgLower.includes('call') || normMsgLower.includes('number') || normMsgLower.includes('help form') || normMsgLower.includes('office') || normMsgLower.includes('location') || normMsgLower.includes('address') || normMsgLower.includes('headquarter') || normMsgLower.includes('where are you');
     let contactContext = '';
     if (showLeadForm && isContactQuery) {
-      contactContext = "Official Dashboard Business Contact & Location Information:\n• Phone Support: +1 (800) 555-0199 / +1 (202) 555-0148\n• Email Support: support@chatboxai.com\n• Contact Page: [Contact Us](/contact-us)\n• Booking Page: [Book Appointment](/book-now)\n• Office Location: 123 Tech Avenue, Suite 400, Washington, D.C., USA\n• Support Response Time: Within 24 hours";
+      contactContext = `Official Business Contact & Location Information:\n• Phone Support: +1 (800) 555-0199 / +1 (202) 555-0148\n• Email Support: support@chatboxai.com\n• Contact Page: [Contact Us](${contactPageUrl})\n• Booking Page: [Book Appointment](${bookPageUrl})\n• Office Location: 123 Tech Avenue, Suite 400, Washington, D.C., USA\n• Support Response Time: Within 24 hours`;
     }
 
-    context = [hoursContext, servicesContext, contactContext, context].filter(Boolean).join('\n\n');
+    context = [hoursContext, servicesContext, contactContext, crawledPagesContext, context].filter(Boolean).join('\n\n');
 
     // Grounding Context Assembly
 
@@ -388,7 +400,10 @@ STRICT ANSWERING RULES:
 11. SHORT & DIRECT RESPONSES: Keep answers short, direct, and tightly focused on the user's specific intent. Avoid long background explanations, unnecessary fluff, or listing unasked details unless explicitly requested.
 12. RELATED QUESTIONS (ALWAYS INCLUDE 2-3 FOLLOW-UPS): At the end of every answer to an important question, ALWAYS append a section titled "**Related questions:**" containing 2 to 3 relevant, natural follow-up questions (bullet points •) that help guide the user to their next logical inquiry.
 13. NO EXTRA PREAMBLE OR FOOTER NOTES ON BUSINESS HOURS: When providing business hours, output only the section header '**Business Hours**' followed by the daily hours list. Do NOT output preamble sentences such as 'Our support team is available during the following hours (UTC):' and do NOT output footer notes such as 'If you need to get in touch outside of these hours, feel free to leave a message...'.
-14. DIRECT PAGE LINKS FOR BOOKING & CONTACT: When suggesting visitors contact support, leave a message, or book an appointment, ALWAYS include direct clickable markdown links (e.g. [Contact Us](/contact-us) or [Book Appointment](/book-now)).`;
+14. DIRECT DYNAMIC PAGE LINKS: When suggesting visitors contact support, book an appointment, or navigate to any page, ALWAYS use direct clickable markdown links pointing to the exact page URLs extracted from the website's crawled content:
+- Book Now / Appointment Page: [Book Now](${bookPageUrl}) or [Book Appointment](${bookPageUrl})
+- Contact Us Page: [Contact Us](${contactPageUrl})
+- Additional Pages: Always use the exact URLs listed in the CRAWLED WEBSITE NAVIGATION & PAGE DIRECTORY above. Never output invented, generic, or broken links.`;
 
     if (hasBuyingIntent) {
       systemPrompt += `\n[IMPORTANT] The visitor has shown interest in purchasing or pricing. Politely offer to have sales contact them, and ask for their email address or contact info.`;

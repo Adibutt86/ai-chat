@@ -17,7 +17,8 @@ import {
   ChevronLeft, 
   ChevronRight,
   FileText,
-  AlertCircle
+  AlertCircle,
+  Trash2
 } from 'lucide-react';
 
 interface Booking {
@@ -137,6 +138,30 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
       }
     } catch {
       alert('Network error updating status');
+    } finally {
+      setStatusChanging(false);
+    }
+  };
+
+  const handleDeleteBooking = async (id: string) => {
+    if (!confirm('Are you sure you want to permanently delete this booking? This action cannot be undone.')) return;
+
+    setStatusChanging(true);
+    try {
+      const res = await fetch(`/api/bookings?id=${id}`, {
+        method: 'DELETE',
+      });
+      if (res.ok) {
+        fetchBookings();
+        if (selectedBooking && selectedBooking.id === id) {
+          setSelectedBooking(null);
+        }
+      } else {
+        const data = await res.json();
+        alert(data.error || 'Failed to delete booking');
+      }
+    } catch {
+      alert('Network error deleting booking');
     } finally {
       setStatusChanging(false);
     }
@@ -310,7 +335,7 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
                         {getStatusBadge(booking.status)}
                       </td>
                       <td className="p-4 text-right" onClick={(e) => e.stopPropagation()}>
-                        <div className="flex gap-1.5 justify-end">
+                        <div className="flex gap-1.5 justify-end items-center">
                           {booking.status === 'confirmed' && (
                             <>
                               <button
@@ -321,15 +346,19 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
                               </button>
                               <button
                                 onClick={() => handleUpdateStatus(booking.id, 'cancelled')}
-                                className="bg-white hover:bg-zinc-50 text-red-650 border border-zinc-250 px-2 py-1 rounded-lg text-xs font-semibold transition cursor-pointer"
+                                className="bg-white hover:bg-zinc-50 text-amber-600 border border-zinc-250 px-2 py-1 rounded-lg text-xs font-semibold transition cursor-pointer"
                               >
                                 Cancel
                               </button>
                             </>
                           )}
-                          {booking.status !== 'confirmed' && (
-                            <span className="text-zinc-400 text-xs italic pr-2">No actions available</span>
-                          )}
+                          <button
+                            onClick={() => handleDeleteBooking(booking.id)}
+                            className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-2 py-1 rounded-lg text-xs font-semibold transition cursor-pointer flex items-center gap-1"
+                            title="Permanently Delete Booking"
+                          >
+                            <Trash2 className="h-3 w-3" /> Delete
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -478,9 +507,16 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
                   <button
                     disabled={statusChanging || selectedBooking.status === 'cancelled'}
                     onClick={() => handleUpdateStatus(selectedBooking.id, 'cancelled')}
-                    className="bg-red-50 hover:bg-red-100 border border-red-200 text-red-650 disabled:opacity-40 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer"
+                    className="bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-700 disabled:opacity-40 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer"
                   >
                     Cancel Booking
+                  </button>
+                  <button
+                    disabled={statusChanging}
+                    onClick={() => handleDeleteBooking(selectedBooking.id)}
+                    className="bg-red-600 hover:bg-red-700 text-white disabled:opacity-40 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer flex items-center gap-1"
+                  >
+                    <Trash2 className="h-3.5 w-3.5" /> Delete Booking
                   </button>
                 </div>
               </div>

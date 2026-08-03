@@ -17,9 +17,15 @@ export async function GET(request: Request) {
         where: { organizationId: agent.organizationId },
         orderBy: { date: 'asc' }
       });
-      return NextResponse.json(holidays);
+      const response = NextResponse.json(holidays);
+      response.headers.set('Access-Control-Allow-Origin', '*');
+      response.headers.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
+      response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+      return response;
     } catch (err: any) {
-      return NextResponse.json({ error: err.message }, { status: 500 });
+      const errorResponse = NextResponse.json({ error: err.message }, { status: 500 });
+      errorResponse.headers.set('Access-Control-Allow-Origin', '*');
+      return errorResponse;
     }
   }
 
@@ -101,4 +107,12 @@ export async function DELETE(request: Request) {
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
+}
+
+export async function OPTIONS() {
+  const response = new NextResponse(null, { status: 204 });
+  response.headers.set('Access-Control-Allow-Origin', '*');
+  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+  return response;
 }

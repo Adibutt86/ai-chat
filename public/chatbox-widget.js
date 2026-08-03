@@ -773,164 +773,199 @@
       .chatbox-message-row.booking-wizard-container {
         max-width: 100% !important;
         width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .booking-wizard,
+      .booking-wizard * {
+        box-sizing: border-box !important;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
       }
       .booking-wizard {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        border-radius: 16px;
-        padding: 16px;
-        margin-top: 8px;
-        font-size: 13px;
-        color: #334155;
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 16px !important;
+        padding: 16px !important;
+        margin-top: 8px !important;
+        font-size: 13px !important;
+        color: #334155 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+        line-height: 1.4 !important;
       }
       .booking-wizard h4 {
-        margin: 0 0 12px 0;
-        font-size: 14.5px;
-        font-weight: 600;
-        color: #0f172a;
-        display: flex;
-        align-items: center;
-        gap: 6px;
+        margin: 0 0 12px 0 !important;
+        padding: 0 !important;
+        font-size: 14.5px !important;
+        font-weight: 600 !important;
+        color: #0f172a !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        line-height: 1.3 !important;
       }
       .booking-btn {
-        width: 100%;
-        background-color: #f8fafc;
-        border: 1px solid #e2e8f0;
-        color: #334155;
-        padding: 10px 14px;
-        border-radius: 10px;
-        margin-bottom: 8px;
-        text-align: left;
-        cursor: pointer;
-        font-size: 13px;
-        transition: all 0.2s;
-        display: flex;
-        flex-direction: column;
-        box-sizing: border-box;
+        width: 100% !important;
+        background-color: #f8fafc !important;
+        border: 1px solid #e2e8f0 !important;
+        color: #334155 !important;
+        padding: 10px 14px !important;
+        border-radius: 10px !important;
+        margin-bottom: 8px !important;
+        text-align: left !important;
+        cursor: pointer !important;
+        font-size: 13px !important;
+        transition: all 0.2s !important;
+        display: flex !important;
+        flex-direction: column !important;
+        line-height: 1.4 !important;
+        box-shadow: none !important;
+        appearance: none !important;
+        -webkit-appearance: none !important;
       }
       .booking-btn:hover {
-        background-color: #f1f5f9;
-        border-color: #cbd5e1;
-        transform: translateY(-1px);
+        background-color: #f1f5f9 !important;
+        border-color: #cbd5e1 !important;
+        transform: translateY(-1px) !important;
       }
       .booking-btn-primary {
-        background-color: ${primaryColor};
-        color: white;
-        border: none;
-        text-align: center;
-        justify-content: center;
-        font-weight: 600;
+        background-color: ${primaryColor} !important;
+        color: white !important;
+        border: none !important;
+        text-align: center !important;
+        justify-content: center !important;
+        align-items: center !important;
+        font-weight: 600 !important;
       }
       .booking-btn-primary:hover {
-        background-color: ${primaryColor};
-        opacity: 0.95;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px ${primaryColor}30;
+        background-color: ${primaryColor} !important;
+        opacity: 0.95 !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px ${primaryColor}30 !important;
       }
       .booking-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-        margin-top: 10px;
-        max-height: 140px;
-        overflow-y: auto;
-        padding-right: 4px;
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+        margin-top: 10px !important;
+        max-height: 140px !important;
+        overflow-y: auto !important;
+        padding-right: 4px !important;
       }
       .booking-grid-item {
-        background-color: #f8fafc;
-        border: 1px solid #e2e8f0;
-        text-align: center;
-        padding: 8px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 12px;
-        font-weight: 500;
-        box-sizing: border-box;
-        transition: all 0.2s;
+        background-color: #f8fafc !important;
+        border: 1px solid #e2e8f0 !important;
+        text-align: center !important;
+        padding: 8px !important;
+        border-radius: 8px !important;
+        cursor: pointer !important;
+        font-size: 12px !important;
+        font-weight: 500 !important;
+        transition: all 0.2s !important;
+        line-height: 1.3 !important;
+        color: #1e293b !important;
       }
-      .booking-grid-item:hover {
-        background-color: ${primaryColor};
-        color: white;
-        border-color: ${primaryColor};
+      .booking-grid-item:hover, .booking-grid-item.selected {
+        background-color: ${primaryColor} !important;
+        color: white !important;
+        border-color: ${primaryColor} !important;
       }
 
       /* Mini Interactive Calendar Styles */
       .booking-calendar-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-        background: #f8fafc;
-        padding: 6px 10px;
-        border-radius: 10px;
-        border: 1px solid #e2e8f0;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        margin-bottom: 10px !important;
+        background: #f8fafc !important;
+        padding: 6px 10px !important;
+        border-radius: 10px !important;
+        border: 1px solid #e2e8f0 !important;
+        width: 100% !important;
       }
       .booking-calendar-title {
-        font-weight: 600;
-        font-size: 13px;
-        color: #0f172a;
+        font-weight: 600 !important;
+        font-size: 13px !important;
+        color: #0f172a !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        line-height: 1 !important;
       }
       .booking-calendar-nav {
-        background: #ffffff;
-        border: 1px solid #cbd5e1;
-        border-radius: 6px;
-        width: 26px;
-        height: 26px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: 12px;
-        color: #1e293b;
-        transition: all 0.2s;
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 6px !important;
+        width: 26px !important;
+        height: 26px !important;
+        min-width: 26px !important;
+        min-height: 26px !important;
+        max-width: 26px !important;
+        max-height: 26px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        font-size: 12px !important;
+        color: #1e293b !important;
+        transition: all 0.2s !important;
+        line-height: 1 !important;
+        outline: none !important;
+        box-shadow: none !important;
+        appearance: none !important;
+        -webkit-appearance: none !important;
       }
       .booking-calendar-nav:hover {
-        background: ${primaryColor};
-        color: #ffffff;
-        border-color: ${primaryColor};
+        background: ${primaryColor} !important;
+        color: #ffffff !important;
+        border-color: ${primaryColor} !important;
       }
       .booking-calendar-grid {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 4px;
-        text-align: center;
-        margin-bottom: 8px;
+        display: grid !important;
+        grid-template-columns: repeat(7, 1fr) !important;
+        gap: 4px !important;
+        text-align: center !important;
+        margin-bottom: 8px !important;
+        width: 100% !important;
       }
       .booking-calendar-day-header {
-        font-size: 10px;
-        font-weight: 700;
-        color: #64748b;
-        padding: 4px 0;
-        text-transform: uppercase;
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        color: #64748b !important;
+        padding: 4px 0 !important;
+        margin: 0 !important;
+        text-transform: uppercase !important;
+        line-height: 1 !important;
       }
       .booking-calendar-cell {
-        padding: 7px 2px;
-        border-radius: 8px;
-        font-size: 12px;
-        border: 1px solid transparent;
-        cursor: pointer;
-        transition: all 0.2s;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 32px;
+        padding: 7px 2px !important;
+        border-radius: 8px !important;
+        font-size: 12px !important;
+        border: 1px solid transparent !important;
+        cursor: pointer !important;
+        transition: all 0.2s !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-height: 32px !important;
+        height: 32px !important;
+        margin: 0 !important;
+        line-height: 1 !important;
+        user-select: none !important;
       }
       .booking-calendar-cell.available {
-        background-color: #f0fdf4;
-        color: #166534;
-        border-color: #bbf7d0;
-        font-weight: 600;
+        background-color: #f0fdf4 !important;
+        color: #166534 !important;
+        border-color: #bbf7d0 !important;
+        font-weight: 600 !important;
       }
       .booking-calendar-cell.available:hover {
-        background-color: ${primaryColor};
+        background-color: ${primaryColor} !important;
         color: white !important;
-        border-color: ${primaryColor};
-        transform: scale(1.04);
+        border-color: ${primaryColor} !important;
+        transform: scale(1.04) !important;
       }
       .booking-calendar-cell.disabled {
         color: #94a3b8 !important;
@@ -938,64 +973,66 @@
         background-color: #f1f5f9 !important;
         opacity: 0.45 !important;
         pointer-events: none !important;
-        text-decoration: line-through;
-        user-select: none;
+        text-decoration: line-through !important;
+        border-color: transparent !important;
       }
       .booking-calendar-cell.selected {
         background-color: ${primaryColor} !important;
         color: white !important;
-        font-weight: 700;
+        font-weight: 700 !important;
         border-color: ${primaryColor} !important;
       }
       .booking-input {
-        width: 100%;
-        border: 1px solid #e2e8f0;
-        border-radius: 8px;
-        padding: 8px 12px;
-        font-size: 13px;
-        margin-bottom: 12px;
-        box-sizing: border-box;
+        width: 100% !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 8px !important;
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+        margin-bottom: 12px !important;
         background-color: #ffffff !important;
         color: #1e293b !important;
-        outline: none;
-        transition: border-color 0.2s;
+        outline: none !important;
+        transition: border-color 0.2s !important;
+        line-height: 1.4 !important;
+        box-shadow: none !important;
       }
       .booking-input:focus {
-        border-color: ${primaryColor};
+        border-color: ${primaryColor} !important;
       }
       .booking-textarea {
-        font-family: inherit;
-        resize: none;
-        overflow-y: hidden;
-        min-height: 48px;
-        line-height: 1.45;
-        box-sizing: border-box;
-        transition: height 0.15s ease-out;
+        font-family: inherit !important;
+        resize: none !important;
+        overflow-y: hidden !important;
+        min-height: 48px !important;
+        line-height: 1.45 !important;
+        transition: height 0.15s ease-out !important;
       }
       .booking-label {
-        font-size: 10.5px;
-        text-transform: uppercase;
-        font-weight: 600;
-        color: #64748b;
-        margin-bottom: 6px;
-        display: block;
-        letter-spacing: 0.5px;
+        font-size: 10.5px !important;
+        text-transform: uppercase !important;
+        font-weight: 600 !important;
+        color: #64748b !important;
+        margin-bottom: 6px !important;
+        display: block !important;
+        letter-spacing: 0.5px !important;
+        line-height: 1.2 !important;
       }
       .booking-summary-row {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 8px;
-        border-bottom: 1px dashed #f1f5f9;
-        padding-bottom: 6px;
-        font-size: 12.5px;
+        display: flex !important;
+        justify-content: space-between !important;
+        margin-bottom: 8px !important;
+        border-bottom: 1px dashed #f1f5f9 !important;
+        padding-bottom: 6px !important;
+        font-size: 12.5px !important;
+        line-height: 1.3 !important;
       }
       .booking-summary-label {
-        color: #64748b;
+        color: #64748b !important;
       }
       .booking-summary-val {
-        font-weight: 600;
-        color: #0f172a;
-        text-align: right;
+        font-weight: 600 !important;
+        color: #0f172a !important;
+        text-align: right !important;
       }
 
       /* Skeleton loader styles */
@@ -1692,6 +1729,15 @@
               };
               wizard.appendChild(btn);
             });
+
+            // Option to cancel / remove an existing booking
+            const cancelOptionBtn = document.createElement('button');
+            cancelOptionBtn.className = 'booking-btn';
+            cancelOptionBtn.style.cssText = 'margin-top: 8px; background-color: #fff1f2; border-color: #fecdd3; color: #e11d48; text-align: center; justify-content: center; font-size: 12px; font-weight: 500;';
+            cancelOptionBtn.innerHTML = `🗑️ Cancel or Remove Existing Booking`;
+            cancelOptionBtn.onclick = renderManageBooking;
+            wizard.appendChild(cancelOptionBtn);
+
             scrollToLatestIfNeeded();
           })
           .catch(() => {
@@ -1709,7 +1755,8 @@
 
       // Step 2: Select Date (Visual Mini-Calendar with Real-Time Business Hours Availability)
       function renderStep2() {
-        let currentCalDate = new Date();
+        let currentCalDate = selectedDate ? new Date(selectedDate + 'T00:00:00') : new Date();
+        if (isNaN(currentCalDate.getTime())) currentCalDate = new Date();
         
         wizard.innerHTML = `
           <h4>📅 Select Date</h4>
@@ -1718,12 +1765,12 @@
         scrollToLatestIfNeeded();
 
         Promise.all([
-          fetch(`${origin}/api/business-hours?agentId=${agentId}`).then(r => r.json()),
+          fetch(`${origin}/api/business-hours?agentId=${agentId}`).then(r => r.json()).catch(() => []),
           fetch(`${origin}/api/holidays?agentId=${agentId}`).then(r => r.json()).catch(() => [])
         ])
           .then(([businessHours, holidays]) => {
             const enabledDays = new Set();
-            if (Array.isArray(businessHours)) {
+            if (Array.isArray(businessHours) && businessHours.length > 0) {
               businessHours.forEach(bh => {
                 if (bh.isEnabled) {
                   enabledDays.add(bh.dayOfWeek); // 0 = Sunday, 1 = Monday, ...
@@ -1780,13 +1827,14 @@
                 const isPast = dateObj.getTime() < today.getTime();
                 const isOpenDay = enabledDays.has(dayOfWeek);
                 const holidayName = holidayMap.get(dateISO);
+                const isSelected = dateISO === selectedDate;
 
                 if (holidayName) {
-                  calHtml += `<div class="booking-calendar-cell disabled" style="background: #fff7ed; color: #c2410c; border-color: #ffedd5;" title="Holiday: ${holidayName}">${d}</div>`;
+                  calHtml += `<div class="booking-calendar-cell disabled" style="background: #fff7ed !important; color: #c2410c !important; border-color: #ffedd5 !important;" title="Holiday: ${holidayName}">${d}</div>`;
                 } else if (isPast || !isOpenDay) {
                   calHtml += `<div class="booking-calendar-cell disabled" title="${!isOpenDay ? 'Closed / Unavailable' : 'Past date'}">${d}</div>`;
                 } else {
-                  calHtml += `<div class="booking-calendar-cell available" data-date="${dateISO}" title="Available">${d}</div>`;
+                  calHtml += `<div class="booking-calendar-cell available ${isSelected ? 'selected' : ''}" data-date="${dateISO}" title="Available">${d}</div>`;
                 }
               }
 
@@ -1825,7 +1873,7 @@
             wizard.innerHTML = `
               <h4>📅 Select Date</h4>
               <label class="booking-label">Choose appointment date</label>
-              <input type="date" min="${todayStr}" id="booking-date-picker" class="booking-input" />
+              <input type="date" min="${todayStr}" id="booking-date-picker" class="booking-input" value="${selectedDate || ''}" />
               <button id="booking-date-next" class="booking-btn booking-btn-primary" style="margin-top: 6px;">Check Available Times</button>
             `;
             wizard.querySelector('#booking-date-next').onclick = () => {
@@ -1849,7 +1897,7 @@
         fetch(`${origin}/api/bookings/available-slots?agentId=${agentId}&serviceId=${selectedService.id}&date=${selectedDate}`)
           .then(res => res.json())
           .then((slots) => {
-            if (slots.length === 0) {
+            if (!Array.isArray(slots) || slots.length === 0) {
               wizard.innerHTML = `
                 <h4>Select Time</h4>
                 <div style="font-size: 13px; color: #64748b; margin-bottom: 12px;">No slots available for ${selectedDate}.</div>
@@ -1869,7 +1917,8 @@
             const grid = wizard.querySelector('#slots-grid');
             slots.forEach(slot => {
               const pill = document.createElement('div');
-              pill.className = 'booking-grid-item';
+              const isSelectedSlot = selectedSlot && selectedSlot.startTime === slot.startTime;
+              pill.className = `booking-grid-item ${isSelectedSlot ? 'selected' : ''}`;
               pill.innerText = slot.localStart;
               pill.onclick = () => {
                 selectedSlot = slot;
@@ -1928,13 +1977,27 @@
         notesArea.oninput = autoExpandNotes;
         setTimeout(autoExpandNotes, 0);
 
-        wizard.querySelector('#booking-details-back').onclick = renderStep3;
+        wizard.querySelector('#booking-details-back').onclick = () => {
+          clientDetails = {
+            name: wizard.querySelector('#booking-name').value.trim(),
+            email: wizard.querySelector('#booking-email').value.trim(),
+            phone: wizard.querySelector('#booking-phone').value.trim(),
+            notes: wizard.querySelector('#booking-notes').value.trim()
+          };
+          renderStep3();
+        };
+
         wizard.querySelector('#booking-details-next').onclick = () => {
           const nameVal = wizard.querySelector('#booking-name').value.trim();
           const emailVal = wizard.querySelector('#booking-email').value.trim();
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           
-          if (!nameVal || !emailVal) {
-            alert('Full Name and Email Address are required.');
+          if (!nameVal) {
+            alert('Please enter your Full Name.');
+            return;
+          }
+          if (!emailVal || !emailRegex.test(emailVal)) {
+            alert('Please enter a valid email address.');
             return;
           }
           
@@ -2032,13 +2095,105 @@
           <div style="font-size:13px; color:#64748b; line-height:1.4; margin-bottom:12px;">
             Your appointment has been booked successfully! A confirmation notice has been sent.
           </div>
-          <div style="font-size:12px; background-color:#f8fafc; border: 1px solid #e2e8f0; border-radius:10px; padding:12px; line-height: 1.6;">
+          <div style="font-size:12px; background-color:#f8fafc; border: 1px solid #e2e8f0; border-radius:10px; padding:12px; line-height: 1.6; margin-bottom: 12px;">
             <strong>Confirmation ID:</strong> <span style="font-family:monospace; color:${primaryColor};">${booking.id}</span><br/>
             <strong>Service:</strong> ${booking.serviceName}<br/>
             <strong>Business:</strong> ${booking.businessName}<br/>
-            <strong>Time:</strong> ${selectedDate} at ${selectedSlot.localStart}
+            <strong>Time:</strong> ${selectedDate} at ${selectedSlot ? selectedSlot.localStart : ''}
+          </div>
+          <button id="booking-cancel-btn" class="booking-btn" style="margin-bottom:0; background-color:#fff1f2; color:#e11d48; border-color:#fecdd3; text-align:center; justify-content:center;">
+            🗑️ Delete / Cancel Booking
+          </button>
+        `;
+
+        wizard.querySelector('#booking-cancel-btn').onclick = () => {
+          if (!confirm('Are you sure you want to delete this booking?')) return;
+          const cancelBtn = wizard.querySelector('#booking-cancel-btn');
+          cancelBtn.disabled = true;
+          cancelBtn.innerText = 'Deleting...';
+
+          fetch(`${origin}/api/bookings?id=${booking.id}&customerEmail=${encodeURIComponent(clientDetails.email)}`, {
+            method: 'DELETE'
+          })
+          .then(res => {
+            if (res.ok) {
+              wizard.innerHTML = `
+                <h4 style="color: #ef4444; display:flex; align-items:center; gap:6px;">
+                  🗑️ Booking Deleted
+                </h4>
+                <div style="font-size:13px; color:#64748b; line-height:1.4;">
+                  Your booking (ID: <code style="font-family:monospace;">${booking.id}</code>) has been successfully deleted and removed from the schedule.
+                </div>
+              `;
+            } else {
+              return res.json().then(d => { throw new Error(d.error || 'Failed to delete booking') });
+            }
+          })
+          .catch(err => {
+            cancelBtn.disabled = false;
+            cancelBtn.innerText = '🗑️ Delete / Cancel Booking';
+            alert(err.message || 'Error deleting booking');
+          });
+        };
+        scrollToLatestIfNeeded();
+      }
+
+      // Manage / Cancel Existing Booking screen
+      function renderManageBooking() {
+        wizard.innerHTML = `
+          <h4>🗑️ Cancel / Delete Booking</h4>
+          <label class="booking-label">Booking Confirmation ID *</label>
+          <input type="text" id="manage-booking-id" class="booking-input" placeholder="e.g. cm78xyz..." required />
+          
+          <label class="booking-label">Your Email Address *</label>
+          <input type="email" id="manage-booking-email" class="booking-input" placeholder="john@example.com" required />
+          
+          <div style="display: flex; gap: 8px; margin-top: 8px;">
+            <button id="manage-booking-back" class="booking-btn" style="margin-bottom:0; flex:1; text-align:center; justify-content:center;">Back</button>
+            <button id="manage-booking-submit" class="booking-btn" style="margin-bottom:0; flex:1; background-color:#ef4444; color:white; border:none; text-align:center; justify-content:center; font-weight:600;">Delete Booking</button>
           </div>
         `;
+
+        wizard.querySelector('#manage-booking-back').onclick = renderStep1;
+
+        const deleteBtn = wizard.querySelector('#manage-booking-submit');
+        deleteBtn.onclick = () => {
+          const bId = wizard.querySelector('#manage-booking-id').value.trim();
+          const emailVal = wizard.querySelector('#manage-booking-email').value.trim();
+
+          if (!bId || !emailVal) {
+            alert('Booking ID and Email Address are required.');
+            return;
+          }
+
+          if (!confirm('Are you sure you want to permanently delete this booking?')) return;
+
+          deleteBtn.disabled = true;
+          deleteBtn.innerText = 'Deleting...';
+
+          fetch(`${origin}/api/bookings?id=${encodeURIComponent(bId)}&customerEmail=${encodeURIComponent(emailVal)}`, {
+            method: 'DELETE'
+          })
+          .then(res => {
+            if (res.ok) {
+              wizard.innerHTML = `
+                <h4 style="color: #ef4444; display:flex; align-items:center; gap:6px;">
+                  🗑️ Booking Deleted
+                </h4>
+                <div style="font-size:13px; color:#64748b; line-height:1.4;">
+                  Booking <strong>${bId}</strong> has been successfully cancelled and removed from the system.
+                </div>
+              `;
+            } else {
+              return res.json().then(d => { throw new Error(d.error || 'Booking not found or details do not match') });
+            }
+          })
+          .catch(err => {
+            deleteBtn.disabled = false;
+            deleteBtn.innerText = 'Delete Booking';
+            alert(err.message || 'Error deleting booking.');
+          });
+        };
         scrollToLatestIfNeeded();
       }
     }

@@ -529,51 +529,62 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
                 )}
               </div>
 
-              {/* Point 2: Contact Us / Leave Details */}
+              {/* Point 2: Lead Capture & Contact Us */}
               <div className="bg-zinc-950/60 border border-zinc-800 p-4 rounded-xl space-y-3">
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={showLeadForm}
-                    onChange={(e) => setShowLeadForm(e.target.checked)}
-                    className="rounded border-zinc-800 text-blue-600 focus:ring-blue-600 bg-zinc-900 h-4 w-4"
-                  />
-                  <span className="font-semibold text-white">📞 Contact Us / Leave Details</span>
-                </label>
+                <div className="flex items-center justify-between">
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={showLeadForm}
+                      onChange={(e) => setShowLeadForm(e.target.checked)}
+                      className="rounded border-zinc-800 text-blue-600 focus:ring-blue-600 bg-zinc-900 h-4 w-4"
+                    />
+                    <span className="font-semibold text-white">📋 Lead Capture & Customer Contact Form</span>
+                  </label>
+                  <span className="text-[10px] bg-blue-950 text-blue-300 font-bold px-2 py-0.5 rounded-md border border-blue-800">
+                    Saves to Dashboard Leads
+                  </span>
+                </div>
+
+                <p className="text-[11px] text-zinc-400 pl-7 leading-relaxed">
+                  Prompts website visitors after welcome message: <em>"Please leave your name and email for better communication"</em>. Submissions are saved directly to your Dashboard settings under <strong>Leads</strong>.
+                </p>
 
                 {showLeadForm && (
-                  <div className="pl-7 space-y-2 pt-1 border-t border-zinc-850">
-                    <label className="block text-[11px] uppercase tracking-wider text-zinc-400 font-bold mb-1">Knowledge Retrieval Source for Contact:</label>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      <label className={`flex items-start gap-2 p-2.5 rounded-lg border cursor-pointer transition ${contactSourceMode === 'website' ? 'bg-blue-950/40 border-blue-600/80 text-white' : 'bg-zinc-900/50 border-zinc-800 text-zinc-400 hover:border-zinc-700'}`}>
-                        <input
-                          type="radio"
-                          name="contactSourceMode"
-                          value="website"
-                          checked={contactSourceMode === 'website'}
-                          onChange={() => setContactSourceMode('website')}
-                          className="mt-0.5 text-blue-600 focus:ring-blue-600 bg-zinc-950 border-zinc-800 h-3.5 w-3.5 cursor-pointer"
-                        />
-                        <div>
-                          <div className="text-xs font-bold text-white">🌐 Fetch from Website</div>
-                          <div className="text-[10px] text-zinc-400 leading-tight">Searches live website content for contact details.</div>
-                        </div>
-                      </label>
+                  <div className="pl-7 space-y-3 pt-2 border-t border-zinc-850">
+                    <div>
+                      <label className="block text-[11px] uppercase tracking-wider text-zinc-400 font-bold mb-1">Knowledge Retrieval Source for Contact:</label>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <label className={`flex items-start gap-2 p-2.5 rounded-lg border cursor-pointer transition ${contactSourceMode === 'website' ? 'bg-blue-950/40 border-blue-600/80 text-white' : 'bg-zinc-900/50 border-zinc-800 text-zinc-400 hover:border-zinc-700'}`}>
+                          <input
+                            type="radio"
+                            name="contactSourceMode"
+                            value="website"
+                            checked={contactSourceMode === 'website'}
+                            onChange={() => setContactSourceMode('website')}
+                            className="mt-0.5 text-blue-600 focus:ring-blue-600 bg-zinc-950 border-zinc-800 h-3.5 w-3.5 cursor-pointer"
+                          />
+                          <div>
+                            <div className="text-xs font-bold text-white">🌐 Fetch from Website</div>
+                            <div className="text-[10px] text-zinc-400 leading-tight">Searches live website content for contact details.</div>
+                          </div>
+                        </label>
 
-                      <label className={`flex items-start gap-2 p-2.5 rounded-lg border cursor-pointer transition ${contactSourceMode === 'dashboard' ? 'bg-blue-950/40 border-blue-600/80 text-white' : 'bg-zinc-900/50 border-zinc-800 text-zinc-400 hover:border-zinc-700'}`}>
-                        <input
-                          type="radio"
-                          name="contactSourceMode"
-                          value="dashboard"
-                          checked={contactSourceMode === 'dashboard'}
-                          onChange={() => setContactSourceMode('dashboard')}
-                          className="mt-0.5 text-blue-600 focus:ring-blue-600 bg-zinc-950 border-zinc-800 h-3.5 w-3.5 cursor-pointer"
-                        />
-                        <div>
-                          <div className="text-xs font-bold text-white">📊 Fetch from Dashboard</div>
-                          <div className="text-[10px] text-zinc-400 leading-tight">Uses structured dashboard contact info.</div>
-                        </div>
-                      </label>
+                        <label className={`flex items-start gap-2 p-2.5 rounded-lg border cursor-pointer transition ${contactSourceMode === 'dashboard' ? 'bg-blue-950/40 border-blue-600/80 text-white' : 'bg-zinc-900/50 border-zinc-800 text-zinc-400 hover:border-zinc-700'}`}>
+                          <input
+                            type="radio"
+                            name="contactSourceMode"
+                            value="dashboard"
+                            checked={contactSourceMode === 'dashboard'}
+                            onChange={() => setContactSourceMode('dashboard')}
+                            className="mt-0.5 text-blue-600 focus:ring-blue-600 bg-zinc-950 border-zinc-800 h-3.5 w-3.5 cursor-pointer"
+                          />
+                          <div>
+                            <div className="text-xs font-bold text-white">📊 Fetch from Dashboard</div>
+                            <div className="text-[10px] text-zinc-400 leading-tight">Triggers interactive lead capture form.</div>
+                          </div>
+                        </label>
+                      </div>
                     </div>
                   </div>
                 )}

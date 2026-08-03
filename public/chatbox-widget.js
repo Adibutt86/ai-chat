@@ -1186,6 +1186,15 @@
             ${avatarImg.replace('chatbox-avatar', 'chatbox-message-avatar')}
             <div class="chatbox-message">${welcomeMessage}</div>
           </div>
+          ${config.widgetSettings?.showLeadForm !== false ? `
+            <div class="chatbox-message-row bot">
+              ${avatarImg.replace('chatbox-avatar', 'chatbox-message-avatar')}
+              <div class="chatbox-message" style="font-weight: 500;">
+                👋 <strong>Welcome to ${config.name || 'our site'}!</strong><br/>
+                Please leave your name and email below for better communication so our team can assist and follow up with you.
+              </div>
+            </div>
+          ` : ''}
         </div>
         <button id="chatbox-scroll-latest">
           <span>New messages</span>
@@ -1422,10 +1431,20 @@
           if (cleanQ && cleanQ.length > 3 && !cleanQ.toLowerCase().includes('related questions')) {
             const attrQ = cleanQ.replace(/'/g, "\\'").replace(/"/g, '&quot;');
             if (!firstAttrQ) firstAttrQ = attrQ;
+
+            // Shorten pill label for clean, non-lengthy chatbox display
+            let shortLabel = cleanQ
+              .replace(/^(?:what is|what are|can you tell me|how do i|where can i find|tell me about|could you provide|do you have|please explain|how can i|what does|is there a|do you offer)\s+/gi, '')
+              .trim();
+            shortLabel = shortLabel.charAt(0).toUpperCase() + shortLabel.slice(1);
+            if (shortLabel.length > 30) {
+              shortLabel = shortLabel.substring(0, 28) + '...';
+            }
+
             pillsHtml += `
-              <button class="chatbox-related-pill" onclick="window.chatboxSendQuery('${attrQ}')" type="button">
+              <button class="chatbox-related-pill" onclick="window.chatboxSendQuery('${attrQ}')" type="button" title="${attrQ}">
                 <span class="chatbox-related-icon">✓</span>
-                <span>${cleanQ}</span>
+                <span>${shortLabel}</span>
               </button>
             `;
           }
@@ -2220,12 +2239,16 @@
       wizard.className = 'booking-wizard';
       widgetRow.appendChild(wizard);
       
-      messagesContainer.appendChild(widgetRow);
+      body.appendChild(widgetRow);
       scrollToLatestIfNeeded();
 
+      const siteTitle = config.name || 'our team';
+
       wizard.innerHTML = `
-        <h4>📞 Leave a Message</h4>
-        <div style="font-size: 12.5px; color: #64748b; margin-bottom: 12px;">Fill out your details below and our team will get back to you shortly:</div>
+        <h4 style="display:flex; align-items:center; gap:6px;">📋 Contact Details</h4>
+        <div style="font-size: 12.5px; color: #475569; margin-bottom: 12px; line-height: 1.4;">
+          Please leave your name & email below for better communication with <strong>${siteTitle}</strong>:
+        </div>
         
         <label class="booking-label">Full Name *</label>
         <input type="text" id="lead-name" class="booking-input" required placeholder="John Smith" />
@@ -2233,13 +2256,13 @@
         <label class="booking-label">Email Address *</label>
         <input type="email" id="lead-email" class="booking-input" required placeholder="john@example.com" />
         
-        <label class="booking-label">Phone Number</label>
+        <label class="booking-label">Phone Number (Optional)</label>
         <input type="tel" id="lead-phone" class="booking-input" placeholder="+1 555-0199" />
         
-        <label class="booking-label">Your Message</label>
-        <textarea id="lead-notes" class="booking-input" style="height: 60px; resize: none;" placeholder="How can we help you?"></textarea>
+        <label class="booking-label">Your Message or Notes</label>
+        <textarea id="lead-notes" class="booking-input" style="height: 55px; resize: none;" placeholder="How can we help you today?"></textarea>
         
-        <button id="lead-submit-btn" class="booking-btn booking-btn-primary" style="margin-top: 8px;">Submit Message</button>
+        <button id="lead-submit-btn" class="booking-btn booking-btn-primary" style="margin-top: 8px;">Submit Contact Details</button>
       `;
 
       const submitBtn = wizard.querySelector('#lead-submit-btn');
@@ -2249,13 +2272,14 @@
         const phoneVal = wizard.querySelector('#lead-phone').value.trim();
         const notesVal = wizard.querySelector('#lead-notes').value.trim();
 
-        if (!emailVal) {
-          alert('Email Address is required.');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailVal || !emailRegex.test(emailVal)) {
+          alert('Please enter a valid Email Address.');
           return;
         }
 
         submitBtn.disabled = true;
-        submitBtn.innerText = 'Submitting...';
+        submitBtn.innerText = 'Saving Lead...';
 
         fetch(`${origin}/api/leads`, {
           method: 'POST',
@@ -2273,18 +2297,17 @@
           wizard.innerHTML = `
             <h4 style="color: #10b981; display:flex; align-items:center; gap:6px;">
               <svg style="width:18px;height:18px;fill:#10b981;" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-              Message Received!
+              Details Saved!
             </h4>
             <div style="font-size: 13px; color: #475569; line-height: 1.5;">
-              Thank you, <strong>${nameVal || 'valued visitor'}</strong>! Your message has been sent to our team. We will get in touch with you at <strong>${emailVal}</strong> soon.
+              Thank you, <strong>${nameVal || 'valued visitor'}</strong>! Your contact details have been saved to our dashboard. Our team will get in touch with you at <strong>${emailVal}</strong> soon.
             </div>
           `;
-          scrollToLatestIfNeeded();
         })
         .catch(() => {
           submitBtn.disabled = false;
-          submitBtn.innerText = 'Submit Message';
-          alert('Error submitting message. Please try again.');
+          submitBtn.innerText = 'Submit Contact Details';
+          alert('Failed to save contact details. Please try again.');
         });
       };
       scrollToLatestIfNeeded();

@@ -1202,7 +1202,6 @@
             <div class="chatbox-message-row bot">
               ${avatarImg.replace('chatbox-avatar', 'chatbox-message-avatar')}
               <div class="chatbox-message" style="font-weight: 500;">
-                👋 <strong>Welcome to ${config.name || 'our site'}!</strong><br/>
                 Please leave your name and email below for better communication so our team can assist and follow up with you.
               </div>
             </div>
@@ -2133,21 +2132,21 @@
       // Success screen
       function renderSuccess(booking) {
         wizard.innerHTML = `
-          <h4 style="color: #10b981; display:flex; align-items:center; gap:6px;">
-            <svg style="width:18px;height:18px;fill:#10b981;" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-            Booking Confirmed
+          <h4 style="color: #d97706; display:flex; align-items:center; gap:6px;">
+            ⌛ Booking Pending Approval
           </h4>
           <div style="font-size:13px; color:#64748b; line-height:1.4; margin-bottom:12px;">
-            Your appointment has been booked successfully! A confirmation notice has been sent.
+            Your appointment request has been submitted and is currently <strong>pending administrator approval</strong>. Once approved by our team in the dashboard, a confirmation email will be sent to <strong>${clientDetails.email || booking.customerEmail || 'your email'}</strong>.
           </div>
-          <div style="font-size:12px; background-color:#f8fafc; border: 1px solid #e2e8f0; border-radius:10px; padding:12px; line-height: 1.6; margin-bottom: 12px;">
+          <div style="font-size:12px; background-color:#fffbeb; border: 1px solid #fde68a; border-radius:10px; padding:12px; line-height: 1.6; margin-bottom: 12px;">
+            <strong>Status:</strong> <span style="display:inline-block; padding:2px 8px; border-radius:12px; background-color:#fef3c7; color:#b45309; font-weight:600; font-size:11px;">⌛ Pending Admin Approval</span><br/>
             <strong>Confirmation ID:</strong> <span style="font-family:monospace; color:${primaryColor};">${booking.id}</span><br/>
             <strong>Service:</strong> ${booking.serviceName}<br/>
             <strong>Business:</strong> ${booking.businessName}<br/>
             <strong>Time:</strong> ${selectedDate} at ${selectedSlot ? selectedSlot.localStart : ''}
           </div>
           <button id="booking-cancel-btn" class="booking-btn" style="margin-bottom:0; background-color:#fff1f2; color:#e11d48; border-color:#fecdd3; text-align:center; justify-content:center;">
-            🗑️ Delete / Cancel Booking
+            🗑️ Delete / Cancel Booking Request
           </button>
         `;
 

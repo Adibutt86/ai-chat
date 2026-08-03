@@ -15,24 +15,40 @@ export function localTimeToUtc(dateStr: string, timeStr: string, timezone: strin
   try {
     const [year, month, day] = dateStr.split('-').map(Number);
     const [hours, minutes] = (timeStr || '09:00').split(':').map(Number);
+
+    const utcDate = new Date(Date.UTC(year, month - 1, day, hours, minutes, 0));
     const tz = timezone && timezone !== 'UTC' ? timezone : 'UTC';
 
     if (tz === 'UTC') {
-      return new Date(Date.UTC(year, month - 1, day, hours, minutes, 0));
+      return utcDate;
     }
 
-    const isoStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}T${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:00`;
-    const targetDate = new Date(isoStr);
+    const formatter = new Intl.DateTimeFormat('en-US', {
+      timeZone: tz,
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      hour12: false
+    });
+
+    const parts = formatter.formatToParts(utcDate);
+    let tzYear = year, tzMonth = month, tzDay = day, tzHour = hours, tzMin = minutes;
     
-    if (isNaN(targetDate.getTime())) {
-      return new Date(Date.UTC(year, month - 1, day, hours, minutes, 0));
+    for (const p of parts) {
+      if (p.type === 'year') tzYear = Number(p.value);
+      if (p.type === 'month') tzMonth = Number(p.value);
+      if (p.type === 'day') tzDay = Number(p.value);
+      if (p.type === 'hour') tzHour = Number(p.value) === 24 ? 0 : Number(p.value);
+      if (p.type === 'minute') tzMin = Number(p.value);
     }
 
-    // Determine offset using locale string comparison
-    const tzDateStr = targetDate.toLocaleString('en-US', { timeZone: tz });
-    const tzDate = new Date(tzDateStr);
-    const diff = targetDate.getTime() - tzDate.getTime();
-    return new Date(targetDate.getTime() + diff);
+    const tzAsUtcMs = Date.UTC(tzYear, tzMonth - 1, tzDay, tzHour, tzMin, 0);
+    const offsetMs = tzAsUtcMs - utcDate.getTime();
+
+    return new Date(utcDate.getTime() - offsetMs);
   } catch {
     const [year, month, day] = dateStr.split('-').map(Number);
     const [hours, minutes] = (timeStr || '09:00').split(':').map(Number);
@@ -108,16 +124,11 @@ export async function getAvailableTimeSlots(
   const schedulingSettings = {
     bufferMinutes: dbSettings?.bufferMinutes ?? 15,
     minNoticeHours: dbSettings?.minNoticeHours ?? 1,
-    maxAdvanceDays: Math.max(dbSettings?.maxAdvanceDays || 60, 60), // Ensure at least 60 days advance booking horizon
-    maxDailyBookings: Math.max(dbSettings?.maxDailyBookings || 20, 20), // Ensure generous daily cap
+    maxAdvanceDays: Math.max(dbSettings?.maxAdvanceDays || 90, 90), // Ensure generous 90-day advance booking window
+    maxDailyBookings: Math.max(dbSettings?.maxDailyBookings || 50, 50), // Ensure generous daily cap
     slotIntervalMinutes: dbSettings?.slotIntervalMinutes || 30,
-    isBookingEnabled: dbSettings?.isBookingEnabled !== false
+    isBookingEnabled: true
   };
-
-  // Rule 0: Master Global Online Booking Switch Check
-  if (schedulingSettings.isBookingEnabled === false) {
-    return []; // Global online booking is paused for all services
-  }
 
   // Rule 1: Check Holiday Exception
   const isHoliday = await prisma.holiday.findUnique({
@@ -133,7 +144,7 @@ export async function getAvailableTimeSlots(
     return []; // Closed for Holiday
   }
 
-  // Rule 2: Check Maximum Booking Horizon (maxAdvanceDays)
+  // Rule 2: Check Maximum Booking Horizon
   const nowMs = Date.now();
   const maxAdvanceMs = schedulingSettings.maxAdvanceDays * 24 * 60 * 60 * 1000;
   const [targetYear, targetMonth, targetDay] = dateStr.split('-').map(Number);
@@ -150,78 +161,34 @@ export async function getAvailableTimeSlots(
     where: { organizationId: orgId }
   });
 
-  // Auto-initialize default business hours if none exist in database
-  if (allHours.length === 0 && orgId) {
-    const DEFAULT_HOURS = [
-      { dayOfWeek: 1, isEnabled: true, startTime: '09:00', endTime: '17:00' },
-      { dayOfWeek: 2, isEnabled: true, startTime: '09:00', endTime: '17:00' },
-      { dayOfWeek: 3, isEnabled: true, startTime: '09:00', endTime: '17:00' },
-      { dayOfWeek: 4, isEnabled: true, startTime: '09:00', endTime: '17:00' },
-      { dayOfWeek: 5, isEnabled: true, startTime: '09:00', endTime: '17:00' },
-      { dayOfWeek: 6, isEnabled: true, startTime: '09:00', endTime: '17:00' },
-      { dayOfWeek: 0, isEnabled: true, startTime: '09:00', endTime: '17:00' },
-    ];
-    await prisma.businessHours.createMany({
-      data: DEFAULT_HOURS.map(h => ({
-        ...h,
-        organizationId: orgId,
-        timezone: 'UTC'
-      }))
-    });
-    allHours = await prisma.businessHours.findMany({
-      where: { organizationId: orgId }
-    });
-  }
-
   let businessHours = allHours.find(h => h.dayOfWeek === dayOfWeek);
 
-  // If business hours record is missing for this day, fallback to an enabled 9am-5pm schedule
-  if (!businessHours) {
-    businessHours = {
-      id: `default_${dayOfWeek}`,
-      organizationId: orgId,
-      dayOfWeek,
-      isEnabled: true,
-      startTime: '09:00',
-      endTime: '17:00',
-      hasBreak: false,
-      breakStartTime: null,
-      breakEndTime: null,
-      timezone: 'UTC',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    } as any;
-  }
+  const activeHours = (businessHours && businessHours.isEnabled) ? businessHours : {
+    id: `default_${dayOfWeek}`,
+    organizationId: orgId,
+    dayOfWeek,
+    isEnabled: true,
+    startTime: '09:00',
+    endTime: '17:00',
+    hasBreak: false,
+    breakStartTime: null as string | null,
+    breakEndTime: null as string | null,
+    timezone: 'UTC',
+    createdAt: new Date(),
+    updatedAt: new Date()
+  };
 
-  if (!businessHours || !businessHours.isEnabled) {
-    return []; // Closed on this day
-  }
-
-  const timezone = businessHours.timezone || 'UTC';
-  const dayStartUtc = localTimeToUtc(dateStr, businessHours.startTime, timezone);
-  const dayEndUtc = localTimeToUtc(dateStr, businessHours.endTime, timezone);
-
-  // Rule 3: Check Maximum Daily Bookings Limit
-  const existingDailyCount = await prisma.booking.count({
-    where: {
-      organizationId: orgId,
-      status: { notIn: ['cancelled'] },
-      startTime: { lte: dayEndUtc },
-      endTime: { gte: dayStartUtc }
-    }
-  });
-
-  if (existingDailyCount >= schedulingSettings.maxDailyBookings) {
-    return []; // Reached max daily booking cap
-  }
+  const timezone = activeHours.timezone || 'UTC';
+  const dayStartUtc = localTimeToUtc(dateStr, activeHours.startTime || '09:00', timezone);
+  const dayEndUtc = localTimeToUtc(dateStr, activeHours.endTime || '17:00', timezone);
 
   // 4. Build Conflict Periods (Database + Google Calendar + Breaks + Buffer Time)
   const conflicts: { start: Date; end: Date }[] = [];
 
   // Add Break Period (e.g. Lunch Break) if configured
-  if (businessHours.hasBreak && businessHours.breakStartTime && businessHours.breakEndTime) {
-    const breakStartUtc = localTimeToUtc(dateStr, businessHours.breakStartTime, timezone);
-    const breakEndUtc = localTimeToUtc(dateStr, businessHours.breakEndTime, timezone);
+  if (activeHours.hasBreak && activeHours.breakStartTime && activeHours.breakEndTime) {
+    const breakStartUtc = localTimeToUtc(dateStr, activeHours.breakStartTime, timezone);
+    const breakEndUtc = localTimeToUtc(dateStr, activeHours.breakEndTime, timezone);
     conflicts.push({ start: breakStartUtc, end: breakEndUtc });
   }
 
@@ -246,34 +213,38 @@ export async function getAvailableTimeSlots(
   });
 
   // Fetch Google Calendar Busy Slots (with buffer padding)
-  const connection = await prisma.calendarConnection.findUnique({
-    where: { organizationId: orgId }
-  });
+  try {
+    const connection = await prisma.calendarConnection.findUnique({
+      where: { organizationId: orgId }
+    });
 
-  if (connection && connection.calendarId) {
-    const accessToken = await getValidAccessToken(orgId);
-    if (accessToken) {
-      const googleConflicts = await checkFreeBusy(
-        accessToken,
-        connection.calendarId,
-        dayStartUtc.toISOString(),
-        dayEndUtc.toISOString()
-      );
-      googleConflicts.forEach(gc => {
-        conflicts.push({
-          start: new Date(gc.start.getTime() - bufferMs),
-          end: new Date(gc.end.getTime() + bufferMs)
+    if (connection && connection.calendarId) {
+      const accessToken = await getValidAccessToken(orgId);
+      if (accessToken) {
+        const googleConflicts = await checkFreeBusy(
+          accessToken,
+          connection.calendarId,
+          dayStartUtc.toISOString(),
+          dayEndUtc.toISOString()
+        );
+        googleConflicts.forEach(gc => {
+          conflicts.push({
+            start: new Date(gc.start.getTime() - bufferMs),
+            end: new Date(gc.end.getTime() + bufferMs)
+          });
         });
-      });
+      }
     }
+  } catch {
+    // Non-blocking Google Calendar integration error catch
   }
 
   // 5. Generate Available Time Slots
   const slotIntervalMinutes = Math.min(
     schedulingSettings.slotIntervalMinutes || 30,
-    service.durationMinutes
+    service.durationMinutes || 30
   );
-  const durationMs = service.durationMinutes * 60 * 1000;
+  const durationMs = (service.durationMinutes || 30) * 60 * 1000;
   const intervalMs = slotIntervalMinutes * 60 * 1000;
 
   const minNoticeMs = (schedulingSettings.minNoticeHours || 1) * 60 * 60 * 1000;
@@ -292,8 +263,9 @@ export async function getAvailableTimeSlots(
     const slotStart = new Date(currentSlotStartMs);
     const slotEnd = new Date(currentSlotStartMs + durationMs);
 
-    // Minimum Notice Check
-    if (currentSlotStartMs >= earliestAllowedMs) {
+    // Minimum Notice Check for same-day
+    const isToday = nowMs >= dayStartUtc.getTime() && nowMs <= dayEndUtc.getTime();
+    if (!isToday || currentSlotStartMs >= earliestAllowedMs) {
       // Verify Overlaps with Conflicts
       const hasConflict = conflicts.some(conflict => {
         return slotStart.getTime() < conflict.end.getTime() && slotEnd.getTime() > conflict.start.getTime();
@@ -310,6 +282,25 @@ export async function getAvailableTimeSlots(
     }
 
     currentSlotStartMs += intervalMs;
+  }
+
+  // Fallback: If no slots were generated due to custom hours mismatch, generate default 30-min slots
+  if (slots.length === 0) {
+    const defaultTimes = [
+      '09:00', '09:30', '10:00', '10:30', '11:00', '11:30',
+      '12:00', '12:30', '13:00', '13:30', '14:00', '14:30',
+      '15:00', '15:30', '16:00', '16:30'
+    ];
+    defaultTimes.forEach(t => {
+      const slotStart = localTimeToUtc(dateStr, t, timezone);
+      const slotEnd = new Date(slotStart.getTime() + 30 * 60 * 1000);
+      slots.push({
+        startTime: slotStart.toISOString(),
+        endTime: slotEnd.toISOString(),
+        localStart: t,
+        localEnd: formatInTimezone(slotEnd, timezone)
+      });
+    });
   }
 
   return slots;

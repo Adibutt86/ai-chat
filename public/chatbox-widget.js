@@ -2253,35 +2253,25 @@
       body.appendChild(widgetRow);
       scrollToLatestIfNeeded();
 
-      const siteTitle = config.name || 'our team';
-
       wizard.innerHTML = `
-        <h4 style="display:flex; align-items:center; gap:6px;">📋 Contact Details</h4>
+        <h4 style="display:flex; align-items:center; gap:6px; margin-bottom: 8px;">📋 Contact Details</h4>
         <div style="font-size: 12.5px; color: #475569; margin-bottom: 12px; line-height: 1.4;">
-          Please leave your name & email below for better communication with <strong>${siteTitle}</strong>:
+          Please leave your name and email below for better communication:
         </div>
         
-        <label class="booking-label">Full Name *</label>
-        <input type="text" id="lead-name" class="booking-input" required placeholder="John Smith" />
+        <label class="booking-label">Full Name</label>
+        <input type="text" id="lead-name" class="booking-input" placeholder="John Smith" />
         
         <label class="booking-label">Email Address *</label>
         <input type="email" id="lead-email" class="booking-input" required placeholder="john@example.com" />
         
-        <label class="booking-label">Phone Number (Optional)</label>
-        <input type="tel" id="lead-phone" class="booking-input" placeholder="+1 555-0199" />
-        
-        <label class="booking-label">Your Message or Notes</label>
-        <textarea id="lead-notes" class="booking-input" style="height: 55px; resize: none;" placeholder="How can we help you today?"></textarea>
-        
-        <button id="lead-submit-btn" class="booking-btn booking-btn-primary" style="margin-top: 8px;">Submit Contact Details</button>
+        <button id="lead-submit-btn" class="booking-btn booking-btn-primary" style="margin-top: 10px;">Submit Contact Details</button>
       `;
 
       const submitBtn = wizard.querySelector('#lead-submit-btn');
       submitBtn.onclick = () => {
         const nameVal = wizard.querySelector('#lead-name').value.trim();
         const emailVal = wizard.querySelector('#lead-email').value.trim();
-        const phoneVal = wizard.querySelector('#lead-phone').value.trim();
-        const notesVal = wizard.querySelector('#lead-notes').value.trim();
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailVal || !emailRegex.test(emailVal)) {
@@ -2298,9 +2288,7 @@
           body: JSON.stringify({
             agentId,
             name: nameVal,
-            email: emailVal,
-            phone: phoneVal,
-            message: notesVal
+            email: emailVal
           })
         })
         .then(res => res.json())
@@ -2308,10 +2296,10 @@
           wizard.innerHTML = `
             <h4 style="color: #10b981; display:flex; align-items:center; gap:6px;">
               <svg style="width:18px;height:18px;fill:#10b981;" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-              Details Saved!
+              Contact Details Saved!
             </h4>
             <div style="font-size: 13px; color: #475569; line-height: 1.5;">
-              Thank you, <strong>${nameVal || 'valued visitor'}</strong>! Your contact details have been saved to our dashboard. Our team will get in touch with you at <strong>${emailVal}</strong> soon.
+              Thank you, <strong>${nameVal || 'valued visitor'}</strong>! Your details have been saved to our dashboard. How can we help you today?
             </div>
           `;
         })

@@ -19,7 +19,50 @@ import { Loader2 } from 'lucide-react';
 export default function DashboardLayout() {
   const { session, loading } = useAuth();
   const router = useRouter();
-  const [currentTab, setCurrentTab] = useState('overview');
+  const [currentTab, setCurrentTabState] = useState('overview');
+
+  // Restore active tab from URL query parameter or localStorage on mount
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabFromUrl = urlParams.get('tab');
+    const savedTab = localStorage.getItem('dashboard_active_tab');
+
+    const validTabs = [
+      'overview',
+      'agents',
+      'training',
+      'conversations',
+      'leads',
+      'bookings',
+      'services',
+      'business_hours',
+      'widget',
+      'settings'
+    ];
+
+    let activeTab = 'overview';
+    if (tabFromUrl && validTabs.includes(tabFromUrl)) {
+      activeTab = tabFromUrl;
+    } else if (savedTab && validTabs.includes(savedTab)) {
+      activeTab = savedTab;
+    }
+
+    setCurrentTabState(activeTab);
+
+    // Sync URL query parameter without page reload
+    const newUrl = `${window.location.pathname}?tab=${activeTab}`;
+    window.history.replaceState(null, '', newUrl);
+  }, []);
+
+  const setCurrentTab = (tab: string) => {
+    setCurrentTabState(tab);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('dashboard_active_tab', tab);
+      const newUrl = `${window.location.pathname}?tab=${tab}`;
+      window.history.replaceState(null, '', newUrl);
+    }
+  };
 
   // Dashboard Data State
   const [agents, setAgents] = useState<any[]>([]);

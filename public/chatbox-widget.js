@@ -2311,7 +2311,7 @@
               Contact Details Saved!
             </h4>
             <div style="font-size: 13px; color: #475569; line-height: 1.5;">
-              Thank you, <strong>${nameVal || 'valued visitor'}</strong>! Your details have been saved to our dashboard. How can we help you today?
+              Thank you, <strong>${nameVal || 'valued visitor'}</strong>! Your details have been saved in our records. How can we help you today?
             </div>
           `;
         })

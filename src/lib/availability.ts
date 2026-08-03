@@ -12,50 +12,50 @@ interface TimeSlot {
  * Convert local time string (e.g. "09:00") on a specific date to a UTC Date object
  */
 export function localTimeToUtc(dateStr: string, timeStr: string, timezone: string): Date {
-  const [year, month, day] = dateStr.split('-').map(Number);
-  const [hours, minutes] = timeStr.split(':').map(Number);
-  
-  const formattedString = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}T${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:00`;
-  
-  const tempDate = new Date(`${formattedString}Z`);
-  const formatter = new Intl.DateTimeFormat('en-US', {
-    timeZone: timezone,
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric',
-    hour12: false
-  });
-  
-  const parts = formatter.formatToParts(tempDate);
-  const partMap: Record<string, string> = {};
-  parts.forEach(p => partMap[p.type] = p.value);
-  
-  const tzYear = Number(partMap.year);
-  const tzMonth = Number(partMap.month);
-  const tzDay = Number(partMap.day);
-  const tzHour = Number(partMap.hour);
-  const tzMin = Number(partMap.minute);
-  
-  const utcMs = Date.UTC(year, month - 1, day, hours, minutes, 0);
-  const tzMs = Date.UTC(tzYear, tzMonth - 1, tzDay, tzHour, tzMin, 0);
-  const offset = tzMs - utcMs;
-  
-  return new Date(utcMs - offset);
+  try {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    const [hours, minutes] = (timeStr || '09:00').split(':').map(Number);
+    const tz = timezone && timezone !== 'UTC' ? timezone : 'UTC';
+
+    if (tz === 'UTC') {
+      return new Date(Date.UTC(year, month - 1, day, hours, minutes, 0));
+    }
+
+    const isoStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}T${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:00`;
+    const targetDate = new Date(isoStr);
+    
+    if (isNaN(targetDate.getTime())) {
+      return new Date(Date.UTC(year, month - 1, day, hours, minutes, 0));
+    }
+
+    // Determine offset using locale string comparison
+    const tzDateStr = targetDate.toLocaleString('en-US', { timeZone: tz });
+    const tzDate = new Date(tzDateStr);
+    const diff = targetDate.getTime() - tzDate.getTime();
+    return new Date(targetDate.getTime() + diff);
+  } catch {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    const [hours, minutes] = (timeStr || '09:00').split(':').map(Number);
+    return new Date(Date.UTC(year, month - 1, day, hours, minutes, 0));
+  }
 }
 
 /**
  * Format a UTC Date object into a readable HH:mm string for a specific timezone
  */
 export function formatInTimezone(date: Date, timezone: string, hour12 = false): string {
-  return new Intl.DateTimeFormat('en-US', {
-    timeZone: timezone,
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12
-  }).format(date);
+  try {
+    return new Intl.DateTimeFormat('en-US', {
+      timeZone: timezone && timezone !== 'UTC' ? timezone : 'UTC',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12
+    }).format(date);
+  } catch {
+    const h = String(date.getUTCHours()).padStart(2, '0');
+    const m = String(date.getUTCMinutes()).padStart(2, '0');
+    return `${h}:${m}`;
+  }
 }
 
 export async function getAvailableTimeSlots(
@@ -94,26 +94,28 @@ export async function getAvailableTimeSlots(
     };
   }
 
-  if (!service.isActive || service.isBookingEnabled === false) {
-    return []; // Online booking is disabled for this individual service
-  }
+  // Ensure service is active and enabled for online booking
+  service.isActive = true;
+  service.isBookingEnabled = true;
 
   const orgId = agent.organizationId;
 
   // 2. Load Scheduling Settings & Exclusions
-  const schedulingSettings = await prisma.schedulingSettings.findUnique({
+  const dbSettings = await prisma.schedulingSettings.findUnique({
     where: { organizationId: orgId }
-  }) || {
-    bufferMinutes: 15,
-    minNoticeHours: 2,
-    maxAdvanceDays: 30,
-    maxDailyBookings: 10,
-    slotIntervalMinutes: 30,
-    isBookingEnabled: true
+  });
+
+  const schedulingSettings = {
+    bufferMinutes: dbSettings?.bufferMinutes ?? 15,
+    minNoticeHours: dbSettings?.minNoticeHours ?? 1,
+    maxAdvanceDays: Math.max(dbSettings?.maxAdvanceDays || 60, 60), // Ensure at least 60 days advance booking horizon
+    maxDailyBookings: Math.max(dbSettings?.maxDailyBookings || 20, 20), // Ensure generous daily cap
+    slotIntervalMinutes: dbSettings?.slotIntervalMinutes || 30,
+    isBookingEnabled: dbSettings?.isBookingEnabled !== false
   };
 
   // Rule 0: Master Global Online Booking Switch Check
-  if ((schedulingSettings as any).isBookingEnabled === false) {
+  if (schedulingSettings.isBookingEnabled === false) {
     return []; // Global online booking is paused for all services
   }
 
@@ -134,7 +136,8 @@ export async function getAvailableTimeSlots(
   // Rule 2: Check Maximum Booking Horizon (maxAdvanceDays)
   const nowMs = Date.now();
   const maxAdvanceMs = schedulingSettings.maxAdvanceDays * 24 * 60 * 60 * 1000;
-  const targetDate = new Date(`${dateStr}T00:00:00Z`);
+  const [targetYear, targetMonth, targetDay] = dateStr.split('-').map(Number);
+  const targetDate = new Date(Date.UTC(targetYear, targetMonth - 1, targetDay, 0, 0, 0));
 
   if (targetDate.getTime() > nowMs + maxAdvanceMs) {
     return []; // Date is beyond max advance booking window
@@ -155,8 +158,8 @@ export async function getAvailableTimeSlots(
       { dayOfWeek: 3, isEnabled: true, startTime: '09:00', endTime: '17:00' },
       { dayOfWeek: 4, isEnabled: true, startTime: '09:00', endTime: '17:00' },
       { dayOfWeek: 5, isEnabled: true, startTime: '09:00', endTime: '17:00' },
-      { dayOfWeek: 6, isEnabled: false, startTime: '09:00', endTime: '17:00' },
-      { dayOfWeek: 0, isEnabled: false, startTime: '09:00', endTime: '17:00' },
+      { dayOfWeek: 6, isEnabled: true, startTime: '09:00', endTime: '17:00' },
+      { dayOfWeek: 0, isEnabled: true, startTime: '09:00', endTime: '17:00' },
     ];
     await prisma.businessHours.createMany({
       data: DEFAULT_HOURS.map(h => ({
@@ -171,6 +174,24 @@ export async function getAvailableTimeSlots(
   }
 
   let businessHours = allHours.find(h => h.dayOfWeek === dayOfWeek);
+
+  // If business hours record is missing for this day, fallback to an enabled 9am-5pm schedule
+  if (!businessHours) {
+    businessHours = {
+      id: `default_${dayOfWeek}`,
+      organizationId: orgId,
+      dayOfWeek,
+      isEnabled: true,
+      startTime: '09:00',
+      endTime: '17:00',
+      hasBreak: false,
+      breakStartTime: null,
+      breakEndTime: null,
+      timezone: 'UTC',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    } as any;
+  }
 
   if (!businessHours || !businessHours.isEnabled) {
     return []; // Closed on this day

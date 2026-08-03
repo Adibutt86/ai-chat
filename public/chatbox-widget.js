@@ -2300,7 +2300,10 @@
             email: emailVal
           })
         })
-        .then(res => res.json())
+        .then(res => {
+          if (res.ok) return res.json();
+          return res.json().then(d => { throw new Error(d.error || 'Failed to save contact details') });
+        })
         .then(() => {
           wizard.innerHTML = `
             <h4 style="color: #10b981; display:flex; align-items:center; gap:6px;">
@@ -2312,10 +2315,10 @@
             </div>
           `;
         })
-        .catch(() => {
+        .catch((err) => {
           submitBtn.disabled = false;
           submitBtn.innerText = 'Submit Contact Details';
-          alert('Failed to save contact details. Please try again.');
+          alert(err.message || 'Failed to save contact details. Please try again.');
         });
       };
       scrollToLatestIfNeeded();

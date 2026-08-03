@@ -1898,12 +1898,26 @@
           .then(res => res.json())
           .then((slots) => {
             if (!Array.isArray(slots) || slots.length === 0) {
+              const dateParts = selectedDate.split('-').map(Number);
+              const currD = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
+              currD.setDate(currD.getDate() + 1);
+              const nextDateISO = `${currD.getFullYear()}-${String(currD.getMonth() + 1).padStart(2, '0')}-${String(currD.getDate()).padStart(2, '0')}`;
+
               wizard.innerHTML = `
                 <h4>Select Time</h4>
-                <div style="font-size: 13px; color: #64748b; margin-bottom: 12px;">No slots available for ${selectedDate}.</div>
-                <button id="booking-slot-back" class="booking-btn booking-btn-primary">Choose Another Date</button>
+                <div style="font-size: 12.5px; color: #475569; margin-bottom: 12px; background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0; line-height: 1.4;">
+                  No remaining slots available for <strong>${selectedDate}</strong> (working hours may have passed or day is closed).
+                </div>
+                <div style="display: flex; gap: 8px;">
+                  <button id="booking-slot-back" class="booking-btn" style="flex:1; text-align:center; justify-content:center; margin-bottom:0; font-weight:600; color:#0f172a !important;">Choose Date</button>
+                  <button id="booking-slot-next" class="booking-btn booking-btn-primary" style="flex:1; margin-bottom:0;">Try Tomorrow (${nextDateISO})</button>
+                </div>
               `;
               wizard.querySelector('#booking-slot-back').onclick = renderStep2;
+              wizard.querySelector('#booking-slot-next').onclick = () => {
+                selectedDate = nextDateISO;
+                renderStep3();
+              };
               return;
             }
 
@@ -1911,7 +1925,7 @@
               <h4>Select Time</h4>
               <div style="font-size: 12px; color: #64748b;">Available times on ${selectedDate}:</div>
               <div class="booking-grid" id="slots-grid"></div>
-              <button id="booking-slot-back" class="booking-btn" style="margin-top: 12px; text-align:center; justify-content:center; margin-bottom: 0;">Back to Dates</button>
+              <button id="booking-slot-back" class="booking-btn" style="margin-top: 12px; text-align:center; justify-content:center; margin-bottom: 0; font-weight:600; color:#0f172a !important;">Back to Dates</button>
             `;
 
             const grid = wizard.querySelector('#slots-grid');

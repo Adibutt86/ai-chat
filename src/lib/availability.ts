@@ -143,15 +143,40 @@ export async function getAvailableTimeSlots(
   // 3. Load business hours for day of week
   const dayOfWeek = targetDate.getUTCDay();
 
-  const businessHours = await prisma.businessHours.findFirst({
-    where: { organizationId: orgId, dayOfWeek }
+  let allHours = await prisma.businessHours.findMany({
+    where: { organizationId: orgId }
   });
+
+  // Auto-initialize default business hours if none exist in database
+  if (allHours.length === 0 && orgId) {
+    const DEFAULT_HOURS = [
+      { dayOfWeek: 1, isEnabled: true, startTime: '09:00', endTime: '17:00' },
+      { dayOfWeek: 2, isEnabled: true, startTime: '09:00', endTime: '17:00' },
+      { dayOfWeek: 3, isEnabled: true, startTime: '09:00', endTime: '17:00' },
+      { dayOfWeek: 4, isEnabled: true, startTime: '09:00', endTime: '17:00' },
+      { dayOfWeek: 5, isEnabled: true, startTime: '09:00', endTime: '17:00' },
+      { dayOfWeek: 6, isEnabled: false, startTime: '09:00', endTime: '17:00' },
+      { dayOfWeek: 0, isEnabled: false, startTime: '09:00', endTime: '17:00' },
+    ];
+    await prisma.businessHours.createMany({
+      data: DEFAULT_HOURS.map(h => ({
+        ...h,
+        organizationId: orgId,
+        timezone: 'UTC'
+      }))
+    });
+    allHours = await prisma.businessHours.findMany({
+      where: { organizationId: orgId }
+    });
+  }
+
+  let businessHours = allHours.find(h => h.dayOfWeek === dayOfWeek);
 
   if (!businessHours || !businessHours.isEnabled) {
     return []; // Closed on this day
   }
 
-  const timezone = businessHours.timezone;
+  const timezone = businessHours.timezone || 'UTC';
   const dayStartUtc = localTimeToUtc(dateStr, businessHours.startTime, timezone);
   const dayEndUtc = localTimeToUtc(dateStr, businessHours.endTime, timezone);
 
@@ -230,8 +255,14 @@ export async function getAvailableTimeSlots(
   const durationMs = service.durationMinutes * 60 * 1000;
   const intervalMs = slotIntervalMinutes * 60 * 1000;
 
-  const minNoticeMs = schedulingSettings.minNoticeHours * 60 * 60 * 1000;
-  const earliestAllowedMs = nowMs + minNoticeMs;
+  const minNoticeMs = (schedulingSettings.minNoticeHours || 1) * 60 * 60 * 1000;
+  let earliestAllowedMs = nowMs + minNoticeMs;
+
+  // Smart same-day notice fallback: if booking for today and minNoticeMs exceeds remaining business hours,
+  // set earliestAllowedMs to now + 10 mins so remaining open slots today can still be booked.
+  if (nowMs < dayEndUtc.getTime() && earliestAllowedMs >= dayEndUtc.getTime()) {
+    earliestAllowedMs = nowMs + 10 * 60 * 1000;
+  }
 
   const slots: TimeSlot[] = [];
   let currentSlotStartMs = dayStartUtc.getTime();

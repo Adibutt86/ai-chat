@@ -224,7 +224,7 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
           </div>
           <button
             type="submit"
-            className="bg-white hover:bg-zinc-50 border border-zinc-250 text-zinc-700 px-4 py-2 rounded-xl text-sm font-semibold transition cursor-pointer"
+            className="bg-blue-600 hover:bg-blue-700 border border-blue-600 text-white px-4 py-2 rounded-xl text-sm font-semibold transition cursor-pointer shadow-sm"
           >
             Search
           </button>
@@ -340,13 +340,13 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
                             <>
                               <button
                                 onClick={() => handleUpdateStatus(booking.id, 'completed')}
-                                className="bg-white hover:bg-zinc-50 text-emerald-600 border border-zinc-250 px-2 py-1 rounded-lg text-xs font-semibold transition cursor-pointer"
+                                className="bg-emerald-600 hover:bg-emerald-700 text-white border border-emerald-700 px-2.5 py-1 rounded-lg text-xs font-semibold transition cursor-pointer shadow-sm"
                               >
                                 Complete
                               </button>
                               <button
                                 onClick={() => handleUpdateStatus(booking.id, 'cancelled')}
-                                className="bg-white hover:bg-zinc-50 text-amber-600 border border-zinc-250 px-2 py-1 rounded-lg text-xs font-semibold transition cursor-pointer"
+                                className="bg-amber-600 hover:bg-amber-700 text-white border border-amber-700 px-2.5 py-1 rounded-lg text-xs font-semibold transition cursor-pointer shadow-sm"
                               >
                                 Cancel
                               </button>
@@ -354,7 +354,7 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
                           )}
                           <button
                             onClick={() => handleDeleteBooking(booking.id)}
-                            className="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-2 py-1 rounded-lg text-xs font-semibold transition cursor-pointer flex items-center gap-1"
+                            className="bg-red-600 hover:bg-red-700 text-white border border-red-700 px-2.5 py-1 rounded-lg text-xs font-semibold transition cursor-pointer flex items-center gap-1 shadow-sm"
                             title="Permanently Delete Booking"
                           >
                             <Trash2 className="h-3 w-3" /> Delete
@@ -377,14 +377,14 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
               <button
                 disabled={page === 1}
                 onClick={() => setPage(p => Math.max(1, p - 1))}
-                className="p-1.5 bg-white border border-zinc-200 hover:bg-zinc-50 disabled:opacity-40 rounded-lg text-zinc-500 transition cursor-pointer"
+                className="p-1.5 bg-zinc-800 border border-zinc-700 hover:bg-zinc-700 disabled:opacity-40 rounded-lg text-white transition cursor-pointer"
               >
                 <ChevronLeft className="h-4 w-4" />
               </button>
               <button
                 disabled={page === totalPages}
                 onClick={() => setPage(p => Math.min(totalPages, p + 1))}
-                className="p-1.5 bg-white border border-zinc-200 hover:bg-zinc-50 disabled:opacity-40 rounded-lg text-zinc-500 transition cursor-pointer"
+                className="p-1.5 bg-zinc-800 border border-zinc-700 hover:bg-zinc-700 disabled:opacity-40 rounded-lg text-white transition cursor-pointer"
               >
                 <ChevronRight className="h-4 w-4" />
               </button>
@@ -395,7 +395,7 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
 
       {/* Details Modal */}
       {selectedBooking && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-white border border-zinc-200 rounded-2xl w-full max-w-xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-150 text-sm text-zinc-700">
             <div className="p-6 border-b border-zinc-200 flex justify-between items-center bg-zinc-50">
               <h3 className="font-bold text-zinc-900 text-lg flex items-center gap-2">
@@ -403,7 +403,7 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
               </h3>
               <button 
                 onClick={() => setSelectedBooking(null)} 
-                className="p-1.5 bg-white hover:bg-zinc-100 border border-zinc-200 rounded-lg text-zinc-500 hover:text-zinc-800 cursor-pointer"
+                className="p-1.5 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-lg text-white cursor-pointer"
               >
                 <XCircle className="h-5 w-5" />
               </button>
@@ -488,33 +488,33 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
 
             <div className="p-6 bg-zinc-50 border-t border-zinc-200 flex justify-between items-center">
               <div>
-                <label className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold block mb-1">Update Status</label>
+                <label className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold block mb-1">Update Status / Action</label>
                 <div className="flex gap-2">
                   <button
                     disabled={statusChanging || selectedBooking.status === 'completed'}
                     onClick={() => handleUpdateStatus(selectedBooking.id, 'completed')}
-                    className="bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-600 disabled:opacity-40 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer"
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white disabled:opacity-40 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer shadow-sm"
                   >
                     Mark Completed
                   </button>
                   <button
                     disabled={statusChanging || selectedBooking.status === 'no_show'}
                     onClick={() => handleUpdateStatus(selectedBooking.id, 'no_show')}
-                    className="bg-zinc-100 hover:bg-zinc-200 border border-zinc-300 text-zinc-700 disabled:opacity-40 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer"
+                    className="bg-zinc-700 hover:bg-zinc-800 text-white disabled:opacity-40 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer shadow-sm"
                   >
                     Mark No Show
                   </button>
                   <button
                     disabled={statusChanging || selectedBooking.status === 'cancelled'}
                     onClick={() => handleUpdateStatus(selectedBooking.id, 'cancelled')}
-                    className="bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-700 disabled:opacity-40 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer"
+                    className="bg-amber-600 hover:bg-amber-700 text-white disabled:opacity-40 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer shadow-sm"
                   >
                     Cancel Booking
                   </button>
                   <button
                     disabled={statusChanging}
                     onClick={() => handleDeleteBooking(selectedBooking.id)}
-                    className="bg-red-600 hover:bg-red-700 text-white disabled:opacity-40 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer flex items-center gap-1"
+                    className="bg-red-600 hover:bg-red-700 text-white disabled:opacity-40 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer flex items-center gap-1 shadow-sm"
                   >
                     <Trash2 className="h-3.5 w-3.5" /> Delete Booking
                   </button>
@@ -523,7 +523,7 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
 
               <button
                 onClick={() => setSelectedBooking(null)}
-                className="bg-white hover:bg-zinc-100 border border-zinc-250 text-zinc-700 px-4 py-2 rounded-xl text-sm font-semibold transition cursor-pointer"
+                className="bg-zinc-800 hover:bg-zinc-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition cursor-pointer"
               >
                 Close
               </button>

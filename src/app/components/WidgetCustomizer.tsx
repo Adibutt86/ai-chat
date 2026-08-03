@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Settings, Save, Sparkles, Sliders, Upload, Copy, Check } from 'lucide-react';
+import { Settings, Save, Sparkles, Sliders, Upload, Copy, Check, Trash2 } from 'lucide-react';
 
 interface WidgetCustomizerProps {
   agentId: string;
@@ -95,6 +95,36 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  // Administrative Delete Booking State
+  const [deleteBookingId, setDeleteBookingId] = useState('');
+  const [deleteBookingMsg, setDeleteBookingMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [deletingBooking, setDeletingBooking] = useState(false);
+
+  const handleDeleteBookingSettings = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!deleteBookingId.trim()) return;
+    if (!confirm(`Are you sure you want to permanently delete booking ID "${deleteBookingId.trim()}"?`)) return;
+
+    setDeletingBooking(true);
+    setDeleteBookingMsg(null);
+    try {
+      const res = await fetch(`/api/bookings?id=${encodeURIComponent(deleteBookingId.trim())}`, {
+        method: 'DELETE',
+      });
+      if (res.ok) {
+        setDeleteBookingMsg({ type: 'success', text: `Booking "${deleteBookingId.trim()}" has been deleted successfully.` });
+        setDeleteBookingId('');
+      } else {
+        const data = await res.json();
+        setDeleteBookingMsg({ type: 'error', text: data.error || 'Failed to delete booking. Please check the Booking ID and try again.' });
+      }
+    } catch {
+      setDeleteBookingMsg({ type: 'error', text: 'Network error deleting booking.' });
+    } finally {
+      setDeletingBooking(false);
+    }
+  };
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -464,6 +494,36 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
                           <div className="text-[10px] text-zinc-400 leading-tight">Triggers interactive booking flow & slots.</div>
                         </div>
                       </label>
+                    </div>
+
+                    {/* Administrative Delete Booking Option */}
+                    <div className="mt-3 pt-3 border-t border-zinc-800 space-y-2">
+                      <label className="block text-[11px] uppercase tracking-wider text-red-400 font-bold flex items-center gap-1.5">
+                        <Trash2 className="h-3.5 w-3.5 text-red-400" /> Administrative Booking Removal (Delete Booking):
+                      </label>
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          placeholder="Enter Booking Confirmation ID (e.g. cm78xyz)..."
+                          value={deleteBookingId}
+                          onChange={(e) => setDeleteBookingId(e.target.value)}
+                          className="flex-1 bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-1.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-red-500"
+                        />
+                        <button
+                          type="button"
+                          disabled={deletingBooking || !deleteBookingId.trim()}
+                          onClick={handleDeleteBookingSettings}
+                          className="bg-red-600 hover:bg-red-700 disabled:opacity-40 text-white text-xs px-3.5 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 cursor-pointer transition shrink-0 shadow-sm"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                          {deletingBooking ? 'Deleting...' : 'Delete Booking'}
+                        </button>
+                      </div>
+                      {deleteBookingMsg && (
+                        <div className={`text-xs p-2.5 rounded-lg font-medium ${deleteBookingMsg.type === 'success' ? 'bg-emerald-950/80 border border-emerald-800 text-emerald-300' : 'bg-red-950/80 border border-red-800 text-red-300'}`}>
+                          {deleteBookingMsg.text}
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}

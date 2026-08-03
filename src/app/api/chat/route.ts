@@ -195,6 +195,68 @@ export async function POST(request: Request) {
 
     const encoder = new TextEncoder();
 
+    // Direct Email Lead Capture Interception:
+    // When visitor provides an email address in the chat message, save as Lead to DB and thank them directly
+    const leadEmailMatch = message.match(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/i);
+    if (leadEmailMatch) {
+      const extractedEmail = leadEmailMatch[1].trim();
+
+      let extractedName: string | undefined = undefined;
+      const nameMatch = message.match(/(?:my name is|i am|this is|i'm|name:?)\s+([A-Za-z\s]{2,30})/i);
+      if (nameMatch) {
+        extractedName = nameMatch[1].trim();
+      } else {
+        const textWithoutEmail = message.replace(extractedEmail, '').replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, ' ').trim();
+        const parts = textWithoutEmail.split(/\s+/).filter((p: string) => p.length >= 2 && !/^\d+$/.test(p));
+        if (parts.length > 0 && parts[0].length >= 2 && !['hi', 'hello', 'hey', 'my', 'is', 'email', 'contact', 'please'].includes(parts[0].toLowerCase())) {
+          extractedName = parts[0];
+        }
+      }
+
+      try {
+        await prisma.lead.create({
+          data: {
+            agentId: targetAgentId,
+            conversationId: conv.id,
+            email: extractedEmail,
+            name: extractedName || undefined,
+            company: message
+          }
+        });
+      } catch {
+        // Non-blocking lead creation
+      }
+
+      const thankMessage = extractedName 
+        ? `Thanks ${extractedName} for providing your information! What would you like to know today?`
+        : `Thanks for providing your information! What would you like to know today?`;
+
+      const stream = new ReadableStream({
+        async start(controller) {
+          controller.enqueue(encoder.encode(JSON.stringify({ conversationId: conv.id }) + '\n'));
+          controller.enqueue(encoder.encode(JSON.stringify({ chunk: thankMessage }) + '\n'));
+
+          await prisma.message.create({
+            data: {
+              conversationId: conv.id,
+              sender: 'assistant',
+              content: thankMessage,
+            },
+          });
+          controller.close();
+        }
+      });
+
+      return new Response(stream, {
+        headers: {
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive',
+          ...corsHeaders,
+        },
+      });
+    }
+
     // Booking Intent Detection - Only intercept if showBooking toggle is enabled in Widget Settings
     // Booking Intent Detection - Only trigger interactive booking flow if enabled AND configured to fetch from Dashboard
     const showBooking = agent.widgetSettings?.showBooking !== false;
@@ -498,20 +560,6 @@ Token Estimate: ~${Math.round((message.length + fullReply.length) / 4)}
         }
       }
     });
-
-    // Capture lead if visitor provides email in conversation
-    const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
-    const emailMatch = message.match(emailRegex);
-    if (emailMatch) {
-      await prisma.lead.create({
-        data: {
-          conversationId: conv.id,
-          agentId: targetAgentId,
-          email: emailMatch[0],
-          name: 'Captured visitor',
-        },
-      });
-    }
 
     return new Response(stream, {
       headers: {

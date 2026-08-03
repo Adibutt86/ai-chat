@@ -1198,14 +1198,6 @@
             ${avatarImg.replace('chatbox-avatar', 'chatbox-message-avatar')}
             <div class="chatbox-message">${welcomeMessage}</div>
           </div>
-          ${config.widgetSettings?.showLeadForm !== false ? `
-            <div class="chatbox-message-row bot">
-              ${avatarImg.replace('chatbox-avatar', 'chatbox-message-avatar')}
-              <div class="chatbox-message" style="font-weight: 500;">
-                Please leave your name and email below for better communication so our team can assist and follow up with you.
-              </div>
-            </div>
-          ` : ''}
         </div>
         <button id="chatbox-scroll-latest">
           <span>New messages</span>
@@ -1377,6 +1369,10 @@
             </div>
           `;
 
+          if (config.widgetSettings?.showLeadForm !== false) {
+            appendLeadFormWidget(false);
+          }
+
           // Re-render sticky horizontal suggestions bar
           const stickySuggestions = document.getElementById('chatbox-sticky-suggestions');
           if (stickySuggestions) {
@@ -1387,6 +1383,13 @@
           scrollToBottom(true);
         }
       };
+    }
+
+    // Auto-show Contact Details widget card after welcome message if conversation is fresh
+    if (chatMessages.length === 0 && config.widgetSettings?.showLeadForm !== false) {
+      setTimeout(() => {
+        appendLeadFormWidget(false);
+      }, 50);
     }
 
     // Restore Open State
@@ -2242,16 +2245,22 @@
       }
     }
 
-    function appendLeadFormWidget() {
-      const widgetRow = document.createElement('div');
-      widgetRow.className = 'chatbox-message-row bot';
+    function appendLeadFormWidget(shouldSave = true) {
+      const wizardContainer = document.createElement('div');
+      wizardContainer.className = 'chatbox-message-row bot booking-wizard-container';
+      wizardContainer.style.maxWidth = '90%';
       
       const wizard = document.createElement('div');
       wizard.className = 'booking-wizard';
-      widgetRow.appendChild(wizard);
+      wizardContainer.innerHTML = avatarImg.replace('chatbox-avatar', 'chatbox-message-avatar').replace('style="', 'style="align-self: flex-start; ');
+      wizardContainer.appendChild(wizard);
       
-      body.appendChild(widgetRow);
+      body.appendChild(wizardContainer);
       scrollToLatestIfNeeded();
+
+      if (shouldSave) {
+        saveMessage('bot', '[lead-form]', true);
+      }
 
       wizard.innerHTML = `
         <h4 style="display:flex; align-items:center; gap:6px; margin-bottom: 8px;">📋 Contact Details</h4>

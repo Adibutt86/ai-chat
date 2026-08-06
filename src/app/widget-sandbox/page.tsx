@@ -26,7 +26,7 @@ function SandboxInner() {
   return (
     <div className="min-h-screen bg-zinc-900 text-zinc-100 flex flex-col items-center justify-center p-8 relative">
       <div className="max-w-2xl text-center space-y-4">
-        <h1 className="text-4xl font-extrabold tracking-tight text-white">ChatBox AI Sandbox</h1>
+        <h1 className="text-4xl font-extrabold tracking-tight text-white">Geekvista Sandbox</h1>
         <p className="text-zinc-400">This simulates a customer's external website loading the script bundle.</p>
         
         <div className="bg-zinc-950/80 border border-zinc-800 rounded-2xl p-6 text-left max-w-lg mx-auto font-mono text-xs text-zinc-400 space-y-2">

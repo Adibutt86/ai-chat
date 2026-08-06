@@ -1,0 +1,218 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e8]:
+    - heading "ChatBoxAI" [level=4] [ref=f3e9]
+    - paragraph [ref=f3e10]: Loading Experience...
+  - banner [ref=f3e11]:
+    - generic [ref=f3e12]:
+      - link "AICHAT AICHAT" [ref=f3e13] [cursor=pointer]:
+        - /url: /
+        - img "AICHAT" [ref=f3e15]
+        - generic [ref=f3e16]: AICHAT
+      - navigation [ref=f3e17]:
+        - list [ref=f3e18]:
+          - listitem [ref=f3e19]:
+            - link "Home " [ref=f3e20] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=f3e21]:
+                - text: Home
+                - generic [ref=f3e22]: 
+              - text: 
+          - listitem [ref=f3e23]:
+            - link "About" [ref=f3e24] [cursor=pointer]:
+              - /url: /about
+          - listitem [ref=f3e26]:
+            - link "Prices" [ref=f3e27] [cursor=pointer]:
+              - /url: /prices
+          - listitem [ref=f3e29]:
+            - link "Blog" [ref=f3e30] [cursor=pointer]:
+              - /url: /blog
+          - listitem [ref=f3e32]:
+            - link "WP Plugin" [ref=f3e33] [cursor=pointer]:
+              - /url: /wordpress
+          - listitem [ref=f3e35]:
+            - link "Contact" [ref=f3e36] [cursor=pointer]:
+              - /url: /contact
+      - generic [ref=f3e38]:
+        - link "Sign In" [ref=f3e39] [cursor=pointer]:
+          - /url: /login
+        - link "Get Started" [ref=f3e40] [cursor=pointer]:
+          - /url: /register
+      - text: 
+  - banner [ref=f3e41]:
+    - generic [ref=f3e42]:
+      - img "Blog" [ref=f3e43]
+      - img "Blog" [ref=f3e44]
+    - list [ref=f3e46]:
+      - listitem [ref=f3e47]:
+        - link "Home" [ref=f3e48] [cursor=pointer]:
+          - /url: /
+        - text: /
+      - listitem [ref=f3e49]:
+        - link "Blog" [ref=f3e50] [cursor=pointer]:
+          - /url: /blog
+        - text: /
+      - listitem [ref=f3e51]: How to Build a Customer Support Chatbot in 5 Minutes
+    - generic [ref=f3e53]:
+      - heading "How to Build a Customer Support Chatbot in 5 Minutes" [level=1] [ref=f3e54]
+      - paragraph [ref=f3e55]: Learn how ChatBox AI lets you deploy a custom AI chatbot that learns from your website and documents — no coding required.
+  - main [ref=f3e56]:
+    - generic [ref=f3e57]:
+      - link "Back to All Articles" [ref=f3e58] [cursor=pointer]:
+        - /url: /blog
+      - generic [ref=f3e61]:
+        - generic [ref=f3e62]:
+          - generic [ref=f3e63]: Tutorial
+          - generic [ref=f3e67]: Getting Started
+          - generic [ref=f3e71]: AI
+          - generic [ref=f3e75]: Chatbot
+        - generic [ref=f3e79]:
+          - generic [ref=f3e80]:
+            - text: ChatBox Team
+            - generic [ref=f3e84]: (Product Team)
+          - generic [ref=f3e85]: July 20, 2026
+          - generic [ref=f3e88]: 2 min read
+      - article [ref=f3e92]:
+        - paragraph [ref=f3e93]:
+          - text: Getting a chatbot up and running used to take weeks of developer time, custom training data, and expensive infrastructure.
+          - strong [ref=f3e94]: ChatBox AI changes all of that.
+        - paragraph [ref=f3e95]: In this guide, you'll learn how to deploy a fully functional customer support chatbot in under 5 minutes.
+        - heading [level=2] [ref=f3e96]:
+          - link "What You'll Need" [ref=f3e97] [cursor=pointer]:
+            - /url: "#what-youll-need"
+        - list [ref=f3e98]:
+          - listitem [ref=f3e99]: A ChatBox AI account (free to start)
+          - listitem [ref=f3e100]: Your website URL or documentation files
+          - listitem [ref=f3e101]: About 5 minutes ☕
+        - heading [level=2] [ref=f3e102]:
+          - 'link "Step 1: Create Your Agent" [ref=f3e103] [cursor=pointer]':
+            - /url: "#step-1-create-your-agent"
+        - paragraph [ref=f3e104]:
+          - text: After signing in, head to the
+          - strong [ref=f3e105]: Dashboard
+          - text: and click
+          - strong [ref=f3e106]: New Agent
+          - text: . Give it a name that represents your brand.
+        - code [ref=f3e108]: "Agent Name: Acme Support Bot Welcome Message: Hi! How can I help you today?"
+        - heading [level=2] [ref=f3e109]:
+          - 'link "Step 2: Add Your Knowledge Sources" [ref=f3e110] [cursor=pointer]':
+            - /url: "#step-2-add-your-knowledge-sources"
+        - paragraph [ref=f3e111]: "This is where the magic happens. ChatBox AI can learn from:"
+        - list [ref=f3e112]:
+          - listitem [ref=f3e113]:
+            - strong [ref=f3e114]: Website URLs
+            - text: — paste your docs or help center URL
+          - listitem [ref=f3e115]:
+            - strong [ref=f3e116]: PDF/Word files
+            - text: — upload manuals, FAQs, guides
+          - listitem [ref=f3e117]:
+            - strong [ref=f3e118]: Plain text
+            - text: — paste content directly
+        - paragraph [ref=f3e119]: The AI will read and index everything automatically.
+        - heading [level=2] [ref=f3e120]:
+          - 'link "Step 3: Customize the Widget" [ref=f3e121] [cursor=pointer]':
+            - /url: "#step-3-customize-the-widget"
+        - paragraph [ref=f3e122]: "Match the chatbot to your brand:"
+        - list [ref=f3e123]:
+          - listitem [ref=f3e124]: Primary color
+          - listitem [ref=f3e125]: Bot name and avatar
+          - listitem [ref=f3e126]: Greeting message
+          - listitem [ref=f3e127]: Language
+        - heading [level=2] [ref=f3e128]:
+          - 'link "Step 4: Embed on Your Website" [ref=f3e129] [cursor=pointer]':
+            - /url: "#step-4-embed-on-your-website"
+        - paragraph [ref=f3e130]:
+          - text: Copy the one-line embed script and paste it before your
+          - code [ref=f3e131]: </body>
+          - text: "tag:"
+        - figure [ref=f3e132]:
+          - code [ref=f3e134]:
+            - generic [ref=f3e135]: <script
+            - generic [ref=f3e136]: src="https://chatbox.ai/widget.js"
+            - generic [ref=f3e137]: data-agent-id="YOUR_AGENT_ID"
+            - generic [ref=f3e138]: "></script>"
+        - paragraph [ref=f3e139]: That's it! Your chatbot is now live.
+        - heading [level=2] [ref=f3e140]:
+          - link "Why It Works So Well" [ref=f3e141] [cursor=pointer]:
+            - /url: "#why-it-works-so-well"
+        - paragraph [ref=f3e142]:
+          - text: ChatBox AI uses
+          - strong [ref=f3e143]: retrieval-augmented generation (RAG)
+          - text: — meaning the bot doesn't hallucinate answers. It only responds based on the content you've provided, keeping responses accurate and on-brand.
+        - blockquote [ref=f3e144]:
+          - paragraph [ref=f3e145]: "\"We reduced our support ticket volume by 60% in the first month.\" — Acme Corp"
+        - heading [level=2] [ref=f3e146]:
+          - link "Next Steps" [ref=f3e147] [cursor=pointer]:
+            - /url: "#next-steps"
+        - list [ref=f3e148]:
+          - listitem [ref=f3e149]:
+            - text: Set up
+            - strong [ref=f3e150]: escalation rules
+            - text: to hand off to a human agent
+          - listitem [ref=f3e151]:
+            - text: Review
+            - strong [ref=f3e152]: chat analytics
+            - text: to see what customers ask most
+          - listitem [ref=f3e153]:
+            - text: Connect your
+            - strong [ref=f3e154]: CRM
+            - text: for personalized responses
+      - generic [ref=f3e155]:
+        - heading "Ready to Automate Customer Support?" [level=3] [ref=f3e156]
+        - paragraph [ref=f3e157]: Deploy your custom AI chatbot in under 5 minutes. No credit card required.
+        - link "Get Started Free →" [ref=f3e158] [cursor=pointer]:
+          - /url: /register
+      - link "← Back to Blog" [ref=f3e160] [cursor=pointer]:
+        - /url: /blog
+  - contentinfo [ref=f3e161]:
+    - generic [ref=f3e162]:
+      - generic [ref=f3e163]:
+        - link "AICHAT AICHAT" [ref=f3e164] [cursor=pointer]:
+          - /url: /
+          - img "AICHAT" [ref=f3e166]
+          - generic [ref=f3e167]: AICHAT
+        - list [ref=f3e168]:
+          - listitem [ref=f3e169]:
+            - link "About " [ref=f3e170] [cursor=pointer]:
+              - /url: /about
+              - text: About
+              - generic [ref=f3e171]: 
+          - listitem [ref=f3e172]:
+            - link "Prices " [ref=f3e173] [cursor=pointer]:
+              - /url: /prices
+              - text: Prices
+              - generic [ref=f3e174]: 
+          - listitem [ref=f3e175]:
+            - link "Blog " [ref=f3e176] [cursor=pointer]:
+              - /url: /blog
+              - text: Blog
+              - generic [ref=f3e177]: 
+          - listitem [ref=f3e178]:
+            - link "Contact " [ref=f3e179] [cursor=pointer]:
+              - /url: /contact
+              - text: Contact
+              - generic [ref=f3e180]: 
+      - generic [ref=f3e181]:
+        - generic [ref=f3e182]:
+          - link "support@chatboxai.com" [ref=f3e183] [cursor=pointer]:
+            - /url: mailto:support@chatboxai.com
+          - link "+1 202 303 404" [ref=f3e184] [cursor=pointer]:
+            - /url: tel:+1202303404
+        - list [ref=f3e186]:
+          - listitem [ref=f3e187]:
+            - link "" [ref=f3e188] [cursor=pointer]:
+              - /url: https://facebook.com/
+          - listitem [ref=f3e190]:
+            - link "" [ref=f3e191] [cursor=pointer]:
+              - /url: https://instagram.com/
+          - listitem [ref=f3e193]:
+            - link "" [ref=f3e194] [cursor=pointer]:
+              - /url: https://twitter.com/
+          - listitem [ref=f3e196]:
+            - link "" [ref=f3e197] [cursor=pointer]:
+              - /url: https://youtube.com/
+          - listitem [ref=f3e199]:
+            - link "" [ref=f3e200] [cursor=pointer]:
+              - /url: https://linkedin.com/
+      - paragraph [ref=f3e202]: Copyright © 2026 AICHAT
+    - text: 
+  - button "Open Next.js Dev Tools" [ref=f3e208] [cursor=pointer]

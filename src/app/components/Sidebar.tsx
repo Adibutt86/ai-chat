@@ -45,7 +45,7 @@ export default function Sidebar({ currentTab, setCurrentTab, agentsCount }: Side
       {/* Brand Header */}
       <div className="h-16 px-6 border-b border-zinc-800 flex items-center gap-2">
         <Bot className="h-6 w-6 text-blue-500" />
-        <span className="font-bold text-white text-lg tracking-tight">ChatBox AI</span>
+        <span className="font-bold text-white text-lg tracking-tight">Geekvista</span>
       </div>
 
       {/* User Section */}
@@ -55,7 +55,7 @@ export default function Sidebar({ currentTab, setCurrentTab, agentsCount }: Side
         </div>
         <div className="flex-1 min-w-0">
           <p className="text-sm font-semibold text-white truncate">{session?.email?.split('@')[0] || 'User'}</p>
-          <p className="text-xs text-zinc-400 truncate">{session?.email || 'admin@chatbox.ai'}</p>
+          <p className="text-xs text-zinc-400 truncate">{session?.email || 'admin@geekvista.com'}</p>
         </div>
       </div>
 

@@ -140,7 +140,7 @@ export default function Home() {
           <div className="container d-xl-flex">
             <div className="hero_main">
               <span style={{ color: 'var(--primary)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '8px', display: 'block', fontSize: '14px' }}>
-                Meet ChatBox AI
+                Meet Geekvista
               </span>
               <span className="tw-height h1">
                 <span className="text">Engage, Support & Convert</span>
@@ -149,7 +149,7 @@ export default function Home() {
                 Engage, Support & Convert
               </h1>
               <p className="hero_main-text">
-                ChatBox AI provides beautiful, custom-trained conversational widgets designed to integrate seamlessly into your website. Automate customer support, capture high-quality leads, and delight visitors 24/7.
+                Geekvista provides beautiful, custom-trained conversational widgets designed to integrate seamlessly into your website. Automate customer support, capture high-quality leads, and delight visitors 24/7.
               </p>
               
               <div className="hero_main-features" style={{ margin: '20px 0 30px 0', display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
@@ -157,7 +157,7 @@ export default function Home() {
                   ⚡ Instant Embed
                 </span>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '14px', background: 'rgba(42, 42, 255, 0.1)', padding: '6px 12px', borderRadius: '20px', border: '1px solid rgba(42, 42, 255, 0.2)' }}>
-                  🤖 Powered by ChatBox AI
+                  🤖 Powered by Geekvista
                 </span>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '14px', background: 'rgba(42, 42, 255, 0.1)', padding: '6px 12px', borderRadius: '20px', border: '1px solid rgba(42, 42, 255, 0.2)' }}>
                   🔌 WordPress Ready
@@ -261,7 +261,7 @@ export default function Home() {
                 </h4>
               </div>
               <p className="about_main-text">
-                ChatBox AI helps businesses automate customer support, capture qualified leads, and engage website visitors round the clock using custom-trained AI assistants.
+                Geekvista helps businesses automate customer support, capture qualified leads, and engage website visitors round the clock using custom-trained AI assistants.
               </p>
               <ul className="about_main-list d-flex flex-column">
                 <motion.li 
@@ -340,7 +340,7 @@ export default function Home() {
                     onClick={() => setActiveFaq(activeFaq === 'item-1' ? null : 'item-1')}
                     style={{ cursor: 'pointer' }}
                   >
-                    How ChatBox AI works with your business
+                    How Geekvista works with your business
                     <span className={`title_icon ${activeFaq === 'item-1' ? 'transform' : ''}`}>
                       <i className="icon-arrow-left icon arrow-rotate"></i>
                     </span>
@@ -349,7 +349,7 @@ export default function Home() {
                     <div className="body">
                       <div className="main">
                         <p className="main_general">
-                          ChatBox AI integrates directly into your workflow in 3 simple steps to automate customer support and boost lead generation.
+                          Geekvista integrates directly into your workflow in 3 simple steps to automate customer support and boost lead generation.
                         </p>
                         <ul className="main_list">
                           <li className="main_list-item">
@@ -508,7 +508,7 @@ export default function Home() {
           </div>
           <div className="container d-md-flex flex-column align-items-center">
             <h3 className="join_header">
-              Join <span className="join_header-wrapper"><Counter value={68000} suffix="+" /></span> growing businesses that use ChatBox AI to drive Customer Experience
+              Join <span className="join_header-wrapper"><Counter value={68000} suffix="+" /></span> growing businesses that use Geekvista to drive Customer Experience
             </h3>
             <ul className="join_list d-flex flex-column flex-md-row justify-content-md-center">
               <li className="join_list-item">
@@ -564,7 +564,7 @@ export default function Home() {
                   </h4>
                 </div>
                 <p className="feedback_main-header_text">
-                  Have questions about setting up ChatBox AI for your website or business? Get in touch with us today and our AI specialists will be happy to assist you.
+                  Have questions about setting up Geekvista for your website or business? Get in touch with us today and our AI specialists will be happy to assist you.
                 </p>
               </div>
               <form className="feedback_main-form form d-flex flex-column" action="#" method="post">
@@ -611,7 +611,7 @@ export default function Home() {
           </div>
           <div className="footer_bottom">
             <div className="footer_bottom-contacts d-flex flex-column">
-              <a className="link" href="mailto:support@chatboxai.com">support@chatboxai.com</a>
+              <a className="link" href="mailto:support@geekvista.com">support@geekvista.com</a>
               <a className="link" href="tel:+1202303404">+1 202 303 404</a>
             </div>
             <div className="footer_bottom-socials">

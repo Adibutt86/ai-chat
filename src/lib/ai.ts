@@ -67,7 +67,7 @@ export function simulateLocalAIResponse(context: string, message: string): strin
 
   // 2. Free Trial / Demo Intent (Handles "trail" typo for "trial")
   if (normQuery.includes('trail') || normQuery.includes('trial') || normQuery.includes('free trial') || normQuery.includes('demo') || normQuery.includes('test')) {
-    return "**Free Trial & Live Demo**\n\nYes! We offer a 14-day free trial on all ChatBox AI plans so you can test website crawling, custom RAG vector search, and widget customization with zero risk.\n\n• **No Credit Card Required** for trial setup.\n• **Instant Crawling**: Crawl your website URL in under 2 minutes.\n• **Widget Customization**: Test custom colors, brand icons, and business hours.";
+    return "**Free Trial & Live Demo**\n\nYes! We offer a 14-day free trial on all Geekvista plans so you can test website crawling, custom RAG vector search, and widget customization with zero risk.\n\n• **No Credit Card Required** for trial setup.\n• **Instant Crawling**: Crawl your website URL in under 2 minutes.\n• **Widget Customization**: Test custom colors, brand icons, and business hours.";
   }
 
   // 3. Thanks & Goodbye
@@ -93,7 +93,7 @@ export function simulateLocalAIResponse(context: string, message: string): strin
 
   // 6. Pricing & Plans Query
   if (normQuery.includes('pricing') || normQuery.includes('plan') || normQuery.includes('cost') || normQuery.includes('how much')) {
-    return "**ChatBox AI Plans & Pricing**\n\n• **Starter Plan** ($19/mo): 1 Active Agent, 1,000 Messages/month, URL Crawler.\n• **Professional Plan** ($49/mo): 5 Active Agents, 10,000 Messages/month, Document Uploads, Lead Capture.\n• **Enterprise Plan** ($149/mo): Unlimited Agents & Messages, Dedicated Database, 24/7 Support.";
+    return "**Geekvista Plans & Pricing**\n\n• **Starter Plan** ($19/mo): 1 Active Agent, 1,000 Messages/month, URL Crawler.\n• **Professional Plan** ($49/mo): 5 Active Agents, 10,000 Messages/month, Document Uploads, Lead Capture.\n• **Enterprise Plan** ($149/mo): Unlimited Agents & Messages, Dedicated Database, 24/7 Support.";
   }
 
   // 7. Smart RAG Training Query ("what is smart rag")
@@ -103,7 +103,7 @@ export function simulateLocalAIResponse(context: string, message: string): strin
 
   // 8. Office / Contact Location
   if (normQuery.includes('office') || normQuery.includes('location') || normQuery.includes('address') || normQuery.includes('where are you')) {
-    return "**Official Office Location**\n\n**Headquarters**: 123 Tech Avenue, Suite 400, Washington, D.C., USA\n**Email**: support@chatboxai.com\n**Phone**: +1 (800) 555-0199";
+    return "**Official Office Location**\n\n**Headquarters**: 123 Tech Avenue, Suite 400, Washington, D.C., USA\n**Email**: support@geekvista.com\n**Phone**: +1 (800) 555-0199";
   }
 
   // 9. Extract factual answers strictly from crawled website text context
@@ -114,7 +114,7 @@ export function simulateLocalAIResponse(context: string, message: string): strin
       .replace(/SYSTEM INSTRUCTION[\s\S]*?Reference Context:\s*/gi, '')
       .replace(/You are an official AI Customer Support Representative[\s\S]*?\./gi, '')
       .replace(/Sign in to manage your AI agents[\s\S]*?Create an account/gi, '')
-      .replace(/Email Address Password Forgot password\? Sign In New to ChatBox AI\?/gi, '')
+      .replace(/Email Address Password Forgot password\? Sign In New to Geekvista\?/gi, '')
       .replace(/0\d\s+[\w\s&]+/gi, '')
       .replace(/Turn website traffic into sales[\s\S]*?Bedrock Integration/gi, '')
       .trim();

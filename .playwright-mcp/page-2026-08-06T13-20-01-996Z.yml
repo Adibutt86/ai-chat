@@ -1,0 +1,60 @@
+- main [ref=e2]:
+  - generic [ref=e4]:
+    - generic [ref=e5]: ChatBox AI Blog
+    - heading "Insights on AI & Customer Support" [level=1] [ref=e8]: Insights on AI &Customer Support
+    - paragraph [ref=e9]: Tutorials, deep dives, and best practices to help you build better customer experiences with AI.
+  - generic [ref=e10]:
+    - generic [ref=e11]:
+      - generic [ref=e12]: "Filter:"
+      - generic [ref=e13] [cursor=pointer]: Business
+      - generic [ref=e17] [cursor=pointer]: ROI
+      - generic [ref=e21] [cursor=pointer]: Customer Support
+      - generic [ref=e25] [cursor=pointer]: AI
+      - generic [ref=e29] [cursor=pointer]: RAG
+      - generic [ref=e33] [cursor=pointer]: Machine Learning
+      - generic [ref=e37] [cursor=pointer]: Deep Dive
+      - generic [ref=e41] [cursor=pointer]: Tutorial
+      - generic [ref=e45] [cursor=pointer]: Getting Started
+      - generic [ref=e49] [cursor=pointer]: Chatbot
+    - generic [ref=e53]:
+      - generic [ref=e54]: Featured
+      - link "Tutorial Getting Started AI Chatbot How to Build a Customer Support Chatbot in 5 Minutes Learn how ChatBox AI lets you deploy a custom AI chatbot that learns from your website and documents — no coding required. July 20, 2026 2 min read by ChatBox Team Read article" [ref=e58] [cursor=pointer]:
+        - /url: /blog/build-chatbot-5-minutes
+        - generic [ref=e60]:
+          - generic [ref=e61]:
+            - generic [ref=e62]: Tutorial
+            - generic [ref=e63]: Getting Started
+            - generic [ref=e64]: AI
+            - generic [ref=e65]: Chatbot
+          - heading "How to Build a Customer Support Chatbot in 5 Minutes" [level=2] [ref=e66]
+          - paragraph [ref=e67]: Learn how ChatBox AI lets you deploy a custom AI chatbot that learns from your website and documents — no coding required.
+          - generic [ref=e68]:
+            - generic [ref=e69]:
+              - generic [ref=e70]: July 20, 2026
+              - generic [ref=e73]: 2 min read
+              - generic [ref=e77]: by ChatBox Team
+            - generic [ref=e78]: Read article
+    - heading "All Posts" [level=2] [ref=e81]
+    - generic [ref=e82]:
+      - link [ref=e83] [cursor=pointer]:
+        - /url: /blog/10-ways-ai-reduces-support-costs
+        - article [ref=e84]:
+          - generic [ref=e85]:
+            - generic [ref=e86]: Business
+            - generic [ref=e87]: ROI
+          - heading "10 Ways AI Chatbots Reduce Customer Support Costs" [level=3] [ref=e88]
+          - paragraph [ref=e89]: From deflecting tier-1 tickets to enabling 24/7 support without extra headcount, here's how AI chatbots deliver real ROI.
+          - generic [ref=e90]:
+            - generic [ref=e91]: Aug 1, 2026
+            - generic [ref=e94]: 2 min read
+      - link [ref=e98] [cursor=pointer]:
+        - /url: /blog/rag-vs-fine-tuning
+        - article [ref=e99]:
+          - generic [ref=e100]:
+            - generic [ref=e101]: AI
+            - generic [ref=e102]: RAG
+          - 'heading "RAG vs Fine-Tuning: Which Is Right for Your Chatbot?" [level=3] [ref=e103]'
+          - paragraph [ref=e104]: A deep dive into the two most popular approaches to customizing AI chatbots — and when to use each one for your business.
+          - generic [ref=e105]:
+            - generic [ref=e106]: Jul 28, 2026
+            - generic [ref=e109]: 2 min read

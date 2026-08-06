@@ -7,7 +7,7 @@ import Script from 'next/script';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'ChatBox AI - Customer Support Chatbot Builder',
+  title: 'Geekvista - Customer Support Chatbot Builder',
   description: 'Deploy custom AI chatbots that automatically learn from your website pages, manuals, files, and FAQs.',
 };
 

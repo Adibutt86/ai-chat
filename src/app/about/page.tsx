@@ -203,7 +203,7 @@ export default function AboutPage() {
                   <span className="tw-height h4"><span className="text">Ask us anything</span></span>
                   <h4 className="feedback_main-header_title type" data-text="Ask us anything">Ask us anything</h4>
                 </div>
-                <p className="feedback_main-header_text">Have questions about setting up ChatBox AI for your website or business? Get in touch with us today and our AI specialists will be happy to assist you.</p>
+                <p className="feedback_main-header_text">Have questions about setting up Geekvista for your website or business? Get in touch with us today and our AI specialists will be happy to assist you.</p>
               </div>
               <form className="feedback_main-form form d-flex flex-column" action="#" method="post">
                 <input className="field required" type="text" id="feedbackName" name="feedbackName" placeholder="Name" required />
@@ -254,7 +254,7 @@ export default function AboutPage() {
           </div>
           <div className="footer_bottom">
             <div className="footer_bottom-contacts d-flex flex-column">
-              <a className="link" href="mailto:support@chatboxai.com">support@chatboxai.com</a>
+              <a className="link" href="mailto:support@geekvista.com">support@geekvista.com</a>
               <a className="link" href="tel:+1202303404">+1 202 303 404</a>
             </div>
             <div className="footer_bottom-socials">

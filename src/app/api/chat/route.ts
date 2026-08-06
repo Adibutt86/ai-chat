@@ -434,7 +434,7 @@ export async function POST(request: Request) {
     const isContactQuery = normMsgLower.includes('contact') || normMsgLower.includes('reach') || normMsgLower.includes('support') || normMsgLower.includes('email') || normMsgLower.includes('phone') || normMsgLower.includes('call') || normMsgLower.includes('number') || normMsgLower.includes('help form') || normMsgLower.includes('office') || normMsgLower.includes('location') || normMsgLower.includes('address') || normMsgLower.includes('headquarter') || normMsgLower.includes('where are you');
     let contactContext = '';
     if (showLeadForm && isContactQuery) {
-      contactContext = `Official Business Contact & Location Information:\n• Phone Support: +1 (800) 555-0199 / +1 (202) 555-0148\n• Email Support: support@chatboxai.com\n• Contact Page: [Contact Us](${contactPageUrl})\n• Booking Page: [Book Appointment](${bookPageUrl})\n• Office Location: 123 Tech Avenue, Suite 400, Washington, D.C., USA\n• Support Response Time: Within 24 hours`;
+      contactContext = `Official Business Contact & Location Information:\n• Phone Support: +1 (800) 555-0199 / +1 (202) 555-0148\n• Email Support: support@geekvista.com\n• Contact Page: [Contact Us](${contactPageUrl})\n• Booking Page: [Book Appointment](${bookPageUrl})\n• Office Location: 123 Tech Avenue, Suite 400, Washington, D.C., USA\n• Support Response Time: Within 24 hours`;
     }
 
     context = [hoursContext, servicesContext, contactContext, crawledPagesContext, context].filter(Boolean).join('\n\n');
@@ -446,13 +446,13 @@ export async function POST(request: Request) {
     const hasBuyingIntent = buyingIntentKeywords.some(keyword => message.toLowerCase().includes(keyword));
 
     // 8. Generate Highest-Priority System Instruction block (Requirements #1, #3, #4, #10, #11)
-    let systemPrompt = `You are an official AI Customer Support Representative for ChatBox AI (${agent.name}).
+    let systemPrompt = `You are an official AI Customer Support Representative for Geekvista (${agent.name}).
 
 STRICT ANSWERING RULES:
 1. GREETINGS & PLEASANTRIES: For greetings, pleasantries, or polite introductions (e.g. "hi", "hello", "how are you", "who are you", "good morning", "thank you"), respond warmly and professionally as the website's AI assistant, introduce yourself, and offer to help with any website or support inquiries.
 2. HUMAN CONVERSATIONAL SYNTHESIS: Synthesize information into clear, readable, natural human conversational sentences. Use clean bullet points (•) and clear line breaks.
 3. NO EMOJIS OR SYMBOLS: Do NOT include any emojis, icons, or symbols (such as 💳, ⚡, 🚀, 🏢, 🕒, 📍, 🛠️, 🎁, 🤖, 🟢, 🔴, 🧠, 🌐, 🎯, etc.) in your responses. Keep responses completely free of icon clutter.
-4. BOLD MAIN HEADINGS: Always format main topic section headers in bold text without emojis (for example: **ChatBox AI Plans & Pricing** or **Business Hours**).
+4. BOLD MAIN HEADINGS: Always format main topic section headers in bold text without emojis (for example: **Geekvista Plans & Pricing** or **Business Hours**).
 5. STRICT GROUNDING & INTELLIGENT FLEET SYNTHESIS: For questions about specific vehicle models (e.g. Mercedes-Benz S-Class, BMW 7 Series, executive sedans, SUVs, or minivans) or service options, answer helpful and naturally using the fleet and service information available on the website (e.g. our global chauffeured fleet features a wide range of luxury executive sedans, SUVs, and vans with customizable seating and climate control). Never output cold robotic disclaimers such as "The website does not provide a detailed breakdown of the specific fleet..." or "I couldn't find that information on this website...".
 6. MISSING INFORMATION FALLBACK: For questions completely unrelated to the website or services, politely suggest reaching out to our support team directly.
 7. TYPOS & MISSPELLINGS: Automatically interpret visitor questions even if they contain spelling mistakes, typos, or informal phrasing (e.g. "phon numbr", "pricin plan", "workin hour").

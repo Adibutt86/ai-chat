@@ -248,7 +248,7 @@ export async function fetchSitemapUrls(domain: string): Promise<string[]> {
 
     try {
       const res = await fetch(sitemapUrl, {
-        headers: { 'User-Agent': 'ChatBoxAICrawler/1.0' },
+        headers: { 'User-Agent': 'GeekvistaCrawler/1.0' },
         next: { revalidate: 0 },
       });
       if (!res.ok) continue;

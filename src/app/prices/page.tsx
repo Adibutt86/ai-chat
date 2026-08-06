@@ -88,7 +88,7 @@ export default function PricesPage() {
                   <span className="price">
                     <span className="sign">$</span> <span className="int">19</span> <span className="float">00</span>
                   </span>
-                  <p className="label">Ideal for small websites or testing out ChatBox AI features</p>
+                  <p className="label">Ideal for small websites or testing out Geekvista features</p>
                 </div>
                 <ul className="pricing_list-item_list">
                   <li className="list-item"><i className="icon-circle icon"></i> 1 Active Chatbot Agent</li>
@@ -165,7 +165,7 @@ export default function PricesPage() {
                 <i className="icon-arrow-left icon arrow-rotate"></i>
               </h3>
               <p className="challenges_header-text">
-                ChatBox AI eliminates slow support response times, missed lead captures, and high customer service overhead by delivering instant, custom-trained AI chat assistants.
+                Geekvista eliminates slow support response times, missed lead captures, and high customer service overhead by delivering instant, custom-trained AI chat assistants.
               </p>
             </div>
             <ul className="challenges_list d-flex flex-column flex-sm-row flex-wrap">
@@ -397,7 +397,7 @@ export default function PricesPage() {
           </div>
           <div className="footer_bottom">
             <div className="footer_bottom-contacts d-flex flex-column">
-              <a className="link" href="mailto:support@chatboxai.com">support@chatboxai.com</a>
+              <a className="link" href="mailto:support@geekvista.com">support@geekvista.com</a>
               <a className="link" href="tel:+1202303404">+1 202 303 404</a>
             </div>
             <div className="footer_bottom-socials">

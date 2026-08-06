@@ -62,7 +62,7 @@ export async function POST(request: Request) {
                     interval: billingCycle === 'yearly' ? 'year' : 'month',
                   },
                   product_data: {
-                    name: `ChatBox AI - ${planName} Plan (${billingCycle})`,
+                    name: `Geekvista - ${planName} Plan (${billingCycle})`,
                     description: `Access to ${planName} conversational agent resources.`,
                   },
                 },

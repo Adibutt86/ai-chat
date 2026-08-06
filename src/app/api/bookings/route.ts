@@ -196,7 +196,7 @@ export async function POST(request: Request) {
         const bizTz = businessHours?.timezone || 'UTC';
 
         const summary = `${service.name} - ${customerName}`;
-        const description = `Appointment booked via ChatBox AI widget.\n\nCustomer: ${customerName}\nEmail: ${customerEmail}\nPhone: ${customerPhone || 'N/A'}\nNotes: ${customerNotes || 'N/A'}`;
+        const description = `Appointment booked via Geekvista widget.\n\nCustomer: ${customerName}\nEmail: ${customerEmail}\nPhone: ${customerPhone || 'N/A'}\nNotes: ${customerNotes || 'N/A'}`;
 
         const googleEventId = await createGoogleEvent(accessToken, connection.calendarId, {
           summary,

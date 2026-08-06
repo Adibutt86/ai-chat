@@ -1,0 +1,116 @@
+- generic [active] [ref=f1e1]:
+  - main [ref=f1e2]:
+    - generic [ref=f1e3]:
+      - link "Back to Blog" [ref=f1e4] [cursor=pointer]:
+        - /url: /blog
+      - generic [ref=f1e7]:
+        - generic [ref=f1e8]:
+          - generic [ref=f1e9]: Tutorial
+          - generic [ref=f1e13]: Getting Started
+          - generic [ref=f1e17]: AI
+          - generic [ref=f1e21]: Chatbot
+        - heading "How to Build a Customer Support Chatbot in 5 Minutes" [level=1] [ref=f1e25]
+        - paragraph [ref=f1e26]: Learn how ChatBox AI lets you deploy a custom AI chatbot that learns from your website and documents — no coding required.
+        - generic [ref=f1e27]:
+          - generic [ref=f1e28]:
+            - generic [ref=f1e32]: ChatBox Team
+            - generic [ref=f1e33]: · Product Team
+          - generic [ref=f1e34]: July 20, 2026
+          - generic [ref=f1e37]: 2 min read
+      - article [ref=f1e41]:
+        - separator [ref=f1e42]
+        - heading [level=2] [ref=f1e43]:
+          - 'link "title: \"How to Build a Customer Support Chatbot in 5 Minutes\" description: \"Learn how ChatBox AI lets you deploy a custom AI chatbot that learns from your website and documents — no coding required.\" date: \"2026-07-20\" author: \"ChatBox Team\" authorRole: \"Product Team\" tags: [\"Tutorial\", \"Getting Started\", \"AI\", \"Chatbot\"] featured: true" [ref=f1e44] [cursor=pointer]':
+            - /url: "#title-how-to-build-a-customer-support-chatbot-in-5-minutesdescription-learn-how-chatbox-ai-lets-you-deploy-a-custom-ai-chatbot-that-learns-from-your-website-and-documents--no-coding-requireddate-2026-07-20author-chatbox-teamauthorrole-product-teamtags-tutorial-getting-started-ai-chatbotfeatured-true"
+        - paragraph [ref=f1e45]:
+          - text: Getting a chatbot up and running used to take weeks of developer time, custom training data, and expensive infrastructure.
+          - strong [ref=f1e46]: ChatBox AI changes all of that.
+        - paragraph [ref=f1e47]: In this guide, you'll learn how to deploy a fully functional customer support chatbot in under 5 minutes.
+        - heading [level=2] [ref=f1e48]:
+          - link "What You'll Need" [ref=f1e49] [cursor=pointer]:
+            - /url: "#what-youll-need"
+        - list [ref=f1e50]:
+          - listitem [ref=f1e51]: A ChatBox AI account (free to start)
+          - listitem [ref=f1e52]: Your website URL or documentation files
+          - listitem [ref=f1e53]: About 5 minutes ☕
+        - heading [level=2] [ref=f1e54]:
+          - 'link "Step 1: Create Your Agent" [ref=f1e55] [cursor=pointer]':
+            - /url: "#step-1-create-your-agent"
+        - paragraph [ref=f1e56]:
+          - text: After signing in, head to the
+          - strong [ref=f1e57]: Dashboard
+          - text: and click
+          - strong [ref=f1e58]: New Agent
+          - text: . Give it a name that represents your brand.
+        - code [ref=f1e60]: "Agent Name: Acme Support Bot Welcome Message: Hi! How can I help you today?"
+        - heading [level=2] [ref=f1e61]:
+          - 'link "Step 2: Add Your Knowledge Sources" [ref=f1e62] [cursor=pointer]':
+            - /url: "#step-2-add-your-knowledge-sources"
+        - paragraph [ref=f1e63]: "This is where the magic happens. ChatBox AI can learn from:"
+        - list [ref=f1e64]:
+          - listitem [ref=f1e65]:
+            - strong [ref=f1e66]: Website URLs
+            - text: — paste your docs or help center URL
+          - listitem [ref=f1e67]:
+            - strong [ref=f1e68]: PDF/Word files
+            - text: — upload manuals, FAQs, guides
+          - listitem [ref=f1e69]:
+            - strong [ref=f1e70]: Plain text
+            - text: — paste content directly
+        - paragraph [ref=f1e71]: The AI will read and index everything automatically.
+        - heading [level=2] [ref=f1e72]:
+          - 'link "Step 3: Customize the Widget" [ref=f1e73] [cursor=pointer]':
+            - /url: "#step-3-customize-the-widget"
+        - paragraph [ref=f1e74]: "Match the chatbot to your brand:"
+        - list [ref=f1e75]:
+          - listitem [ref=f1e76]: Primary color
+          - listitem [ref=f1e77]: Bot name and avatar
+          - listitem [ref=f1e78]: Greeting message
+          - listitem [ref=f1e79]: Language
+        - heading [level=2] [ref=f1e80]:
+          - 'link "Step 4: Embed on Your Website" [ref=f1e81] [cursor=pointer]':
+            - /url: "#step-4-embed-on-your-website"
+        - paragraph [ref=f1e82]:
+          - text: Copy the one-line embed script and paste it before your
+          - code [ref=f1e83]: </body>
+          - text: "tag:"
+        - figure [ref=f1e84]:
+          - code [ref=f1e86]:
+            - generic [ref=f1e87]: <script
+            - generic [ref=f1e88]: src="https://chatbox.ai/widget.js"
+            - generic [ref=f1e89]: data-agent-id="YOUR_AGENT_ID"
+            - generic [ref=f1e90]: "></script>"
+        - paragraph [ref=f1e91]: That's it! Your chatbot is now live.
+        - heading [level=2] [ref=f1e92]:
+          - link "Why It Works So Well" [ref=f1e93] [cursor=pointer]:
+            - /url: "#why-it-works-so-well"
+        - paragraph [ref=f1e94]:
+          - text: ChatBox AI uses
+          - strong [ref=f1e95]: retrieval-augmented generation (RAG)
+          - text: — meaning the bot doesn't hallucinate answers. It only responds based on the content you've provided, keeping responses accurate and on-brand.
+        - blockquote [ref=f1e96]:
+          - paragraph [ref=f1e97]: "\"We reduced our support ticket volume by 60% in the first month.\" — Acme Corp"
+        - heading [level=2] [ref=f1e98]:
+          - link "Next Steps" [ref=f1e99] [cursor=pointer]:
+            - /url: "#next-steps"
+        - list [ref=f1e100]:
+          - listitem [ref=f1e101]:
+            - text: Set up
+            - strong [ref=f1e102]: escalation rules
+            - text: to hand off to a human agent
+          - listitem [ref=f1e103]:
+            - text: Review
+            - strong [ref=f1e104]: chat analytics
+            - text: to see what customers ask most
+          - listitem [ref=f1e105]:
+            - text: Connect your
+            - strong [ref=f1e106]: CRM
+            - text: for personalized responses
+      - generic [ref=f1e107]:
+        - heading "Ready to try ChatBox AI?" [level=2] [ref=f1e108]
+        - paragraph [ref=f1e109]: Deploy your AI chatbot in minutes. No credit card required.
+        - link "Start for free →" [ref=f1e110] [cursor=pointer]:
+          - /url: /register
+      - link "← More articles" [ref=f1e112] [cursor=pointer]:
+        - /url: /blog
+  - button "Open Next.js Dev Tools" [ref=f1e118] [cursor=pointer]

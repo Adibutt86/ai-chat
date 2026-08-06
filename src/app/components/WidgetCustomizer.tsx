@@ -208,7 +208,7 @@ export default function WidgetCustomizer({ agentId }: WidgetCustomizerProps) {
   };
 
   const widgetOrigin = typeof window !== 'undefined' ? window.location.origin : '';
-  const scriptTagCode = `<!-- ChatBox AI Widget Loader -->
+  const scriptTagCode = `<!-- Geekvista Widget Loader -->
 <script
   src="${widgetOrigin}/chatbox-widget.js"
   data-agent-id="${agentId}"

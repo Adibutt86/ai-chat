@@ -83,7 +83,7 @@ export default function WordpressPluginPage() {
                   <span className="badge rounded-circle p-3 d-flex align-items-center justify-content-center" style={{ width: '36px', height: '36px', fontWeight: 'bold', backgroundColor: '#2563eb', color: '#ffffff' }}>1</span>
                   <div>
                     <h5 className="mb-2" style={{ fontWeight: 700, color: '#ffffff' }}>Download Official WordPress Plugin ZIP</h5>
-                    <p className="small mb-3" style={{ color: '#CBD5E1' }}>Download the official ChatBox AI WordPress plugin <code>.zip</code> package ready for upload.</p>
+                    <p className="small mb-3" style={{ color: '#CBD5E1' }}>Download the official Geekvista WordPress plugin <code>.zip</code> package ready for upload.</p>
                     <a className="btn btn--neon" href="/api/download-wordpress-plugin" download style={{ padding: '10px 24px', fontSize: '14px' }}>
                       <i className="icon-arrow-down icon mr-2"></i> Download WordPress Plugin (.zip)
                     </a>
@@ -102,7 +102,7 @@ export default function WordpressPluginPage() {
                   <span className="badge rounded-circle p-3 d-flex align-items-center justify-content-center" style={{ width: '36px', height: '36px', fontWeight: 'bold', backgroundColor: '#2563eb', color: '#ffffff' }}>3</span>
                   <div>
                     <h5 className="mb-2" style={{ fontWeight: 700, color: '#ffffff' }}>Select Connection Mode & Testing Options</h5>
-                    <p className="small mb-3" style={{ color: '#CBD5E1' }}>Open <strong style={{ color: '#ffffff' }}>ChatBox AI</strong> in your WordPress sidebar and choose your options:</p>
+                    <p className="small mb-3" style={{ color: '#CBD5E1' }}>Open <strong style={{ color: '#ffffff' }}>Geekvista</strong> in your WordPress sidebar and choose your options:</p>
                     
                     <div className="d-flex flex-column gap-2">
                       <div className="p-3 rounded-3" style={{ background: '#1C232D', border: '1px solid #2B3545', color: '#ffffff' }}>
@@ -111,7 +111,7 @@ export default function WordpressPluginPage() {
                       </div>
                       <div className="p-3 rounded-3" style={{ background: '#1C232D', border: '1px solid #2B3545', color: '#ffffff' }}>
                         <h6 className="mb-1 font-weight-bold" style={{ color: '#4ADE80' }}>🔑 Option B: Connect By Agent ID</h6>
-                        <p className="small mb-0" style={{ color: '#E2E8F0' }}>Paste your specific Agent ID (e.g. <code style={{ color: '#FACC15', backgroundColor: 'rgba(250, 204, 21, 0.1)', padding: '2px 6px', borderRadius: '4px' }}>cm78xyz...</code>) from your ChatBox AI Dashboard for multi-agent setups.</p>
+                        <p className="small mb-0" style={{ color: '#E2E8F0' }}>Paste your specific Agent ID (e.g. <code style={{ color: '#FACC15', backgroundColor: 'rgba(250, 204, 21, 0.1)', padding: '2px 6px', borderRadius: '4px' }}>cm78xyz...</code>) from your Geekvista Dashboard for multi-agent setups.</p>
                       </div>
                       <div className="p-3 rounded-3" style={{ background: '#1C232D', border: '1px solid #2B3545', color: '#ffffff' }}>
                         <h6 className="mb-1 font-weight-bold" style={{ color: '#F472B6' }}>🧪 Option C: Show Now for Logged-In Users & WP Admin Backend</h6>
@@ -144,7 +144,7 @@ export default function WordpressPluginPage() {
               <li className="contact_info-item">
                 <h5 className="contact_info-item_header">Plugin Support:</h5>
                 <div className="contact_info-item_content">
-                  <a className="link link--underline" href="mailto:support@chatboxai.com">support@chatboxai.com</a>
+                  <a className="link link--underline" href="mailto:support@geekvista.com">support@geekvista.com</a>
                 </div>
               </li>
             </ul>
@@ -278,7 +278,7 @@ export default function WordpressPluginPage() {
           </div>
           <div className="footer_bottom">
             <div className="footer_bottom-contacts d-flex flex-column">
-              <a className="link" href="mailto:support@chatboxai.com">support@chatboxai.com</a>
+              <a className="link" href="mailto:support@geekvista.com">support@geekvista.com</a>
               <a className="link" href="tel:+1202303404">+1 202 303 404</a>
             </div>
             <div className="footer_bottom-socials">

@@ -1,0 +1,3921 @@
+[      94ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/blog:0
+[     292ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_react-dom_0kla17-._.js:15305
+[     428ms] Error: ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (Error: ./src/lib/blog.ts:1:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at Object.getCompilationErrors (file://C:\chatbot\node_modules\next\dist\server\dev\hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file://C:\chatbot\node_modules\next\dist\server\lib\dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file://C:\chatbot\node_modules\next\dist\server\dev\next-dev-server.js:720:42)
+    at DevServer.findPageComponents (file://C:\chatbot\node_modules\next\dist\server\dev\next-dev-server.js:690:43)
+    at async DevServer.renderErrorToResponseImpl (file://C:\chatbot\node_modules\next\dist\server\base-server.js:1753:26)
+[     427ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[     432ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     433ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     551ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     660ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[     735ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     803ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     865ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     932ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1000ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1066ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1142ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1208ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1269ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1334ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1408ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1471ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1535ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1591ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1662ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1729ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1795ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1867ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1941ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2018ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2088ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2152ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2217ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2297ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2362ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2441ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2517ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2596ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2669ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2745ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2824ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2887ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2945ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3000ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3095ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3157ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3216ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3269ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3321ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3383ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3460ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3531ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3591ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3646ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3705ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3775ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3835ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3888ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3962ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4037ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4109ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4181ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4254ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4326ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4397ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4470ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4533ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4611ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4688ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4757ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4832ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4904ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4974ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5048ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5108ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5200ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5278ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5350ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5422ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5499ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5564ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5625ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5704ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5761ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5824ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5897ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5967ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6041ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6118ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6202ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6290ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6389ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6463ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6540ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6605ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6666ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6745ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6804ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6876ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6948ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7019ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7092ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7164ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7236ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7310ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7380ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7455ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7524ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7603ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7684ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7757ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7815ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7887ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7959ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8031ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8104ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8182ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8255ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8329ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8403ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8476ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8548ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8621ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8708ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8780ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8836ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8909ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8981ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9053ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9124ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9198ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9267ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9342ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9415ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9486ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9559ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9631ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9704ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9776ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9847ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9920ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10003ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10060ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10131ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10187ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10258ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10331ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10404ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10474ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10550ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10625ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10695ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10770ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10842ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10914ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10986ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   11059ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   11131ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   11204ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   11274ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   11355ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   11416ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   11477ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   11540ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   11599ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   11664ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   11727ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   11793ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   11855ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   11917ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   11992ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   12066ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   12140ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   12208ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   12308ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   12339ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[   12447ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   12461ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[   12565ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   12583ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[   12646ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   12707ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   12768ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   12844ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   12904ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   12966ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   13033ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   13121ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   13191ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   13258ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   13324ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   13385ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   13445ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   13511ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   13588ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   13652ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   13717ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   13785ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   13862ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   13929ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   14004ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   14067ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   14151ms] [ERROR] ./src/lib/blog.ts:1:1
+Module not found: Can't resolve 'fs'
+> 1 | import fs from "fs";
+    | ^^^^^^^^^^^^^^^^^^^^
+  2 | import path from "path";
+  3 | import matter from "gray-matter";
+  4 | import readingTime from "reading-time";
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/blog.ts [Client Component Browser]
+    ./src/app/blog/page.tsx [Client Component Browser]
+    ./src/app/blog/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/blog.ts [Client Component SSR]
+    ./src/app/blog/page.tsx [Client Component SSR]
+    ./src/app/blog/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   14271ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[   15061ms] [WARNING] [HMR] Invalid message: {"type":"turbopack-message","data":[{"resource":{"path":"static/chunks/src_app_blog_page_tsx_1nmkkyb._.js","headers":null},"type":"partial","instruction":{"type":"ChunkListUpdate","merged":[{"type":"EcmascriptMergedUpdate","chunks":{"static/chunks/_11dbfdn._.js":{"type":"added","modules":["[project]/src/app/components/Header.tsx [app-client] (ecmascript)","[project]/src/app/components/Footer.tsx [app-client] (ecmascript)","[project]/src/app/components/Preloader.tsx [app-client] (ecmascript)","[project]/node_modules/next/dist/shared/lib/router/utils/format-url.js [app-client] (ecmascript)","[project]/node_modules/next/dist/client/use-merged-ref.js [app-client] (ecmascript)","[project]/node_modules/next/dist/shared/lib/router/utils/is-local-url.js [app-client] (ecmascript)","[project]/node_modules/next/dist/shared/lib/utils/error-once.js [app-client] (ecmascript)","[project]/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)","[project]/node_modules/lucide-react/dist/esm/defaultAttributes.mjs [app-client] (ecmascript)","[project]/node_modules/lucide-react/dist/esm/shared/src/utils/hasA11yProp.mjs [app-client] (ecmascript)","[project]/node_modules/lucide-react/dist/esm/shared/src/utils/mergeClasses.mjs [app-client] (ecmascript)","[project]/node_modules/lucide-react/dist/esm/context.mjs [app-client] (ecmascript)","[project]/node_modules/lucide-react/dist/esm/Icon.mjs [app-client] (ecmascript)"]},"static/chunks/src_1zd65s9._.js":{"type":"deleted","modules":["[project]/src/app/components/Header.tsx [app-client] (ecmascript)","[project]/src/app/components/Footer.tsx [app-client] (ecmascript)","[project]/src/app/components/Preloader.tsx [app-client] (ecmascript)","[project]/src/lib/blog.ts [app-client] (ecmascript)","[project]/src/app/blog/page.tsx [app-client] (ecmascript)"]},"static/chunks/node_modules_017mlps._.js":{"type":"deleted","modules":["[project]/node_modules/next/dist/shared/lib/router/utils/format-url.js [app-client] (ecmascript)","[project]/node_modules/next/dist/client/use-merged-ref.js [app-client] (ecmascript)","[project]/node_modules/next/dist/shared/lib/router/utils/is-local-url.js [app-client] (ecmascript)","[project]/node_modules/next/dist/shared/lib/utils/error-once.js [app-client] (ecmascript)","[project]/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)","[project]/node_modules/next/script.js [app-client] (ecmascript)","[project]/node_modules/next/dist/compiled/path-browserify/index.js [app-client] (ecmascript)","[project]/node_modules/kind-of/index.js [app-client] (ecmascript)","[project]/node_modules/is-extendable/index.js [app-client] (ecmascript)","[project]/node_modules/extend-shallow/index.js [app-client] (ecmascript)","[project]/node_modules/section-matter/index.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/exception.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/common.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/schema.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/str.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/seq.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/map.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/schema/failsafe.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/null.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/bool.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/int.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/float.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/schema/json.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/schema/core.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/timestamp.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/merge.js [app-client] (ecmascript)","[project]/node_modules/next/dist/compiled/buffer/index.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/binary.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/omap.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/pairs.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/set.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/schema/default_safe.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/js/undefined.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/js/regexp.js [app-client] (ecmascript)","[project]/node_modules/esprima/dist/esprima.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/type/js/function.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/schema/default_full.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/mark.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/loader.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml/dumper.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/lib/js-yaml.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/node_modules/js-yaml/index.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/lib/engines.js [app-client] (ecmascript)","[project]/node_modules/strip-bom-string/index.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/lib/utils.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/lib/defaults.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/lib/engine.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/lib/stringify.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/lib/excerpt.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/lib/to-file.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/lib/parse.js [app-client] (ecmascript)","[project]/node_modules/gray-matter/index.js [app-client] (ecmascript)","[project]/node_modules/reading-time/lib/reading-time.js [app-client] (ecmascript)","[project]/node_modules/next/dist/compiled/events/events.js [app-client] (ecmascript)","[project]/node_modules/next/dist/compiled/util/util.js [app-client] (ecmascript)","[project]/node_modules/next/dist/compiled/stream-browserify/index.js [app-client] (ecmascript)","[project]/node_modules/reading-time/lib/stream.js [app-client] (ecmascript)","[project]/node_modules/reading-time/index.js [app-client] (ecmascript)","[project]/node_modules/lucide-react/dist/esm/shared/src/utils/mergeClasses.mjs [app-client] (ecmascript)","[project]/node_modules/lucide-react/dist/esm/shared/src/utils/toKebabCase.mjs [app-client] (ecmascript)","[project]/node_modules/lucide-react/dist/esm/shared/src/utils/toCamelCase.mjs [app-client] (ecmascript)","[project]/node_modules/lucide-react/dist/esm/shared/src/utils/toPascalCase.mjs [app-client] (ecmascript)","[project]/node_modules/lucide-react/dist/esm/defaultAttributes.mjs [app-client] (ecmascript)","[project]/node_modules/lucide-react/dist/esm/shared/src/utils/hasA11yProp.mjs [app-client] (ecmascript)","[project]/node_modules/lucide-react/dist/esm/context.mjs [app-client] (ecmascript)","[project]/node_modules/lucide-react/dist/esm/Icon.mjs [app-client] (ecmascript)","[project]/node_modules/lucide-react/dist/esm/createLucideIcon.mjs [app-client] (ecmascript)","[project]/node_modules/lucide-react/dist/esm/icons/calendar.mjs [app-client] (ecmascript)","[project]/node_modules/lucide-react/dist/esm/icons/calendar.mjs [app-client] (ecmascript) <export default as Calendar>","[project]/node_modules/lucide-react/dist/esm/icons/clock.mjs [app-client] (ecmascript)","[project]/node_modules/lucide-react/dist/esm/icons/clock.mjs [app-client] (ecmascript) <export default as Clock>","[project]/node_modules/lucide-react/dist/esm/icons/tag.mjs [app-client] (ecmascript)","[project]/node_modules/lucide-react/dist/esm/icons/tag.mjs [app-client] (ecmascript) <export default as Tag>","[project]/node_modules/lucide-react/dist/esm/icons/arrow-right.mjs [app-client] (ecmascript)","[project]/node_modules/lucide-react/dist/esm/icons/arrow-right.mjs [app-client] (ecmascript) <export default as ArrowRight>","[project]/node_modules/lucide-react/dist/esm/icons/book-open.mjs [app-client] (ecmascript)","[project]/node_modules/lucide-react/dist/esm/icons/book-open.mjs [app-client] (ecmascript) <export default as BookOpen>","[project]/node_modules/lucide-react/dist/esm/icons/zap.mjs [app-client] (ecmascript)","[project]/node_modules/lucide-react/dist/esm/icons/zap.mjs [app-client] (ecmascript) <export default as Zap>"]}}}]},"issues":[],"diagnostics":[]}]}
+TypeError: Cannot convert undefined or null to object
+    at Object.keys (<anonymous>)
+    at extractModulesFromTurbopackMessage (http://localhost:3000/_next/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2585:39)
+    at TurbopackHmr.onTurbopackMessage (http://localhost:3000/_next/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2532:32)
+    at processMessage (http://localhost:3000/_next/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2890:30)
+    at http://localhost:3000/_next/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13
+    at WebSocket.handleMessage (http://localhost:3000/_next/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[   15150ms] [LOG] [Fast Refresh] done in 899ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[   15971ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[   16459ms] [LOG] [Fast Refresh] done in 589ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[   16824ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   16875ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   17108ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/auth/session:0
+[   17117ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   17117ms] [LOG] [Fast Refresh] done in 110ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   19026ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   19043ms] [LOG] [Fast Refresh] done in 122ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   24583ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   24602ms] [LOG] [Fast Refresh] done in 120ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   26466ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   26469ms] [LOG] [Fast Refresh] done in 106ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477

@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: ChatBox AI Widget
+ * Plugin Name: Geekvista Widget
  * Plugin URI: https://chatbox-ai.com
- * Description: Connect custom-trained AI chatbots powered by ChatBox AI (Claude) to your WordPress website instantly.
+ * Description: Connect custom-trained AI chatbots powered by Geekvista (Claude) to your WordPress website instantly.
  * Version: 1.2.0
- * Author: ChatBox AI Team
+ * Author: Geekvista Team
  * License: GPL2
  */
 
@@ -20,8 +20,8 @@ class ChatBox_AI_Widget_Plugin {
 
     public function add_plugin_page() {
         add_menu_page(
-            'ChatBox AI Settings', 
-            'ChatBox AI', 
+            'Geekvista Settings', 
+            'Geekvista', 
             'manage_options', 
             'chatbox-ai-settings', 
             array($this, 'create_admin_page'),
@@ -33,8 +33,8 @@ class ChatBox_AI_Widget_Plugin {
     public function create_admin_page() {
         ?>
         <div class="wrap">
-            <h1>🤖 ChatBox AI Widget Configuration</h1>
-            <p>Connect your WordPress website to your custom-trained ChatBox AI assistant using your Agent ID.</p>
+            <h1>🤖 Geekvista Widget Configuration</h1>
+            <p>Connect your WordPress website to your custom-trained Geekvista assistant using your Agent ID.</p>
             <form method="post" action="options.php">
                 <?php
                 settings_fields('chatbox_ai_option_group');
@@ -59,13 +59,13 @@ class ChatBox_AI_Widget_Plugin {
     }
 
     public function section_info() {
-        echo 'Paste your Agent ID from the ChatBox AI Dashboard to enable the AI assistant on your website.';
+        echo 'Paste your Agent ID from the Geekvista Dashboard to enable the AI assistant on your website.';
     }
 
     public function agent_id_callback() {
         $val = esc_attr(get_option('chatbox_ai_agent_id', ''));
         echo '<input type="text" name="chatbox_ai_agent_id" value="' . $val . '" class="regular-text" placeholder="e.g. cmrp4sl270011uwtwukg511mu" required />';
-        echo '<p class="description">Copy your Agent ID from <strong>ChatBox AI Dashboard > Widget Customizer > Agent ID</strong>.</p>';
+        echo '<p class="description">Copy your Agent ID from <strong>Geekvista Dashboard > Widget Customizer > Agent ID</strong>.</p>';
     }
 
     public function admin_only_callback() {
@@ -77,7 +77,7 @@ class ChatBox_AI_Widget_Plugin {
     public function server_url_callback() {
         $val = esc_attr(get_option('chatbox_ai_server_url', 'http://localhost:3000'));
         echo '<input type="text" name="chatbox_ai_server_url" value="' . $val . '" class="regular-text" placeholder="http://localhost:3000" />';
-        echo '<p class="description">Your ChatBox AI server domain (default: http://localhost:3000).</p>';
+        echo '<p class="description">Your Geekvista server domain (default: http://localhost:3000).</p>';
     }
 
     public function render_widget() {

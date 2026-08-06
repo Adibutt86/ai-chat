@@ -46,9 +46,9 @@ export default function Preloader() {
             width: '84px',
             height: '84px',
             borderRadius: '50%',
-            border: '3px solid rgba(37, 99, 235, 0.15)',
-            borderTopColor: '#2563eb',
-            borderRightColor: '#60a5fa',
+            border: '3px solid rgba(30, 58, 138, 0.2)',
+            borderTopColor: '#1E3A8A',
+            borderRightColor: '#10B981',
             animation: 'preloader-spin 1s linear infinite',
             position: 'absolute',
           }}
@@ -59,11 +59,11 @@ export default function Preloader() {
             width: '48px',
             height: '48px',
             borderRadius: '50%',
-            backgroundColor: '#2563eb',
+            backgroundColor: '#1E3A8A',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 0 24px rgba(37, 99, 235, 0.6)',
+            boxShadow: '0 0 24px rgba(30, 58, 138, 0.6)',
             animation: 'preloader-pulse 1.5s ease-in-out infinite',
           }}
         >
@@ -75,7 +75,7 @@ export default function Preloader() {
 
       <div style={{ marginTop: '28px', textAlign: 'center' }}>
         <h4 style={{ color: '#ffffff', fontSize: '18px', fontWeight: '700', letterSpacing: '0.5px', margin: 0, fontFamily: 'sans-serif' }}>
-          ChatBox<span style={{ color: '#60a5fa' }}>AI</span>
+          Geek<span style={{ color: '#10B981' }}>vista</span>
         </h4>
         <p style={{ color: '#94a3b8', fontSize: '12px', marginTop: '6px', margin: 0, fontFamily: 'sans-serif' }}>
           Loading Experience...

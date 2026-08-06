@@ -54,7 +54,7 @@ export async function sendBookingNotification(
     If you have any questions, please contact ${payload.businessName}.
 
     Best regards,
-    ChatBox AI Scheduler
+    Geekvista Scheduler
   `;
 
   // Local/Development logging of the email

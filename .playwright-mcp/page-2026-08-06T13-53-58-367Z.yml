@@ -1,0 +1,261 @@
+- generic [active] [ref=f8e1]:
+  - generic [ref=f8e8]:
+    - heading "ChatBoxAI" [level=4] [ref=f8e9]
+    - paragraph [ref=f8e10]: Loading Experience...
+  - banner [ref=f8e11]:
+    - generic [ref=f8e12]:
+      - link "AICHAT AICHAT" [ref=f8e13] [cursor=pointer]:
+        - /url: /
+        - img "AICHAT" [ref=f8e15]
+        - generic [ref=f8e16]: AICHAT
+      - navigation [ref=f8e17]:
+        - list [ref=f8e18]:
+          - listitem [ref=f8e19]:
+            - link "Home " [ref=f8e20] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=f8e21]:
+                - text: Home
+                - generic [ref=f8e22]: 
+              - text: 
+          - listitem [ref=f8e23]:
+            - link "About" [ref=f8e24] [cursor=pointer]:
+              - /url: /about
+          - listitem [ref=f8e26]:
+            - link "Prices" [ref=f8e27] [cursor=pointer]:
+              - /url: /prices
+          - listitem [ref=f8e29]:
+            - link "Blog" [ref=f8e30] [cursor=pointer]:
+              - /url: /blog
+          - listitem [ref=f8e32]:
+            - link "WP Plugin" [ref=f8e33] [cursor=pointer]:
+              - /url: /wordpress
+          - listitem [ref=f8e35]:
+            - link "Contact" [ref=f8e36] [cursor=pointer]:
+              - /url: /contact
+      - generic [ref=f8e38]:
+        - link "Sign In" [ref=f8e39] [cursor=pointer]:
+          - /url: /login
+        - link "Get Started" [ref=f8e40] [cursor=pointer]:
+          - /url: /register
+      - text: 
+  - main [ref=f8e41]:
+    - generic [ref=f8e42]:
+      - img "The Fastest Web Solutions" [ref=f8e44]
+      - generic [ref=f8e46]:
+        - generic [ref=f8e47]: Meet ChatBox AI
+        - generic [ref=f8e48]: Engage, Support & Convert
+        - heading "Engage, Support & Convert |" [level=1] [ref=f8e49]
+        - paragraph [ref=f8e50]: ChatBox AI provides beautiful, custom-trained conversational widgets designed to integrate seamlessly into your website. Automate customer support, capture high-quality leads, and delight visitors 24/7.
+        - generic [ref=f8e51]:
+          - generic [ref=f8e52]: ⚡ Instant Embed
+          - generic [ref=f8e53]: 🤖 Powered by ChatBox AI
+          - generic [ref=f8e54]: 🔌 WordPress Ready
+        - generic [ref=f8e55]:
+          - link "Try For Free" [ref=f8e56] [cursor=pointer]:
+            - /url: "#"
+          - link "Explore Features" [ref=f8e57] [cursor=pointer]:
+            - /url: "#features"
+    - generic [ref=f8e59]:
+      - img "Our Features and Services" [ref=f8e60]
+      - generic [ref=f8e61]:
+        - img "Our Features and Services" [ref=f8e63]
+        - list [ref=f8e64]:
+          - listitem [ref=f8e65]:
+            - link " Smart RAG Training Automatically scrape your website pages, docs, and FAQs to train custom AI models in seconds." [ref=f8e66] [cursor=pointer]:
+              - /url: /wordpress
+              - generic [ref=f8e67]: 
+              - generic [ref=f8e68]: Smart RAG Training
+              - paragraph [ref=f8e69]: Automatically scrape your website pages, docs, and FAQs to train custom AI models in seconds.
+          - listitem [ref=f8e70]:
+            - link " Anthropic Claude AI Engine Powered exclusively by Anthropic Claude AI models for fast, accurate, and high-fidelity responses." [ref=f8e71] [cursor=pointer]:
+              - /url: /prices
+              - generic [ref=f8e72]: 
+              - generic [ref=f8e73]: Anthropic Claude AI Engine
+              - paragraph [ref=f8e74]: Powered exclusively by Anthropic Claude AI models for fast, accurate, and high-fidelity responses.
+          - listitem [ref=f8e75]:
+            - link " Seamless Widget Embed Easy one-line script snippet for WordPress, Next.js, Shopify, or custom HTML sites." [ref=f8e76] [cursor=pointer]:
+              - /url: /wordpress
+              - generic [ref=f8e77]: 
+              - generic [ref=f8e78]: Seamless Widget Embed
+              - paragraph [ref=f8e79]: Easy one-line script snippet for WordPress, Next.js, Shopify, or custom HTML sites.
+          - listitem [ref=f8e80]:
+            - link " Lead Capture & Analytics Collect visitor emails, track conversation transcripts, and capture qualified sales leads 24/7." [ref=f8e81] [cursor=pointer]:
+              - /url: /contact
+              - generic [ref=f8e82]: 
+              - generic [ref=f8e83]: Lead Capture & Analytics
+              - paragraph [ref=f8e84]: Collect visitor emails, track conversation transcripts, and capture qualified sales leads 24/7.
+    - generic [ref=f8e85]:
+      - img "The Right Digital Tools for Business" [ref=f8e86]
+      - generic [ref=f8e87]:
+        - generic [ref=f8e88]:
+          - generic [ref=f8e89]:
+            - generic [ref=f8e90]: The Right Digital Tools for Business
+            - heading "The Right Digital Tools for Business" [level=4] [ref=f8e91]
+          - paragraph [ref=f8e92]: ChatBox AI helps businesses automate customer support, capture qualified leads, and engage website visitors round the clock using custom-trained AI assistants.
+          - list [ref=f8e93]:
+            - listitem [ref=f8e94]:
+              - generic [ref=f8e95]: 
+              - generic [ref=f8e97]:
+                - heading "Detects your platform and makes installation on your website a breeze" [level=6] [ref=f8e98]
+                - paragraph [ref=f8e99]: Supports one-click WordPress plugin integration, Next.js, Shopify, and custom HTML embed widgets in less than 2 minutes.
+            - listitem [ref=f8e100]:
+              - generic [ref=f8e101]: 
+              - generic [ref=f8e103]:
+                - heading "Advanced catalog of top analytics and marketing services to address your business needs" [level=6] [ref=f8e104]
+                - paragraph [ref=f8e105]: Track chat transcripts, visitor country analytics, lead details, and conversation performance in real time.
+            - listitem [ref=f8e106]:
+              - generic [ref=f8e107]: 
+              - generic [ref=f8e109]:
+                - heading "Turn website traffic into sales with smart AI conversational prompts" [level=6] [ref=f8e110]
+                - paragraph [ref=f8e111]: Turn casual site visitors into paying customers with proactive AI chat prompts, automated FAQ resolution, and instant booking flows.
+          - generic [ref=f8e112]:
+            - link "View Demo" [ref=f8e113] [cursor=pointer]:
+              - /url: "#"
+            - link "Free Trial" [ref=f8e114] [cursor=pointer]:
+              - /url: "#"
+        - generic [ref=f8e115]:
+          - img "The Right Digital Tools for Business" [ref=f8e116]
+          - img "The Right Digital Tools for Business" [ref=f8e117]
+    - generic [ref=f8e120]:
+      - generic [ref=f8e122]:
+        - heading "How ChatBox AI works with your business " [level=4] [ref=f8e123] [cursor=pointer]:
+          - text: How ChatBox AI works with your business
+          - generic [ref=f8e124]: 
+        - generic [ref=f8e128]:
+          - paragraph [ref=f8e129]: ChatBox AI integrates directly into your workflow in 3 simple steps to automate customer support and boost lead generation.
+          - list [ref=f8e130]:
+            - listitem [ref=f8e131]:
+              - generic [ref=f8e132]: "01"
+              - generic [ref=f8e133]:
+                - heading "Index Your Knowledge Base" [level=6] [ref=f8e134]
+                - paragraph [ref=f8e135]: Paste your website URL, sitemap, or upload documentation to automatically train your custom AI chatbot in seconds.
+            - listitem [ref=f8e136]:
+              - generic [ref=f8e137]: "02"
+              - generic [ref=f8e138]:
+                - heading "Customize Widget & Model Settings" [level=6] [ref=f8e139]
+                - paragraph [ref=f8e140]: Adjust widget colors, avatar, position, welcome message, and system instructions to match your brand style.
+            - listitem [ref=f8e141]:
+              - generic [ref=f8e142]: "03"
+              - generic [ref=f8e143]:
+                - heading "Embed & Automate 24/7 Support" [level=6] [ref=f8e144]
+                - paragraph [ref=f8e145]: Copy-paste a single script snippet to deploy your chatbot and automate visitor support and lead capture instantly.
+      - heading "All Services & Features that we provide " [level=4] [ref=f8e148] [cursor=pointer]:
+        - text: All Services & Features that we provide
+        - generic [ref=f8e149]: 
+      - heading "Advanced Solutions & Flexible Pricing " [level=4] [ref=f8e153] [cursor=pointer]:
+        - text: Advanced Solutions & Flexible Pricing
+        - generic [ref=f8e154]: 
+    - generic [ref=f8e156]:
+      - generic [ref=f8e157]:
+        - img "Join Us" [ref=f8e158]
+        - generic [ref=f8e159]:
+          - img "Join Us" [ref=f8e160]
+          - img "Join Us" [ref=f8e161]
+      - generic [ref=f8e162]:
+        - heading "Join 0+ growing businesses that use ChatBox AI to drive Customer Experience" [level=3] [ref=f8e163]:
+          - text: Join
+          - generic [ref=f8e164]: 0+
+          - text: growing businesses that use ChatBox AI to drive Customer Experience
+        - list [ref=f8e166]:
+          - listitem [ref=f8e167]:
+            - generic [ref=f8e168]: 
+            - text: No credit card required
+          - listitem [ref=f8e169]:
+            - generic [ref=f8e170]: 
+            - text: 14-day free trial
+          - listitem [ref=f8e171]:
+            - generic [ref=f8e172]: 
+            - text: Cancel Anytime
+        - link "Get Started Now" [ref=f8e173] [cursor=pointer]:
+          - /url: "#"
+    - generic [ref=f8e175]:
+      - generic [ref=f8e176]:
+        - generic [ref=f8e177]: 
+        - list [ref=f8e179]:
+          - listitem [ref=f8e180]: 1000+ Partners,
+          - listitem [ref=f8e181]: 1700+ Investors,
+          - listitem [ref=f8e182]: 160+ Clients
+      - generic [ref=f8e184]:
+        - generic [ref=f8e185]: FRD Company
+        - generic [ref=f8e186]: Cryptochain
+        - generic [ref=f8e187]: SMMHelper
+        - generic [ref=f8e188]: Innovation Line
+        - generic [ref=f8e189]: Basic Data
+        - generic [ref=f8e190]: FRD Company
+        - generic [ref=f8e191]: Cryptochain
+        - generic [ref=f8e192]: SMMHelper
+        - generic [ref=f8e193]: Innovation Line
+        - generic [ref=f8e194]: Basic Data
+        - generic [ref=f8e195]: FRD Company
+        - generic [ref=f8e196]: Cryptochain
+        - generic [ref=f8e197]: SMMHelper
+        - generic [ref=f8e198]: Innovation Line
+        - generic [ref=f8e199]: Basic Data
+        - generic [ref=f8e200]: FRD Company
+        - generic [ref=f8e201]: Cryptochain
+        - generic [ref=f8e202]: SMMHelper
+        - generic [ref=f8e203]: Innovation Line
+        - generic [ref=f8e204]: Basic Data
+    - generic [ref=f8e205]:
+      - generic:
+        - img "shape" [ref=f8e207]
+        - img "shape" [ref=f8e209]
+      - generic [ref=f8e211]:
+        - generic [ref=f8e212]:
+          - generic [ref=f8e213]:
+            - generic [ref=f8e214]: Ask us anything
+            - heading "Ask us anything" [level=4] [ref=f8e215]
+          - paragraph [ref=f8e216]: Have questions about setting up ChatBox AI for your website or business? Get in touch with us today and our AI specialists will be happy to assist you.
+        - generic [ref=f8e217]:
+          - textbox "Name" [ref=f8e218] [cursor=pointer]
+          - textbox "E-mail" [ref=f8e219] [cursor=pointer]
+          - textbox "Type your message here…" [ref=f8e220] [cursor=pointer]
+          - button "Send" [ref=f8e221] [cursor=pointer]
+  - contentinfo [ref=f8e223]:
+    - generic [ref=f8e224]:
+      - generic [ref=f8e225]:
+        - link "AICHAT AICHAT" [ref=f8e226] [cursor=pointer]:
+          - /url: /
+          - img "AICHAT" [ref=f8e228]
+          - generic [ref=f8e229]: AICHAT
+        - list [ref=f8e230]:
+          - listitem [ref=f8e231]:
+            - link "About " [ref=f8e232] [cursor=pointer]:
+              - /url: /about
+              - text: About
+              - generic [ref=f8e233]: 
+          - listitem [ref=f8e234]:
+            - link "Services " [ref=f8e235] [cursor=pointer]:
+              - /url: /services
+              - text: Services
+              - generic [ref=f8e236]: 
+          - listitem [ref=f8e237]:
+            - link "Contact " [ref=f8e238] [cursor=pointer]:
+              - /url: /contact
+              - text: Contact
+              - generic [ref=f8e239]: 
+      - generic [ref=f8e240]:
+        - generic [ref=f8e241]:
+          - link "support@chatboxai.com" [ref=f8e242] [cursor=pointer]:
+            - /url: mailto:support@chatboxai.com
+          - link "+1 202 303 404" [ref=f8e243] [cursor=pointer]:
+            - /url: tel:+1202303404
+        - list [ref=f8e245]:
+          - listitem [ref=f8e246]:
+            - link "" [ref=f8e247] [cursor=pointer]:
+              - /url: https://facebook.com/
+          - listitem [ref=f8e249]:
+            - link "" [ref=f8e250] [cursor=pointer]:
+              - /url: https://instagram.com/
+          - listitem [ref=f8e252]:
+            - link "" [ref=f8e253] [cursor=pointer]:
+              - /url: https://twitter.com/
+          - listitem [ref=f8e255]:
+            - link "" [ref=f8e256] [cursor=pointer]:
+              - /url: https://youtube.com/
+          - listitem [ref=f8e258]:
+            - link "" [ref=f8e259] [cursor=pointer]:
+              - /url: https://linkedin.com/
+      - paragraph [ref=f8e261]: Copyright © 2026 Sitech by Merkulove
+    - text: 
+  - button "Open Next.js Dev Tools" [ref=f8e267] [cursor=pointer]

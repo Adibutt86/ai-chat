@@ -26,7 +26,7 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-zinc-950 px-4 text-zinc-100">
       <div className="w-full max-w-md rounded-2xl border border-zinc-800 bg-zinc-900 p-8 shadow-2xl">
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-extrabold tracking-tight text-white">ChatBox AI</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight text-white">Geekvista</h1>
           <p className="mt-2 text-sm text-zinc-400">Sign in to manage your AI agents</p>
         </div>
 
@@ -80,7 +80,7 @@ export default function LoginPage() {
         </form>
 
         <p className="mt-6 text-center text-xs text-zinc-500">
-          New to ChatBox AI?{' '}
+          New to Geekvista?{' '}
           <Link href="/register" className="text-blue-500 hover:underline">
             Create an account
           </Link>

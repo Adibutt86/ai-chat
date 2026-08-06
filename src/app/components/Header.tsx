@@ -63,6 +63,12 @@ export default function Header({ dataPage = 'contact', dataPageParent = 'contact
               </Link>
             </li>
 
+            <li className="header_nav-list_item">
+              <Link className="nav-item nav-link" href="/blog">
+                <span className="nav-item_text">Blog</span>
+              </Link>
+            </li>
+
             {session && (
               <li className="header_nav-list_item">
                 <Link className="nav-item nav-link" href="/dashboard">

@@ -1,5 +1,5 @@
 /**
- * ChatBox AI Widget Core Embedded Script
+ * Geekvista Widget Core Embedded Script
  * Renders floating action buttons and loaded custom dialogs on external webpages.
  * Includes interactive booking system wizard flow.
  */
@@ -10,7 +10,7 @@
   const isDashboard = currentScript ? currentScript.getAttribute('data-dashboard') === 'true' : false;
 
   if (!agentId) {
-    console.error('ChatBox AI Widget error: missing "data-agent-id" attribute on script element.');
+    console.error('Geekvista Widget error: missing "data-agent-id" attribute on script element.');
     return;
   }
 
@@ -28,7 +28,7 @@
       buildWidget(config, origin);
     })
     .catch(err => {
-      console.error('Failed to initialize ChatBox AI Widget:', err);
+      console.error('Failed to initialize Geekvista Widget:', err);
     });
 
   function buildWidget(config, origin) {

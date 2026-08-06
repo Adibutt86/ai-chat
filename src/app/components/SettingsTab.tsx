@@ -1,13 +1,16 @@
-'use client';
-
 import React, { useState, useEffect } from 'react';
-import { Plus, Shield, Settings as SettingsIcon, Users, Calendar, RefreshCw } from 'lucide-react';
+import Link from 'next/link';
+import { useAuth } from '@/app/context/AuthContext';
+import { isMasterAdmin } from '@/lib/permissions';
+import { Plus, Shield, Settings as SettingsIcon, Users, Calendar, RefreshCw, ExternalLink } from 'lucide-react';
 
 interface SettingsTabProps {
   agentId: string;
 }
 
 export default function SettingsTab({ agentId }: SettingsTabProps) {
+  const { session } = useAuth();
+  const isMaster = isMasterAdmin(session?.role);
   const [members, setMembers] = useState<any[]>([]);
   const [memberEmail, setMemberEmail] = useState('');
   const [memberRole, setMemberRole] = useState('member');
@@ -258,6 +261,17 @@ export default function SettingsTab({ agentId }: SettingsTabProps) {
                 </div>
               ))}
             </div>
+            {isMaster && (
+              <div className="pt-3 mt-3 border-t border-slate-200">
+                <Link
+                  href="/master-panel"
+                  className="flex items-center justify-center gap-1.5 bg-[#1E3A8A] hover:bg-[#152a65] text-white font-bold rounded-lg px-3 py-2 text-xs transition-all shadow-xs"
+                >
+                  <ExternalLink className="h-3.5 w-3.5 text-[#F97316]" />
+                  <span>Open Master Control Panel (Manage All System Users)</span>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>

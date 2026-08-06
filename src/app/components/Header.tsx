@@ -17,11 +17,11 @@ export default function Header({ dataPage = 'contact', dataPageParent = 'contact
   return (
     <header className="header d-lg-flex align-items-center" data-page={dataPage} data-page-parent={dataPageParent}>
       <div className="container d-flex align-items-center flex-wrap flex-lg-nowrap justify-content-between w-100">
-        <Link className="logo header_logo d-inline-flex align-items-center" href="/" style={{ flexGrow: 0 }}>
-          <span className="logo_icon">
-            <img src="/svg/logo.svg" alt="AICHAT" />
+        <Link className="logo header_logo d-inline-flex align-items-center gap-2" href="/" style={{ flexGrow: 0 }}>
+          <span className="logo_icon d-inline-flex align-items-center justify-content-center" style={{ width: '54px', height: '54px' }}>
+            <img src="/svg/logo.svg" alt="Geekvista AI" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </span>
-          <span className="logo_text h5">AICHAT</span>
+          <span className="logo_text h4 mb-0" style={{ fontSize: '26px', fontWeight: 800, lineHeight: 1, color: '#1b2129' }}>Geekvista AI</span>
         </Link>
 
         <nav className={`header_nav collapse ${mobileMenuOpen ? 'show' : ''} d-lg-flex justify-content-lg-center`} id="headerMenu" style={{ flexGrow: 1, visibility: 'visible', overflow: 'visible', maxHeight: 'none' }}>
@@ -69,24 +69,16 @@ export default function Header({ dataPage = 'contact', dataPageParent = 'contact
               </Link>
             </li>
 
-            {session && (
-              <li className="header_nav-list_item">
-                <Link className="nav-item nav-link" href="/dashboard">
-                  <span className="nav-item_text">Dashboard</span>
-                </Link>
-              </li>
-            )}
-
 
 
             <li className="header_nav-list_item">
-              <Link className="nav-item nav-link" href="/wordpress">
+              <Link className={`nav-item nav-link ${dataPage === 'wordpress' ? 'current' : ''}`} href="/wordpress">
                 <span className="nav-item_text">WP Plugin</span>
               </Link>
             </li>
 
             <li className="header_nav-list_item">
-              <Link className="nav-item nav-link" href="/contact">
+              <Link className={`nav-item nav-link ${dataPage === 'contact' ? 'current' : ''}`} href="/contact">
                 <span className="nav-item_text">Contact</span>
               </Link>
             </li>
@@ -111,7 +103,7 @@ export default function Header({ dataPage = 'contact', dataPageParent = 'contact
             </Link>
           ) : (
             <>
-              <Link href="/login" className="text-white text-decoration-none" style={{ marginRight: '15px', fontWeight: 600 }}>
+              <Link href="/login" style={{ marginRight: '15px', fontWeight: 700, color: '#1b2129', textDecoration: 'none' }}>
                 Sign In
               </Link>
               <Link className="header_btn btn btn--neon m-0" href="/register">

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSessionUser, authError } from '@/lib/api-auth';
 import { prisma } from '@/lib/db';
+import { isMasterAdmin } from '@/lib/permissions';
 
 async function resolveOrgId(session: any): Promise<string | null> {
   if (session.orgId) return session.orgId;
@@ -15,6 +16,14 @@ async function resolveOrgId(session: any): Promise<string | null> {
 export async function GET(request: Request) {
   const session = await getSessionUser(request);
   if (!session) return authError();
+
+  const isMaster = isMasterAdmin(session.role);
+  if (isMaster) {
+    const agents = await prisma.agent.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
+    return NextResponse.json(agents);
+  }
 
   const orgId = await resolveOrgId(session);
   if (!orgId) {

@@ -41,34 +41,92 @@ export default function PricesPage() {
       <Header dataPage="prices" dataPageParent="prices" />
 
       {/* Page Header */}
-      <header className="page">
+      <header className="page" style={{ background: 'linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%)', padding: '40px 0 80px', position: 'relative', overflow: 'hidden' }}>
         <div className="container">
-          <ul className="breadcrumbs d-flex flex-wrap">
+          <ul className="breadcrumbs d-flex flex-wrap" style={{ marginBottom: '30px' }}>
             <li className="breadcrumbs_item">
-              <Link className="link" href="/">Home</Link>
+              <Link className="link" href="/" style={{ color: 'rgba(255,255,255,0.7)', fontWeight: 600 }}>Home</Link>
             </li>
             <li className="breadcrumbs_item current">
-              <span id="currentpage">Prices</span>
+              <span id="currentpage" style={{ color: '#F97316', fontWeight: 700 }}>Prices</span>
             </li>
           </ul>
         </div>
-        <div className="container d-xl-flex">
-          <div className="page_main">
-            <div className="wrapper">
-              <span className="tw-height h2">
-                <span className="text">Solutions for Your business</span>
+        
+        <div className="container">
+          <div className="row align-items-center" style={{ display: 'flex', flexWrap: 'wrap', gap: '30px 0' }}>
+            <div className="col-12 col-xl-6" style={{ flex: '1 1 500px', maxWidth: '650px' }}>
+              <span style={{ 
+                color: '#F97316', 
+                fontWeight: '700', 
+                textTransform: 'uppercase', 
+                letterSpacing: '1.5px', 
+                marginBottom: '12px', 
+                display: 'inline-block', 
+                fontSize: '13px',
+                background: 'rgba(249, 115, 22, 0.15)',
+                padding: '6px 14px',
+                borderRadius: '20px',
+                border: '1px solid rgba(249, 115, 22, 0.3)'
+              }}>
+                Flexible & Transparent Pricing
               </span>
-              <h2 className="page_main-title type" data-text="Solutions for Your business">
-                Solutions for Your business
-              </h2>
+              
+              <h1 style={{ 
+                color: '#FFFFFF', 
+                fontSize: '44px', 
+                fontWeight: '800', 
+                lineHeight: '1.2', 
+                marginBottom: '20px',
+                fontFamily: 'inherit' 
+              }}>
+                Simple, Predictable Plans for Growing Businesses
+              </h1>
+              
+              <p style={{ 
+                color: 'rgba(255, 255, 255, 0.82)', 
+                fontSize: '17px', 
+                lineHeight: '1.7', 
+                marginBottom: '32px',
+                maxWidth: '560px' 
+              }}>
+                Deploy intelligent AI chat assistants on your website in minutes. Pay only for what you use with zero hidden fees and instant setup.
+              </p>
+              
+              <div style={{ display: 'flex', gap: '14px', alignItems: 'center', flexWrap: 'wrap' }}>
+                <Link className="btn btn--neon signUpTrigger" href="/register" style={{ padding: '0 28px', height: '48px' }}>
+                  Start Free Trial
+                </Link>
+                <Link className="btn" href="/contact" style={{ 
+                  background: 'rgba(255, 255, 255, 0.1)', 
+                  border: '1px solid rgba(255, 255, 255, 0.25)', 
+                  color: '#FFFFFF',
+                  padding: '0 24px',
+                  height: '48px',
+                  borderRadius: '2px',
+                  fontWeight: '700'
+                }}>
+                  Talk to Sales
+                </Link>
+              </div>
             </div>
-            <Link className="page_main-btn btn btn--white" href="/contact">Get Free Consultation</Link>
-          </div>
-          <div className="page_media">
-            <img className="page_media-arrow" src="/svg/arrow.svg" alt="Solutions for Your business" />
-            <picture>
-              <img className="page_media-image" src="/img/prices/hero.jpg" alt="Solutions for Your business" />
-            </picture>
+            
+            <div className="col-12 col-xl-6 d-flex justify-content-center" style={{ flex: '1 1 450px' }}>
+              <div style={{ position: 'relative', width: '100%', maxWidth: '540px' }}>
+                <img 
+                  src="/img/prices/hero_new.jpg" 
+                  alt="Geekvista Pricing Plans" 
+                  style={{ 
+                    width: '100%', 
+                    height: 'auto', 
+                    borderRadius: '16px', 
+                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)', 
+                    border: '2px solid rgba(255, 255, 255, 0.15)',
+                    display: 'block' 
+                  }} 
+                />
+              </div>
+            </div>
           </div>
         </div>
       </header>
@@ -101,24 +159,19 @@ export default function PricesPage() {
               </li>
 
               <li className="pricing_list-item">
-                <div className="media">
-                  <img className="media_left" src="/svg/Illustration-2.svg" alt="Our Pricing" />
-                  <img className="media_right" src="/svg/puzzle.svg" alt="Our Pricing" />
-                </div>
                 <div className="pricing_list-item_header">
                   <h5 className="title">Professional</h5>
                   <span className="price">
                     <span className="sign">$</span> <span className="int">49</span> <span className="float">00</span>
                   </span>
-                  <p className="label">Best option for scaling companies and online stores</p>
+                  <p className="label">Designed for growing businesses needing higher limits</p>
                 </div>
                 <ul className="pricing_list-item_list">
-                  <li className="list-item"><i className="icon-circle icon"></i> 5 Active Chatbot Agents</li>
-                  <li className="list-item"><i className="icon-circle icon"></i> 10,000 Messages per Month</li>
-                  <li className="list-item"><i className="icon-circle icon"></i> Sitemap & URL Page Indexing</li>
-                  <li className="list-item"><i className="icon-circle icon"></i> PDF & Document Knowledge Uploads</li>
-                  <li className="list-item"><i className="icon-circle icon"></i> Priority Email Support</li>
-                  <li className="list-item"><i className="icon-circle icon"></i> Analytics & Lead Capture</li>
+                  <li className="list-item"><i className="icon-circle icon"></i> 3 Active Chatbot Agents</li>
+                  <li className="list-item"><i className="icon-circle icon"></i> 5,000 Messages per Month</li>
+                  <li className="list-item"><i className="icon-circle icon"></i> Document & PDF Knowledge Base</li>
+                  <li className="list-item"><i className="icon-circle icon"></i> Lead Generation & Form Capture</li>
+                  <li className="list-item"><i className="icon-circle icon"></i> Priority Support</li>
                 </ul>
                 <a className="btn btn--neon signUpTrigger" href="#">Upgrade Plan</a>
               </li>
@@ -127,17 +180,16 @@ export default function PricesPage() {
                 <div className="pricing_list-item_header">
                   <h5 className="title">Enterprise</h5>
                   <span className="price">
-                    <span className="sign">$</span> <span className="int">149</span> <span className="float">00</span>
+                    <span className="sign">$</span> <span className="int">99</span> <span className="float">00</span>
                   </span>
-                  <p className="label">Full support and infrastructure overrides for large businesses</p>
+                  <p className="label">For agencies and high-traffic enterprise organizations</p>
                 </div>
                 <ul className="pricing_list-item_list">
                   <li className="list-item"><i className="icon-circle icon"></i> Unlimited Chatbot Agents</li>
-                  <li className="list-item"><i className="icon-circle icon"></i> Unlimited Messages per Month</li>
-                  <li className="list-item"><i className="icon-circle icon"></i> Dedicated Supabase Database</li>
-                  <li className="list-item"><i className="icon-circle icon"></i> Custom Domain Widget Embeds</li>
-                  <li className="list-item"><i className="icon-circle icon"></i> REST API Access & Webhooks</li>
-                  <li className="list-item"><i className="icon-circle icon"></i> 24/7 Phone & Zoom Support</li>
+                  <li className="list-item"><i className="icon-circle icon"></i> 25,000 Messages per Month</li>
+                  <li className="list-item"><i className="icon-circle icon"></i> Custom LLM & API Key Support</li>
+                  <li className="list-item"><i className="icon-circle icon"></i> Dedicated Account Manager</li>
+                  <li className="list-item"><i className="icon-circle icon"></i> SLA & 24/7 Phone Support</li>
                 </ul>
                 <a className="btn btn--neon signUpTrigger" href="#">Upgrade Plan</a>
               </li>
@@ -203,117 +255,6 @@ export default function PricesPage() {
           </div>
         </section>
 
-        {/* Model Prices Accordion */}
-        <section className="model section">
-          <div className="container d-xl-flex align-items-center justify-content-between">
-            <div className="model_header">
-              <h4 className="model_header-title">Custom AI Models & Bedrock Integration</h4>
-              <p className="model_header-subtitle">Deploy specialized AI models tailored to your brand's unique data requirements.</p>
-              <p className="model_header-text">
-                Easily connect custom Amazon Bedrock credentials, Anthropic Claude keys, or Google Gemini endpoints with flexible rate limits and zero lock-in.
-              </p>
-              <Link className="model_header-btn btn btn--neon" href="/contact">Talk to Specialist</Link>
-            </div>
-            
-            <div className="model_table">
-              <div className="model_table-header">
-                <h6 className="model_table-header_label">Model</h6>
-                <h6 className="model_table-header_label">Service</h6>
-                <h6 className="model_table-header_label">Plan Advanced bills</h6>
-              </div>
-
-              {/* Collapsible Model item 1 */}
-              <div className="model_table-col">
-                <span 
-                  className={`cell cell--trigger ${activeModelCollapse === 'workshops' ? '' : 'collapsed'}`} 
-                  onClick={() => setActiveModelCollapse(activeModelCollapse === 'workshops' ? null : 'workshops')}
-                  role="button"
-                >
-                  <span className="label">Workshops</span>
-                  <i className="icon-angle-left icon"></i>
-                </span>
-                <div className={`cell-collapse collapse ${activeModelCollapse === 'workshops' ? 'show' : ''}`}>
-                  <span className="cell">
-                    <span className="cell-label">Service</span>
-                    <span className="cell-content">LoDDoS - DDOS Testing Tool</span>
-                  </span>
-                  <span className="cell">
-                    <span className="cell-label">Plan Advanced bills</span>
-                    <span className="cell-content">$0.20/billed</span>
-                  </span>
-                </div>
-              </div>
-
-              {/* Collapsible Model item 2 */}
-              <div className="model_table-col">
-                <span 
-                  className={`cell cell--trigger ${activeModelCollapse === 'dev' ? '' : 'collapsed'}`} 
-                  onClick={() => setActiveModelCollapse(activeModelCollapse === 'dev' ? null : 'dev')}
-                  role="button"
-                >
-                  <span className="label">Model Development</span>
-                  <i className="icon-angle-left icon"></i>
-                </span>
-                <div className={`cell-collapse collapse ${activeModelCollapse === 'dev' ? 'show' : ''}`}>
-                  <span className="cell">
-                    <span className="cell-label">Service</span>
-                    <span className="cell-content">System Performance Monitoring</span>
-                  </span>
-                  <span className="cell">
-                    <span className="cell-label">Plan Advanced bills</span>
-                    <span className="cell-content">$2.60/billed</span>
-                  </span>
-                </div>
-              </div>
-
-              {/* Collapsible Model item 3 */}
-              <div className="model_table-col">
-                <span 
-                  className={`cell cell--trigger ${activeModelCollapse === 'consulting' ? '' : 'collapsed'}`} 
-                  onClick={() => setActiveModelCollapse(activeModelCollapse === 'consulting' ? null : 'consulting')}
-                  role="button"
-                >
-                  <span className="label">Ongoing Consulting</span>
-                  <i className="icon-angle-left icon"></i>
-                </span>
-                <div className={`cell-collapse collapse ${activeModelCollapse === 'consulting' ? 'show' : ''}`}>
-                  <span className="cell">
-                    <span className="cell-label">Service</span>
-                    <span className="cell-content">Technical Support Services</span>
-                  </span>
-                  <span className="cell">
-                    <span className="cell-label">Plan Advanced bills</span>
-                    <span className="cell-content">$12/billed</span>
-                  </span>
-                </div>
-              </div>
-
-              {/* Collapsible Model item 4 */}
-              <div className="model_table-col">
-                <span 
-                  className={`cell cell--trigger ${activeModelCollapse === 'startup' ? '' : 'collapsed'}`} 
-                  onClick={() => setActiveModelCollapse(activeModelCollapse === 'startup' ? null : 'startup')}
-                  role="button"
-                >
-                  <span className="label">For Startups</span>
-                  <i className="icon-angle-left icon"></i>
-                </span>
-                <div className={`cell-collapse collapse ${activeModelCollapse === 'startup' ? 'show' : ''}`}>
-                  <span className="cell">
-                    <span className="cell-label">Service</span>
-                    <span className="cell-content">Bug Monitoring and realtime fixes</span>
-                  </span>
-                  <span className="cell">
-                    <span className="cell-label">Plan Advanced bills</span>
-                    <span className="cell-content">$18/billed</span>
-                  </span>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </section>
-
         {/* Services Bottom & Ticker Section */}
         <div className="services">
           <div className="stripe d-flex align-items-center">
@@ -335,31 +276,31 @@ export default function PricesPage() {
           <div className="container">
             <ul className="services_list">
               <li className="wrapper">
-                <Link className="services_list-item d-flex flex-column" href="/service">
+                <Link className="services_list-item d-flex flex-column" href="/about">
                   <i className="icon-chart-bar icon"></i>
-                  <span className="title h5">Data Analysis</span>
-                  <p className="text">Phasellus fringilla tuc dignissim diam. Duis nec tempus ligula. Curabitur vel pretium. Vestibulum metus pur esta</p>
+                  <span className="title h5">Lead & Chat Analytics</span>
+                  <p className="text">Track user conversation transcripts, capture incoming lead contact details, and analyze customer satisfaction metrics in real time.</p>
                 </Link>
               </li>
               <li className="wrapper">
-                <Link className="services_list-item d-flex flex-column" href="/service">
+                <Link className="services_list-item d-flex flex-column" href="/about">
                   <i className="icon-cloud icon"></i>
-                  <span className="title h5">Optimization</span>
-                  <p className="text">Phasellus fringilla dignissim diam. Duis nec tempus ligula. Curabitur vel pretium. Vestibulum metus pur esta</p>
+                  <span className="title h5">RAG Search Optimization</span>
+                  <p className="text">Automatically crawl website URLs, parse PDFs, and generate high-precision vector embeddings for instant, context-aware AI responses.</p>
                 </Link>
               </li>
               <li className="wrapper">
-                <Link className="services_list-item d-flex flex-column" href="/service">
+                <Link className="services_list-item d-flex flex-column" href="/about">
                   <i className="icon-filesearch icon"></i>
-                  <span className="title h5">Content Track</span>
-                  <p className="text">Phasellus fringilla tuc dignissim diam. Duis nec tempus ligula. Curabitur vel pretium. Vestibulum metus pur esta</p>
+                  <span className="title h5">Multi-LLM Engine Guard</span>
+                  <p className="text">Seamlessly switch between Anthropic Claude 3.5, Google Gemini 2.5, and OpenAI GPT-4o with automatic fallback redundancy.</p>
                 </Link>
               </li>
               <li className="wrapper">
-                <Link className="services_list-item d-flex flex-column" href="/service">
+                <Link className="services_list-item d-flex flex-column" href="/about">
                   <i className="icon-protect icon"></i>
-                  <span className="title h5">Risk Manage</span>
-                  <p className="text">Phasellus fringilla dignissim diam. Duis nec tempus ligula. Curabitur vel pretium. Vestibulum metus pur esta</p>
+                  <span className="title h5">Enterprise Security & Privacy</span>
+                  <p className="text">Ensure zero data leaks with role-based access control, encrypted API keys, and custom domain widget embedding.</p>
                 </Link>
               </li>
             </ul>
@@ -371,11 +312,11 @@ export default function PricesPage() {
       <footer className="footer">
         <div className="container">
           <div className="footer_top">
-            <Link className="logo footer_top-logo d-inline-flex align-items-center" href="/">
-              <span className="logo_icon">
-                <img src="/svg/logo.svg" alt="AICHAT" />
+            <Link className="logo footer_top-logo d-inline-flex align-items-center gap-2" href="/">
+              <span className="logo_icon d-inline-flex align-items-center justify-content-center" style={{ width: '56px', height: '56px' }}>
+                <img src="/svg/logo.svg" alt="Geekvista AI" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
               </span>
-              <span className="logo_text h2">AICHAT</span>
+              <span className="logo_text h2 mb-0" style={{ fontSize: '32px', fontWeight: 800, lineHeight: 1 }}>Geekvista AI</span>
             </Link>
             <ul className="footer_top-nav d-flex flex-wrap">
               <li className="footer_top-nav_link">

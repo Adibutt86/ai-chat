@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
-import { verifyToken } from './auth';
+import { verifyToken, SessionPayload } from './auth';
+import { isMasterAdmin } from './permissions';
 
-export async function getSessionUser(request: Request) {
+export async function getSessionUser(request: Request): Promise<SessionPayload | null> {
   const authHeader = request.headers.get('Authorization');
   let token = '';
 
@@ -20,6 +21,15 @@ export async function getSessionUser(request: Request) {
   return verifyToken(token);
 }
 
-export function authError() {
-  return NextResponse.json({ error: 'Unauthorized user access' }, { status: 401 });
+export function authError(message = 'Unauthorized user access', status = 401) {
+  return NextResponse.json({ error: message }, { status });
 }
+
+export function requireMasterAdmin(session: SessionPayload | null) {
+  if (!session) return authError();
+  if (!isMasterAdmin(session.role)) {
+    return NextResponse.json({ error: 'Access denied. Master Admin privileges required.' }, { status: 403 });
+  }
+  return null;
+}
+

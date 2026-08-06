@@ -14,12 +14,15 @@ import SettingsTab from '@/app/components/SettingsTab';
 import BookingsManager from '@/app/components/BookingsManager';
 import ServicesManager from '@/app/components/ServicesManager';
 import BusinessHoursManager from '@/app/components/BusinessHoursManager';
+import { canAccessTab } from '@/lib/permissions';
 import { Loader2 } from 'lucide-react';
 
 export default function DashboardLayout() {
   const { session, loading } = useAuth();
   const router = useRouter();
   const [currentTab, setCurrentTabState] = useState('overview');
+
+  const userRole = session?.role || 'user';
 
   // Restore active tab from URL query parameter or localStorage on mount
   useEffect(() => {
@@ -48,14 +51,20 @@ export default function DashboardLayout() {
       activeTab = savedTab;
     }
 
+    // Verify role permissions for requested tab
+    if (!canAccessTab(userRole, activeTab)) {
+      activeTab = 'overview';
+    }
+
     setCurrentTabState(activeTab);
 
     // Sync URL query parameter without page reload
     const newUrl = `${window.location.pathname}?tab=${activeTab}`;
     window.history.replaceState(null, '', newUrl);
-  }, []);
+  }, [userRole]);
 
   const setCurrentTab = (tab: string) => {
+    if (!canAccessTab(userRole, tab)) return;
     setCurrentTabState(tab);
     if (typeof window !== 'undefined') {
       localStorage.setItem('dashboard_active_tab', tab);

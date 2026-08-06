@@ -169,8 +169,20 @@ export default function Home() {
                 <a className="hero_main-btn btn" href="#features" style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.15)', color: 'inherit' }}>Explore Features</a>
               </div>
             </div>
-            <div className="hero_media animate-fadeIn" style={{ minHeight: '490px', width: '100%', maxWidth: '770px' }}>
-              <Lottie animationData={herohomeAnimation} loop={true} autoplay={true} style={{ width: '100%', height: '100%' }} />
+            <div className="hero_media animate-fadeIn" style={{ minHeight: '420px', width: '100%', maxWidth: '720px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img 
+                src="/img/home_hero.jpg" 
+                alt="AI Chatbot Platform Banner" 
+                style={{ 
+                  width: '100%', 
+                  height: 'auto', 
+                  maxHeight: '480px', 
+                  objectFit: 'cover', 
+                  borderRadius: '16px', 
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.35)', 
+                  border: '2px solid rgba(255, 255, 255, 0.15)' 
+                }} 
+              />
             </div>
           </div>
         </section>
@@ -585,11 +597,11 @@ export default function Home() {
       <footer className="footer">
         <div className="container">
           <div className="footer_top">
-            <Link className="logo footer_top-logo d-inline-flex align-items-center" href="/">
-              <span className="logo_icon">
-                <img src="/svg/logo.svg" alt="AICHAT" />
+            <Link className="logo footer_top-logo d-inline-flex align-items-center gap-2" href="/">
+              <span className="logo_icon d-inline-flex align-items-center justify-content-center" style={{ width: '56px', height: '56px' }}>
+                <img src="/svg/logo.svg" alt="Geekvista AI" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
               </span>
-              <span className="logo_text h2">AICHAT</span>
+              <span className="logo_text h2 mb-0" style={{ fontSize: '32px', fontWeight: 800, lineHeight: 1 }}>Geekvista AI</span>
             </Link>
             <ul className="footer_top-nav d-flex flex-wrap">
               <li className="footer_top-nav_link">

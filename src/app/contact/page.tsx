@@ -268,9 +268,9 @@ export default function ContactPage() {
           <div className="footer_top">
             <Link className="logo footer_top-logo d-inline-flex align-items-center" href="/">
               <span className="logo_icon">
-                <img src="/svg/logo.svg" alt="AICHAT" />
+                <img src="/svg/logo.svg" alt="Geekvista AI" />
               </span>
-              <span className="logo_text h2">AICHAT</span>
+              <span className="logo_text h2">Geekvista AI</span>
             </Link>
             <ul className="footer_top-nav d-flex flex-wrap">
               <li className="footer_top-nav_link">

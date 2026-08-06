@@ -1,7 +1,7 @@
-'use client';
-
 import React from 'react';
 import { useAuth } from '@/app/context/AuthContext';
+import { useRouter } from 'next/navigation';
+import { canAccessTab, isMasterAdmin } from '@/lib/permissions';
 import { 
   Bot, 
   BookOpen, 
@@ -15,7 +15,8 @@ import {
   User,
   Calendar,
   Briefcase,
-  Clock
+  Clock,
+  Shield
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -26,8 +27,11 @@ interface SidebarProps {
 
 export default function Sidebar({ currentTab, setCurrentTab, agentsCount }: SidebarProps) {
   const { session, logout } = useAuth();
+  const router = useRouter();
+  const role = session?.role || 'user';
+  const isMaster = isMasterAdmin(role);
 
-  const navigationItems = [
+  const allNavigationItems = [
     { id: 'overview', name: 'Dashboard', icon: BarChart2 },
     { id: 'agents', name: 'Agents', icon: Bot, badge: agentsCount > 0 ? agentsCount : undefined },
     { id: 'training', name: 'Training', icon: BookOpen },
@@ -38,7 +42,10 @@ export default function Sidebar({ currentTab, setCurrentTab, agentsCount }: Side
     { id: 'business_hours', name: 'Business Hours', icon: Clock },
     { id: 'widget', name: 'Widget Settings', icon: Code },
     { id: 'settings', name: 'Settings', icon: SettingsIcon },
+    ...(isMaster ? [{ id: 'master_panel', name: 'Master Panel', icon: Shield }] : []),
   ];
+
+  const navigationItems = allNavigationItems.filter(item => canAccessTab(role, item.id) || item.id === 'master_panel');
 
   return (
     <aside className="w-64 border-r border-slate-200 bg-white flex flex-col text-slate-700 shadow-sm">
@@ -48,19 +55,28 @@ export default function Sidebar({ currentTab, setCurrentTab, agentsCount }: Side
           <Bot className="h-5 w-5 text-white" />
         </div>
         <div className="flex flex-col">
-          <span className="font-bold text-slate-900 text-base tracking-tight leading-tight">AICHAT</span>
+          <span className="font-bold text-slate-900 text-base tracking-tight leading-tight">Geekvista AI</span>
           <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Console</span>
         </div>
       </div>
 
       {/* User Section */}
-      <div className="px-4 py-3 border-b border-slate-100 bg-slate-50/80 flex items-center gap-3">
-        <div className="h-8 w-8 rounded-full bg-[#1E3A8A]/10 flex items-center justify-center border border-[#1E3A8A]/20 text-[#1E3A8A] font-bold text-xs uppercase">
+      <div className="px-3.5 py-2.5 border-b border-slate-200 bg-slate-50/70 flex items-center gap-2.5">
+        <div className="h-8 w-8 rounded-full bg-[#1E3A8A] flex items-center justify-center text-white font-bold text-xs uppercase shrink-0 shadow-xs">
           {session?.email?.substring(0, 2) || 'US'}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-xs font-semibold text-slate-900 truncate">{session?.email?.split('@')[0] || 'User'}</p>
-          <p className="text-[11px] text-slate-500 truncate">{session?.email || 'admin@geekvista.com'}</p>
+          <div className="flex items-center justify-between gap-1">
+            <p className="text-xs font-bold text-slate-900 truncate capitalize">
+              {session?.email?.split('@')[0] || 'User'}
+            </p>
+            <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shrink-0 ${
+              isMasterAdmin(role) ? 'bg-[#F97316] text-white shadow-2xs' : 'bg-slate-200 text-slate-700'
+            }`}>
+              {isMasterAdmin(role) ? 'Master' : 'User'}
+            </span>
+          </div>
+          <p className="text-[10px] text-slate-400 truncate leading-tight mt-0.5">{session?.email || 'admin@chatbox.ai'}</p>
         </div>
       </div>
 
@@ -72,7 +88,13 @@ export default function Sidebar({ currentTab, setCurrentTab, agentsCount }: Side
           return (
             <button
               key={item.id}
-              onClick={() => setCurrentTab(item.id)}
+              onClick={() => {
+                if (item.id === 'master_panel') {
+                  router.push('/master-panel');
+                } else {
+                  setCurrentTab(item.id);
+                }
+              }}
               className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 cursor-pointer ${
                 isActive 
                   ? 'bg-slate-100 text-[#1E3A8A] border-l-4 border-[#F97316] shadow-xs' 

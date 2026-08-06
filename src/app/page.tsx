@@ -145,18 +145,18 @@ export default function Home() {
               <h1 className="h1" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 3.8rem)', fontWeight: 800, lineHeight: 1.15, color: '#FFFFFF', marginBottom: '20px', marginTop: '4px' }}>
                 Engage, Support <br />&amp; Convert
               </h1>
-              <p className="hero_main-text" style={{ fontSize: '17px', lineHeight: 1.6, color: '#475569', marginBottom: '28px', maxWidth: '580px' }}>
+              <p className="hero_main-text" style={{ fontSize: '17px', lineHeight: 1.6, color: 'rgba(255, 255, 255, 0.9)', marginBottom: '28px', maxWidth: '580px' }}>
                 Geekvista provides beautiful, custom-trained conversational widgets designed to integrate seamlessly into your website. Automate customer support, capture high-quality leads, and delight visitors 24/7.
               </p>
               
               <div className="hero_main-features" style={{ marginBottom: '32px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 600, background: 'rgba(30, 58, 138, 0.08)', color: '#1E3A8A', padding: '6px 14px', borderRadius: '20px', border: '1px solid rgba(30, 58, 138, 0.15)' }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 600, background: 'rgba(255, 255, 255, 0.15)', color: '#FFFFFF', padding: '6px 14px', borderRadius: '20px', border: '1px solid rgba(255, 255, 255, 0.3)', backdropFilter: 'blur(4px)' }}>
                   ⚡ Instant Embed
                 </span>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 600, background: 'rgba(30, 58, 138, 0.08)', color: '#1E3A8A', padding: '6px 14px', borderRadius: '20px', border: '1px solid rgba(30, 58, 138, 0.15)' }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 600, background: 'rgba(255, 255, 255, 0.15)', color: '#FFFFFF', padding: '6px 14px', borderRadius: '20px', border: '1px solid rgba(255, 255, 255, 0.3)', backdropFilter: 'blur(4px)' }}>
                   🤖 Powered by Geekvista
                 </span>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 600, background: 'rgba(30, 58, 138, 0.08)', color: '#1E3A8A', padding: '6px 14px', borderRadius: '20px', border: '1px solid rgba(30, 58, 138, 0.15)' }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 600, background: 'rgba(255, 255, 255, 0.15)', color: '#FFFFFF', padding: '6px 14px', borderRadius: '20px', border: '1px solid rgba(255, 255, 255, 0.3)', backdropFilter: 'blur(4px)' }}>
                   🔌 WordPress Ready
                 </span>
               </div>

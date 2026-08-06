@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { useAuth } from '@/app/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { canAccessTab, isMasterAdmin } from '@/lib/permissions';
@@ -50,14 +51,11 @@ export default function Sidebar({ currentTab, setCurrentTab, agentsCount }: Side
   return (
     <aside className="w-64 border-r border-slate-200 bg-white flex flex-col text-slate-700 shadow-sm">
       {/* Brand Header */}
-      <div className="h-16 px-6 border-b border-slate-200 flex items-center gap-3 bg-white">
-        <div className="h-9 w-9 rounded-lg bg-[#F97316] flex items-center justify-center text-white border border-slate-900 shadow-sm">
-          <Bot className="h-5 w-5 text-white" />
-        </div>
-        <div className="flex flex-col">
-          <span className="font-bold text-slate-900 text-base tracking-tight leading-tight">Geekvista AI</span>
-          <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Console</span>
-        </div>
+      <div className="h-16 px-6 border-b border-slate-200 flex items-center justify-between bg-white">
+        <Link href="/" className="flex items-center gap-2">
+          <img src="/img/logo-main.png" alt="Geekvista AI Console" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />
+        </Link>
+        <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider bg-slate-100 px-2 py-0.5 rounded border border-slate-200">Console</span>
       </div>
 
       {/* User Section */}

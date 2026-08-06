@@ -54,10 +54,8 @@ export default function LoginPage() {
         {/* Auth Card */}
         <div className="w-full rounded-2xl border border-slate-200/80 bg-white p-8 shadow-xl shadow-slate-200/50">
           <div className="mb-8 text-center">
-            <div className="h-11 w-11 rounded-xl bg-[#F97316] flex items-center justify-center text-white border border-slate-900 shadow-sm mx-auto mb-3">
-              <Bot className="h-6 w-6 text-white" />
-            </div>
-            <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">Geekvista AI</h1>
+            <img src="/img/logo-main.png" alt="Geekvista AI" style={{ height: '48px', width: 'auto', margin: '0 auto 12px auto', objectFit: 'contain', display: 'block' }} />
+            <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">Sign In</h1>
             <p className="mt-1 text-xs font-semibold text-slate-500">Sign in to manage your AI workspace</p>
           </div>
 

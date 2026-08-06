@@ -7,8 +7,16 @@ import Script from 'next/script';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Geekvista - Customer Support Chatbot Builder',
+  title: 'Geekvista AI - Customer Support Chatbot Builder',
   description: 'Deploy custom AI chatbots that automatically learn from your website pages, manuals, files, and FAQs.',
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico' }
+    ],
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({

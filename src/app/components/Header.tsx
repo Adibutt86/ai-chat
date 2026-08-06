@@ -22,8 +22,8 @@ export default function Header({ dataPage = 'contact', dataPageParent = 'contact
         </Link>
 
         <nav className={`header_nav collapse ${mobileMenuOpen ? 'show' : ''} d-lg-flex justify-content-lg-center`} id="headerMenu" style={{ flexGrow: 1, visibility: 'visible', overflow: 'visible', maxHeight: 'none' }}>
-          <ul className="header_nav-list">
-            <li className={`header_nav-list_item dropdown ${activeDropdown === 'home' ? 'show' : ''}`}>
+          <ul className="header_nav-list" style={{ whiteSpace: 'nowrap', gap: '0 24px' }}>
+            <li className={`header_nav-list_item dropdown ${activeDropdown === 'home' ? 'show' : ''}`} style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>
               <a
                 className="nav-link nav-item dropdown-toggle d-flex align-items-center justify-content-between"
                 href="#"
@@ -31,8 +31,9 @@ export default function Header({ dataPage = 'contact', dataPageParent = 'contact
                   e.preventDefault();
                   setActiveDropdown(activeDropdown === 'home' ? null : 'home');
                 }}
+                style={{ whiteSpace: 'nowrap' }}
               >
-                <span className="nav-item_text">
+                <span className="nav-item_text" style={{ whiteSpace: 'nowrap' }}>
                   Home <i className="icon-circle icon"></i>
                 </span>
                 <i className="icon-arrow-left icon arrow-rotate"></i>
@@ -40,43 +41,39 @@ export default function Header({ dataPage = 'contact', dataPageParent = 'contact
               <div className={`dropdown-menu collapse ${activeDropdown === 'home' ? 'show' : ''}`}>
                 <ul className="dropdown-list">
                   <li className="list-item" data-main="true">
-                    <Link className="dropdown-item nav-item" href="/">Home 1</Link>
+                    <Link className="dropdown-item nav-item" href="/" style={{ whiteSpace: 'nowrap' }}>Home 1</Link>
                   </li>
                 </ul>
               </div>
             </li>
 
-            <li className="header_nav-list_item">
-              <Link className="nav-item nav-link" href="/about">
-                <span className="nav-item_text">About</span>
+            <li className="header_nav-list_item" style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>
+              <Link className="nav-item nav-link" href="/about" style={{ whiteSpace: 'nowrap' }}>
+                <span className="nav-item_text" style={{ whiteSpace: 'nowrap' }}>About</span>
               </Link>
             </li>
 
-
-
-            <li className="header_nav-list_item">
-              <Link className="nav-item nav-link" href="/prices">
-                <span className="nav-item_text">Prices</span>
+            <li className="header_nav-list_item" style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>
+              <Link className="nav-item nav-link" href="/prices" style={{ whiteSpace: 'nowrap' }}>
+                <span className="nav-item_text" style={{ whiteSpace: 'nowrap' }}>Prices</span>
               </Link>
             </li>
 
-            <li className="header_nav-list_item">
-              <Link className="nav-item nav-link" href="/blog">
-                <span className="nav-item_text">Blog</span>
+            <li className="header_nav-list_item" style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>
+              <Link className="nav-item nav-link" href="/blog" style={{ whiteSpace: 'nowrap' }}>
+                <span className="nav-item_text" style={{ whiteSpace: 'nowrap' }}>Blog</span>
               </Link>
             </li>
 
-
-
-            <li className="header_nav-list_item">
-              <Link className={`nav-item nav-link ${dataPage === 'wordpress' ? 'current' : ''}`} href="/wordpress">
-                <span className="nav-item_text">WP Plugin</span>
+            <li className="header_nav-list_item" style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>
+              <Link className={`nav-item nav-link ${dataPage === 'wordpress' ? 'current' : ''}`} href="/wordpress" style={{ whiteSpace: 'nowrap' }}>
+                <span className="nav-item_text" style={{ whiteSpace: 'nowrap' }}>WP Plugin</span>
               </Link>
             </li>
 
-            <li className="header_nav-list_item">
-              <Link className={`nav-item nav-link ${dataPage === 'contact' ? 'current' : ''}`} href="/contact">
-                <span className="nav-item_text">Contact</span>
+            <li className="header_nav-list_item" style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>
+              <Link className={`nav-item nav-link ${dataPage === 'contact' ? 'current' : ''}`} href="/contact" style={{ whiteSpace: 'nowrap' }}>
+                <span className="nav-item_text" style={{ whiteSpace: 'nowrap' }}>Contact</span>
               </Link>
             </li>
 

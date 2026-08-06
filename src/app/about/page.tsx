@@ -1,18 +1,17 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Script from 'next/script';
 import Link from 'next/link';
 import Header from '@/app/components/Header';
 import Preloader from '@/app/components/Preloader';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import type { Swiper as SwiperClass } from 'swiper';
+import 'swiper/css';
 
 export default function AboutPage() {
   const [showScrollTop, setShowScrollTop] = useState(false);
-
-  // States for sliders
-  const [aboutSlide, setAboutSlide] = useState(0);
-
-  const aboutSlidesCount = 4;
+  const swiperRef = useRef<SwiperClass | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,7 +66,7 @@ export default function AboutPage() {
               href="#"
               onClick={(e) => {
                 e.preventDefault();
-                setAboutSlide((aboutSlide - 1 + aboutSlidesCount) % aboutSlidesCount);
+                swiperRef.current?.slidePrev();
               }}
             >
               <i className="icon-angle-left icon"></i>
@@ -77,46 +76,51 @@ export default function AboutPage() {
               href="#"
               onClick={(e) => {
                 e.preventDefault();
-                setAboutSlide((aboutSlide + 1) % aboutSlidesCount);
+                swiperRef.current?.slideNext();
               }}
             >
               <i className="icon-angle-right icon"></i>
             </a>
           </div>
 
-          <div className="page_slider overflow-hidden">
-            <div 
-              className="d-flex transition-transform duration-500" 
-              style={{ 
-                transform: `translateX(-${aboutSlide * (100 / aboutSlidesCount)}%)`,
-                width: `${aboutSlidesCount * 100}%`
+          <div className="page_slider">
+            <Swiper
+              onSwiper={(swiper) => {
+                swiperRef.current = swiper;
+              }}
+              slidesPerView={2}
+              spaceBetween={24}
+              loop={true}
+              breakpoints={{
+                0: { slidesPerView: 1, spaceBetween: 12 },
+                768: { slidesPerView: 2, spaceBetween: 24 }
               }}
             >
               {/* Slide 1 */}
-              <div style={{ width: `${100 / aboutSlidesCount}%`, flexShrink: 0 }} className="px-2">
+              <SwiperSlide>
                 <picture>
-                  <img src="/img/about/01.jpg" alt="About Us" className="img-fluid rounded-4" style={{ width: '100%', maxHeight: '500px', objectFit: 'cover' }} />
+                  <img src="/img/about/01.jpg" alt="About Us 1" className="img-fluid rounded-4" style={{ width: '100%', height: '320px', objectFit: 'cover' }} />
                 </picture>
-              </div>
+              </SwiperSlide>
               {/* Slide 2 */}
-              <div style={{ width: `${100 / aboutSlidesCount}%`, flexShrink: 0 }} className="px-2">
+              <SwiperSlide>
                 <picture>
-                  <img src="/img/about/02.jpg" alt="About Us" className="img-fluid rounded-4" style={{ width: '100%', maxHeight: '500px', objectFit: 'cover' }} />
+                  <img src="/img/about/02.jpg" alt="About Us 2" className="img-fluid rounded-4" style={{ width: '100%', height: '320px', objectFit: 'cover' }} />
                 </picture>
-              </div>
+              </SwiperSlide>
               {/* Slide 3 */}
-              <div style={{ width: `${100 / aboutSlidesCount}%`, flexShrink: 0 }} className="px-2">
+              <SwiperSlide>
                 <picture>
-                  <img src="/img/about/03.jpg" alt="About Us" className="img-fluid rounded-4" style={{ width: '100%', maxHeight: '500px', objectFit: 'cover' }} />
+                  <img src="/img/about/03.jpg" alt="About Us 3" className="img-fluid rounded-4" style={{ width: '100%', height: '320px', objectFit: 'cover' }} />
                 </picture>
-              </div>
+              </SwiperSlide>
               {/* Slide 4 */}
-              <div style={{ width: `${100 / aboutSlidesCount}%`, flexShrink: 0 }} className="px-2">
+              <SwiperSlide>
                 <picture>
-                  <img src="/img/about/04.jpg" alt="About Us" className="img-fluid rounded-4" style={{ width: '100%', maxHeight: '500px', objectFit: 'cover' }} />
+                  <img src="/img/about/04.jpg" alt="About Us 4" className="img-fluid rounded-4" style={{ width: '100%', height: '320px', objectFit: 'cover' }} />
                 </picture>
-              </div>
-            </div>
+              </SwiperSlide>
+            </Swiper>
           </div>
         </div>
       </header>

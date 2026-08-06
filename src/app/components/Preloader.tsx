@@ -48,7 +48,7 @@ export default function Preloader() {
             borderRadius: '50%',
             border: '3px solid rgba(30, 58, 138, 0.2)',
             borderTopColor: '#1E3A8A',
-            borderRightColor: '#10B981',
+            borderRightColor: '#F97316',
             animation: 'preloader-spin 1s linear infinite',
             position: 'absolute',
           }}
@@ -75,7 +75,7 @@ export default function Preloader() {
 
       <div style={{ marginTop: '28px', textAlign: 'center' }}>
         <h4 style={{ color: '#ffffff', fontSize: '18px', fontWeight: '700', letterSpacing: '0.5px', margin: 0, fontFamily: 'sans-serif' }}>
-          Geek<span style={{ color: '#10B981' }}>vista</span>
+          Geek<span style={{ color: '#F97316' }}>vista</span>
         </h4>
         <p style={{ color: '#94a3b8', fontSize: '12px', marginTop: '6px', margin: 0, fontFamily: 'sans-serif' }}>
           Loading Experience...

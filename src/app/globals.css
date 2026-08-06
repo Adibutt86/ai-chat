@@ -121,7 +121,7 @@
     --popover-foreground: 220 20% 10%;
     --primary: 224 64% 33%; /* #1E3A8A - Quantum Navy */
     --primary-foreground: 210 40% 98%;
-    --secondary: 160 84% 39%; /* #10B981 - Vista Growth Green */
+    --secondary: 24 95% 53%; /* #F97316 - Lead Gen Pulse Orange */
     --secondary-foreground: 210 40% 98%;
     --muted: 220 10% 94%;
     --muted-foreground: 220 10% 46%;
@@ -144,7 +144,7 @@
     --popover-foreground: 220 20% 10%;
     --primary: 224 64% 33%; /* #1E3A8A - Quantum Navy */
     --primary-foreground: 210 40% 98%;
-    --secondary: 160 84% 39%; /* #10B981 - Vista Growth Green */
+    --secondary: 24 95% 53%; /* #F97316 - Lead Gen Pulse Orange */
     --secondary-foreground: 210 40% 98%;
     --muted: 220 10% 94%;
     --muted-foreground: 220 10% 46%;
@@ -227,9 +227,9 @@ body {
   transform: translateY(-2px);
 }
 
-/* Vista Growth Green Secondary Elements (#10B981) */
+/* Lead Gen Pulse Orange Secondary Elements (#F97316) */
 .btn-success-green, .badge-success-green {
-  background: #10B981 !important;
+  background: #F97316 !important;
   color: #ffffff !important;
 }
 

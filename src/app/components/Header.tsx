@@ -17,11 +17,11 @@ export default function Header({ dataPage = 'contact', dataPageParent = 'contact
   return (
     <header className="header d-lg-flex align-items-center" data-page={dataPage} data-page-parent={dataPageParent}>
       <div className="container d-flex align-items-center flex-wrap flex-lg-nowrap justify-content-between w-100">
-        <Link className="logo header_logo d-inline-flex align-items-center gap-2" href="/" style={{ flexGrow: 0 }}>
-          <span className="logo_icon d-inline-flex align-items-center justify-content-center" style={{ width: '54px', height: '54px' }}>
-            <img src="/svg/logo.svg" alt="Geekvista AI" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+        <Link className="logo header_logo d-inline-flex align-items-center gap-2" href="/" style={{ flexGrow: 0, textDecoration: 'none' }}>
+          <span className="logo_icon d-inline-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px', minWidth: '40px', minHeight: '40px', flexShrink: 0 }}>
+            <img src="/svg/logo.svg" alt="Geekvista AI" style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
           </span>
-          <span className="logo_text h4 mb-0" style={{ fontSize: '26px', fontWeight: 800, lineHeight: 1, color: '#1b2129' }}>Geekvista AI</span>
+          <span className="logo_text h4 mb-0" style={{ fontSize: '22px', fontWeight: 800, lineHeight: '1.2', color: '#1b2129', whiteSpace: 'nowrap' }}>Geekvista AI</span>
         </Link>
 
         <nav className={`header_nav collapse ${mobileMenuOpen ? 'show' : ''} d-lg-flex justify-content-lg-center`} id="headerMenu" style={{ flexGrow: 1, visibility: 'visible', overflow: 'visible', maxHeight: 'none' }}>

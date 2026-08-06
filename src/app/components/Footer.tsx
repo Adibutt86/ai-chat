@@ -27,11 +27,11 @@ export default function Footer() {
     <footer className="footer">
       <div className="container">
         <div className="footer_top">
-          <Link className="logo footer_top-logo d-inline-flex align-items-center gap-2" href="/">
-            <span className="logo_icon d-inline-flex align-items-center justify-content-center" style={{ width: '56px', height: '56px' }}>
-              <img src="/svg/logo.svg" alt="Geekvista AI" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+          <Link className="logo footer_top-logo d-inline-flex align-items-center gap-2" href="/" style={{ textDecoration: 'none' }}>
+            <span className="logo_icon d-inline-flex align-items-center justify-content-center" style={{ width: '44px', height: '44px', minWidth: '44px', minHeight: '44px', flexShrink: 0 }}>
+              <img src="/svg/logo.svg" alt="Geekvista AI" style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
             </span>
-            <span className="logo_text h2 mb-0" style={{ fontSize: '32px', fontWeight: 800, lineHeight: 1 }}>Geekvista AI</span>
+            <span className="logo_text h2 mb-0" style={{ fontSize: '26px', fontWeight: 800, lineHeight: '1.2', whiteSpace: 'nowrap' }}>Geekvista AI</span>
           </Link>
           <ul className="footer_top-nav d-flex flex-wrap">
             <li className="footer_top-nav_link">

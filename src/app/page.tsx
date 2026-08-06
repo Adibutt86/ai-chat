@@ -139,7 +139,7 @@ export default function Home() {
           </div>
           <div className="container d-xl-flex">
             <div className="hero_main" style={{ zIndex: 2, position: 'relative' }}>
-              <span style={{ color: '#F97316', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '12px', display: 'inline-block', fontSize: '12px', background: 'rgba(249, 115, 22, 0.1)', padding: '5px 14px', borderRadius: '16px', border: '1px solid rgba(249, 115, 22, 0.2)' }}>
+              <span style={{ color: '#FFFFFF', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '12px', display: 'inline-block', fontSize: '12px', background: 'rgba(255, 255, 255, 0.2)', padding: '5px 14px', borderRadius: '16px', border: '1px solid rgba(255, 255, 255, 0.35)', backdropFilter: 'blur(4px)' }}>
                 Meet Geekvista AI
               </span>
               <h1 className="h1" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 3.8rem)', fontWeight: 800, lineHeight: 1.15, color: '#FFFFFF', marginBottom: '20px', marginTop: '4px' }}>

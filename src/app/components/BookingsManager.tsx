@@ -203,28 +203,28 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <div>
-        <h2 className="text-2xl font-bold text-zinc-900">Bookings</h2>
-        <p className="text-zinc-550 text-sm">Review, verify, and manage customer appointments scheduled through your AI agent.</p>
+        <h2 className="text-xl font-bold text-slate-900 tracking-tight">Bookings</h2>
+        <p className="text-slate-500 text-xs mt-0.5">Review, verify, and manage customer appointments scheduled through your AI agent.</p>
       </div>
 
       {/* Filters and Search */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-zinc-200 rounded-2xl p-4 shadow-sm">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-white border border-slate-200 rounded-xl p-3.5 shadow-xs">
         <form onSubmit={handleSearchSubmit} className="flex-1 flex gap-2">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-zinc-400" />
+            <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
             <input
               type="text"
               placeholder="Search by customer name, email or phone..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-zinc-50 border border-zinc-200 rounded-xl pl-10 pr-4 py-2 text-zinc-900 placeholder-zinc-450 focus:outline-none focus:ring-1 focus:ring-blue-600 text-sm"
+              className="w-full bg-white border border-slate-300 rounded-lg pl-9 pr-3 py-1.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#F97316] text-xs"
             />
           </div>
           <button
             type="submit"
-            className="bg-blue-600 hover:bg-blue-700 border border-blue-600 text-white px-4 py-2 rounded-xl text-sm font-semibold transition cursor-pointer shadow-sm"
+            className="bg-[#F97316] hover:bg-[#ea580c] border border-slate-900 text-white px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-xs"
           >
             Search
           </button>

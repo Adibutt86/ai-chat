@@ -120,51 +120,51 @@ export default function AgentsManager({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-white">AI Agents</h2>
-          <p className="text-zinc-400 text-sm">Configure, deploy, and select different personas/models for your chatbots.</p>
+          <h2 className="text-xl font-bold text-slate-900 tracking-tight">AI Agents</h2>
+          <p className="text-slate-500 text-xs mt-0.5">Configure, deploy, and select different personas/models for your chatbots.</p>
         </div>
         <button
           onClick={handleCreateClick}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition duration-150"
+          className="flex items-center gap-2 bg-[#F97316] hover:bg-[#ea580c] text-white font-semibold shadow-xs border border-slate-900 rounded-lg px-3.5 py-1.5 text-xs transition-all"
         >
           <Plus className="h-4 w-4" />
           Create Agent
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {agents.map((agent) => {
           const isSelected = selectedAgentId === agent.id;
           return (
             <div
               key={agent.id}
               onClick={() => onSelectAgent(agent.id)}
-              className={`cursor-pointer rounded-2xl border p-6 transition flex flex-col justify-between group relative ${
+              className={`cursor-pointer rounded-xl border p-5 transition-all flex flex-col justify-between group relative ${
                 isSelected
-                  ? 'border-blue-500 bg-zinc-900 shadow-md ring-1 ring-blue-500'
-                  : 'border-zinc-800 bg-zinc-900/50 hover:border-zinc-700'
+                  ? 'border-[#1E3A8A] bg-slate-50/90 shadow-sm ring-2 ring-[#1E3A8A]/20'
+                  : 'border-slate-200 bg-white hover:border-slate-300 shadow-xs'
               }`}
             >
               <div>
-                <div className="flex justify-between items-start mb-4">
+                <div className="flex justify-between items-start mb-3">
                   <div
-                    className="h-10 w-10 rounded-xl flex items-center justify-center text-white"
-                    style={{ backgroundColor: agent.themeColor }}
+                    className="h-9 w-9 rounded-lg flex items-center justify-center text-white border border-slate-900 shadow-xs"
+                    style={{ backgroundColor: agent.themeColor || '#2563eb' }}
                   >
                     <Bot className="h-5 w-5" />
                   </div>
                   <div className="flex items-center gap-1.5">
                     {isSelected && (
-                      <span className="bg-blue-950 text-blue-400 border border-blue-900 px-2 py-0.5 rounded-full text-xs font-semibold flex items-center gap-1 mr-1">
-                        <Check className="h-3 w-3" /> Active
+                      <span className="bg-blue-50 text-[#1E3A8A] border border-blue-200 px-2 py-0.5 rounded-full text-[10px] font-bold flex items-center gap-1 mr-1">
+                        <Check className="h-3 w-3 text-[#F97316]" /> Active
                       </span>
                     )}
                     <button
                       onClick={(e) => handleEditClick(e, agent)}
-                      className="opacity-0 group-hover:opacity-100 p-1.5 bg-zinc-800 hover:bg-zinc-750 text-zinc-300 hover:text-white rounded-lg transition duration-150 border border-zinc-700"
+                      className="opacity-0 group-hover:opacity-100 p-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition duration-150 border border-slate-300"
                       title="Edit Agent"
                     >
                       <Edit className="h-3.5 w-3.5" />
@@ -172,7 +172,7 @@ export default function AgentsManager({
                     {agents.length > 1 && (
                       <button
                         onClick={(e) => handleDelete(e, agent.id)}
-                        className="opacity-0 group-hover:opacity-100 p-1.5 bg-red-950/40 hover:bg-red-950 text-red-500 hover:text-white rounded-lg transition duration-150 border border-red-900/50"
+                        className="opacity-0 group-hover:opacity-100 p-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-lg transition duration-150 border border-rose-200"
                         title="Delete Agent"
                       >
                         <Trash2 className="h-3.5 w-3.5" />
@@ -180,14 +180,14 @@ export default function AgentsManager({
                     )}
                   </div>
                 </div>
-                <h3 className="text-lg font-bold text-white">{agent.name}</h3>
-                <p className="text-zinc-400 text-xs mt-2 line-clamp-2">
+                <h3 className="text-base font-bold text-slate-900">{agent.name}</h3>
+                <p className="text-slate-500 text-xs mt-1.5 line-clamp-2">
                   {agent.description || 'No custom agent description.'}
                 </p>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-zinc-800 flex justify-between items-center text-zinc-500 text-xs">
-                <span>Model: {agent.model}</span>
+              <div className="mt-5 pt-3 border-t border-slate-200/80 flex justify-between items-center text-slate-500 text-[11px]">
+                <span className="font-mono">Model: {agent.model}</span>
                 <span>Temp: {agent.temperature}</span>
               </div>
             </div>
@@ -196,67 +196,67 @@ export default function AgentsManager({
       </div>
 
       {showModal && (
-        <div className="fixed inset-0 bg-zinc-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="w-full max-w-xl bg-zinc-900 border border-zinc-800 rounded-2xl p-8 shadow-2xl space-y-6">
-            <h3 className="text-xl font-bold text-white">
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+          <div className="w-full max-w-xl bg-white border border-slate-200 rounded-xl p-6 shadow-2xl space-y-5">
+            <h3 className="text-lg font-bold text-slate-900">
               {isEditMode ? 'Edit Agent Properties' : 'Create New Agent'}
             </h3>
 
             {/* Custom creation/configuration instructions guide */}
-            <div className="bg-blue-950/30 border border-blue-900/40 p-4 rounded-xl text-xs text-blue-300 space-y-2">
-              <span className="font-semibold text-white block">💡 Setup Instructions:</span>
-              <ul className="list-disc pl-4 space-y-1">
+            <div className="bg-blue-50/70 border border-blue-200/80 p-3.5 rounded-lg text-xs text-slate-700 space-y-1.5">
+              <span className="font-bold text-[#1E3A8A] block">💡 Setup Instructions:</span>
+              <ul className="list-disc pl-4 space-y-0.5 text-[11px] text-slate-600">
                 <li><strong>System Instructions</strong>: Define your chatbot's persona, scope, boundaries, and tone of voice.</li>
-                <li><strong>AI Model</strong>: Powered by <em>Anthropic Claude 3.5 Sonnet</em> for high-quality, intelligent streaming responses.</li>
-                <li><strong>Temperature</strong>: Lower settings (0.1–0.3) deliver exact, factual RAG answers. Higher settings (0.7+) create a creative, conversational tone.</li>
+                <li><strong>AI Model</strong>: Powered by <em>Anthropic Claude 3.5 Sonnet</em> for high-quality, intelligent responses.</li>
+                <li><strong>Temperature</strong>: Lower settings (0.1–0.3) deliver exact factual answers. Higher settings (0.7+) create creative responses.</li>
               </ul>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4 text-sm text-zinc-200">
-              <div className="grid grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit} className="space-y-3.5 text-xs text-slate-700">
+              <div className="grid grid-cols-2 gap-3.5">
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Agent Name</label>
+                  <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">Agent Name</label>
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-1 focus:ring-blue-600"
+                    className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Theme Color</label>
+                  <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">Theme Color</label>
                   <input
                     type="color"
                     value={themeColor}
                     onChange={(e) => setThemeColor(e.target.value)}
-                    className="w-full h-10 bg-zinc-950 border border-zinc-800 rounded-lg cursor-pointer"
+                    className="w-full h-8 bg-white border border-slate-300 rounded-lg cursor-pointer"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Description</label>
+                <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">Description</label>
                 <input
                   type="text"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-1 focus:ring-blue-600"
+                  className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                   placeholder="e.g. Sales specialist assistant"
                 />
               </div>
 
               <div>
-                <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Avatar Image (Upload File or URL)</label>
+                <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">Avatar Image (Upload File or URL)</label>
                 <div className="flex gap-2 items-center">
                   <input
                     type="text"
                     value={avatarUrl}
                     onChange={(e) => setAvatarUrl(e.target.value)}
-                    className="flex-1 bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:ring-1 focus:ring-blue-600"
+                    className="flex-1 bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                     placeholder="Paste URL or click Upload"
                   />
-                  <label className="bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs px-3 py-2 rounded-lg cursor-pointer border border-zinc-700 font-medium shrink-0 flex items-center gap-1.5 transition">
+                  <label className="bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs px-3 py-1.5 rounded-lg cursor-pointer border border-slate-300 font-semibold shrink-0 flex items-center gap-1.5 transition">
                     <Upload className="h-3.5 w-3.5" />
                     <span>Upload</span>
                     <input
@@ -277,7 +277,7 @@ export default function AgentsManager({
                       }}
                     />
                   </label>
-                  <div className="h-9 w-9 rounded-full bg-zinc-900 border border-zinc-700 flex items-center justify-center overflow-hidden shrink-0">
+                  <div className="h-8 w-8 rounded-full bg-slate-100 border border-slate-300 flex items-center justify-center overflow-hidden shrink-0">
                     {avatarUrl && avatarUrl.trim() !== '' ? (
                       <img
                         src={avatarUrl}
@@ -288,33 +288,32 @@ export default function AgentsManager({
                         }}
                       />
                     ) : (
-                      <svg className="h-5 w-5 text-zinc-400 p-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <svg className="h-4 w-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <path d="M12 2a10 10 0 0 1 10 10c0 5.523-4.477 10-10 10S2 17.523 2 12A10 10 0 0 1 12 2z"></path>
                         <path d="M12 6v6l4 2"></path>
                       </svg>
                     )}
                   </div>
                 </div>
-                <p className="text-[11px] text-zinc-500 mt-1">Upload a PNG/JPG file from your computer or paste an image URL.</p>
+                <p className="text-[10px] text-slate-400 mt-1">Upload a PNG/JPG file from your computer or paste an image URL.</p>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-3.5">
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">AI Model</label>
+                  <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">AI Model</label>
                   <select
                     value={model}
                     onChange={(e) => setModel(e.target.value)}
-                    className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-1 focus:ring-blue-600"
+                    className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                   >
-                    <option value="claude-3-5-sonnet-20241022">Claude 3.5 Sonnet (Default & Recommended)</option>
+                    <option value="claude-3-5-sonnet-20241022">Claude 3.5 Sonnet (Recommended)</option>
                     <option value="claude-3-5-haiku-20241022">Claude 3.5 Haiku (Fast & Low Cost)</option>
-                    <option value="claude-3-7-sonnet-20250219">Claude 3.7 Sonnet (Advanced Reasoning)</option>
-                    <option value="claude-3-opus-20240229">Claude 3 Opus (Complex Tasks)</option>
-                    <option value="claude-3-haiku-20240307">Claude 3 Haiku</option>
+                    <option value="claude-3-7-sonnet-20250219">Claude 3.7 Sonnet (Advanced)</option>
+                    <option value="claude-3-opus-20240229">Claude 3 Opus</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Temperature ({temperature})</label>
+                  <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">Temperature ({temperature})</label>
                   <input
                     type="range"
                     min="0"
@@ -322,33 +321,33 @@ export default function AgentsManager({
                     step="0.1"
                     value={temperature}
                     onChange={(e) => setTemperature(parseFloat(e.target.value))}
-                    className="w-full"
+                    className="w-full accent-[#F97316]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">System Instructions</label>
+                <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">System Instructions</label>
                 <textarea
                   rows={4}
                   value={systemPrompt}
                   onChange={(e) => setSystemPrompt(e.target.value)}
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white font-mono text-xs focus:outline-none focus:ring-1 focus:ring-blue-600"
+                  className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 font-mono focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                 />
               </div>
 
-              <div className="flex justify-end gap-3 pt-4 border-t border-zinc-800">
+              <div className="flex justify-end gap-2.5 pt-3 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="bg-zinc-800 hover:bg-zinc-700 px-4 py-2 rounded-lg text-white font-medium transition duration-150"
+                  className="bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 font-semibold rounded-lg px-3.5 py-1.5 text-xs shadow-xs transition-all"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSaving}
-                  className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-4 py-2 rounded-lg text-white font-medium transition duration-150"
+                  className="bg-[#F97316] hover:bg-[#ea580c] text-white font-semibold shadow-xs border border-slate-900 rounded-lg px-3.5 py-1.5 text-xs transition-all disabled:opacity-50"
                 >
                   {isSaving ? 'Saving...' : (isEditMode ? 'Save Changes' : 'Create Agent')}
                 </button>
@@ -360,3 +359,4 @@ export default function AgentsManager({
     </div>
   );
 }
+

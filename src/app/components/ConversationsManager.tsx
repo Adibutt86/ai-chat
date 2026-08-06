@@ -37,29 +37,29 @@ export default function ConversationsManager({ agentId }: ConversationsManagerPr
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <div>
-        <h2 className="text-2xl font-bold text-white">Visitor Conversations</h2>
-        <p className="text-zinc-400 text-sm">Review real-time chats, customer queries, and visitor context analytics.</p>
+        <h2 className="text-xl font-bold text-slate-900 tracking-tight">Visitor Conversations</h2>
+        <p className="text-slate-500 text-xs mt-0.5">Review real-time chats, customer queries, and visitor context analytics.</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[600px]">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 h-[600px]">
         {/* Left Side: Conversation List */}
-        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl flex flex-col overflow-hidden">
-          <div className="p-4 border-b border-zinc-800 flex items-center gap-2">
-            <Search className="h-4 w-4 text-zinc-500" />
+        <div className="bg-white border border-slate-200 rounded-xl flex flex-col overflow-hidden shadow-xs">
+          <div className="p-3 border-b border-slate-200 flex items-center gap-2 bg-slate-50/50">
+            <Search className="h-4 w-4 text-slate-400" />
             <input
               type="text"
               placeholder="Search chat contents..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-transparent text-sm text-white focus:outline-none"
+              className="w-full bg-transparent text-xs text-slate-800 focus:outline-none placeholder-slate-400"
             />
           </div>
 
-          <div className="flex-1 overflow-y-auto divide-y divide-zinc-850">
+          <div className="flex-1 overflow-y-auto divide-y divide-slate-100">
             {filteredConversations.length === 0 ? (
-              <p className="text-xs text-zinc-500 italic text-center py-8">No chats found.</p>
+              <p className="text-xs text-slate-400 italic text-center py-8">No chats found.</p>
             ) : (
               filteredConversations.map((conv) => {
                 const isSelected = selectedConversation?.id === conv.id;
@@ -68,17 +68,19 @@ export default function ConversationsManager({ agentId }: ConversationsManagerPr
                   <div
                     key={conv.id}
                     onClick={() => setSelectedConversation(conv)}
-                    className={`p-4 cursor-pointer hover:bg-zinc-800/40 transition ${
-                      isSelected ? 'bg-zinc-800/80 border-l-2 border-blue-500' : ''
+                    className={`p-3.5 cursor-pointer hover:bg-slate-50 transition-all ${
+                      isSelected ? 'bg-slate-100/90 border-l-4 border-[#F97316]' : ''
                     }`}
                   >
                     <div className="flex justify-between items-start mb-1">
-                      <span className="text-xs font-semibold text-white">Visitor ({conv.visitorId.substring(0, 8)})</span>
-                      <span className="text-[10px] text-zinc-500">
+                      <span className={`text-xs font-semibold ${isSelected ? 'text-[#1E3A8A]' : 'text-slate-800'}`}>
+                        Visitor ({conv.visitorId.substring(0, 8)})
+                      </span>
+                      <span className="text-[10px] text-slate-400 font-medium">
                         {new Date(conv.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </span>
                     </div>
-                    <p className="text-xs text-zinc-400 truncate mt-1">{lastMsg}</p>
+                    <p className="text-xs text-slate-500 truncate">{lastMsg}</p>
                   </div>
                 );
               })
@@ -87,49 +89,49 @@ export default function ConversationsManager({ agentId }: ConversationsManagerPr
         </div>
 
         {/* Right Side: Active Chat Viewer */}
-        <div className="lg:col-span-2 bg-zinc-900 border border-zinc-800 rounded-2xl flex flex-col overflow-hidden">
+        <div className="lg:col-span-2 bg-white border border-slate-200 rounded-xl flex flex-col overflow-hidden shadow-xs">
           {selectedConversation ? (
             <>
               {/* Visitor Metadata Header */}
-              <div className="p-4 border-b border-zinc-800 bg-zinc-950 flex flex-wrap justify-between items-center gap-4 text-xs text-zinc-400">
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-1">
-                    <MapPin className="h-3 w-3 text-zinc-500" />
-                    <span>{selectedConversation.country || 'Unknown'}</span>
+              <div className="p-3.5 border-b border-slate-200 bg-slate-50 flex flex-wrap justify-between items-center gap-3 text-xs text-slate-600">
+                <div className="flex items-center gap-3 flex-wrap">
+                  <div className="flex items-center gap-1.5 font-medium">
+                    <MapPin className="h-3.5 w-3.5 text-[#F97316]" />
+                    <span>{selectedConversation.country || 'Unknown Location'}</span>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Monitor className="h-3 w-3 text-zinc-500" />
-                    <span>{selectedConversation.browser || 'Unknown'}</span>
+                  <div className="flex items-center gap-1.5 font-medium">
+                    <Monitor className="h-3.5 w-3.5 text-slate-400" />
+                    <span>{selectedConversation.browser || 'Unknown Device'}</span>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Globe className="h-3 w-3 text-zinc-500" />
-                    <span className="truncate max-w-[150px]">{selectedConversation.pageUrl || 'Widget Page'}</span>
+                  <div className="flex items-center gap-1.5 font-medium">
+                    <Globe className="h-3.5 w-3.5 text-[#1E3A8A]" />
+                    <span className="truncate max-w-[180px]">{selectedConversation.pageUrl || 'Widget Page'}</span>
                   </div>
                 </div>
-                <div className="flex items-center gap-1 text-[10px] text-zinc-500">
+                <div className="flex items-center gap-1 text-[11px] text-slate-400 font-medium">
                   <Calendar className="h-3 w-3" />
                   <span>{new Date(selectedConversation.createdAt).toLocaleString()}</span>
                 </div>
               </div>
 
               {/* Chat Message Thread */}
-              <div className="flex-1 p-6 space-y-4 overflow-y-auto bg-zinc-950/20">
+              <div className="flex-1 p-5 space-y-3 overflow-y-auto bg-slate-50/40">
                 {selectedConversation.messages.map((msg: any) => {
-                  const isBot = msg.sender === 'user';
+                  const isUser = msg.sender === 'user';
                   return (
                     <div
                       key={msg.id}
-                      className={`flex ${isBot ? 'justify-start' : 'justify-end'}`}
+                      className={`flex ${isUser ? 'justify-[#1E3A8A] justify-start' : 'justify-end'}`}
                     >
                       <div
-                        className={`max-w-[75%] rounded-2xl px-4 py-2.5 text-sm shadow-sm ${
-                          isBot
-                            ? 'bg-zinc-800 text-zinc-100 border border-zinc-700'
-                            : 'bg-blue-600 text-white'
+                        className={`max-w-[75%] rounded-xl px-3.5 py-2 text-xs shadow-xs ${
+                          isUser
+                            ? 'bg-white text-slate-800 border border-slate-200'
+                            : 'bg-[#F97316] text-white font-medium border border-slate-900'
                         }`}
                       >
                         <p className="whitespace-pre-line leading-relaxed">{msg.content}</p>
-                        <span className="block text-[9px] text-zinc-400 mt-1 text-right">
+                        <span className={`block text-[9px] mt-1 text-right ${isUser ? 'text-slate-400' : 'text-orange-100'}`}>
                           {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </span>
                       </div>
@@ -139,7 +141,7 @@ export default function ConversationsManager({ agentId }: ConversationsManagerPr
               </div>
             </>
           ) : (
-            <div className="flex-1 flex flex-col items-center justify-center text-zinc-500 italic p-8">
+            <div className="flex-1 flex flex-col items-center justify-center text-slate-400 italic text-xs p-8">
               Select a conversation thread to view the session message log.
             </div>
           )}
@@ -148,3 +150,4 @@ export default function ConversationsManager({ agentId }: ConversationsManagerPr
     </div>
   );
 }
+

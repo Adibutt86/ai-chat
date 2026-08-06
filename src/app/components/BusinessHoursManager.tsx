@@ -246,22 +246,22 @@ export default function BusinessHoursManager() {
   currentMonday.setDate(now.getDate() + monDiff);
 
   return (
-    <div className="space-y-6 max-w-4xl">
+    <div className="space-y-5 max-w-4xl">
       {/* Header with Current Date & Day Card */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white border border-zinc-200 rounded-2xl p-5 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-white border border-slate-200 rounded-xl p-4 shadow-xs">
         <div>
-          <h2 className="text-2xl font-bold text-zinc-900">Business Hours & Scheduling</h2>
-          <p className="text-zinc-550 text-sm">Manage weekly availability, break shifts, holidays, buffer times, and scheduling notice rules.</p>
+          <h2 className="text-xl font-bold text-slate-900 tracking-tight">Business Hours & Scheduling</h2>
+          <p className="text-slate-500 text-xs mt-0.5">Manage weekly availability, break shifts, holidays, buffer times, and scheduling notice rules.</p>
         </div>
-        <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-2.5 flex items-center gap-3 shrink-0 shadow-xs">
-          <div className="h-9 w-9 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-base shadow-sm">
+        <div className="bg-blue-50/70 border border-[#1E3A8A]/20 rounded-lg px-3.5 py-2 flex items-center gap-2.5 shrink-0">
+          <div className="h-8 w-8 rounded-md bg-[#1E3A8A] text-white flex items-center justify-center font-bold text-sm shadow-xs">
             {now.getDate()}
           </div>
           <div>
-            <div className="text-[10px] font-bold text-blue-900 flex items-center gap-1 uppercase tracking-wider">
-              <Calendar className="h-3.5 w-3.5 text-blue-600" /> Current Date & Day
+            <div className="text-[9px] font-bold text-[#1E3A8A] flex items-center gap-1 uppercase tracking-wider">
+              <Calendar className="h-3 w-3 text-[#F97316]" /> Current Date & Day
             </div>
-            <div className="text-xs font-bold text-zinc-800">
+            <div className="text-xs font-bold text-slate-900">
               {todayFormatted}
             </div>
           </div>
@@ -269,11 +269,11 @@ export default function BusinessHoursManager() {
       </div>
 
       {/* Navigation Tabs */}
-      <div className="flex border-b border-zinc-200 gap-4">
+      <div className="flex border-b border-slate-200 gap-4">
         <button
           onClick={() => setActiveTab('hours')}
-          className={`pb-3 text-sm font-semibold flex items-center gap-2 border-b-2 transition cursor-pointer ${
-            activeTab === 'hours' ? 'border-blue-600 text-blue-600' : 'border-transparent text-zinc-500 hover:text-zinc-800'
+          className={`pb-2.5 text-xs font-bold flex items-center gap-2 border-b-2 transition cursor-pointer ${
+            activeTab === 'hours' ? 'border-[#F97316] text-[#1E3A8A]' : 'border-transparent text-slate-500 hover:text-slate-900'
           }`}
         >
           <Clock className="h-4 w-4" /> Weekly Hours & Breaks

@@ -382,17 +382,17 @@ export default function TrainingManager({ agentId }: TrainingManagerProps) {
   ] as const;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <div>
-        <h2 className="text-2xl font-bold text-zinc-900">Knowledge Base</h2>
-        <p className="text-zinc-550 text-sm">Index and synchronize source materials to train your AI agent's semantic RAG vectors.</p>
+        <h2 className="text-xl font-bold text-slate-900 tracking-tight">Knowledge Base</h2>
+        <p className="text-slate-500 text-xs mt-0.5">Index and synchronize source materials to train your AI agent's semantic RAG vectors.</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* Left section: Tabs and Form */}
-        <div className="lg:col-span-2 bg-white border border-zinc-200 rounded-2xl p-6 space-y-6 shadow-sm">
+        <div className="lg:col-span-2 bg-white border border-slate-200 rounded-xl p-5 space-y-5 shadow-xs">
           {/* Tabs header */}
-          <div className="flex border-b border-zinc-150 pb-px gap-1 overflow-x-auto">
+          <div className="flex border-b border-slate-200 pb-px gap-1 overflow-x-auto">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -400,60 +400,60 @@ export default function TrainingManager({ agentId }: TrainingManagerProps) {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 py-2.5 border-b-2 text-sm font-semibold transition cursor-pointer whitespace-nowrap ${
+                  className={`flex items-center gap-2 px-3.5 py-2 border-b-2 text-xs font-bold transition cursor-pointer whitespace-nowrap ${
                     isActive 
-                      ? 'border-blue-600 text-blue-600' 
-                      : 'border-transparent text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50'
+                      ? 'border-[#F97316] text-[#1E3A8A]' 
+                      : 'border-transparent text-slate-500 hover:text-slate-900 hover:bg-slate-50'
                   }`}
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon className={`h-4 w-4 ${isActive ? 'text-[#F97316]' : 'text-slate-400'}`} />
                   {tab.name}
                 </button>
               );
             })}
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4 text-sm text-zinc-700">
+          <form onSubmit={handleSubmit} className="space-y-3.5 text-xs text-slate-700">
             {activeTab === 'website' && (
               <div className="space-y-3">
-                <div className="space-y-3">
-                  <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1.5">Indexing Method</label>
-                  <div className="flex gap-6 pb-1">
-                    <label className="flex items-center gap-2 text-xs font-semibold text-zinc-700 cursor-pointer select-none">
+                <div className="space-y-2">
+                  <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">Indexing Method</label>
+                  <div className="flex gap-4 flex-wrap">
+                    <label className="flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer select-none">
                       <input
                         type="radio"
                         name="crawlOption"
                         value="url"
                         checked={crawlOption === 'url'}
                         onChange={() => setCrawlOption('url')}
-                        className="text-blue-600 focus:ring-blue-600 bg-zinc-50 border-zinc-300"
+                        className="accent-[#F97316]"
                       />
                       Single Website URL Page Indexing
                     </label>
-                    <label className="flex items-center gap-2 text-xs font-semibold text-zinc-700 cursor-pointer select-none">
+                    <label className="flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer select-none">
                       <input
                         type="radio"
                         name="crawlOption"
                         value="sitemap"
                         checked={crawlOption === 'sitemap'}
                         onChange={() => setCrawlOption('sitemap')}
-                        className="text-blue-600 focus:ring-blue-600 bg-zinc-50 border-zinc-300"
+                        className="accent-[#F97316]"
                       />
                       Entire Website (Sitemap Indexing)
                     </label>
                   </div>
                 </div>
-                <div className="space-y-1.5">
-                  <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold">Target URL to Crawl</label>
+                <div className="space-y-1">
+                  <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold">Target URL to Crawl</label>
                   <input
                     type="url"
                     placeholder="https://example.com"
                     value={webUrl}
                     onChange={(e) => setWebUrl(e.target.value)}
-                    className="w-full bg-zinc-50 border border-zinc-200 rounded-lg px-3 py-2.5 text-zinc-900 placeholder-zinc-400 focus:outline-none"
+                    className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                     required
                   />
-                  <p className="text-xs text-zinc-550">
+                  <p className="text-[11px] text-slate-400 mt-1">
                     {crawlOption === 'sitemap' 
                       ? 'The crawler will fetch the main sitemap pages and index all sitemap directories recursively.' 
                       : 'The crawler will fetch and index the single specified page URL only.'}
@@ -464,42 +464,42 @@ export default function TrainingManager({ agentId }: TrainingManagerProps) {
 
             {activeTab === 'file' && (
               <div className="space-y-3">
-                <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold">Upload Document File (.pdf, .docx, .txt)</label>
-                <div className="border-2 border-dashed border-zinc-200 hover:border-blue-500 rounded-2xl p-6 text-center cursor-pointer transition relative bg-zinc-50 flex flex-col items-center justify-center min-h-[140px]">
+                <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold">Upload Document File (.pdf, .docx, .txt)</label>
+                <div className="border-2 border-dashed border-slate-300 hover:border-[#F97316] rounded-xl p-5 text-center cursor-pointer transition relative bg-slate-50 flex flex-col items-center justify-center min-h-[120px]">
                   <input
                     type="file"
                     accept=".pdf,.docx,.txt"
                     onChange={handleFileChange}
                     className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
                   />
-                  <FileText className="h-10 w-10 text-zinc-400 mb-2" />
-                  <span className="text-sm font-semibold text-zinc-700">
+                  <FileText className="h-8 w-8 text-slate-400 mb-1.5" />
+                  <span className="text-xs font-semibold text-slate-700">
                     {loadingFile ? 'Extracting document text content...' : 'Click to select or drag PDF, DOCX, or TXT file'}
                   </span>
-                  <span className="text-xs text-zinc-500 mt-1">Parsed locally on your machine and vectorized for agent training</span>
+                  <span className="text-[10px] text-slate-400 mt-0.5">Parsed locally on your machine and vectorized for agent training</span>
                 </div>
 
                 {fileName && (
                   <div className="space-y-3 pt-2">
                     <div>
-                      <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Document Title</label>
+                      <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">Document Title</label>
                       <input
                         type="text"
                         placeholder="ReturnPolicy.pdf"
                         value={fileName}
                         onChange={(e) => setFileName(e.target.value)}
-                        className="w-full bg-zinc-50 border border-zinc-200 rounded-lg px-3 py-2.5 text-zinc-900"
+                        className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                         required
                       />
                     </div>
                     <div>
-                      <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Extracted Text Content (Editable)</label>
+                      <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">Extracted Text Content (Editable)</label>
                       <textarea
-                        rows={6}
+                        rows={5}
                         placeholder="Paste manual or doc text contents here..."
                         value={fileContent}
                         onChange={(e) => setFileContent(e.target.value)}
-                        className="w-full bg-zinc-50 border border-zinc-200 rounded-lg px-3 py-2.5 text-zinc-900 font-mono text-xs"
+                        className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 font-mono focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                         required
                       />
                     </div>
@@ -510,37 +510,37 @@ export default function TrainingManager({ agentId }: TrainingManagerProps) {
 
             {activeTab === 'faq' && (
               <div className="space-y-3">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Category</label>
+                    <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">Category</label>
                     <input
                       type="text"
                       placeholder="General"
                       value={faqCategory}
                       onChange={(e) => setFaqCategory(e.target.value)}
-                      className="w-full bg-zinc-50 border border-zinc-200 rounded-lg px-3 py-2.5 text-zinc-900"
+                      className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Question</label>
+                  <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">Question</label>
                   <input
                     type="text"
                     placeholder="e.g. What is the delivery timeframe?"
                     value={faqQuestion}
                     onChange={(e) => setFaqQuestion(e.target.value)}
-                    className="w-full bg-zinc-50 border border-zinc-200 rounded-lg px-3 py-2.5 text-zinc-900"
+                    className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Answer</label>
+                  <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">Answer</label>
                   <textarea
                     rows={3}
                     placeholder="Provide standard matching answer description..."
                     value={faqAnswer}
                     onChange={(e) => setFaqAnswer(e.target.value)}
-                    className="w-full bg-zinc-50 border border-zinc-200 rounded-lg px-3 py-2.5 text-zinc-900"
+                    className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                     required
                   />
                 </div>
@@ -549,13 +549,13 @@ export default function TrainingManager({ agentId }: TrainingManagerProps) {
 
             {activeTab === 'manual' && (
               <div className="space-y-3">
-                <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold">Custom Knowledge Content</label>
+                <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold">Custom Knowledge Content</label>
                 <textarea
-                  rows={8}
+                  rows={6}
                   placeholder="Type custom business data, support instructions or internal policies directly..."
                   value={manualText}
                   onChange={(e) => setManualText(e.target.value)}
-                  className="w-full bg-zinc-50 border border-zinc-200 rounded-lg px-3 py-2.5 text-zinc-900"
+                  className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                   required
                 />
               </div>
@@ -564,7 +564,7 @@ export default function TrainingManager({ agentId }: TrainingManagerProps) {
             <button
               type="submit"
               disabled={loading}
-              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-lg text-white font-semibold disabled:opacity-50 cursor-pointer transition"
+              className="flex items-center gap-2 bg-[#F97316] hover:bg-[#ea580c] text-white font-semibold border border-slate-900 shadow-xs rounded-lg px-4 py-2 text-xs transition-all disabled:opacity-50 cursor-pointer"
             >
               {loading && <Loader2 className="h-4 w-4 animate-spin" />}
               Save & Train Index
@@ -573,14 +573,14 @@ export default function TrainingManager({ agentId }: TrainingManagerProps) {
         </div>
 
         {/* Right section: Activity logs */}
-        <div className="bg-white border border-zinc-200 rounded-2xl p-6 flex flex-col shadow-sm">
-          <div className="flex justify-between items-center mb-4 border-b border-zinc-100 pb-2">
-            <h3 className="text-base font-bold text-zinc-900">Indexing Activity</h3>
+        <div className="bg-white border border-slate-200 rounded-xl p-5 flex flex-col shadow-xs">
+          <div className="flex justify-between items-center mb-3 border-b border-slate-100 pb-2">
+            <h3 className="text-sm font-bold text-slate-900">Indexing Activity</h3>
             <div className="flex gap-1.5">
               <button
                 onClick={handleStopIndexing}
                 disabled={stopping}
-                className="bg-white hover:bg-red-50 text-red-600 border border-zinc-200 hover:border-red-200 px-2 py-1 rounded-lg text-[10px] font-semibold transition cursor-pointer"
+                className="bg-white hover:bg-rose-50 text-rose-600 border border-slate-300 px-2 py-1 rounded-md text-[10px] font-semibold transition cursor-pointer"
                 title="Stop all active crawl and index operations"
               >
                 {stopping ? 'Stopping...' : 'Stop'}
@@ -588,7 +588,7 @@ export default function TrainingManager({ agentId }: TrainingManagerProps) {
               <button
                 onClick={handleResetLogs}
                 disabled={resetting}
-                className="bg-white hover:bg-zinc-100 text-zinc-500 border border-zinc-200 px-2 py-1 rounded-lg text-[10px] font-semibold transition cursor-pointer"
+                className="bg-white hover:bg-slate-100 text-slate-600 border border-slate-300 px-2 py-1 rounded-md text-[10px] font-semibold transition cursor-pointer"
                 title="Clear training activity log history"
               >
                 {resetting ? 'Resetting...' : 'Reset'}
@@ -596,7 +596,7 @@ export default function TrainingManager({ agentId }: TrainingManagerProps) {
               <button
                 onClick={handleClearCache}
                 disabled={clearingCache}
-                className="bg-white hover:bg-red-50 text-red-650 border border-red-200 hover:border-red-300 px-2 py-1 rounded-lg text-[10px] font-bold transition cursor-pointer"
+                className="bg-white hover:bg-rose-50 text-rose-600 border border-rose-300 px-2 py-1 rounded-md text-[10px] font-bold transition cursor-pointer"
                 title="Wipe entire agent knowledge base and vector embeddings"
               >
                 {clearingCache ? 'Clearing...' : 'Clear Cache'}
@@ -604,24 +604,24 @@ export default function TrainingManager({ agentId }: TrainingManagerProps) {
             </div>
           </div>
           
-          <div className="flex-1 space-y-3 overflow-y-auto max-h-[350px] pr-1">
+          <div className="flex-1 space-y-2.5 overflow-y-auto max-h-[350px] pr-1">
             {logs.length === 0 ? (
-              <p className="text-xs text-zinc-550 italic text-center py-8">No training events logged yet.</p>
+              <p className="text-xs text-slate-400 italic text-center py-8">No training events logged yet.</p>
             ) : (
               logs.map((log) => (
-                <div key={log.id} className="p-3 bg-zinc-50 border border-zinc-200 rounded-lg flex items-start gap-3 group relative">
+                <div key={log.id} className="p-2.5 bg-slate-50 border border-slate-200/80 rounded-lg flex items-start gap-2.5 group relative">
                   {log.status === 'completed' && <Check className="h-4 w-4 text-emerald-600 mt-0.5" />}
-                  {log.status === 'running' && <Loader2 className="h-4 w-4 text-blue-600 animate-spin mt-0.5" />}
-                  {log.status === 'failed' && <AlertTriangle className="h-4 w-4 text-red-650 mt-0.5" />}
+                  {log.status === 'running' && <Loader2 className="h-4 w-4 text-[#F97316] animate-spin mt-0.5" />}
+                  {log.status === 'failed' && <AlertTriangle className="h-4 w-4 text-rose-600 mt-0.5" />}
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-semibold text-zinc-800 truncate capitalize">
+                    <p className="text-xs font-semibold text-slate-800 truncate capitalize">
                       {log.sourceType}: {log.sourceName}
                     </p>
-                    <p className="text-[10px] text-zinc-550 mt-0.5">{log.message}</p>
+                    <p className="text-[10px] text-slate-500 mt-0.5">{log.message}</p>
                   </div>
                   <button
                     onClick={() => handleDeleteLog(log.id)}
-                    className="opacity-0 group-hover:opacity-100 p-1 text-zinc-400 hover:text-red-500 rounded transition cursor-pointer"
+                    className="opacity-0 group-hover:opacity-100 p-1 text-slate-400 hover:text-rose-600 rounded transition cursor-pointer"
                     title="Delete Log Entry"
                   >
                     <Trash2 className="h-3.5 w-3.5" />
@@ -634,23 +634,23 @@ export default function TrainingManager({ agentId }: TrainingManagerProps) {
       </div>
 
       {/* Stored Document Records List */}
-      <div className="bg-white border border-zinc-200 rounded-2xl p-6 shadow-sm">
-        <div className="flex items-center gap-2 border-b border-zinc-200 pb-3 mb-4">
-          <FileText className="h-5 w-5 text-blue-600" />
-          <h3 className="text-base font-bold text-zinc-900">Trained Document Records</h3>
+      <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+        <div className="flex items-center gap-2 border-b border-slate-200 pb-3 mb-3">
+          <FileText className="h-4 w-4 text-[#F97316]" />
+          <h3 className="text-sm font-bold text-slate-900">Trained Document Records</h3>
         </div>
         
         {loadingDocs && documents.length === 0 ? (
-          <div className="flex py-8 justify-center">
-            <Loader2 className="h-6 w-6 animate-spin text-blue-600" />
+          <div className="flex py-6 justify-center">
+            <Loader2 className="h-5 w-5 animate-spin text-[#F97316]" />
           </div>
         ) : documents.length === 0 ? (
-          <p className="text-sm text-zinc-400 italic py-4">No documents have been indexed for this agent yet. Train your agent using the options above.</p>
+          <p className="text-xs text-slate-400 italic py-4">No documents have been indexed for this agent yet. Train your agent using the options above.</p>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-sm text-zinc-700">
+            <table className="w-full text-left border-collapse text-xs text-slate-700">
               <thead>
-                <tr className="bg-zinc-50 border-b border-zinc-200 text-zinc-550 font-semibold uppercase text-xs tracking-wider">
+                <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase text-[10px] tracking-wider">
                   <th className="p-3">Source Name</th>
                   <th className="p-3">Source Type</th>
                   <th className="p-3">Content Preview</th>
@@ -659,58 +659,58 @@ export default function TrainingManager({ agentId }: TrainingManagerProps) {
                   <th className="p-3 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-150">
+              <tbody className="divide-y divide-slate-100">
                 {documents.map((doc) => (
-                  <tr key={doc.id} className="hover:bg-zinc-50/50 transition">
-                    <td className="p-3 font-semibold text-zinc-900 max-w-[200px] truncate" title={doc.name}>
+                  <tr key={doc.id} className="hover:bg-slate-50/70 transition">
+                    <td className="p-3 font-semibold text-slate-900 max-w-[180px] truncate" title={doc.name}>
                       {doc.name}
                     </td>
                     <td className="p-3">
-                      <span className="bg-zinc-100 border border-zinc-200 text-[10px] px-2 py-0.5 rounded-full text-zinc-600 font-mono capitalize">
+                      <span className="bg-slate-100 border border-slate-200 text-[10px] px-2 py-0.5 rounded-full text-slate-600 font-mono capitalize">
                         {doc.type}
                       </span>
                     </td>
-                    <td className="p-3 text-zinc-550 max-w-[280px] truncate">
+                    <td className="p-3 text-slate-500 max-w-[260px] truncate">
                       {doc.content}
                     </td>
                     <td className="p-3">
-                      <span className={`inline-flex items-center gap-1 text-xs font-semibold ${
+                      <span className={`inline-flex items-center gap-1 text-[11px] font-semibold ${
                         doc.status === 'completed' 
                           ? 'text-emerald-600' 
                           : doc.status === 'failed' 
-                            ? 'text-red-650' 
-                            : 'text-blue-600'
+                            ? 'text-rose-600' 
+                            : 'text-[#1E3A8A]'
                       }`}>
                         {doc.status === 'completed' && <Check className="h-3 w-3" />}
                         {doc.status === 'running' && <Loader2 className="h-3 w-3 animate-spin" />}
                         {doc.status}
                       </span>
                     </td>
-                    <td className="p-3 text-xs text-zinc-500">
+                    <td className="p-3 text-[11px] text-slate-500">
                       {new Date(doc.createdAt).toLocaleDateString()}
                     </td>
                     <td className="p-3 text-right">
-                      <div className="flex gap-2 justify-end">
+                      <div className="flex gap-1.5 justify-end">
                         <button
                           onClick={() => handleResetDoc(doc)}
-                          className="p-1.5 hover:bg-zinc-100 text-zinc-500 hover:text-zinc-900 rounded-lg transition cursor-pointer"
+                          className="p-1 hover:bg-slate-100 text-slate-500 hover:text-slate-900 rounded transition cursor-pointer"
                           title="Reset & Re-index Document"
                         >
-                          <RefreshCw className="h-4 w-4" />
+                          <RefreshCw className="h-3.5 w-3.5" />
                         </button>
                         <button
                           onClick={() => handleOpenEditDoc(doc)}
-                          className="p-1.5 hover:bg-zinc-100 text-zinc-500 hover:text-zinc-900 rounded-lg transition cursor-pointer"
+                          className="p-1 hover:bg-slate-100 text-slate-500 hover:text-slate-900 rounded transition cursor-pointer"
                           title="Edit content and re-index"
                         >
-                          <Edit className="h-4 w-4" />
+                          <Edit className="h-3.5 w-3.5" />
                         </button>
                         <button
                           onClick={() => handleDeleteDoc(doc.id)}
-                          className="p-1.5 hover:bg-red-50 text-red-500 hover:text-red-650 rounded-lg transition cursor-pointer"
+                          className="p-1 hover:bg-rose-50 text-slate-400 hover:text-rose-600 rounded transition cursor-pointer"
                           title="Delete from knowledge base"
                         >
-                          <Trash2 className="h-4 w-4" />
+                          <Trash2 className="h-3.5 w-3.5" />
                         </button>
                       </div>
                     </td>
@@ -724,56 +724,56 @@ export default function TrainingManager({ agentId }: TrainingManagerProps) {
 
       {/* Edit Document Content Modal */}
       {showEditModal && selectedDoc && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white border border-zinc-200 rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-150">
-            <div className="p-6 border-b border-zinc-200 flex justify-between items-center bg-zinc-50">
-              <h3 className="font-bold text-zinc-900 text-lg">Edit Knowledge Document</h3>
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center z-50 p-4">
+          <div className="bg-white border border-slate-200 rounded-xl w-full max-w-2xl overflow-hidden shadow-2xl">
+            <div className="p-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+              <h3 className="font-bold text-slate-900 text-sm">Edit Knowledge Document</h3>
               <button 
                 onClick={() => setShowEditModal(false)} 
-                className="p-1.5 hover:bg-zinc-200 rounded-lg text-zinc-500 hover:text-zinc-800 cursor-pointer"
+                className="p-1 hover:bg-slate-200 rounded-lg text-slate-500 hover:text-slate-800 cursor-pointer"
               >
-                <X className="h-5 w-5" />
+                <X className="h-4 w-4" />
               </button>
             </div>
             
-            <form onSubmit={handleUpdateDoc} className="p-6 space-y-4">
+            <form onSubmit={handleUpdateDoc} className="p-5 space-y-3.5 text-xs text-slate-700">
               <div>
-                <label className="block text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-1.5">Document Title / Label</label>
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Document Title / Label</label>
                 <input
                   type="text"
                   required
                   value={editName}
                   onChange={(e) => setEditName(e.target.value)}
-                  className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-2.5 text-zinc-900 text-sm focus:outline-none"
+                  className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-1.5">Document Content</label>
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Document Content</label>
                 <textarea
-                  rows={10}
+                  rows={8}
                   required
                   value={editContent}
                   onChange={(e) => setEditContent(e.target.value)}
-                  className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-2.5 text-zinc-900 text-sm font-mono focus:outline-none"
+                  className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 font-mono focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                 />
-                <p className="text-[11px] text-zinc-400 mt-1">Editing content will automatically clear old vector embeddings and regenerate new semantic vectors.</p>
+                <p className="text-[10px] text-slate-400 mt-1">Editing content will automatically clear old vector embeddings and regenerate new semantic vectors.</p>
               </div>
 
-              <div className="pt-4 border-t border-zinc-200 flex justify-end gap-3 bg-zinc-50/50 -mx-6 -mb-6 p-6">
+              <div className="pt-3 border-t border-slate-200 flex justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => setShowEditModal(false)}
-                  className="bg-white hover:bg-zinc-100 border border-zinc-250 text-zinc-700 px-4 py-2 rounded-xl text-sm font-semibold transition cursor-pointer"
+                  className="bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 font-semibold rounded-lg px-3.5 py-1.5 text-xs shadow-xs transition-all"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={updatingDoc}
-                  className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white px-4 py-2 rounded-xl text-sm font-semibold transition cursor-pointer"
+                  className="flex items-center gap-1.5 bg-[#F97316] hover:bg-[#ea580c] text-white font-semibold border border-slate-900 shadow-xs rounded-lg px-3.5 py-1.5 text-xs transition-all disabled:opacity-50"
                 >
-                  {updatingDoc ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
+                  {updatingDoc ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Check className="h-3.5 w-3.5" />}
                   <span>Save & Re-Index</span>
                 </button>
               </div>
@@ -784,3 +784,4 @@ export default function TrainingManager({ agentId }: TrainingManagerProps) {
     </div>
   );
 }
+

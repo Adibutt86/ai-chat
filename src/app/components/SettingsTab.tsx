@@ -104,77 +104,77 @@ export default function SettingsTab({ agentId }: SettingsTabProps) {
   };
 
   return (
-    <div className="space-y-8 max-w-4xl">
+    <div className="space-y-5 max-w-4xl">
       <div>
-        <h2 className="text-2xl font-bold text-zinc-900">System Settings</h2>
-        <p className="text-zinc-550 text-sm">Manage enterprise organization details, Google Calendar synchronization, and team membership roles.</p>
+        <h2 className="text-xl font-bold text-slate-900 tracking-tight">System Settings</h2>
+        <p className="text-slate-500 text-xs mt-0.5">Manage enterprise organization details, Google Calendar synchronization, and team membership roles.</p>
       </div>
 
       {successMsg && (
-        <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-600 text-sm">
+        <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-700 text-xs font-semibold">
           {successMsg}
         </div>
       )}
 
       {/* Organization Card */}
-      <div className="bg-white border border-zinc-200 rounded-2xl p-6 space-y-4 shadow-sm">
-        <div className="flex items-center gap-2 border-b border-zinc-200 pb-3">
-          <SettingsIcon className="h-5 w-5 text-blue-600" />
-          <h3 className="text-base font-bold text-zinc-900">Organization Configuration</h3>
+      <div className="bg-white border border-slate-200 rounded-xl p-5 space-y-3.5 shadow-xs">
+        <div className="flex items-center gap-2 border-b border-slate-200 pb-2.5">
+          <SettingsIcon className="h-4 w-4 text-[#F97316]" />
+          <h3 className="text-sm font-bold text-slate-900">Organization Configuration</h3>
         </div>
-        <div className="grid grid-cols-2 gap-4 text-sm text-zinc-700">
+        <div className="grid grid-cols-2 gap-3.5 text-xs text-slate-700">
           <div>
-            <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Company Name</label>
+            <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">Company Name</label>
             <input
               type="text"
               value={orgName}
               readOnly
-              className="w-full bg-zinc-50 border border-zinc-200 rounded-lg px-3 py-2 text-zinc-600 focus:outline-none"
+              className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-slate-700 text-xs focus:outline-none"
             />
           </div>
           <div>
-            <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Billing Plan</label>
+            <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">Billing Plan</label>
             <input
               type="text"
               value="PRO PLAN ($49/mo)"
               readOnly
-              className="w-full bg-zinc-50 border border-zinc-200 rounded-lg px-3 py-2 text-emerald-600 font-semibold focus:outline-none"
+              className="w-full bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-1.5 text-emerald-700 font-bold text-xs focus:outline-none"
             />
           </div>
         </div>
       </div>
 
       {/* Google Calendar Connection Card */}
-      <div className="bg-white border border-zinc-200 rounded-2xl p-6 space-y-4 shadow-sm">
-        <div className="flex items-center justify-between border-b border-zinc-200 pb-3">
+      <div className="bg-white border border-slate-200 rounded-xl p-5 space-y-3.5 shadow-xs">
+        <div className="flex items-center justify-between border-b border-slate-200 pb-2.5">
           <div className="flex items-center gap-2">
-            <Calendar className="h-5 w-5 text-blue-600" />
-            <h3 className="text-base font-bold text-zinc-900">Google Calendar Integration</h3>
+            <Calendar className="h-4 w-4 text-[#F97316]" />
+            <h3 className="text-sm font-bold text-slate-900">Google Calendar Integration</h3>
           </div>
-          {calendarLoading && <RefreshCw className="h-4 w-4 animate-spin text-zinc-400" />}
+          {calendarLoading && <RefreshCw className="h-3.5 w-3.5 animate-spin text-slate-400" />}
         </div>
         
         {calendarStatus?.connected ? (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-sm">
+          <div className="space-y-3">
+            <div className="flex items-center justify-between p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-xs">
               <div>
-                <p className="font-semibold text-emerald-600">Google Calendar Connected</p>
-                <p className="text-zinc-500 text-xs mt-0.5">Real-time availability and double bookings will be synchronized automatically.</p>
+                <p className="font-bold text-emerald-700">Google Calendar Connected</p>
+                <p className="text-slate-500 text-[11px] mt-0.5">Real-time availability and double bookings will be synchronized automatically.</p>
               </div>
               <button
                 onClick={handleDisconnectCalendar}
-                className="bg-red-50 text-red-600 hover:bg-red-100 border border-red-200 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer"
+                className="bg-white text-rose-600 hover:bg-rose-50 border border-rose-200 px-3 py-1 rounded-md text-xs font-semibold transition cursor-pointer"
               >
                 Disconnect
               </button>
             </div>
 
-            <div className="max-w-xs text-sm">
-              <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1.5">Select Active Calendar</label>
+            <div className="max-w-xs text-xs">
+              <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">Select Active Calendar</label>
               <select
                 value={calendarStatus.selectedCalendarId || 'primary'}
                 onChange={(e) => handleSelectCalendar(e.target.value)}
-                className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-2.5 text-zinc-900 focus:outline-none focus:ring-1 focus:ring-blue-600 text-sm cursor-pointer"
+                className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#F97316] text-xs cursor-pointer"
               >
                 {calendarStatus.calendars?.map((cal: any) => (
                   <option key={cal.id} value={cal.id}>
@@ -185,11 +185,11 @@ export default function SettingsTab({ agentId }: SettingsTabProps) {
             </div>
           </div>
         ) : (
-          <div className="space-y-4">
-            <p className="text-sm text-zinc-550">Synchronize your appointment slots with your Google Calendar to prevent double bookings automatically.</p>
+          <div className="space-y-3">
+            <p className="text-xs text-slate-500">Synchronize your appointment slots with your Google Calendar to prevent double bookings automatically.</p>
             <a
               href="/api/auth/google"
-              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition"
+              className="inline-flex items-center gap-2 bg-[#F97316] hover:bg-[#ea580c] text-white border border-slate-900 shadow-xs px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all"
             >
               Connect Google Calendar
             </a>
@@ -198,31 +198,31 @@ export default function SettingsTab({ agentId }: SettingsTabProps) {
       </div>
 
       {/* Team Invitation & Active Members */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white border border-zinc-200 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 border-b border-zinc-200 pb-3">
-              <Users className="h-5 w-5 text-blue-600" />
-              <h3 className="text-base font-bold text-zinc-900">Add Team Members</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="bg-white border border-slate-200 rounded-xl p-5 flex flex-col justify-between shadow-xs">
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 border-b border-slate-200 pb-2.5">
+              <Users className="h-4 w-4 text-[#F97316]" />
+              <h3 className="text-sm font-bold text-slate-900">Add Team Members</h3>
             </div>
-            <form onSubmit={handleInviteMember} className="space-y-3 text-sm text-zinc-750">
+            <form onSubmit={handleInviteMember} className="space-y-3 text-xs text-slate-700">
               <div>
-                <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Email Address</label>
+                <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">Email Address</label>
                 <input
                   type="email"
                   placeholder="colleague@company.com"
                   value={memberEmail}
                   onChange={(e) => setMemberEmail(e.target.value)}
-                  className="w-full bg-zinc-50 border border-zinc-200 rounded-lg px-3 py-2 text-zinc-900 placeholder-zinc-400 focus:outline-none"
+                  className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#F97316]"
                   required
                 />
               </div>
               <div>
-                <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-1">Permission Role</label>
+                <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">Permission Role</label>
                 <select
                   value={memberRole}
                   onChange={(e) => setMemberRole(e.target.value)}
-                  className="w-full bg-zinc-50 border border-zinc-200 rounded-lg px-3 py-2 text-zinc-900 focus:outline-none cursor-pointer"
+                  className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#F97316] cursor-pointer"
                 >
                   <option value="admin">Administrator</option>
                   <option value="member">Standard Member</option>
@@ -230,29 +230,29 @@ export default function SettingsTab({ agentId }: SettingsTabProps) {
               </div>
               <button
                 type="submit"
-                className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-white font-semibold cursor-pointer transition"
+                className="w-full flex items-center justify-center gap-1.5 bg-[#F97316] hover:bg-[#ea580c] text-white font-semibold border border-slate-900 shadow-xs rounded-lg px-3.5 py-1.5 text-xs transition-all cursor-pointer"
               >
-                <Plus className="h-4 w-4" /> Add Team Member
+                <Plus className="h-3.5 w-3.5" /> Add Team Member
               </button>
             </form>
           </div>
         </div>
 
         {/* Team Members List */}
-        <div className="bg-white border border-zinc-200 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
+        <div className="bg-white border border-slate-200 rounded-xl p-5 flex flex-col justify-between shadow-xs">
           <div>
-            <div className="flex items-center gap-2 border-b border-zinc-200 pb-3">
-              <Shield className="h-5 w-5 text-blue-600" />
-              <h3 className="text-base font-bold text-zinc-900">Active Members</h3>
+            <div className="flex items-center gap-2 border-b border-slate-200 pb-2.5">
+              <Shield className="h-4 w-4 text-[#F97316]" />
+              <h3 className="text-sm font-bold text-slate-900">Active Members</h3>
             </div>
-            <div className="mt-4 space-y-3 overflow-y-auto max-h-[200px] pr-1">
+            <div className="mt-3 space-y-2 overflow-y-auto max-h-[200px] pr-1">
               {members.map((m: any) => (
-                <div key={m.id} className="p-3 bg-zinc-50 border border-zinc-200 rounded-lg flex justify-between items-center text-xs">
+                <div key={m.id} className="p-2.5 bg-slate-50 border border-slate-200 rounded-lg flex justify-between items-center text-xs">
                   <div>
-                    <p className="font-semibold text-zinc-800">{m.user.name || m.user.email}</p>
-                    <p className="text-zinc-500 mt-0.5">{m.user.email}</p>
+                    <p className="font-semibold text-slate-800">{m.user.name || m.user.email}</p>
+                    <p className="text-slate-400 text-[10px] mt-0.5">{m.user.email}</p>
                   </div>
-                  <span className="bg-white border border-zinc-200 text-[10px] px-2 py-0.5 rounded-full text-zinc-500 font-mono capitalize">
+                  <span className="bg-white border border-slate-200 text-[10px] px-2 py-0.5 rounded-full text-slate-600 font-mono capitalize">
                     {m.role}
                   </span>
                 </div>
@@ -264,3 +264,4 @@ export default function SettingsTab({ agentId }: SettingsTabProps) {
     </div>
   );
 }
+

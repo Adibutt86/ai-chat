@@ -1,9 +1,3 @@
-@import "../../public/css/preload.min.css";
-@import "../../public/css/icomoon.css";
-@import "../../public/css/libs.min.css";
-@import "../../public/css/blog.min.css";
-@import "../../public/css/post.min.css";
-@import "../../public/css/floatbutton.min.css";
 @import "tailwindcss";
 
 /* Blog Article MDX Typography Styles */

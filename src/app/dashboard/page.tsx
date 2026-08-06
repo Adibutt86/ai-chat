@@ -205,10 +205,13 @@ export default function DashboardLayout() {
 
   if (loading || dataLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#141920] text-zinc-400">
+      <div 
+        className="flex min-h-screen items-center justify-center bg-slate-50 text-slate-500"
+        style={{ fontFamily: "'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}
+      >
         <div className="text-center space-y-3">
-          <Loader2 className="h-8 w-8 animate-spin mx-auto text-blue-500" />
-          <p className="text-sm font-medium">Loading workspace console...</p>
+          <Loader2 className="h-8 w-8 animate-spin mx-auto text-[#F97316]" />
+          <p className="text-xs font-semibold uppercase tracking-wider text-slate-600">Loading workspace console...</p>
         </div>
       </div>
     );
@@ -218,7 +221,10 @@ export default function DashboardLayout() {
   const activeAgentName = activeAgent ? activeAgent.name : 'No Agent Selected';
 
   return (
-    <div className="dark flex h-screen bg-[#141920] text-zinc-100 overflow-hidden">
+    <div 
+      className="flex h-screen bg-[#F8FAFC] text-slate-800 overflow-hidden font-sans"
+      style={{ fontFamily: "'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}
+    >
       {/* Sidebar Nav */}
       <Sidebar 
         currentTab={currentTab} 
@@ -227,15 +233,15 @@ export default function DashboardLayout() {
       />
 
       {/* Main Content Workspace */}
-      <main className="flex-1 overflow-y-auto p-8 bg-[#141920]">
+      <main className="flex-1 overflow-y-auto p-6 md:p-8 bg-[#F8FAFC]">
         {/* Workspace select header when agents exist */}
         {agents.length > 0 && (
           <div className="mb-6 flex justify-end gap-3 items-center text-xs">
-            <span className="text-zinc-550 font-semibold uppercase tracking-wider">Active Scope Agent:</span>
+            <span className="text-slate-500 font-semibold uppercase tracking-wider text-[11px]">Active Scope Agent:</span>
             <select
               value={selectedAgentId || ''}
               onChange={(e) => handleSelectAgent(e.target.value)}
-              className="bg-white border border-zinc-200 rounded-lg px-3 py-1.5 text-zinc-750 font-semibold focus:outline-none focus:ring-1 focus:ring-blue-600 cursor-pointer"
+              className="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-[#F97316] cursor-pointer shadow-sm text-xs"
             >
               {agents.map((agent) => (
                 <option key={agent.id} value={agent.id}>
@@ -297,3 +303,4 @@ export default function DashboardLayout() {
     </div>
   );
 }
+

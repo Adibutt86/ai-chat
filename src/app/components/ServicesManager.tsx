@@ -222,34 +222,34 @@ export default function ServicesManager() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-zinc-900">Services</h2>
-          <p className="text-zinc-550 text-sm">Create and manage bookable services for your AI chatbot.</p>
+          <h2 className="text-xl font-bold text-slate-900 tracking-tight">Services</h2>
+          <p className="text-slate-500 text-xs mt-0.5">Create and manage bookable services for your AI chatbot.</p>
         </div>
         <button
           onClick={handleOpenAdd}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition cursor-pointer"
+          className="flex items-center gap-1.5 bg-[#F97316] hover:bg-[#ea580c] text-white border border-slate-900 shadow-xs px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer"
         >
           <Plus className="h-4 w-4" /> Add Service
         </button>
       </div>
 
       {/* Global Online Booking Master Switch Banner */}
-      <div className={`border rounded-2xl p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 transition-colors ${
-        isGlobalBookingEnabled ? 'bg-blue-50/60 border-blue-200' : 'bg-amber-50/70 border-amber-200'
+      <div className={`border rounded-xl p-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-3 transition-colors ${
+        isGlobalBookingEnabled ? 'bg-blue-50/70 border-[#1E3A8A]/20' : 'bg-amber-50/70 border-amber-200'
       }`}>
         <div>
           <div className="flex items-center gap-2">
-            <span className="font-bold text-zinc-900 text-base">Global Online Booking Status</span>
-            <span className={`text-xs px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider ${
-              isGlobalBookingEnabled ? 'bg-blue-600 text-white' : 'bg-amber-600 text-white'
+            <span className="font-bold text-slate-900 text-sm">Global Online Booking Status</span>
+            <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ${
+              isGlobalBookingEnabled ? 'bg-[#1E3A8A] text-white' : 'bg-amber-600 text-white'
             }`}>
               {isGlobalBookingEnabled ? 'Active (All Services)' : 'Paused (All Services)'}
             </span>
           </div>
-          <p className="text-zinc-600 text-xs mt-1 max-w-2xl">
+          <p className="text-slate-600 text-xs mt-0.5 max-w-2xl">
             {isGlobalBookingEnabled 
               ? 'Online booking is active globally across your AI chatbot widget. Individual service toggles below control which specific services can be booked.' 
               : 'Online booking is master-disabled across all services. Visitors will be notified that online booking is currently unavailable.'}
@@ -257,7 +257,7 @@ export default function ServicesManager() {
         </div>
         <button
           onClick={handleToggleGlobalBooking}
-          className={`px-4 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer shrink-0 shadow-sm ${
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer shrink-0 shadow-xs ${
             isGlobalBookingEnabled 
               ? 'bg-amber-500 hover:bg-amber-600 text-white' 
               : 'bg-blue-600 hover:bg-blue-700 text-white'

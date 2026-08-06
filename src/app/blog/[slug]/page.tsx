@@ -42,16 +42,17 @@ export default async function BlogPostPage({ params }: PageProps) {
   return (
     <>
       <Preloader />
+      <link rel="stylesheet" href="/css/preload.min.css" />
+      <link rel="stylesheet" href="/css/icomoon.css" />
+      <link rel="stylesheet" href="/css/libs.min.css" />
+      <link rel="stylesheet" href="/css/post.min.css" />
+      <link rel="stylesheet" href="/css/floatbutton.min.css" />
 
       {/* Header navigation bar */}
-      <Header dataPage="blog" dataPageParent="blog" />
+      <Header dataPage="post" dataPageParent="pages" />
 
       {/* Page Header Header */}
       <header className="page">
-        <div className="page_shapes">
-          <img className="shape shape--left" src="/svg/ovalblue.svg" alt="Blog" />
-          <img className="shape shape--right" src="/svg/bgshape_white2.svg" alt="Blog" />
-        </div>
         <div className="container">
           <ul className="breadcrumbs d-flex flex-wrap">
             <li className="breadcrumbs_item">
@@ -64,92 +65,63 @@ export default async function BlogPostPage({ params }: PageProps) {
               <span id="currentpage">{post.title}</span>
             </li>
           </ul>
-        </div>
-        <div className="container d-md-flex">
-          <div className="page_main">
-            <h1 className="page_main-title">{post.title}</h1>
-            <p className="page_main-text">{post.description}</p>
+
+          <div className="page_header">
+            <div className="wrapper">
+              <span className="tw-height h2"><span className="text">{post.title}</span></span>
+              <h2 className="page_main-title type" data-text={post.title}>{post.title}</h2>
+            </div>
+            <div className="main_meta d-flex flex-wrap align-items-center mt-3">
+              <span className="main_meta-bookmark"><i className="icon-bookmark icon"></i></span>
+              <p className="main_meta-item">
+                {new Date(post.date).toLocaleDateString("en-US", {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric",
+                })}
+              </p>
+              <p className="main_meta-item">by {post.author}</p>
+              <p className="main_meta-item">{post.readingTime}</p>
+            </div>
           </div>
         </div>
       </header>
 
       {/* Post Body Section */}
-      <main className="bg-white py-12 text-slate-800">
-        <div className="max-w-3xl mx-auto px-4">
-          {/* Back link */}
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-2 text-[#1E3A8A] hover:text-[#2563eb] font-medium text-sm mb-8 transition-colors group"
-          >
-            <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-            Back to All Articles
-          </Link>
-
-          {/* Post Meta Header */}
-          <div className="mb-10 pb-6 border-b border-slate-200">
-            <div className="flex flex-wrap gap-2 mb-4">
-              {post.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="inline-flex items-center gap-1 text-xs bg-blue-50 text-[#1E3A8A] border border-blue-100 font-medium px-3 py-1 rounded-full"
-                >
-                  <Tag size={11} />
-                  {tag}
-                </span>
-              ))}
+      <main className="post">
+        <div className="container py-5">
+          <article className="article">
+            <div className="article_media article_media--main mb-4">
+              <picture>
+                <img
+                  src={post.coverImage || "/img/post/main.jpg"}
+                  alt={post.title}
+                  style={{ width: '100%', maxHeight: '500px', objectFit: 'cover' }}
+                />
+              </picture>
             </div>
 
-            <div className="flex flex-wrap items-center gap-5 text-sm text-slate-500">
-              <span className="flex items-center gap-1.5 font-medium text-slate-700">
-                <User size={14} className="text-[#1E3A8A]" />
-                {post.author}
-                {post.authorRole && (
-                  <span className="text-slate-400 font-normal">({post.authorRole})</span>
-                )}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Calendar size={14} className="text-[#1E3A8A]" />
-                {new Date(post.date).toLocaleDateString("en-US", {
-                  month: "long",
-                  day: "numeric",
-                  year: "numeric",
-                })}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Clock size={14} className="text-[#10B981]" />
-                {post.readingTime}
-              </span>
+            <div className="container--sm py-3" style={{ fontSize: '1.1rem', lineHeight: '1.8' }}>
+              <PostContent />
             </div>
-          </div>
 
-          {/* MDX Article Body */}
-          <article className="blog-prose max-w-none">
-            <PostContent />
+            {post.tags && post.tags.length > 0 && (
+              <div className="article_tags container--sm mt-4">
+                <ul className="article_tags-list d-flex flex-wrap gap-2">
+                  {post.tags.map((tag) => (
+                    <li key={tag} className="list-item">
+                      <span className="tag">{tag}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </article>
 
-          {/* Call to Action Box */}
-          <div className="mt-14 rounded-2xl border border-slate-200 bg-slate-50 p-8 text-center shadow-sm">
-            <h3 className="text-2xl font-bold text-slate-900 mb-2">
-              Ready to Automate Customer Support?
-            </h3>
-            <p className="text-slate-600 mb-6 max-w-md mx-auto">
-              Deploy your custom AI chatbot in under 5 minutes. No credit card required.
-            </p>
-            <Link
-              href="/register"
-              className="inline-flex items-center gap-2 bg-[#F97316] hover:bg-[#ea580c] text-white font-semibold px-6 py-3 rounded-xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
-            >
-              Get Started Free →
-            </Link>
-          </div>
-
-          {/* Bottom Back Button */}
-          <div className="mt-10 text-center">
-            <Link
-              href="/blog"
-              className="text-slate-500 hover:text-[#1E3A8A] text-sm font-medium transition-colors"
-            >
-              ← Back to Blog
+          {/* Navigation link */}
+          <div className="mt-5 text-center">
+            <Link href="/blog" className="btn btn--neon d-inline-flex">
+              ← Back to All Articles
             </Link>
           </div>
         </div>
@@ -163,3 +135,4 @@ export default async function BlogPostPage({ params }: PageProps) {
     </>
   );
 }
+

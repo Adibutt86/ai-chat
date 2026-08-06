@@ -103,8 +103,7 @@ export default function ContactPage() {
                 <h5 className="contact_info-item_header">Phone Numbers:</h5>
                 <div className="contact_info-item_content">
                   <div className="wrapper">
-                    <a className="link" href="tel:+13025550134">+1-302-555-0134</a>
-                    <a className="link" href="tel:+16025550134" style={{ display: 'block', marginTop: '5px' }}>+1-602-555-0134</a>
+                    <a className="link" href="tel:+923475851969">+92 347 5851969</a>
                   </div>
                 </div>
               </li>
@@ -293,7 +292,7 @@ export default function ContactPage() {
           <div className="footer_bottom">
             <div className="footer_bottom-contacts d-flex flex-column">
               <a className="link" href="mailto:support@geekvista.com">support@geekvista.com</a>
-              <a className="link" href="tel:+1202303404">+1 202 303 404</a>
+              <a className="link" href="tel:+923475851969">+92 347 5851969</a>
             </div>
             <div className="footer_bottom-socials">
               <ul className="footer_bottom-socials_list socials d-flex flex-wrap">

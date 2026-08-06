@@ -259,7 +259,7 @@ export default function AboutPage() {
           <div className="footer_bottom">
             <div className="footer_bottom-contacts d-flex flex-column">
               <a className="link" href="mailto:support@geekvista.com">support@geekvista.com</a>
-              <a className="link" href="tel:+1202303404">+1 202 303 404</a>
+              <a className="link" href="tel:+923475851969">+92 347 5851969</a>
             </div>
             <div className="footer_bottom-socials">
               <ul className="footer_bottom-socials_list socials d-flex flex-wrap">

@@ -142,8 +142,8 @@ export default function Home() {
               <span style={{ color: '#F97316', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '12px', display: 'inline-block', fontSize: '12px', background: 'rgba(249, 115, 22, 0.1)', padding: '5px 14px', borderRadius: '16px', border: '1px solid rgba(249, 115, 22, 0.2)' }}>
                 Meet Geekvista AI
               </span>
-              <h1 className="h1" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 3.8rem)', fontWeight: 800, lineHeight: 1.15, color: '#1B2129', marginBottom: '20px', marginTop: '4px' }}>
-                Engage, Support & Convert
+              <h1 className="h1" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 3.8rem)', fontWeight: 800, lineHeight: 1.15, color: '#FFFFFF', marginBottom: '20px', marginTop: '4px' }}>
+                Engage, Support <br />&amp; Convert
               </h1>
               <p className="hero_main-text" style={{ fontSize: '17px', lineHeight: 1.6, color: '#475569', marginBottom: '28px', maxWidth: '580px' }}>
                 Geekvista provides beautiful, custom-trained conversational widgets designed to integrate seamlessly into your website. Automate customer support, capture high-quality leads, and delight visitors 24/7.

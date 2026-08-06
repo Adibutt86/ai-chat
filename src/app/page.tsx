@@ -169,20 +169,8 @@ export default function Home() {
                 <a className="hero_main-btn btn" href="#features" style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.15)', color: 'inherit' }}>Explore Features</a>
               </div>
             </div>
-            <div className="hero_media animate-fadeIn" style={{ minHeight: '420px', width: '100%', maxWidth: '720px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <img 
-                src="/img/home_hero.jpg" 
-                alt="AI Chatbot Platform Banner" 
-                style={{ 
-                  width: '100%', 
-                  height: 'auto', 
-                  maxHeight: '480px', 
-                  objectFit: 'cover', 
-                  borderRadius: '16px', 
-                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.35)', 
-                  border: '2px solid rgba(255, 255, 255, 0.15)' 
-                }} 
-              />
+            <div className="hero_media animate-fadeIn" style={{ minHeight: '490px', width: '100%', maxWidth: '770px' }}>
+              <Lottie animationData={herohomeAnimation} loop={true} autoplay={true} style={{ width: '100%', height: '100%' }} />
             </div>
           </div>
         </section>

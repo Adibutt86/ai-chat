@@ -138,35 +138,32 @@ export default function Home() {
             <img className="hero_bg-blue" src="/svg/herohome1.svg" alt="The Fastest Web Solutions" />
           </div>
           <div className="container d-xl-flex">
-            <div className="hero_main">
-              <span style={{ color: 'var(--primary)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '8px', display: 'block', fontSize: '14px' }}>
-                Meet Geekvista
+            <div className="hero_main" style={{ zIndex: 2, position: 'relative' }}>
+              <span style={{ color: '#F97316', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '12px', display: 'inline-block', fontSize: '12px', background: 'rgba(249, 115, 22, 0.1)', padding: '5px 14px', borderRadius: '16px', border: '1px solid rgba(249, 115, 22, 0.2)' }}>
+                Meet Geekvista AI
               </span>
-              <span className="tw-height h1">
-                <span className="text">Engage, Support & Convert</span>
-              </span>
-              <h1 className="hero_main-title type" data-text="Engage, Support & Convert">
+              <h1 className="h1" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 3.8rem)', fontWeight: 800, lineHeight: 1.15, color: '#1B2129', marginBottom: '20px', marginTop: '4px' }}>
                 Engage, Support & Convert
               </h1>
-              <p className="hero_main-text">
+              <p className="hero_main-text" style={{ fontSize: '17px', lineHeight: 1.6, color: '#475569', marginBottom: '28px', maxWidth: '580px' }}>
                 Geekvista provides beautiful, custom-trained conversational widgets designed to integrate seamlessly into your website. Automate customer support, capture high-quality leads, and delight visitors 24/7.
               </p>
               
-              <div className="hero_main-features" style={{ margin: '20px 0 30px 0', display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '14px', background: 'rgba(42, 42, 255, 0.1)', padding: '6px 12px', borderRadius: '20px', border: '1px solid rgba(42, 42, 255, 0.2)' }}>
+              <div className="hero_main-features" style={{ marginBottom: '32px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 600, background: 'rgba(30, 58, 138, 0.08)', color: '#1E3A8A', padding: '6px 14px', borderRadius: '20px', border: '1px solid rgba(30, 58, 138, 0.15)' }}>
                   ⚡ Instant Embed
                 </span>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '14px', background: 'rgba(42, 42, 255, 0.1)', padding: '6px 12px', borderRadius: '20px', border: '1px solid rgba(42, 42, 255, 0.2)' }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 600, background: 'rgba(30, 58, 138, 0.08)', color: '#1E3A8A', padding: '6px 14px', borderRadius: '20px', border: '1px solid rgba(30, 58, 138, 0.15)' }}>
                   🤖 Powered by Geekvista
                 </span>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '14px', background: 'rgba(42, 42, 255, 0.1)', padding: '6px 12px', borderRadius: '20px', border: '1px solid rgba(42, 42, 255, 0.2)' }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 600, background: 'rgba(30, 58, 138, 0.08)', color: '#1E3A8A', padding: '6px 14px', borderRadius: '20px', border: '1px solid rgba(30, 58, 138, 0.15)' }}>
                   🔌 WordPress Ready
                 </span>
               </div>
 
-              <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
-                <a className="hero_main-btn btn btn--neon signUpTrigger" href="#">Try For Free</a>
-                <a className="hero_main-btn btn" href="#features" style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.15)', color: 'inherit' }}>Explore Features</a>
+              <div style={{ display: 'flex', gap: '14px', alignItems: 'center', flexWrap: 'wrap' }}>
+                <a className="hero_main-btn btn btn--neon signUpTrigger" href="#" style={{ borderRadius: '8px', padding: '0 28px', height: '48px', fontWeight: 700 }}>Try For Free</a>
+                <a className="hero_main-btn btn" href="#features" style={{ background: '#FFFFFF', border: '1px solid #CBD5E1', color: '#1E293B', borderRadius: '8px', padding: '0 24px', height: '48px', fontWeight: 700, boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>Explore Features</a>
               </div>
             </div>
             <div className="hero_media animate-fadeIn" style={{ minHeight: '490px', width: '100%', maxWidth: '770px' }}>

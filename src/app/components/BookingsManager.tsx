@@ -88,7 +88,7 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
   const fetchBookings = async () => {
     setLoading(true);
     try {
-      let url = `/api/bookings?page=${page}&limit=10`;
+      let url = `/api/bookings?agentId=${agentId}&page=${page}&limit=10`;
       if (statusFilter) url += `&status=${statusFilter}`;
       if (serviceFilter) url += `&serviceId=${serviceFilter}`;
       if (search.trim()) url += `&search=${encodeURIComponent(search)}`;

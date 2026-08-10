@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSessionUser, authError } from '@/lib/api-auth';
+import { isMasterAdmin } from '@/lib/permissions';
 import { prisma } from '@/lib/db';
 import { getValidAccessToken, checkFreeBusy, createGoogleEvent, deleteGoogleEvent } from '@/lib/google-calendar';
 import { formatInTimezone } from '@/lib/availability';
@@ -15,6 +16,8 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Organization not found in session' }, { status: 400 });
   }
 
+  const isMaster = isMasterAdmin(session.role);
+
   const { searchParams } = new URL(request.url);
   const agentId = searchParams.get('agentId');
   const status = searchParams.get('status');
@@ -25,9 +28,10 @@ export async function GET(request: Request) {
   const skip = (page - 1) * limit;
 
   try {
-    const whereClause: any = {
-      organizationId: orgId,
-    };
+    const whereClause: any = {};
+    if (!isMaster) {
+      whereClause.organizationId = orgId;
+    }
 
     if (agentId) whereClause.agentId = agentId;
     if (status) whereClause.status = status;
@@ -298,8 +302,15 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: 'id and status are required' }, { status: 400 });
     }
 
+    const isMaster = isMasterAdmin(session.role);
+
+    const whereClause: any = { id };
+    if (!isMaster) {
+      whereClause.organizationId = orgId;
+    }
+
     const booking = await prisma.booking.findFirst({
-      where: { id, organizationId: orgId }
+      where: whereClause
     });
 
     if (!booking) {
@@ -413,8 +424,13 @@ export async function DELETE(request: Request) {
     let booking;
 
     if (session && session.orgId) {
+      const isMaster = isMasterAdmin(session.role);
+      const whereClause: any = { id };
+      if (!isMaster) {
+        whereClause.organizationId = session.orgId;
+      }
       booking = await prisma.booking.findFirst({
-        where: { id, organizationId: session.orgId }
+        where: whereClause
       });
     } else {
       // Public / customer delete

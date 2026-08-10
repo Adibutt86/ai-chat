@@ -86,8 +86,18 @@ export async function POST(request: Request) {
     }
 
     // 1. Resolve agent and organization context
+    let targetAgentId = agentId;
+    if (agentId === 'demo') {
+      const latestAgent = await prisma.agent.findFirst({
+        orderBy: { createdAt: 'desc' },
+      });
+      if (latestAgent) {
+        targetAgentId = latestAgent.id;
+      }
+    }
+
     const agent = await prisma.agent.findUnique({
-      where: { id: agentId },
+      where: { id: targetAgentId },
       include: { organization: true }
     });
 
@@ -171,7 +181,7 @@ export async function POST(request: Request) {
       data: {
         id: simpleId,
         organizationId: orgId,
-        agentId,
+        agentId: targetAgentId,
         serviceId,
         customerName,
         customerEmail,

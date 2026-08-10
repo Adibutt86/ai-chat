@@ -88,9 +88,22 @@ export async function POST(request: Request) {
     // 1. Resolve agent and organization context
     let targetAgentId = agentId;
     if (agentId === 'demo') {
-      const mainAgent = await prisma.agent.findFirst({
+      let mainAgent = await prisma.agent.findFirst({
+        where: { name: { contains: 'demo', mode: 'insensitive' } },
         orderBy: { createdAt: 'asc' },
       });
+      if (!mainAgent) {
+        mainAgent = await prisma.agent.findFirst({
+          where: { name: { contains: 'tester', mode: 'insensitive' } },
+          orderBy: { createdAt: 'asc' },
+        });
+      }
+      if (!mainAgent) {
+        mainAgent = await prisma.agent.findFirst({
+          orderBy: { createdAt: 'asc' },
+        });
+      }
+      
       if (mainAgent) {
         targetAgentId = mainAgent.id;
       }

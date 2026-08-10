@@ -53,13 +53,18 @@ export async function POST(request: Request) {
 
     let targetAgentId = agentId;
     if (!targetAgentId || targetAgentId === 'demo') {
-      const firstAgent = await prisma.agent.findFirst({ orderBy: { createdAt: 'desc' } });
-      if (firstAgent) targetAgentId = firstAgent.id;
-      else targetAgentId = 'default-agent-id';
+      const mainAgent = await prisma.agent.findFirst({
+        orderBy: { createdAt: 'asc' },
+      });
+      if (mainAgent) {
+        targetAgentId = mainAgent.id;
+      } else {
+        targetAgentId = 'default-agent-id';
+      }
     } else {
       const existingAgent = await prisma.agent.findUnique({ where: { id: targetAgentId } });
       if (!existingAgent) {
-        const firstAgent = await prisma.agent.findFirst({ orderBy: { createdAt: 'desc' } });
+        const firstAgent = await prisma.agent.findFirst({ orderBy: { createdAt: 'asc' } });
         if (firstAgent) targetAgentId = firstAgent.id;
       }
     }

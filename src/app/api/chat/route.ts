@@ -145,11 +145,11 @@ export async function POST(request: Request) {
 
     let targetAgentId = agentId;
     if (agentId === 'demo') {
-      const latestAgent = await prisma.agent.findFirst({
-        orderBy: { createdAt: 'desc' },
+      const mainAgent = await prisma.agent.findFirst({
+        orderBy: { createdAt: 'asc' },
       });
-      if (latestAgent) {
-        targetAgentId = latestAgent.id;
+      if (mainAgent) {
+        targetAgentId = mainAgent.id;
       }
     }
 

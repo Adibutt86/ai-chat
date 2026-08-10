@@ -486,46 +486,19 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
               )}
             </div>
 
-            <div className="p-6 bg-zinc-50 border-t border-zinc-200 flex justify-between items-center">
-              <div>
-                <label className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold block mb-1">Update Status / Action</label>
-                <div className="flex gap-2">
-                  <button
-                    disabled={statusChanging || selectedBooking.status === 'completed'}
-                    onClick={() => handleUpdateStatus(selectedBooking.id, 'completed')}
-                    className="bg-emerald-600 hover:bg-emerald-700 text-white disabled:opacity-40 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer shadow-sm"
-                  >
-                    Mark Completed
-                  </button>
-                  <button
-                    disabled={statusChanging || selectedBooking.status === 'no_show'}
-                    onClick={() => handleUpdateStatus(selectedBooking.id, 'no_show')}
-                    className="bg-zinc-700 hover:bg-zinc-800 text-white disabled:opacity-40 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer shadow-sm"
-                  >
-                    Mark No Show
-                  </button>
-                  <button
-                    disabled={statusChanging || selectedBooking.status === 'cancelled'}
-                    onClick={() => handleUpdateStatus(selectedBooking.id, 'cancelled')}
-                    className="bg-amber-600 hover:bg-amber-700 text-white disabled:opacity-40 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer shadow-sm"
-                  >
-                    Cancel Booking
-                  </button>
-                  <button
-                    disabled={statusChanging}
-                    onClick={() => handleDeleteBooking(selectedBooking.id)}
-                    className="bg-red-600 hover:bg-red-700 text-white disabled:opacity-40 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer flex items-center gap-1 shadow-sm"
-                  >
-                    <Trash2 className="h-3.5 w-3.5" /> Delete Booking
-                  </button>
-                </div>
-              </div>
-
-              <button
-                onClick={() => setSelectedBooking(null)}
-                className="bg-zinc-800 hover:bg-zinc-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition cursor-pointer"
+            <div className="p-6 bg-zinc-50 border-t border-zinc-200 flex justify-end gap-3 items-center">
+              <a
+                href={`mailto:${selectedBooking.customerEmail}`}
+                className="bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2 shadow-sm"
               >
-                Close
+                <Mail className="h-4 w-4" /> Email Customer
+              </a>
+              <button
+                disabled={statusChanging || selectedBooking.status === 'cancelled'}
+                onClick={() => handleUpdateStatus(selectedBooking.id, 'cancelled')}
+                className="bg-red-600 hover:bg-red-700 text-white disabled:opacity-40 px-4 py-2 rounded-lg text-sm font-semibold transition cursor-pointer flex items-center gap-2 shadow-sm"
+              >
+                <XCircle className="h-4 w-4" /> Cancel Booking
               </button>
             </div>
           </div>

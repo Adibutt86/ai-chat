@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Mail, Phone, Building, Calendar, UserCheck } from 'lucide-react';
+import { Mail, Phone, Building, Calendar, UserCheck, Download } from 'lucide-react';
+import { isMasterAdmin } from '@/lib/permissions';
 
 interface Lead {
   id: string;
@@ -14,14 +15,51 @@ interface Lead {
 
 interface LeadsProps {
   leads: Lead[];
+  userRole: string;
 }
 
-export default function Leads({ leads }: LeadsProps) {
+export default function Leads({ leads, userRole }: LeadsProps) {
+  const isAdmin = isMasterAdmin(userRole);
+
+  const exportToCSV = () => {
+    const headers = ['Contact Name', 'Email Address', 'Phone Number', 'Company Name', 'Captured Date'];
+    const csvContent = [
+      headers.join(','),
+      ...leads.map(l => [
+        `"${(l.name || '').replace(/"/g, '""')}"`,
+        `"${(l.email || '').replace(/"/g, '""')}"`,
+        `"${(l.phone || '').replace(/"/g, '""')}"`,
+        `"${(l.company || '').replace(/"/g, '""')}"`,
+        `"${new Date(l.createdAt).toLocaleDateString()}"`
+      ].join(','))
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'captured_leads.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="space-y-5">
-      <div>
-        <h2 className="text-xl font-bold text-slate-900 tracking-tight">Captured Leads</h2>
-        <p className="text-slate-500 text-xs mt-0.5">Review potential customers and buyers details captured by chatbot conversations.</p>
+      <div className="flex justify-between items-start">
+        <div>
+          <h2 className="text-xl font-bold text-slate-900 tracking-tight">Captured Leads</h2>
+          <p className="text-slate-500 text-xs mt-0.5">Review potential customers and buyers details captured by chatbot conversations.</p>
+        </div>
+        {isAdmin && leads.length > 0 && (
+          <button
+            onClick={exportToCSV}
+            className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-slate-800 transition shadow-sm"
+          >
+            <Download className="h-4 w-4" />
+            Export to Excel
+          </button>
+        )}
       </div>
 
       <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-xs">
@@ -34,13 +72,14 @@ export default function Leads({ leads }: LeadsProps) {
                 <th className="p-3.5">Phone Number</th>
                 <th className="p-3.5">Company Name</th>
                 <th className="p-3.5">Captured Date</th>
-                <th className="p-3.5 text-right">Status</th>
+                <th className="p-3.5 text-center">Status</th>
+                <th className="p-3.5 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
               {leads.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="p-8 text-center text-slate-400 italic text-xs">
+                  <td colSpan={7} className="p-8 text-center text-slate-400 italic text-xs">
                     No buyer leads captured yet. Add buying-intent keywords in chat simulation.
                   </td>
                 </tr>
@@ -85,10 +124,15 @@ export default function Leads({ leads }: LeadsProps) {
                         <span>{new Date(lead.createdAt).toLocaleDateString()}</span>
                       </div>
                     </td>
-                    <td className="p-3.5 text-right">
+                    <td className="p-3.5 text-center">
                       <span className="inline-flex items-center gap-1 bg-blue-50 text-[#1E3A8A] border border-blue-200 px-2 py-0.5 rounded-full text-[10px] font-bold">
                         <UserCheck className="h-3 w-3 text-[#F97316]" /> New Lead
                       </span>
+                    </td>
+                    <td className="p-3.5 text-right">
+                      <a href={`mailto:${lead.email}`} className="inline-flex items-center gap-1.5 bg-[#F97316] text-white px-3 py-1.5 rounded-lg text-[11px] font-bold hover:bg-[#EA580C] transition shadow-xs">
+                        <Mail className="h-3.5 w-3.5" /> Email
+                      </a>
                     </td>
                   </tr>
                 ))

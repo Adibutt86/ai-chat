@@ -14,7 +14,7 @@ import SettingsTab from '@/app/components/SettingsTab';
 import BookingsManager from '@/app/components/BookingsManager';
 import ServicesManager from '@/app/components/ServicesManager';
 import BusinessHoursManager from '@/app/components/BusinessHoursManager';
-import { canAccessTab } from '@/lib/permissions';
+import { canAccessTab, isMasterAdmin } from '@/lib/permissions';
 import { Loader2 } from 'lucide-react';
 
 export default function DashboardLayout() {
@@ -87,7 +87,14 @@ export default function DashboardLayout() {
         const data = await res.json();
         setAgents(data);
         if (data.length > 0 && !selectedAgentId) {
-          setSelectedAgentId(data[0].id);
+          let defaultAgent = data[0];
+          if (isMasterAdmin(userRole)) {
+            const demoAgent = data.find((a: any) => a.name.toLowerCase().includes('demo'));
+            if (demoAgent) {
+              defaultAgent = demoAgent;
+            }
+          }
+          setSelectedAgentId(defaultAgent.id);
         }
       }
     } catch (err) {
@@ -263,7 +270,7 @@ export default function DashboardLayout() {
 
         {/* Dynamic view router */}
         {currentTab === 'overview' && analytics && (
-          <Overview stats={analytics} agentName={activeAgentName} />
+          <Overview stats={analytics} agentName={activeAgentName} userRole={userRole} />
         )}
 
         {currentTab === 'agents' && (
@@ -286,7 +293,7 @@ export default function DashboardLayout() {
         )}
 
         {currentTab === 'leads' && (
-          <Leads leads={leads} />
+          <Leads leads={leads} userRole={userRole} />
         )}
 
         {currentTab === 'widget' && selectedAgentId && (

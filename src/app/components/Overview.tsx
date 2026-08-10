@@ -10,6 +10,8 @@ import {
   ShieldCheck
 } from 'lucide-react';
 
+import { isMasterAdmin } from '@/lib/permissions';
+
 interface StatsProps {
   stats: {
     visitorsCount: number;
@@ -21,9 +23,12 @@ interface StatsProps {
     popularPages: { url: string; count: number }[];
   };
   agentName: string;
+  userRole: string;
 }
 
-export default function Overview({ stats, agentName }: StatsProps) {
+export default function Overview({ stats, agentName, userRole }: StatsProps) {
+  const isMaster = isMasterAdmin(userRole);
+
   const cards = [
     { title: 'Total Visitors', value: stats.visitorsCount, icon: Users, change: '+12.3%', color: 'text-[#1E3A8A] bg-blue-50 border-blue-100' },
     { title: 'Active Chats', value: stats.chatsCount, icon: MessageSquare, change: '+8.4%', color: 'text-emerald-600 bg-emerald-50 border-emerald-100' },
@@ -69,37 +74,39 @@ export default function Overview({ stats, agentName }: StatsProps) {
         })}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {/* Left Column: Popular Pages */}
-        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
-          <h3 className="text-sm font-bold text-slate-900 mb-3">Top Pages Visited by Bot</h3>
-          <div className="space-y-2.5">
-            {stats.popularPages.map((page, idx) => (
-              <div key={idx} className="flex justify-between items-center p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
-                <span className="text-xs font-mono text-slate-800 truncate max-w-[240px]">{page.url}</span>
-                <span className="bg-white text-[11px] px-2.5 py-0.5 rounded-full text-[#1E3A8A] font-semibold border border-slate-200 shadow-xs">
-                  {page.count} requests
-                </span>
-              </div>
-            ))}
+      {isMaster && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {/* Left Column: Popular Pages */}
+          <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+            <h3 className="text-sm font-bold text-slate-900 mb-3">Top Pages Visited by Bot</h3>
+            <div className="space-y-2.5">
+              {stats.popularPages.map((page, idx) => (
+                <div key={idx} className="flex justify-between items-center p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
+                  <span className="text-xs font-mono text-slate-800 truncate max-w-[240px]">{page.url}</span>
+                  <span className="bg-white text-[11px] px-2.5 py-0.5 rounded-full text-[#1E3A8A] font-semibold border border-slate-200 shadow-xs">
+                    {page.count} requests
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Right Column: Unanswered Questions */}
-        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
-          <h3 className="text-sm font-bold text-slate-900 mb-3">Unanswered / Fallback Questions</h3>
-          <div className="space-y-2.5">
-            {stats.unansweredQuestions.map((q, idx) => (
-              <div key={idx} className="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80 flex justify-between items-center">
-                <span className="text-xs text-slate-800 truncate max-w-[240px]">{q}</span>
-                <span className="bg-orange-50 text-[#F97316] border border-orange-200 text-[10px] font-bold px-2 py-0.5 rounded-full">
-                  Needs Training
-                </span>
-              </div>
-            ))}
+          {/* Right Column: Unanswered Questions */}
+          <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+            <h3 className="text-sm font-bold text-slate-900 mb-3">Unanswered / Fallback Questions</h3>
+            <div className="space-y-2.5">
+              {stats.unansweredQuestions.map((q, idx) => (
+                <div key={idx} className="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80 flex justify-between items-center">
+                  <span className="text-xs text-slate-800 truncate max-w-[240px]">{q}</span>
+                  <span className="bg-orange-50 text-[#F97316] border border-orange-200 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                    Needs Training
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

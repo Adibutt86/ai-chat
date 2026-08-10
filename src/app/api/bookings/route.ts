@@ -165,8 +165,11 @@ export async function POST(request: Request) {
       serviceId = genService.id;
     }
 
+    const simpleId = Math.random().toString(36).substring(2, 10).toUpperCase();
+
     const booking = await prisma.booking.create({
       data: {
+        id: simpleId,
         organizationId: orgId,
         agentId,
         serviceId,

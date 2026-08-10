@@ -87,14 +87,20 @@ export default function DashboardLayout() {
         const data = await res.json();
         setAgents(data);
         if (data.length > 0 && !selectedAgentId) {
-          let defaultAgent = data[0];
-          if (isMasterAdmin(userRole)) {
-            const demoAgent = data.find((a: any) => a.name.toLowerCase().includes('demo'));
-            if (demoAgent) {
-              defaultAgent = demoAgent;
+          const savedAgentId = localStorage.getItem('dashboard_active_agent_id');
+          if (savedAgentId && data.some((a: any) => a.id === savedAgentId)) {
+            setSelectedAgentId(savedAgentId);
+          } else {
+            let defaultAgent = data[0];
+            if (isMasterAdmin(userRole)) {
+              const demoAgent = data.find((a: any) => a.name.toLowerCase().includes('demo'));
+              if (demoAgent) {
+                defaultAgent = demoAgent;
+              }
             }
+            setSelectedAgentId(defaultAgent.id);
+            localStorage.setItem('dashboard_active_agent_id', defaultAgent.id);
           }
-          setSelectedAgentId(defaultAgent.id);
         }
       }
     } catch (err) {
@@ -171,6 +177,9 @@ export default function DashboardLayout() {
 
   const handleSelectAgent = (id: string) => {
     setSelectedAgentId(id);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('dashboard_active_agent_id', id);
+    }
   };
 
   const handleCreateAgent = async (agentData: any) => {

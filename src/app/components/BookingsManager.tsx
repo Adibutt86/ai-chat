@@ -19,7 +19,8 @@ import {
   Download,
   Send,
   CheckCircle2,
-  Sliders
+  Sliders,
+  Plus
 } from 'lucide-react';
 import EmailTemplates from '@/app/components/EmailTemplates';
 
@@ -74,6 +75,21 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
   const [toastMessage, setToastMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [showEmailTemplatesModal, setShowEmailTemplatesModal] = useState(false);
 
+  // Manual Booking Modal State
+  const [showManualBookingModal, setShowManualBookingModal] = useState(false);
+  const [manualServiceId, setManualServiceId] = useState('');
+  const [manualDate, setManualDate] = useState(new Date().toISOString().split('T')[0]);
+  const [availableSlots, setAvailableSlots] = useState<any[]>([]);
+  const [loadingSlots, setLoadingSlots] = useState(false);
+  const [selectedSlot, setSelectedSlot] = useState<any | null>(null);
+
+  const [manualName, setManualName] = useState('');
+  const [manualEmail, setManualEmail] = useState('');
+  const [manualPhone, setManualPhone] = useState('');
+  const [manualNotes, setManualNotes] = useState('');
+  const [manualStatus, setManualStatus] = useState<'confirmed' | 'pending'>('confirmed');
+  const [submittingManual, setSubmittingManual] = useState(false);
+
   useEffect(() => {
     fetchServices();
   }, []);
@@ -88,6 +104,9 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
       if (res.ok) {
         const data = await res.json();
         setServices(data);
+        if (data.length > 0) {
+          setManualServiceId(data[0].id);
+        }
       }
     } catch (err) {
       console.error('Error fetching services:', err);
@@ -116,6 +135,31 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
       setError('Connection error. Please try again.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Fetch real-time available time slots for manual booking
+  useEffect(() => {
+    if (showManualBookingModal && manualServiceId && manualDate) {
+      fetchAvailableSlots();
+    }
+  }, [showManualBookingModal, manualServiceId, manualDate]);
+
+  const fetchAvailableSlots = async () => {
+    setLoadingSlots(true);
+    setSelectedSlot(null);
+    try {
+      const res = await fetch(`/api/bookings/available-slots?agentId=${agentId}&serviceId=${manualServiceId}&date=${manualDate}`);
+      if (res.ok) {
+        const data = await res.json();
+        setAvailableSlots(data || []);
+      } else {
+        setAvailableSlots([]);
+      }
+    } catch {
+      setAvailableSlots([]);
+    } finally {
+      setLoadingSlots(false);
     }
   };
 
@@ -183,7 +227,7 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
       if (res.ok) {
         setToastMessage({
           type: 'success',
-          text: `Email successfully delivered to ${emailModalBooking.customerEmail} via Resend Server!`
+          text: `Email successfully delivered to ${emailModalBooking.customerEmail}!`
         });
         setTimeout(() => {
           setEmailModalBooking(null);
@@ -192,16 +236,64 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
       } else {
         setToastMessage({
           type: 'error',
-          text: data.error || 'Failed to send email via Resend API.'
+          text: data.error || 'Failed to send email.'
         });
       }
     } catch {
       setToastMessage({
         type: 'error',
-        text: 'Network error sending email via Resend server.'
+        text: 'Network error sending email.'
       });
     } finally {
       setSendingEmail(false);
+    }
+  };
+
+  const handleCreateManualBooking = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedSlot) {
+      alert('Please select an available time slot.');
+      return;
+    }
+
+    setSubmittingManual(true);
+    try {
+      const userTz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+      const res = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          agentId,
+          serviceId: manualServiceId,
+          customerName: manualName,
+          customerEmail: manualEmail,
+          customerPhone: manualPhone || undefined,
+          customerNotes: manualNotes || undefined,
+          startTime: selectedSlot.startTime,
+          endTime: selectedSlot.endTime,
+          timezone: userTz,
+          status: manualStatus,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        fetchBookings();
+        setShowManualBookingModal(false);
+        setManualName('');
+        setManualEmail('');
+        setManualPhone('');
+        setManualNotes('');
+        setSelectedSlot(null);
+        alert(`Manual Booking created successfully for ${manualName}! slot is now blocked.`);
+      } else {
+        alert(data.error || 'Failed to create manual booking.');
+      }
+    } catch {
+      alert('Network error creating manual booking.');
+    } finally {
+      setSubmittingManual(false);
     }
   };
 
@@ -274,9 +366,16 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h2 className="text-xl font-bold text-slate-900 tracking-tight">Bookings</h2>
-          <p className="text-slate-500 text-xs mt-0.5">Review, verify, and manage customer appointments scheduled through your AI agent.</p>
+          <p className="text-slate-500 text-xs mt-0.5">Review, verify, and manage customer appointments scheduled through your AI agent or manual entry.</p>
         </div>
         <div className="flex items-center gap-2">
+          <button
+            onClick={() => setShowManualBookingModal(true)}
+            className="flex items-center gap-1.5 bg-[#F97316] hover:bg-[#ea580c] text-white px-3.5 py-2 rounded-lg text-xs font-bold transition border border-slate-900 shadow-xs cursor-pointer"
+          >
+            <Plus className="h-4 w-4" />
+            Create Manual Booking
+          </button>
           <button
             onClick={() => setShowEmailTemplatesModal(true)}
             className="flex items-center gap-1.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 px-3.5 py-2 rounded-lg text-xs font-bold transition shadow-xs cursor-pointer"
@@ -428,7 +527,7 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
                           <button
                             onClick={() => openEmailModal(booking)}
                             className="bg-[#F97316] hover:bg-[#ea580c] text-white px-2.5 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer shadow-xs flex items-center gap-1"
-                            title="Send Email via Resend"
+                            title="Send Direct Email"
                           >
                             <Mail className="h-3.5 w-3.5" /> Email
                           </button>
@@ -495,6 +594,202 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
           </div>
         )}
       </div>
+
+      {/* Manual Booking Modal */}
+      {showManualBookingModal && (
+        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center z-50 p-4">
+          <div className="bg-white border border-slate-200 rounded-xl w-full max-w-xl overflow-hidden shadow-2xl text-xs text-slate-700 animate-fadeIn">
+            <div className="p-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+              <div className="flex items-center gap-2">
+                <div className="h-7 w-7 rounded-lg bg-[#F97316]/10 flex items-center justify-center text-[#F97316]">
+                  <Plus className="h-4 w-4" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-slate-900 text-sm">Create Manual Appointment</h3>
+                  <p className="text-[10px] text-slate-400">Manually schedule customer bookings and sync time slots with chatbot</p>
+                </div>
+              </div>
+              <button 
+                onClick={() => setShowManualBookingModal(false)}
+                className="p-1 text-slate-400 hover:text-slate-600 rounded-lg cursor-pointer"
+              >
+                <XCircle className="h-5 w-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateManualBooking} className="p-5 space-y-4 max-h-[80vh] overflow-y-auto">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">
+                    Select Service *
+                  </label>
+                  <select
+                    value={manualServiceId}
+                    onChange={(e) => setManualServiceId(e.target.value)}
+                    className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-[#F97316] cursor-pointer"
+                  >
+                    {services.map(s => (
+                      <option key={s.id} value={s.id}>{s.name} ({s.durationMinutes} min)</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">
+                    Booking Date *
+                  </label>
+                  <input
+                    type="date"
+                    required
+                    value={manualDate}
+                    onChange={(e) => setManualDate(e.target.value)}
+                    className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-[#F97316]"
+                  />
+                </div>
+              </div>
+
+              {/* Time Slots Picker */}
+              <div>
+                <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1.5">
+                  Available Time Slots for {manualDate} *
+                </label>
+                {loadingSlots ? (
+                  <div className="p-6 text-center bg-slate-50 border border-slate-200 rounded-lg">
+                    <Loader2 className="h-5 w-5 animate-spin text-[#F97316] mx-auto" />
+                    <span className="text-[11px] text-slate-500 font-medium mt-1 block">Checking real-time slot availability...</span>
+                  </div>
+                ) : availableSlots.length === 0 ? (
+                  <div className="p-4 bg-amber-50 border border-amber-200 text-amber-800 rounded-lg text-xs font-semibold">
+                    No available time slots found for this date. (Already booked or closed business hours).
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 max-h-[140px] overflow-y-auto p-1.5 bg-slate-50 border border-slate-200 rounded-lg">
+                    {availableSlots.map((slot, idx) => {
+                      const isSelected = selectedSlot?.startTime === slot.startTime;
+                      return (
+                        <button
+                          key={idx}
+                          type="button"
+                          onClick={() => setSelectedSlot(slot)}
+                          className={`px-2.5 py-1.5 rounded-lg text-xs font-bold border transition text-center cursor-pointer ${
+                            isSelected
+                              ? 'bg-[#1E3A8A] text-white border-[#1E3A8A] shadow-xs'
+                              : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100 hover:border-slate-400'
+                          }`}
+                        >
+                          {slot.localStart}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              {/* Customer Details Form */}
+              <div className="border-t border-slate-200 pt-3 space-y-3">
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">
+                      Customer Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Hassan Naqvi"
+                      value={manualName}
+                      onChange={(e) => setManualName(e.target.value)}
+                      className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#F97316]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">
+                      Customer Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="customer@example.com"
+                      value={manualEmail}
+                      onChange={(e) => setManualEmail(e.target.value)}
+                      className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#F97316]"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">
+                      Phone Number (Optional)
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="+1 555-0199"
+                      value={manualPhone}
+                      onChange={(e) => setManualPhone(e.target.value)}
+                      className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#F97316]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">
+                      Appointment Status
+                    </label>
+                    <select
+                      value={manualStatus}
+                      onChange={(e: any) => setManualStatus(e.target.value)}
+                      className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-800 font-bold focus:outline-none focus:ring-2 focus:ring-[#F97316] cursor-pointer"
+                    >
+                      <option value="confirmed">Confirmed (Approved)</option>
+                      <option value="pending">Pending Approval</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">
+                    Customer Notes / Instructions (Optional)
+                  </label>
+                  <textarea
+                    rows={2}
+                    placeholder="Enter any special requests or appointment details..."
+                    value={manualNotes}
+                    onChange={(e) => setManualNotes(e.target.value)}
+                    className="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-xs text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#F97316]"
+                  />
+                </div>
+              </div>
+
+              <div className="pt-3 flex justify-end gap-2 border-t border-slate-200">
+                <button
+                  type="button"
+                  onClick={() => setShowManualBookingModal(false)}
+                  className="px-3.5 py-2 border border-slate-300 text-slate-700 font-semibold rounded-lg hover:bg-slate-50 transition text-xs cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={submittingManual || !selectedSlot}
+                  className="flex items-center gap-1.5 bg-[#F97316] hover:bg-[#ea580c] text-white font-bold border border-slate-900 shadow-xs rounded-lg px-4 py-2 text-xs transition cursor-pointer disabled:opacity-50"
+                >
+                  {submittingManual ? (
+                    <>
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      <span>Creating Appointment...</span>
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle2 className="h-3.5 w-3.5" />
+                      <span>Create Manual Booking</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Details Modal */}
       {selectedBooking && (
@@ -613,7 +908,7 @@ export default function BookingsManager({ agentId }: BookingsManagerProps) {
         </div>
       )}
 
-      {/* Direct Resend Email Modal for Customer */}
+      {/* Direct Email Modal for Customer */}
       {emailModalBooking && (
         <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center z-50 p-4">
           <div className="bg-white border border-slate-200 rounded-xl w-full max-w-lg overflow-hidden shadow-xl text-xs text-slate-700 animate-fadeIn">

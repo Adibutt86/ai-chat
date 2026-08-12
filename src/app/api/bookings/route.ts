@@ -82,7 +82,8 @@ export async function POST(request: Request) {
       customerNotes,
       startTime, // ISO String (UTC)
       endTime,   // ISO String (UTC)
-      timezone   // Visitor's local timezone
+      timezone,  // Visitor's local timezone
+      status
     } = await request.json();
 
     if (!agentId || !serviceId || !customerName || !customerEmail || !startTime || !endTime) {
@@ -208,7 +209,7 @@ export async function POST(request: Request) {
         startTime: start,
         endTime: end,
         timezone: timezone || 'UTC',
-        status: 'pending',
+        status: status || 'confirmed',
       },
       include: {
         service: true,

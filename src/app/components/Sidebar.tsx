@@ -43,19 +43,22 @@ export default function Sidebar({ currentTab, setCurrentTab, agentsCount }: Side
     { id: 'business_hours', name: 'Business Hours', icon: Clock },
     { id: 'widget', name: 'Widget Settings', icon: Code },
     { id: 'settings', name: 'Settings', icon: SettingsIcon },
-    ...(isMaster ? [{ id: 'master_panel', name: 'Master Panel', icon: Shield }] : []),
+    { id: 'master_panel', name: 'Master Panel', icon: Shield },
   ];
 
-  const navigationItems = allNavigationItems.filter(item => canAccessTab(role, item.id) || item.id === 'master_panel');
+  const navigationItems = allNavigationItems.filter(item => canAccessTab(role, item.id));
 
   return (
     <aside className="w-64 border-r border-slate-200 bg-white flex flex-col text-slate-700 shadow-sm">
       {/* Brand Header */}
       <div className="h-16 px-6 border-b border-slate-200 flex items-center justify-between bg-white">
-        <Link href="/" className="flex items-center gap-2">
-          <img src="/img/logo-main.png" alt="Geekvista AI Console" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <img src="/gemini-svg.svg" alt="Geekvista AI" className="h-8 w-8 object-contain transition-transform group-hover:scale-105" />
+          <div className="flex flex-col">
+            <span className="text-sm font-extrabold text-slate-900 leading-none tracking-tight">Geekvista AI</span>
+            <span className="text-[9px] text-[#F97316] font-bold tracking-wider uppercase mt-0.5">Workspace</span>
+          </div>
         </Link>
-        <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider bg-slate-100 px-2 py-0.5 rounded border border-slate-200">Console</span>
       </div>
 
       {/* User Section */}
@@ -74,7 +77,7 @@ export default function Sidebar({ currentTab, setCurrentTab, agentsCount }: Side
               {isMasterAdmin(role) ? 'Master' : 'User'}
             </span>
           </div>
-          <p className="text-[10px] text-slate-400 truncate leading-tight mt-0.5">{session?.email || 'admin@chatbox.ai'}</p>
+          <p className="text-[10px] text-slate-400 truncate leading-tight mt-0.5">{session?.email || 'comswebs@gmail.com'}</p>
         </div>
       </div>
 

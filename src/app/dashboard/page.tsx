@@ -278,8 +278,8 @@ export default function DashboardLayout() {
         )}
 
         {/* Dynamic view router */}
-        {currentTab === 'overview' && analytics && (
-          <Overview stats={analytics} agentName={activeAgentName} userRole={userRole} />
+        {currentTab === 'overview' && (
+          <Overview stats={analytics} agentName={activeAgentName} userRole={userRole} setCurrentTab={setCurrentTab} />
         )}
 
         {currentTab === 'agents' && (

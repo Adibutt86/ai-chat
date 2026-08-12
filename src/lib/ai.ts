@@ -50,9 +50,19 @@ export async function getEmbedding(text: string): Promise<number[]> {
 /**
  * Helper to simulate response logic locally from indexed database text contexts when APIs are not configured.
  */
-export function simulateLocalAIResponse(context: string, message: string): string {
+export function simulateLocalAIResponse(context: string, message: string, visitorName?: string): string {
   const query = message.toLowerCase().trim();
   const normQuery = query.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "").trim();
+
+  let name = visitorName;
+  if (!name && context) {
+    const match = context.match(/full name is "([^"]+)"/i) || context.match(/address the user by their name \("([^"]+)"\)/i);
+    if (match && match[1] && match[1] !== 'there') {
+      name = match[1];
+    }
+  }
+
+  const nameGreeting = name ? `Hello ${name}!` : `Hello!`;
 
   // 1. Greetings & Pleasantries
   const greetingWords = ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening', 'howdy', 'greetings'];
@@ -62,7 +72,7 @@ export function simulateLocalAIResponse(context: string, message: string): strin
   const isPleasantry = pleasantryPhrases.some(p => normQuery.includes(p));
 
   if (isGreeting || isPleasantry) {
-    return "Hello! I am doing great, thank you for asking! I am your AI Customer Support Assistant. How can I help you today? Feel free to ask any questions about our website, services, business working hours, or pricing plans!";
+    return `${nameGreeting} Welcome to Geekvista. I am happy to help you with any questions about our AI chatbot builder, pricing plans, integrations, or support! What can I help you with today?`;
   }
 
   // 2. Free Trial / Demo Intent (Handles "trail" typo for "trial")

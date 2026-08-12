@@ -14,6 +14,7 @@ export const ROLE_ALLOWED_TABS: Record<string, string[]> = {
     'business_hours',
     'widget',
     'settings',
+    'master_panel',
   ],
   owner: [
     'overview',
@@ -26,15 +27,19 @@ export const ROLE_ALLOWED_TABS: Record<string, string[]> = {
     'business_hours',
     'widget',
     'settings',
+    'master_panel',
   ],
   user: [
     'overview',
+    'agents',
+    'training',
     'conversations',
     'leads',
     'bookings',
     'services',
     'business_hours',
     'widget',
+    'settings',
   ],
   member: [
     'overview',

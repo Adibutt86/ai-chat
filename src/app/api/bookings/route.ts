@@ -4,7 +4,7 @@ import { isMasterAdmin } from '@/lib/permissions';
 import { prisma } from '@/lib/db';
 import { getValidAccessToken, checkFreeBusy, createGoogleEvent, deleteGoogleEvent } from '@/lib/google-calendar';
 import { formatInTimezone } from '@/lib/availability';
-import { sendBookingNotification } from '@/lib/notifications';
+import { sendBookingNotification, sendBookingAdminNotification } from '@/lib/notifications';
 
 // GET: List bookings for dashboard (authenticated)
 export async function GET(request: Request) {
@@ -245,20 +245,26 @@ export async function POST(request: Request) {
       }
     }
 
-    // 6. Send email notification to customer (Pending Approval)
+    // 6. Send email notifications (Customer + Admin with approve/cancel action links)
     try {
+      const reqUrl = new URL(request.url);
+      const origin = reqUrl.origin;
+
       await sendBookingNotification('BOOKING_CREATED', {
         bookingId: booking.id,
         customerName: booking.customerName,
         customerEmail: booking.customerEmail,
+        customerPhone: booking.customerPhone,
         serviceName: service.name,
         startTime: start,
         endTime: end,
         timezone: booking.timezone,
         businessName: agent.organization.name
       });
+
+      await sendBookingAdminNotification(booking, service.name, agent.organization.name, origin);
     } catch (err) {
-      console.error('Failed to send booking created email:', err);
+      console.error('Failed to send booking email notifications:', err);
     }
 
     // Return confirmation

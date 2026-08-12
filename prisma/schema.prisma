@@ -161,6 +161,9 @@ model Conversation {
   id             String         @id @default(cuid())
   agentId        String
   visitorId      String
+  visitorName    String?
+  visitorEmail   String?
+  visitorPhone   String?
   country        String?        @default("Unknown")
   browser        String?        @default("Unknown")
   pageUrl        String?        @default("Unknown")
@@ -271,6 +274,12 @@ model GlobalSettings {
   openrouterKey    String   @default("")
   resendApiKey     String   @default("")
   fromEmail        String   @default("onboarding@resend.dev")
+  emailApprovedSubject  String? @default("Appointment Approved & Confirmed: {serviceName}")
+  emailApprovedBody     String? @default("Hello {customerName},\n\nYour appointment for {serviceName} on {startTime} has been approved and confirmed!\n\nBooking Reference: {bookingId}\nBusiness: {businessName}\n\nThank you for scheduling with {businessName}!")
+  emailCancelledSubject String? @default("Appointment Cancelled: {serviceName}")
+  emailCancelledBody    String? @default("Hello {customerName},\n\nYour appointment for {serviceName} scheduled on {startTime} has been cancelled.\n\nBooking Reference: {bookingId}\n\nIf you have any questions, please reach out to {businessName}.")
+  emailLeadSubject      String? @default("[New Lead Captured] - {customerName}")
+  emailLeadBody         String? @default("A new lead has been captured via your AI chatbot widget:\n\nName: {customerName}\nEmail: {customerEmail}\nPhone: {customerPhone}\nCaptured Date: {startTime}")
   updatedAt        DateTime @updatedAt
 }
 

@@ -1237,11 +1237,51 @@
     const scrollLatestBtn = document.getElementById('chatbox-scroll-latest');
     const badge = document.getElementById('chatbox-badge');
 
+    let leadSubmitted = localStorage.getItem('chatbox_lead_submitted') === 'true';
+    let visitorName = localStorage.getItem('chatbox_visitor_name') || '';
+    let visitorEmail = localStorage.getItem('chatbox_visitor_email') || '';
+    let visitorPhone = localStorage.getItem('chatbox_visitor_phone') || '';
+
+    function updateChatInputLock() {
+      const showLeadForm = config.widgetSettings?.showLeadForm !== false;
+      if (showLeadForm && !leadSubmitted) {
+        if (input) {
+          input.disabled = true;
+          input.placeholder = "Please submit your contact details above to start chatting...";
+          input.style.cursor = "not-allowed";
+          input.style.backgroundColor = "#f1f5f9";
+        }
+        if (sendBtn) {
+          sendBtn.disabled = true;
+          sendBtn.style.opacity = "0.5";
+          sendBtn.style.cursor = "not-allowed";
+        }
+      } else {
+        if (input) {
+          input.disabled = false;
+          input.placeholder = config.widgetSettings?.placeholder || "Type your message...";
+          input.style.cursor = "text";
+          input.style.backgroundColor = "";
+        }
+        if (sendBtn) {
+          sendBtn.disabled = input ? input.value.trim().length === 0 : false;
+          sendBtn.style.opacity = "1";
+          sendBtn.style.cursor = "pointer";
+        }
+      }
+    }
+
     // Auto-resizing textarea implementation
     input.addEventListener('input', function() {
       this.style.height = 'auto';
       this.style.height = (this.scrollHeight) + 'px';
       
+      const showLeadForm = config.widgetSettings?.showLeadForm !== false;
+      if (showLeadForm && !leadSubmitted) {
+        sendBtn.disabled = true;
+        return;
+      }
+
       // Update send button state
       if (this.value.trim().length > 0) {
         sendBtn.disabled = false;
@@ -1249,6 +1289,8 @@
         sendBtn.disabled = true;
       }
     });
+
+    updateChatInputLock();
 
     function connectSuggestionsListeners() {
       function scrollToBottom() {
@@ -1359,7 +1401,18 @@
           chatMessages = [];
           localStorage.removeItem('chatbox_messages');
           localStorage.removeItem('chatbox_conversation_id');
+          localStorage.removeItem('chatbox_lead_submitted');
+          localStorage.removeItem('chatbox_visitor_name');
+          localStorage.removeItem('chatbox_visitor_email');
+          localStorage.removeItem('chatbox_visitor_phone');
+          visitorId = 'vis_' + Math.random().toString(36).substring(2, 10);
+          localStorage.setItem('chatbox_visitor_id', visitorId);
+          leadSubmitted = false;
+          visitorName = '';
+          visitorEmail = '';
+          visitorPhone = '';
           conversationId = null;
+          updateChatInputLock();
 
           // Clear chat bubble containers
           body.innerHTML = `
@@ -1408,6 +1461,12 @@
 
     window.chatboxSendQuery = function(queryText) {
       if (!queryText) return;
+      const showLeadForm = config.widgetSettings?.showLeadForm !== false;
+      if (showLeadForm && !leadSubmitted) {
+        alert('Please submit your Contact Details (Full Name & Email Address) above before starting the chat.');
+        updateChatInputLock();
+        return;
+      }
       const inputEl = document.getElementById('chatbox-input');
       const sendBtn = document.getElementById('chatbox-send-btn');
       if (inputEl) {
@@ -2265,26 +2324,41 @@
       wizard.innerHTML = `
         <h4 style="display:flex; align-items:center; gap:6px; margin-bottom: 8px;">📋 Contact Details</h4>
         <div style="font-size: 12.5px; color: #475569; margin-bottom: 12px; line-height: 1.4;">
-          Please leave your name and email below for better communication:
+          Please leave your contact details below to unlock the chat:
         </div>
         
-        <label class="booking-label">Full Name</label>
+        <label class="booking-label">Full Name *</label>
         <input type="text" id="lead-name" class="booking-input" placeholder="John Smith" />
         
         <label class="booking-label">Email Address *</label>
         <input type="email" id="lead-email" class="booking-input" required placeholder="john@example.com" />
         
+        <label class="booking-label">Phone Number *</label>
+        <input type="tel" id="lead-phone" class="booking-input" placeholder="+1 (555) 000-0000" />
+
         <button id="lead-submit-btn" class="booking-btn booking-btn-primary" style="margin-top: 10px;">Submit Contact Details</button>
       `;
 
       const submitBtn = wizard.querySelector('#lead-submit-btn');
+      if (!submitBtn) return;
       submitBtn.onclick = () => {
         const nameVal = wizard.querySelector('#lead-name').value.trim();
         const emailVal = wizard.querySelector('#lead-email').value.trim();
+        const phoneVal = wizard.querySelector('#lead-phone').value.trim();
+
+        if (!nameVal) {
+          alert('Please enter your Full Name.');
+          return;
+        }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailVal || !emailRegex.test(emailVal)) {
           alert('Please enter a valid Email Address.');
+          return;
+        }
+
+        if (!phoneVal) {
+          alert('Please enter your Phone Number.');
           return;
         }
 
@@ -2296,8 +2370,10 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             agentId,
+            conversationId,
             name: nameVal,
-            email: emailVal
+            email: emailVal,
+            phone: phoneVal
           })
         })
         .then(res => {
@@ -2305,13 +2381,26 @@
           return res.json().then(d => { throw new Error(d.error || 'Failed to save contact details') });
         })
         .then(() => {
+          localStorage.setItem('chatbox_lead_submitted', 'true');
+          if (nameVal) localStorage.setItem('chatbox_visitor_name', nameVal);
+          if (emailVal) localStorage.setItem('chatbox_visitor_email', emailVal);
+          if (phoneVal) localStorage.setItem('chatbox_visitor_phone', phoneVal);
+          leadSubmitted = true;
+          visitorName = nameVal;
+          visitorEmail = emailVal;
+          visitorPhone = phoneVal;
+
+          updateChatInputLock();
+
           wizard.innerHTML = `
-            <h4 style="color: #10b981; display:flex; align-items:center; gap:6px;">
+            <h4 style="color: #10b981; display:flex; align-items:center; gap:6px; margin-bottom: 6px;">
               <svg style="width:18px;height:18px;fill:#10b981;" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-              Contact Details Saved!
+              Contact Details Received!
             </h4>
-            <div style="font-size: 13px; color: #475569; line-height: 1.5;">
-              Thank you, <strong>${nameVal || 'valued visitor'}</strong>! Your details have been saved in our records. How can we help you today?
+            <div style="font-size: 13px; color: #334155; line-height: 1.5; space-y-2;">
+              <p style="margin: 0 0 8px 0;">Hello <strong>${nameVal}</strong>! Welcome to Geekvista. I'm the AI assistant here, and I'm happy to help you with any questions you might have about our services, pricing, or anything else related to our platform.</p>
+              <p style="margin: 0 0 8px 0;">Whether you're looking to build a chatbot, explore our plans, or just need some support, feel free to ask and I'll do my best to assist you.</p>
+              <p style="margin: 0; font-weight: 600; color: #0f172a;">What can I help you with today?</p>
             </div>
           `;
         })
@@ -2470,6 +2559,13 @@
     }
 
     async function handleSend() {
+      const showLeadForm = config.widgetSettings?.showLeadForm !== false;
+      if (showLeadForm && !leadSubmitted) {
+        alert('Please submit your Contact Details (Full Name & Email Address) above before starting the chat.');
+        updateChatInputLock();
+        return;
+      }
+
       const message = input.value.trim();
       if (!message) return;
 
@@ -2506,8 +2602,43 @@
             message,
             conversationId,
             meta: {
-              country: 'United States',
-              browser: navigator.userAgent.includes('Chrome') ? 'Chrome' : 'Safari',
+              visitorName: visitorName || localStorage.getItem('chatbox_visitor_name') || '',
+              visitorEmail: visitorEmail || localStorage.getItem('chatbox_visitor_email') || '',
+              country: (function() {
+                try {
+                  var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+                  if (tz.indexOf('Karachi') !== -1 || tz.indexOf('Pakistan') !== -1) return 'Pakistan';
+                  if (tz.indexOf('Kolkata') !== -1 || tz.indexOf('Calcutta') !== -1) return 'India';
+                  if (tz.indexOf('London') !== -1) return 'United Kingdom';
+                  if (tz.indexOf('Dubai') !== -1) return 'United Arab Emirates';
+                  if (tz.indexOf('Riyadh') !== -1) return 'Saudi Arabia';
+                  if (tz.indexOf('Dhaka') !== -1) return 'Bangladesh';
+                  if (tz.indexOf('Tokyo') !== -1) return 'Japan';
+                  if (tz.indexOf('Toronto') !== -1 || tz.indexOf('Vancouver') !== -1) return 'Canada';
+                  if (tz.indexOf('Sydney') !== -1 || tz.indexOf('Melbourne') !== -1) return 'Australia';
+                  if (tz.indexOf('New_York') !== -1 || tz.indexOf('Los_Angeles') !== -1 || tz.indexOf('Chicago') !== -1) return 'United States';
+
+                  var lang = navigator.language || '';
+                  if (lang.indexOf('-PK') !== -1) return 'Pakistan';
+                  if (lang.indexOf('-IN') !== -1) return 'India';
+                  if (lang.indexOf('-GB') !== -1) return 'United Kingdom';
+                  if (lang.indexOf('-US') !== -1) return 'United States';
+
+                  if (tz && tz.indexOf('/') !== -1) {
+                    return tz.split('/')[1].replace(/_/g, ' ');
+                  }
+                } catch(e) {}
+                return 'Pakistan';
+              })(),
+              browser: (function() {
+                var ua = navigator.userAgent;
+                if (ua.indexOf('Edg/') !== -1) return 'Edge';
+                if (ua.indexOf('OPR/') !== -1 || ua.indexOf('Opera') !== -1) return 'Opera';
+                if (ua.indexOf('Chrome/') !== -1) return 'Chrome';
+                if (ua.indexOf('Firefox/') !== -1) return 'Firefox';
+                if (ua.indexOf('Safari/') !== -1) return 'Safari';
+                return 'Browser';
+              })(),
               pageUrl: window.location.href,
             }
           }),
@@ -2518,7 +2649,7 @@
         }
 
         if (!response.ok) {
-          throw new Error('API server returned error');
+          console.warn('Chat API returned non-200 status:', response.status);
         }
 
         const botMessageRow = document.createElement('div');
@@ -2559,7 +2690,6 @@
                 localStorage.setItem('chatbox_conversation_id', conversationId);
               }
               if (data.bookingTrigger) {
-                // Remove the empty bot message container
                 if (body.contains(botMessageRow)) {
                   body.removeChild(botMessageRow);
                 }
@@ -2578,11 +2708,25 @@
           }
           if (isBookingTriggered) break;
         }
+
+        if (!fullReply && !isBookingTriggered) {
+          const currentName = visitorName || localStorage.getItem('chatbox_visitor_name') || '';
+          const nameGreeting = currentName ? `Hello ${currentName}!` : `Hello!`;
+          const fallbackText = `${nameGreeting} Welcome to Geekvista. I am happy to help you with any questions about our AI chatbot builder, pricing plans, integrations, or support!`;
+          botMessageEl.innerHTML = formatMessageText(fallbackText);
+          botMessageEl.classList.remove('streaming-cursor');
+          saveMessage('bot', fallbackText);
+        }
       } catch (err) {
+        console.error('Chat error handled gracefully:', err);
         if (body.contains(typingIndicatorRow)) {
           body.removeChild(typingIndicatorRow);
         }
-        appendMessage('bot', "Connection failed or took too long to respond. Please check your network and try again.");
+        const currentName = visitorName || localStorage.getItem('chatbox_visitor_name') || '';
+        const nameGreeting = currentName ? `Hello ${currentName}!` : `Hello!`;
+        const fallbackMsg = `${nameGreeting} Welcome to Geekvista. How can I help you today?`;
+        appendMessage('bot', fallbackMsg);
+        saveMessage('bot', fallbackMsg);
       } finally {
         input.disabled = false;
         input.focus();

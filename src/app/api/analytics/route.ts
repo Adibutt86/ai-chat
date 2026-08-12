@@ -28,21 +28,12 @@ export async function GET(request: Request) {
 
   return NextResponse.json({
     analytics: {
-      visitorsCount: Math.round(totalConversations * 1.3) + 5,
+      visitorsCount: totalConversations,
       chatsCount: totalConversations,
       messagesCount: totalMessages,
-      avgResponseTime: '1.2s',
       leadCount: totalLeads,
-      unansweredQuestions: [
-        'How can I get custom discounts?',
-        'Do you support offline local installation?',
-        'Is there a phone support hotline?'
-      ],
-      popularPages: [
-        { url: '/pricing', count: 18 },
-        { url: '/docs/api', count: 12 },
-        { url: '/features', count: 9 },
-      ]
+      unansweredQuestions: [],
+      popularPages: []
     },
     leads: recentLeads,
   });

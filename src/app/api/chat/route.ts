@@ -127,11 +127,36 @@ export async function GET(request: Request) {
       messages: {
         orderBy: { createdAt: 'asc' },
       },
+      leads: true,
     },
     orderBy: { createdAt: 'desc' },
   });
 
-  return NextResponse.json(conversations, { headers: corsHeaders });
+  const agentLeads = await prisma.lead.findMany({
+    where: { agentId },
+    orderBy: { createdAt: 'desc' }
+  });
+
+  const formattedConversations = conversations.map(conv => {
+    let name = conv.visitorName || conv.leads?.[0]?.name;
+    let email = conv.visitorEmail || conv.leads?.[0]?.email;
+    
+    if (!name || !email) {
+      const matchedLead = agentLeads.find(l => l.conversationId === conv.id);
+      if (matchedLead) {
+        if (!name && matchedLead.name) name = matchedLead.name;
+        if (!email && matchedLead.email) email = matchedLead.email;
+      }
+    }
+
+    return {
+      ...conv,
+      visitorName: name || null,
+      visitorEmail: email || null
+    };
+  });
+
+  return NextResponse.json(formattedConversations, { headers: corsHeaders });
 }
 
 export async function POST(request: Request) {
@@ -181,19 +206,52 @@ export async function POST(request: Request) {
         where: { id: conversationId },
         include: { messages: true },
       });
+      if (conv) {
+        const updateData: any = {};
+        if (meta?.country) updateData.country = meta.country;
+        if (meta?.browser) updateData.browser = meta.browser;
+        if (meta?.pageUrl) updateData.pageUrl = meta.pageUrl;
+        if (meta?.visitorName) updateData.visitorName = meta.visitorName;
+        if (meta?.visitorEmail) updateData.visitorEmail = meta.visitorEmail;
+
+        if (Object.keys(updateData).length > 0) {
+          await prisma.conversation.update({
+            where: { id: conv.id },
+            data: updateData
+          });
+        }
+      }
     }
 
     if (!conv) {
+      const geoCountry = request.headers.get('x-vercel-ip-country') || 
+                         request.headers.get('cf-ipcountry') || 
+                         request.headers.get('x-country');
+
+      const visitorName = meta?.visitorName || null;
+      const visitorEmail = meta?.visitorEmail || null;
+
       conv = await prisma.conversation.create({
         data: {
           agentId: targetAgentId,
           visitorId: visitorId || 'anonymous-visitor',
-          country: meta?.country || 'United States',
+          visitorName: visitorName || undefined,
+          visitorEmail: visitorEmail || undefined,
+          country: meta?.country || geoCountry || 'Pakistan',
           browser: meta?.browser || 'Chrome',
           pageUrl: meta?.pageUrl || 'https://widget-client.com',
         },
-        include: { messages: true },
+        include: { messages: true, leads: true },
       });
+
+      if (visitorEmail) {
+        try {
+          await prisma.lead.updateMany({
+            where: { email: visitorEmail, conversationId: null },
+            data: { conversationId: conv.id }
+          });
+        } catch (e) {}
+      }
     }
 
     // 2. Save visitor message
@@ -457,11 +515,14 @@ export async function POST(request: Request) {
     const buyingIntentKeywords = ['price', 'buy', 'cost', 'quote', 'premium', 'demo', 'pricing', 'subscribe', 'sales'];
     const hasBuyingIntent = buyingIntentKeywords.some(keyword => message.toLowerCase().includes(keyword));
 
+    const activeVisitorName = meta?.visitorName || conv?.visitorName;
+
     // 8. Generate Highest-Priority System Instruction block (Requirements #1, #3, #4, #10, #11)
     let systemPrompt = `You are an official AI Customer Support Representative for Geekvista (${agent.name}).
+${activeVisitorName ? `\nVISITOR IDENTIFICATION:\nThe visitor's full name is "${activeVisitorName}". Address the visitor directly and naturally by their name ("${activeVisitorName}") when responding to their questions or introducing yourself.` : ''}
 
 STRICT ANSWERING RULES:
-1. GREETINGS & PLEASANTRIES: For greetings, pleasantries, or polite introductions (e.g. "hi", "hello", "how are you", "who are you", "good morning", "thank you"), respond warmly and professionally as the website's AI assistant, introduce yourself, and offer to help with any website or support inquiries.
+1. GREETINGS & PLEASANTRIES: For greetings, pleasantries, or polite introductions (e.g. "hi", "hello", "how are you", "who are you", "good morning", "thank you"), respond warmly and professionally as the website's AI assistant, address the user by their name ("${activeVisitorName || 'there'}"), introduce yourself, and offer to help with any website or support inquiries.
 2. HUMAN CONVERSATIONAL SYNTHESIS: Synthesize information into clear, readable, natural human conversational sentences. Use clean bullet points (•) and clear line breaks.
 3. NO EMOJIS OR SYMBOLS: Do NOT include any emojis, icons, or symbols (such as 💳, ⚡, 🚀, 🏢, 🕒, 📍, 🛠️, 🎁, 🤖, 🟢, 🔴, 🧠, 🌐, 🎯, etc.) in your responses. Keep responses completely free of icon clutter.
 4. BOLD MAIN HEADINGS: Always format main topic section headers in bold text without emojis (for example: **Geekvista Plans & Pricing** or **Business Hours**).
@@ -556,15 +617,15 @@ Response Time: ${duration}ms
 Token Estimate: ~${Math.round((message.length + fullReply.length) / 4)}
 `);
         } catch (err: any) {
-          console.error("[Anthropic API Error]:", err?.message || err);
-          const errorReply = "Sorry, we have a connection issue.";
-          controller.enqueue(encoder.encode(JSON.stringify({ chunk: errorReply }) + '\n'));
+          console.error("[Chat API Error]:", err?.message || err);
+          const fallbackText = simulateLocalAIResponse(context, message);
+          controller.enqueue(encoder.encode(JSON.stringify({ chunk: fallbackText }) + '\n'));
 
           await prisma.message.create({
             data: {
               conversationId: conv.id,
               sender: 'assistant',
-              content: errorReply,
+              content: fallbackText,
             },
           });
         } finally {

@@ -737,6 +737,11 @@
         font-family: inherit;
         line-height: 1.4;
         box-sizing: border-box;
+        overflow-y: auto;
+        scrollbar-width: none;
+      }
+      #chatbox-input::-webkit-scrollbar {
+        display: none;
       }
       #chatbox-send-btn {
         background-color: ${primaryColor};
@@ -1247,13 +1252,14 @@
       if (showLeadForm && !leadSubmitted) {
         if (input) {
           input.disabled = true;
-          input.placeholder = "Please submit your contact details above to start chatting...";
+          input.placeholder = "Please introduce yourself...";
           input.style.cursor = "not-allowed";
           input.style.backgroundColor = "#f1f5f9";
+          input.style.opacity = "0.6";
         }
         if (sendBtn) {
           sendBtn.disabled = true;
-          sendBtn.style.opacity = "0.5";
+          sendBtn.style.opacity = "0.4";
           sendBtn.style.cursor = "not-allowed";
         }
       } else {
@@ -1262,6 +1268,7 @@
           input.placeholder = config.widgetSettings?.placeholder || "Type your message...";
           input.style.cursor = "text";
           input.style.backgroundColor = "";
+          input.style.opacity = "1";
         }
         if (sendBtn) {
           sendBtn.disabled = input ? input.value.trim().length === 0 : false;
@@ -2337,6 +2344,11 @@
         <input type="tel" id="lead-phone" class="booking-input" placeholder="+1 (555) 000-0000" />
 
         <button id="lead-submit-btn" class="booking-btn booking-btn-primary" style="margin-top: 10px;">Submit Contact Details</button>
+        
+        <div style="margin-top: 12px; padding: 10px; background-color: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; color: #3b82f6; font-size: 12.5px; display: flex; align-items: center; gap: 8px; font-weight: 500;">
+          <span style="font-size:15px; line-height: 1;">👋</span>
+          We'd love to know who we're talking to! Submit your details to unlock the chat.
+        </div>
       `;
 
       const submitBtn = wizard.querySelector('#lead-submit-btn');

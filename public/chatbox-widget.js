@@ -40,6 +40,7 @@
     // 3. Inject global style definitions
     const style = document.createElement('style');
     const primaryColor = config.widgetSettings?.primaryColor || '#2563eb';
+    const secondaryColor = config.widgetSettings?.secondaryColor || primaryColor;
     const borderRadius = config.widgetSettings?.borderRadius || '0.75rem';
     const welcomeMessage = config.widgetSettings?.welcomeMessage || 'Hi! How can I help you today?';
     const placeholder = config.widgetSettings?.placeholder || 'Type your message...';

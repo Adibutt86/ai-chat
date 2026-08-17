@@ -108,16 +108,16 @@
         transition: transform 0.3s ease, opacity 0.3s ease;
       }
       #chatbox-launcher .icon-chat {
-        width: 32px;
-        height: 32px;
+        width: 42px;
+        height: 42px;
       }
       #chatbox-launcher .icon-close {
         opacity: 0;
         transform: rotate(-45deg) scale(0.6);
         fill: none;
         stroke: white;
-        width: 24px;
-        height: 24px;
+        width: 28px;
+        height: 28px;
       }
       #chatbox-launcher.open .icon-chat {
         opacity: 0;
@@ -1233,7 +1233,7 @@
       </div>
       <button id="chatbox-launcher" aria-label="Open Chat Support" aria-haspopup="dialog">
         <span id="chatbox-badge"></span>
-        <svg class="icon-svg icon-chat" viewBox="0 0 128 128" width="32" height="32" fill="none">
+        <svg class="icon-svg icon-chat" viewBox="36 16 56 60" width="42" height="42" fill="none">
           <!-- Inner AI Geometric Nodes (No Bubble Outline) -->
           <polygon points="64,24 84,35 84,57 64,68 44,57 44,35" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linejoin="round"/>
           <path d="M54 46H74" stroke="#F97316" stroke-width="5" stroke-linecap="round"/>
@@ -1243,7 +1243,7 @@
           <circle cx="74" cy="46" r="4" fill="#F97316"/>
           <circle cx="46" cy="56" r="4" fill="#38BDF8"/>
         </svg>
-        <svg class="icon-svg icon-close" viewBox="0 0 24 24" width="24" height="24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        <svg class="icon-svg icon-close" viewBox="0 0 24 24" width="28" height="28"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </button>
     `;
 

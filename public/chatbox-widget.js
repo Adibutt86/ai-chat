@@ -32,8 +32,9 @@
     });
 
   function buildWidget(config, origin) {
-    if (document.getElementById('chatbox-widget-container')) {
-      return;
+    const existingContainer = document.getElementById('chatbox-widget-container');
+    if (existingContainer) {
+      existingContainer.remove();
     }
 
     // 3. Inject global style definitions

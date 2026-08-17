@@ -266,7 +266,7 @@ export default function ContactPage() {
         <div className="container">
           <div className="footer_top">
             <Link className="logo footer_top-logo d-inline-flex align-items-center gap-2" href="/" style={{ textDecoration: 'none' }}>
-              <img src="/img/logo-main.png" alt="Geekvista AI" style={{ height: '70px', width: 'auto', objectFit: 'contain', display: 'block' }} />
+              <img src="/img/gemini-svg.svg" alt="Geekvista AI" style={{ height: '70px', width: 'auto', objectFit: 'contain', display: 'block' }} />
             </Link>
             <ul className="footer_top-nav d-flex flex-wrap">
               <li className="footer_top-nav_link">

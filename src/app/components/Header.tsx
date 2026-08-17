@@ -18,7 +18,7 @@ export default function Header({ dataPage = 'contact', dataPageParent = 'contact
     <header className="header d-lg-flex align-items-center" data-page={dataPage} data-page-parent={dataPageParent}>
       <div className="container d-flex align-items-center flex-wrap flex-lg-nowrap justify-content-between w-100">
         <Link className="logo header_logo d-inline-flex align-items-center gap-2" href="/" style={{ flexGrow: 0, textDecoration: 'none' }}>
-          <img src="/img/logo-main.png" alt="Geekvista AI" style={{ height: '70px', width: 'auto', objectFit: 'contain', display: 'block' }} />
+          <img src="/img/gemini-svg.svg" alt="Geekvista AI" style={{ height: '70px', width: 'auto', objectFit: 'contain', display: 'block' }} />
         </Link>
 
         <nav className={`header_nav collapse ${mobileMenuOpen ? 'show' : ''} d-lg-flex justify-content-lg-center`} id="headerMenu" style={{ flexGrow: 1, visibility: 'visible', overflow: 'visible', maxHeight: 'none' }}>

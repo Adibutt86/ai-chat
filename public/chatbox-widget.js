@@ -103,12 +103,12 @@
       #chatbox-launcher .icon-svg {
         position: absolute;
         transition: transform 0.3s ease, opacity 0.3s ease;
-        fill: none;
-        stroke: white;
       }
       #chatbox-launcher .icon-close {
         opacity: 0;
         transform: rotate(-45deg) scale(0.6);
+        fill: none;
+        stroke: white;
       }
       #chatbox-launcher.open .icon-chat {
         opacity: 0;
@@ -1224,14 +1224,21 @@
       </div>
       <button id="chatbox-launcher" aria-label="Open Chat Support" aria-haspopup="dialog">
         <span id="chatbox-badge"></span>
-        <svg class="icon-svg icon-chat" viewBox="0 0 128 128" width="28" height="28" fill="none">
-          <path d="M 28 20 C 28 13.37 33.37 8 40 8 L 88 8 C 94.63 8 100 13.37 100 20 L 100 68 C 100 74.63 94.63 80 88 80 L 62 80 L 38 102 L 38 80 C 31.37 80 28 74.63 28 68 Z" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>
-          <polygon points="64,24 84,35 84,57 64,68 44,57 44,35" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/>
-          <path d="M 52 46 L 76 46" stroke="#F97316" stroke-width="5" stroke-linecap="round"/>
-          <circle cx="64" cy="24" r="4" fill="currentColor"/>
-          <circle cx="84" cy="35" r="4" fill="currentColor"/>
-          <circle cx="76" cy="46" r="4" fill="#F97316"/>
-          <circle cx="44" cy="57" r="4" fill="currentColor"/>
+        <svg class="icon-svg icon-chat" viewBox="0 0 128 128" width="40" height="40" fill="none">
+          <defs>
+            <linearGradient id="launcher-chat-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#064E3B"/>
+              <stop offset="60%" stop-color="#059669"/>
+              <stop offset="100%" stop-color="#10B981"/>
+            </linearGradient>
+          </defs>
+          <path d="M 28 20 C 28 13.37 33.37 8 40 8 L 88 8 C 94.63 8 100 13.37 100 20 L 100 68 C 100 74.63 94.63 80 88 80 L 62 80 L 38 102 L 38 80 C 31.37 80 28 74.63 28 68 Z" fill="url(#launcher-chat-gradient)"/>
+          <polygon points="64,24 84,35 84,57 64,68 44,57 44,35" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linejoin="round"/>
+          <path d="M 52 46 L 76 46" stroke="#F97316" stroke-width="4.5" stroke-linecap="round"/>
+          <circle cx="64" cy="24" r="3.5" fill="#10B981"/>
+          <circle cx="84" cy="35" r="3.5" fill="#34D399"/>
+          <circle cx="76" cy="46" r="3.5" fill="#F97316"/>
+          <circle cx="44" cy="57" r="3.5" fill="#10B981"/>
         </svg>
         <svg class="icon-svg icon-close" viewBox="0 0 24 24" width="24" height="24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </button>

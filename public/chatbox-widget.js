@@ -1224,7 +1224,15 @@
       </div>
       <button id="chatbox-launcher" aria-label="Open Chat Support" aria-haspopup="dialog">
         <span id="chatbox-badge"></span>
-        <svg class="icon-svg icon-chat" viewBox="0 0 24 24" width="26" height="26"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <svg class="icon-svg icon-chat" viewBox="0 0 128 128" width="30" height="30" fill="none">
+          <path d="M24 18C24 11.37 29.37 6 36 6H92C98.63 6 104 11.37 104 18V66C104 72.63 98.63 78 92 78H62L38 100V78H36C29.37 78 24 72.63 24 66V18Z" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M46 36L64 26L82 36V56L64 66L46 56V36Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M54 46H74" stroke="#F97316" stroke-width="4.5" stroke-linecap="round"/>
+          <circle cx="64" cy="26" r="3.5" fill="currentColor"/>
+          <circle cx="82" cy="36" r="3.5" fill="currentColor"/>
+          <circle cx="74" cy="46" r="3.5" fill="#F97316"/>
+          <circle cx="46" cy="56" r="3.5" fill="currentColor"/>
+        </svg>
         <svg class="icon-svg icon-close" viewBox="0 0 24 24" width="24" height="24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </button>
     `;

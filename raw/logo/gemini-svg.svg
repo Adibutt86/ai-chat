@@ -1,22 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" fill="none">
-  <defs>
-    <linearGradient id="chat-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#064E3B"/>
-      <stop offset="60%" stop-color="#059669"/>
-      <stop offset="100%" stop-color="#10B981"/>
-    </linearGradient>
-  </defs>
-  
-  <!-- Main Chat Bubble Base -->
-  <path d="M 28 20 C 28 13.37 33.37 8 40 8 L 88 8 C 94.63 8 100 13.37 100 20 L 100 68 C 100 74.63 94.63 80 88 80 L 62 80 L 38 102 L 38 80 C 31.37 80 28 74.63 28 68 Z" fill="url(#chat-gradient)"/>
-  
-  <!-- Geometric AI Hex Circuit Monogram -->
-  <polygon points="64,24 84,35 84,57 64,68 44,57 44,35" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linejoin="round"/>
-  <path d="M 52 46 L 76 46" stroke="#F97316" stroke-width="4.5" stroke-linecap="round"/>
-  
-  <!-- Connected Tech Nodes -->
-  <circle cx="64" cy="24" r="3.5" fill="#10B981"/>
-  <circle cx="84" cy="35" r="3.5" fill="#34D399"/>
-  <circle cx="76" cy="46" r="3.5" fill="#F97316"/>
-  <circle cx="44" cy="57" r="3.5" fill="#10B981"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 85" width="420" height="85">
+    <defs>
+        <linearGradient id="blue-grad-light" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#0F172A"/>
+            <stop offset="50%" stop-color="#1C3C94"/>
+            <stop offset="100%" stop-color="#2563EB"/>
+        </linearGradient>
+    </defs>
+    <g transform="translate(5, 2)">
+        <!-- Outer Hexagon Badge -->
+        <polygon points="40,2 75,22 75,62 40,82 5,62 5,22" fill="url(#blue-grad-light)"/>
+        <polygon points="40,6 71,24 71,60 40,78 9,60 9,24" fill="#0F172A" opacity="0.15"/>
+        <!-- Inner G Monogram & Circuit -->
+        <path d="M 26 26 L 54 26 C 58 26, 60 28, 60 32 L 60 38 L 44 38 L 44 46 L 54 46 L 54 58 L 26 58 C 22 58, 20 56, 20 50 L 20 34 C 20 28, 22 26, 26 26 Z" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 44 46 L 60 46" stroke="#F97316" stroke-width="4.5" stroke-linecap="round"/>
+        <!-- Nodes -->
+        <circle cx="26" cy="26" r="3.5" fill="#38BDF8"/>
+        <circle cx="54" cy="26" r="3.5" fill="#60A5FA"/>
+        <circle cx="60" cy="46" r="3.5" fill="#F97316"/>
+        <circle cx="26" cy="58" r="3.5" fill="#38BDF8"/>
+    </g>
+    <!-- Brand Typography -->
+    <text x="95" y="44" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="800" font-size="28" fill="#0F172A" letter-spacing="1">GEEK VISTA</text>
+    <text x="96" y="64" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="600" font-size="10" fill="#1C3C94" letter-spacing="2.5">A.I. • LEAD GEN • BOOKING</text>
 </svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" fill="none">
+  <defs>
+    <linearGradient id="gv-blue-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1C3C94"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Chat Bubble (Transparent background canvas) -->
+  <path d="M24 16C24 9.37 29.37 4 36 4H92C98.63 4 104 9.37 104 16V68C104 74.63 98.63 80 92 80H62L36 104V80H36C29.37 80 24 74.63 24 68V16Z" fill="url(#gv-blue-grad)"/>
+
+  <!-- Inner Geometric Hex Monogram -->
+  <polygon points="64,22 84,33 84,57 64,68 44,57 44,33" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linejoin="round"/>
+  <path d="M52 45H76" stroke="#F97316" stroke-width="4.5" stroke-linecap="round"/>
+
+  <!-- AI Circuit Nodes -->
+  <circle cx="64" cy="22" r="3.5" fill="#60A5FA"/>
+  <circle cx="84" cy="33" r="3.5" fill="#38BDF8"/>
+  <circle cx="76" cy="45" r="3.5" fill="#F97316"/>
+  <circle cx="44" cy="57" r="3.5" fill="#60A5FA"/>
+</svg>

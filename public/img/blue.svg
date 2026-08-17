@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" fill="none">
+  <!-- Stroke Bubble Outline -->
+  <path d="M24 18C24 11.37 29.37 6 36 6H92C98.63 6 104 11.37 104 18V66C104 72.63 98.63 78 92 78H62L38 100V78H36C29.37 78 24 72.63 24 66V18Z" stroke="#1C3C94" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Inner AI Geometric Nodes -->
+  <path d="M46 36L64 26L82 36V56L64 66L46 56V36Z" stroke="#1C3C94" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M54 46H74" stroke="#F97316" stroke-width="4.5" stroke-linecap="round"/>
+
+  <!-- Node Dots -->
+  <circle cx="64" cy="26" r="3.5" fill="#38BDF8"/>
+  <circle cx="82" cy="36" r="3.5" fill="#38BDF8"/>
+  <circle cx="74" cy="46" r="3.5" fill="#F97316"/>
+  <circle cx="46" cy="56" r="3.5" fill="#38BDF8"/>
+</svg>

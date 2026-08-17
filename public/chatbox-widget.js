@@ -1227,7 +1227,7 @@
             </button>
           </div>
           <div class="chatbox-branding">
-            Powered by <a href="#" target="_blank" rel="noopener">Nyxens</a>
+            Powered by <a href="https://nyxens.com/" target="_blank" rel="noopener">Nyxens</a>
           </div>
         </div>
       </div>

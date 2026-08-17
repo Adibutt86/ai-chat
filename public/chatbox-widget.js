@@ -80,26 +80,25 @@
         pointer-events: none;
       }
       #chatbox-launcher {
-        width: 64px;
-        height: 64px;
-        background: transparent;
-        border-radius: 0;
-        box-shadow: none;
-        filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.22));
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, ${primaryColor}, ${secondaryColor || primaryColor});
+        border: 2px solid rgba(255, 255, 255, 0.6);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22), 0 3px 8px rgba(0, 0, 0, 0.12);
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.3s ease;
         position: relative;
         pointer-events: auto;
-        border: none;
         outline: none;
-        padding: 0;
       }
       #chatbox-launcher:hover {
         transform: scale(1.08) translateY(-2px);
-        filter: drop-shadow(0 14px 32px rgba(0, 0, 0, 0.3));
+        border-color: #ffffff;
+        box-shadow: 0 14px 36px rgba(0, 0, 0, 0.28);
       }
       #chatbox-launcher:active {
         transform: scale(0.94);
@@ -109,20 +108,16 @@
         transition: transform 0.3s ease, opacity 0.3s ease;
       }
       #chatbox-launcher .icon-chat {
-        width: 64px;
-        height: 64px;
+        width: 32px;
+        height: 32px;
       }
       #chatbox-launcher .icon-close {
         opacity: 0;
         transform: rotate(-45deg) scale(0.6);
         fill: none;
         stroke: white;
-        width: 34px;
-        height: 34px;
-        background: linear-gradient(135deg, ${primaryColor}, ${secondaryColor || primaryColor});
-        border-radius: 50%;
-        padding: 6px;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+        width: 24px;
+        height: 24px;
       }
       #chatbox-launcher.open .icon-chat {
         opacity: 0;
@@ -1238,21 +1233,13 @@
       </div>
       <button id="chatbox-launcher" aria-label="Open Chat Support" aria-haspopup="dialog">
         <span id="chatbox-badge"></span>
-        <svg class="icon-svg icon-chat" viewBox="0 0 128 128" width="64" height="64" fill="none">
-          <defs>
-            <linearGradient id="launcher-bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="${primaryColor}"/>
-              <stop offset="100%" stop-color="${secondaryColor || primaryColor}"/>
-            </linearGradient>
-          </defs>
-          <!-- Full Chat Bubble Shape Fill -->
-          <path d="M24 18C24 11.37 29.37 6 36 6H92C98.63 6 104 11.37 104 18V66C104 72.63 98.63 78 92 78H62L38 100V78H36C29.37 78 24 72.63 24 66V18Z" fill="url(#launcher-bg-gradient)" stroke="rgba(255,255,255,0.25)" stroke-width="2.5" stroke-linejoin="round"/>
-          <!-- Inner AI Geometric Nodes -->
-          <path d="M46 36L64 26L82 36V56L64 66L46 56V36Z" stroke="#FFFFFF" stroke-width="4.5" stroke-linejoin="round"/>
+        <svg class="icon-svg icon-chat" viewBox="0 0 128 128" width="32" height="32" fill="none">
+          <!-- Inner AI Geometric Nodes (No Bubble Outline) -->
+          <polygon points="64,24 84,35 84,57 64,68 44,57 44,35" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linejoin="round"/>
           <path d="M54 46H74" stroke="#F97316" stroke-width="5" stroke-linecap="round"/>
           <!-- Node Dots -->
-          <circle cx="64" cy="26" r="4" fill="#38BDF8"/>
-          <circle cx="82" cy="36" r="4" fill="#38BDF8"/>
+          <circle cx="64" cy="24" r="4" fill="#38BDF8"/>
+          <circle cx="84" cy="35" r="4" fill="#38BDF8"/>
           <circle cx="74" cy="46" r="4" fill="#F97316"/>
           <circle cx="46" cy="56" r="4" fill="#38BDF8"/>
         </svg>

@@ -37,7 +37,7 @@ export default function RootLayout({
         <AuthProvider>
           {children}
           <Script
-            src="/chatbox-widget.js?v=4"
+            src="/chatbox-widget.js?v=5"
             data-agent-id="cmrp4sl270011uwtwukg511mu"
             strategy="lazyOnload"
           />
